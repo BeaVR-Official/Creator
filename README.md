@@ -19,7 +19,10 @@ Enfin, pour les personnes désireuse de partager leur savoir sans pour autant po
 
 Avant de pouvoir utiliser le programme, l'installation de plusieurs packages est nécessaire.
 
-(A détailler)
+Rouler afin d'installer les dépendances :
+```bash
+npm install
+```
 
 
 ## Contributions
