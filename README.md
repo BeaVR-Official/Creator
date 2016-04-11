@@ -1,4 +1,4 @@
-<img style="width:50%;" src="/README/2017_logo_beavr.png">
+<img style="width:200px;" src="/README/2017_logo_beavr.png">
 
 
 # BeaVR - CREATOR
