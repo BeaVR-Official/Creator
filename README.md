@@ -1,5 +1,6 @@
+<p align="center">
 <img width="300" src="/README/2017_logo_beavr.png">
-
+</p>
 
 # BeaVR - CREATOR
 
@@ -12,7 +13,7 @@ Pour les créateur de contenu expérimentés, une interface spécifique permet d
 
 Enfin, pour les personnes désireuse de partager leur savoir sans pour autant posséder des compétence techniques, nous mettons à disposition gratuitement un créateur d'applications, notre Creator. Ce dernier, user-friendly et simple d'utilisation, permet à chacun de concevoir en quelques clics sa propre application d'apprentissage afin de la publier directement sur le Store pour la partager avec la communauté.
 
-## Version <img style="width:10%;" src="https://travis-ci.com/ekersale/beavr-creator.svg?token=x7qbxW6dvqqfhQ4xsHKt&branch=master">
+## Version <img style="width:10%; text-align:center;s" src="https://travis-ci.com/ekersale/beavr-creator.svg?token=x7qbxW6dvqqfhQ4xsHKt&branch=master">
 
 `1.0` Initialisation du projet, intégration des outils de développement/déploiement/collaboration
 
