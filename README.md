@@ -24,6 +24,10 @@ Rouler afin d'installer les dépendances :
 npm install
 ```
 
+## Configuration de WebStorm avec Babel
+
+<img src="/README/Configuration-babel-webstorm.jpg">
+
 
 ## Contributions
 
