@@ -4,7 +4,7 @@
   "description": "Creator for BeaVR project, virtual reality solution",
   "main": "index.js",
   "scripts": {
-  	'test': './node_modules/.bin/karma start --browsers Firefox --single-run'    
+  	"test": "./node_modules/.bin/karma start --browsers Firefox --single-run"  
   },
   "repository": {
     "type": "git",
