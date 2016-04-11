@@ -1,2 +1,2 @@
 # beavr-creator
-Creator for BeaR project
+Creator for BeaVR project
