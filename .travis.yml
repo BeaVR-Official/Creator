@@ -6,8 +6,7 @@ branches:
     - master
 before_script:
   - npm install -g bower
-  - npm install -g gulp
   - npm install phantomjs
   - npm install -g karma
-  - gulp build
-  - gulp style
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
