@@ -4,6 +4,7 @@
 
 class Creator {
     constructor(width, height) {
+
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(width, height);
         document.body.appendChild(this.renderer.domElement);
