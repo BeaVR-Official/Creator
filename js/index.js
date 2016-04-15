@@ -55,6 +55,8 @@ creator.render();
 
 window.scene = creator.getScene();
 
+console.log("coucou");
+
 $("body").bind("blur focus focusin focusout load resize scroll unload click" + " dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " + "mouseleave change select submit keydown keypress keyup error", function (e) {
     creator.render();
 });
@@ -62,6 +64,3 @@ $("body").bind("blur focus focusin focusout load resize scroll unload click" + "
 $(window).resize(function () {
     creator.setRenderSize($(window).width(), $(window).height());
 });
-
-console.log("coucou");
-console.log("e");
