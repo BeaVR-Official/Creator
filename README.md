@@ -33,6 +33,35 @@ npm install
 
 Lien vers la doc officielle : http://blog.jetbrains.com/webstorm/2015/05/ecmascript-6-in-webstorm-transpiling/
 
+## Architecture de développement
+
+```
+beavr-creator
+|__ css
+|   |____ Styles css
+|
+|__ js (src in ES6)
+|   |____ index.js
+|   |____ Folder Module
+|         |____ src js modules
+|
+|__ lib
+|   |____ js librairies
+|
+|__ out (src compiled automaticaly in ES5)
+|   |____ index.js
+|   |____ Folder Module
+|         |____ src js modules
+|
+|__ README (readme content)
+|
+|__ index.html (website entry)
+|
+|__ package.json (npm conf)
+|
+|__ README.md
+```
+
 ## Contributions
 
 Instruction pour l'utilisation du Git.
