@@ -7,8 +7,12 @@ class Creator {
 
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(width, height);
-        document.body.appendChild(this.renderer.domElement);
+        $(".SceneView").append(this.renderer.domElement);
 
+        this.dCamera = new THREE.PerspectiveCamera( 50, 1, 0.1, 10000 );
+        this.dCamera.name = 'Camera';
+        this.dCamera.position.set( 20, 10, 20 );
+        this.dCamera.lookAt( new THREE.Vector3() );
         this.scene = new THREE.Scene();
 
         this.camera = new THREE.PerspectiveCamera(
@@ -52,6 +56,8 @@ var creator = new Creator($(window).width(), $(window).height());
 creator.addBox();
 creator.addLight();
 creator.render();
+
+
 
 window.scene = creator.getScene();
 

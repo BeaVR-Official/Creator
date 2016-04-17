@@ -4,11 +4,66 @@
     <meta charset="UTF-8">
     <title>Creator</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-<script src="lib/three.js"></script>
+<div class="ViewPort">
+    <div class="menuTop">
+        <div class="menuLeftTop">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="#">New project</a>
+                    <a href="#">Open...</a>
+                    <a href="#">Save...</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Edit</button>
+                <div class="dropdown-content">
+                    <a href="#">Undo</a>
+                    <a href="#">Redo</a>
+                    <a href="#">Clone</a>
+                    <a href="#">Delete</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Add</button>
+                <div class="dropdown-content">
+                    <a href="#">Box</a>
+                    <a href="#">Sphere</a>
+                    <a href="#">Cylinder</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Play</button>
+            </div>
+        </div>
+        <div class="menuRightTop">
+            <div class="dropdown">
+                <button class="dropdown-toggle dropbtn dropbtnscene" type="button" data-target=".menuRightMiddle" data-toggle="collapse">Scene
+                    <span class="caret"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="SceneView">
+        <div class="menuRightMiddle">
+
+        </div>
+    </div>
+</div>
+
+
+<script src="lib/ui.js"></script>
+<script src="lib/signals.min.js"></script>
 <script src="lib/ui.three.js"></script>
+<script src="lib/three.js"></script>
 <script src="out/js/index.js"></script>
 </body>
 </html>
