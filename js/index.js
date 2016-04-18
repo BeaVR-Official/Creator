@@ -70,3 +70,5 @@ $("body").bind("blur focus focusin focusout load resize scroll unload click" + "
 $(window).resize(function () {
     creator.setRenderSize($(window).width(), $(window).height());
 });
+
+$(".menuRightMiddle").draggable();
