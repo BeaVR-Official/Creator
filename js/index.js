@@ -71,4 +71,33 @@ $(window).resize(function () {
     creator.setRenderSize($(window).width(), $(window).height());
 });
 
-$(".menuRightMiddle").draggable();
+$(".menuRightMiddle").draggable({containment: '.SceneView'});
+
+$(".menuLeftMiddle").draggable({containment: '.SceneView'});
+
+var data = [
+    {
+        label: 'Main Camera',
+        children: [
+            { label: 'Sphere',
+            children : [
+                { label : 'DirectionalLight' },
+                { label : 'SpotLight'},
+                { label : 'Material'}
+            ]},
+            {
+                label: 'Cube',
+                children: [{
+                    label: 'material'
+                }]
+            }
+        ]
+    }
+];
+
+$(function() {
+    $('#tree1').tree({
+        data: data
+    });
+});
+

@@ -7,9 +7,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"></script>
+    <script src="http://mbraak.github.io/jqTree/tree.jquery.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://mbraak.github.io/jqTree/jqtree.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
@@ -55,6 +57,14 @@
 
     <div class="SceneView">
         <div class="menuRightMiddle ui-widget-content">
+            <div class="containerOptions">
+                <button class="dropdown-toggle" type="button" data-target="#tree1" data-toggle="collapse">Scene objects
+                    <span class="caret"></span>
+                </button>
+                <div id="tree1">
+
+                </div>
+            </div>
             <div class="containerOptions">
                 <button class="dropdown-toggle" type="button" data-target=".DetailsObject" data-toggle="collapse">Informations
                     <span class="caret"></span>
