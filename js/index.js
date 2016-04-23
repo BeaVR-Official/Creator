@@ -49,18 +49,26 @@ class Creator {
         this.renderer.render(this.scene, this.camera);
     }
 
-    select(mouse, callback) {
+    select(mouse) {
         if (mouse == undefined)
             return;
-        console.log(mouse);
+        if (this.selectObject != undefined)
+        {
+            this.raycaster.setFromCamera(mouse, this.camera);
+            this.selectObject.position.set(mouse.x * 10, mouse.y * 10, this.selectObject.position.z);
+            this.ui.pushDataInView(this.selectObject);
+            return;
+        }
         this.raycaster.setFromCamera(mouse, this.camera);
-
-        // calculate objects intersecting the picking ray
         var intersects = this.raycaster.intersectObjects( this.scene.children );
-
         for ( var i = 0; i < intersects.length; i++ ) {
             this.ui.pushDataInView(intersects[ i ].object);
+            this.selectObject = intersects[ i ].object;
         }
+    }
+
+    resetGrap() {
+        this.selectObject = undefined;
     }
 
     getScene() {
@@ -104,6 +112,7 @@ class UI {
         }
         that.currentObject.needsUpdate = true;
         that.currentObject.updateMatrix();
+        that.creator.render();
     }
 
     pushDataInView (object) {
@@ -135,12 +144,18 @@ function onMouseClick( event ) {
     creator.select(mouse);
 }
 
-window.addEventListener( 'click', onMouseClick, false );
-
+$(".SceneView").mousedown(function () {
+    $(this).mousemove(onMouseClick);
+}).mouseup(function () {
+    $(this).unbind('mousemove');
+    creator.resetGrap();
+}).mouseout(function () {
+    $(this).unbind('mousemove');
+    creator.resetGrap();
+});
 
 window.scene = creator.getScene();
 
-console.log("coucou");
 
 $("body").bind("blur focus focusin focusout load resize scroll unload click" + " dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " + "mouseleave change select submit keydown keypress keyup error", function (e) {
     creator.render();
