@@ -5,7 +5,6 @@
 class Creator {
     constructor(width, height, ui) {
         this.ui = ui;
-        document.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(width, height);
         this.renderer.setClearColor(0xdddddd, 1);
@@ -40,10 +39,6 @@ class Creator {
         this.scene.add(mesh);
     }
 
-    display() {
-        console.log("coucou");
-    }
-
     addLight() {
         var light = new THREE.PointLight(0xFFFF00);
         light.position.set(10, 0, 10);
@@ -54,7 +49,7 @@ class Creator {
         this.renderer.render(this.scene, this.camera);
     }
 
-    select(mouse) {
+    select(mouse, callback) {
         if (mouse == undefined)
             return;
         console.log(mouse);
@@ -64,8 +59,7 @@ class Creator {
         var intersects = this.raycaster.intersectObjects( this.scene.children );
 
         for ( var i = 0; i < intersects.length; i++ ) {
-            this.ui.pushDataInView(intersects[ i ].object);
-            console.log(intersects[ i ].object);
+            this.ui.pushDataInView(intersects[ i ].object, this.render);
         }
     }
 
@@ -81,7 +75,36 @@ class Creator {
 }
 
 class UI {
-    pushDataInView (object) {
+    constructor() {
+        var that = this;
+        $('input').on('input', function() {
+            that.inputChange(this,that);
+        });
+    }
+
+    inputChange(those, that) {
+        if (that.currentObject == undefined)
+            return;
+        var mod = $(those).attr('class');
+        if (mod == 'TransPosX' || mod == 'TransPosY' || mod == "TransPosZ") {
+            that.currentObject.position.set($('.TransPosX').val(), $('.TransPosY').val(), $('.TransPosZ').val());
+        }
+        if (mod == 'TransRotX' || mod == 'TransRotY' || mod == "TransRotZ") {
+            that.currentObject.rotation.set($('.TransRotX').val(), $('.TransRotY').val(), $('.TransRotZ').val());
+        }
+        if (mod == 'TransScaleX' || mod == 'TransScaleY' || mod == "TransScaleZ") {
+            that.currentObject.scale.set($('.TransScaleX').val(), $('.TransScaleY').val(), $('.TransScaleZ').val());
+        }
+        that.currentObject.needsUpdate = true;
+        that.currentObject.updateMatrix();
+        if (that.render != undefined) {
+            that.render;
+        }
+    }
+
+    pushDataInView (object, render) {
+        this.currentObject = object;
+        this.render = render;
         $(".objectName").val(object.name);
         $(".TransPosX").val(object.position.x);
         $(".TransPosY").val(object.position.y);
