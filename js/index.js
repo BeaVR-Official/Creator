@@ -120,13 +120,34 @@ class UI {
         });
         $('.AddBox').click(function() {
             that.creator.addBox();
+            that.updateThree(that);
         });
         $('.AddSphere').click(function() {
             that.creator.addSphere();
+            that.updateThree(that);
         });
         $('.AddSCylinder').click(function() {
             that.creator.addCylinder();
+            that.updateThree(that);
         });
+
+
+
+    }
+
+    updateThree() {
+        var scene = this.creator.getScene();
+        var data = [];
+        data.push({
+            'label' : "MainCamera",
+            'children': []
+        });
+        for (var i = 0; i < scene.children.length; ++i) {
+            data[0].children.push({
+                'label' : (scene.children[i].name != "") ? scene.children[i].name : scene.children[i].type
+            });
+        }
+        $('#tree1').tree('loadData', JSON.parse(JSON.stringify(data)));
     }
 
     setViewPort (creator) {
@@ -142,6 +163,22 @@ class UI {
         }).mouseout(function () {
             $(this).unbind('mousemove');
             that.creator.resetGrap();
+        });
+        var scene = this.creator.getScene();
+        var data = [];
+        data.push({
+            'label' : "MainCamera",
+            'children': []
+        });
+        for (var i = 0; i < scene.children.length; ++i) {
+            data[0].children.push({
+                'label' : (scene.children[i].name != "") ? scene.children[i].name : scene.children[i].type
+            });
+        }
+        $('#tree1').tree({
+            data: JSON.parse(JSON.stringify(data)),
+            dragAndDrop: true,
+            autoOpen: 0
         });
     }
 
@@ -208,6 +245,7 @@ $(".menuRightMiddle").draggable({containment: '.SceneView'});
 
 $(".menuLeftMiddle").draggable({containment: '.SceneView'});
 
+/*
 var data = [
     {
         label: 'Main Camera',
@@ -236,3 +274,4 @@ $(function() {
     });
 });
 
+*/
