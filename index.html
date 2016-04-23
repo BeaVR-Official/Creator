@@ -9,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"></script>
     <script src="http://mbraak.github.io/jqTree/tree.jquery.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="http://mbraak.github.io/jqTree/jqtree.css">
@@ -76,7 +77,7 @@
                     </div>
                     <div class="row-fluid">
                         <label>Name</label>
-                        <textarea placeholder="object name" readonly></textarea>
+                        <textarea class="objectName" placeholder="object name" readonly></textarea>
                     </div>
                 </div>
             </div>
@@ -87,37 +88,37 @@
                 <div class="row-fluid inputTransformPosition">
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3 title"><label>Location</label></div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="X" />
+                        <input class="TransPosX" placeholder="X" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="Y" />
+                        <input class="TransPosY" placeholder="Y" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="Z" />
+                        <input class="TransPosZ" placeholder="Z" />
                     </div>
                 </div>
                 <div class="row-fluid inputTransformPosition">
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3 title"><label>Rotation</label></div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="X" />
+                        <input class="TransRotX" placeholder="X" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="Y" />
+                        <input class="TransRotY" placeholder="Y" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="Z" />
+                        <input class="TransRotZ" placeholder="Z" />
                     </div>
                 </div>
                 <div class="row-fluid inputTransformPosition">
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3 title"><label>Scale</label></div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="X" />
+                        <input class="TransScaleX" placeholder="X" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="Y" />
+                        <input class="TransScaleY" placeholder="Y" />
                     </div>
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input placeholder="Z" />
+                        <input class="TransScaleZ" placeholder="Z" />
                     </div>
                 </div>
             </div>
@@ -128,7 +129,6 @@
 
 
 <script src="lib/ui.js"></script>
-<script src="lib/signals.min.js"></script>
 <script src="lib/ui.three.js"></script>
 <script src="lib/three.js"></script>
 <script src="out/js/index.js"></script>

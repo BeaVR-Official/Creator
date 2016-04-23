@@ -3,10 +3,12 @@
  */
 
 class Creator {
-    constructor(width, height) {
-
+    constructor(width, height, ui) {
+        this.ui = ui;
+        document.addEventListener( 'mousedown', this.onDocumentMouseDown, false );
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(width, height);
+        this.renderer.setClearColor(0xdddddd, 1);
         $(".SceneView").append(this.renderer.domElement);
 
         this.dCamera = new THREE.PerspectiveCamera( 50, 1, 0.1, 10000 );
@@ -23,13 +25,23 @@ class Creator {
         );
         this.camera.position.set(-15, 10, 10);
         this.camera.lookAt(this.scene.position);
+        this.raycaster = new THREE.Raycaster();
     }
 
     addBox() {
         var geometry = new THREE.BoxGeometry(5, 5, 5);
         var material = new THREE.MeshLambertMaterial({color: 0xFF0000});
         var mesh = new THREE.Mesh(geometry, material);
+        mesh.userData.id = _.uniqueId();
+        mesh.name= 'box_' + mesh.userData.id;
+        mesh.mirroredLoop = true;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
         this.scene.add(mesh);
+    }
+
+    display() {
+        console.log("coucou");
     }
 
     addLight() {
@@ -39,8 +51,22 @@ class Creator {
     }
 
     render() {
-        this.renderer.setClearColor(0xdddddd, 1);
         this.renderer.render(this.scene, this.camera);
+    }
+
+    select(mouse) {
+        if (mouse == undefined)
+            return;
+        console.log(mouse);
+        this.raycaster.setFromCamera(mouse, this.camera);
+
+        // calculate objects intersecting the picking ray
+        var intersects = this.raycaster.intersectObjects( this.scene.children );
+
+        for ( var i = 0; i < intersects.length; i++ ) {
+            this.ui.pushDataInView(intersects[ i ].object);
+            console.log(intersects[ i ].object);
+        }
     }
 
     getScene() {
@@ -48,15 +74,41 @@ class Creator {
     }
 
     setRenderSize(width, height) {
+        this.camera.aspect = width / height;
+        this.camera.updateProjectionMatrix();
         this.renderer.setSize(width, height);
     }
 }
 
-var creator = new Creator($(window).width(), $(window).height());
+class UI {
+    pushDataInView (object) {
+        $(".objectName").val(object.name);
+        $(".TransPosX").val(object.position.x);
+        $(".TransPosY").val(object.position.y);
+        $(".TransPosZ").val(object.position.z);
+        $(".TransRotX").val(object.rotation.x);
+        $(".TransRotY").val(object.rotation.y);
+        $(".TransRotZ").val(object.rotation.z);
+        $(".TransScaleX").val(object.scale.x);
+        $(".TransScaleY").val(object.scale.y);
+        $(".TransScaleZ").val(object.scale.z);
+    }
+}
+
+var ui = new UI();
+var creator = new Creator($(window).width(), $(window).height(), ui);
 creator.addBox();
 creator.addLight();
 creator.render();
 
+function onMouseClick( event ) {
+    var mouse = new THREE.Vector2();
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    creator.select(mouse);
+}
+
+window.addEventListener( 'click', onMouseClick, false );
 
 
 window.scene = creator.getScene();
@@ -97,7 +149,9 @@ var data = [
 
 $(function() {
     $('#tree1').tree({
-        data: data
+        data: data,
+        dragAndDrop: true,
+        autoOpen: 0
     });
 });
 
