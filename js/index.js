@@ -36,7 +36,34 @@ class Creator {
         mesh.mirroredLoop = true;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
+        mesh.objType = 'box';
         this.scene.add(mesh);
+    }
+
+    addSphere() {
+        var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        var sphere = new THREE.Mesh( geometry, material );
+        sphere.userData.id = _.uniqueId();
+        sphere.name= 'sphere_' + sphere.userData.id;
+        sphere.mirroredLoop = true;
+        sphere.castShadow = true;
+        sphere.receiveShadow = true;
+        sphere.objType = 'sphere';
+        scene.add( sphere );
+    }
+
+    addCylinder() {
+        var geometry = new THREE.CylinderGeometry( 5, 5, 20, 32 );
+        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        var cylinder = new THREE.Mesh( geometry, material );
+        cylinder.userData.id = _.uniqueId();
+        cylinder.name= 'cylinder_' + cylinder.userData.id;
+        cylinder.mirroredLoop = true;
+        cylinder.castShadow = true;
+        cylinder.receiveShadow = true;
+        cylinder.objType = 'cylinder';
+        scene.add( cylinder );
     }
 
     addLight() {
@@ -91,10 +118,31 @@ class UI {
         $('input').on('input', function() {
             that.inputChange(this,that);
         });
+        $('.AddBox').click(function() {
+            that.creator.addBox();
+        });
+        $('.AddSphere').click(function() {
+            that.creator.addSphere();
+        });
+        $('.AddSCylinder').click(function() {
+            that.creator.addCylinder();
+        });
     }
 
     setViewPort (creator) {
         this.creator = creator;
+        var that = this;
+        $(".SceneView").mousedown(function () {
+            $(this).mousemove(function(e) {
+                that.onMouseClick(e, that);
+            });
+        }).mouseup(function () {
+            $(this).unbind('mousemove');
+            that.creator.resetGrap();
+        }).mouseout(function () {
+            $(this).unbind('mousemove');
+            that.creator.resetGrap();
+        });
     }
 
     inputChange(those, that) {
@@ -112,11 +160,11 @@ class UI {
         }
         that.currentObject.needsUpdate = true;
         that.currentObject.updateMatrix();
-        that.creator.render();
     }
 
     pushDataInView (object) {
         this.currentObject = object;
+        $('.ObjSelectType').val(object.objType);
         $(".objectName").val(object.name);
         $(".TransPosX").val(object.position.x);
         $(".TransPosY").val(object.position.y);
@@ -128,6 +176,13 @@ class UI {
         $(".TransScaleY").val(object.scale.y);
         $(".TransScaleZ").val(object.scale.z);
     }
+
+    onMouseClick( event, that ) {
+        var mouse = new THREE.Vector2();
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+        that.creator.select(mouse);
+    }
 }
 
 var ui = new UI();
@@ -137,22 +192,6 @@ creator.addBox();
 creator.addLight();
 creator.render();
 
-function onMouseClick( event ) {
-    var mouse = new THREE.Vector2();
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    creator.select(mouse);
-}
-
-$(".SceneView").mousedown(function () {
-    $(this).mousemove(onMouseClick);
-}).mouseup(function () {
-    $(this).unbind('mousemove');
-    creator.resetGrap();
-}).mouseout(function () {
-    $(this).unbind('mousemove');
-    creator.resetGrap();
-});
 
 window.scene = creator.getScene();
 
