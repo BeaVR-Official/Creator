@@ -59,7 +59,7 @@ class Creator {
         var intersects = this.raycaster.intersectObjects( this.scene.children );
 
         for ( var i = 0; i < intersects.length; i++ ) {
-            this.ui.pushDataInView(intersects[ i ].object, this.render);
+            this.ui.pushDataInView(intersects[ i ].object);
         }
     }
 
@@ -77,9 +77,16 @@ class Creator {
 class UI {
     constructor() {
         var that = this;
+        $('input').on('mousewheel', function(event) {
+            that.creator.render();
+        });
         $('input').on('input', function() {
             that.inputChange(this,that);
         });
+    }
+
+    setViewPort (creator) {
+        this.creator = creator;
     }
 
     inputChange(those, that) {
@@ -97,14 +104,10 @@ class UI {
         }
         that.currentObject.needsUpdate = true;
         that.currentObject.updateMatrix();
-        if (that.render != undefined) {
-            that.render;
-        }
     }
 
-    pushDataInView (object, render) {
+    pushDataInView (object) {
         this.currentObject = object;
-        this.render = render;
         $(".objectName").val(object.name);
         $(".TransPosX").val(object.position.x);
         $(".TransPosY").val(object.position.y);
@@ -120,6 +123,7 @@ class UI {
 
 var ui = new UI();
 var creator = new Creator($(window).width(), $(window).height(), ui);
+ui.setViewPort(creator);
 creator.addBox();
 creator.addLight();
 creator.render();
