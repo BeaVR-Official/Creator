@@ -2,10 +2,8 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{beavr-creator node_modules}" />
-    <file url="file://$PROJECT_DIR$/js/index.js" libraries="{Generated files, jquery, jquery-ui, three, underscore}" />
-    <file url="file://$PROJECT_DIR$/out/js/index.js" libraries="{jquery-ui}" />
-    <file url="PROJECT" libraries="{tree.jquery}" />
+    <file url="file://$PROJECT_DIR$/js/logic/index.js" libraries="{Generated files}" />
+    <file url="PROJECT" libraries="{jquery}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
-    <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>
