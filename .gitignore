@@ -1,3 +1,4 @@
 /node_modules
-/app/scripts/out
-.idea/*
+/out
+/.idea/watcherTasks.xml
+/.idea/jsLibraryMappings.xml

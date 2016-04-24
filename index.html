@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Creator</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pure Drawer</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -13,123 +16,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="http://mbraak.github.io/jqTree/jqtree.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="css/pure-drawer.css"/>
+
+
 </head>
 <body>
-<div class="ViewPort">
-    <div class="menuTop">
-        <div class="menuLeftTop">
-            <div class="dropdown">
-                <button class="dropbtn">Menu</button>
-                <div class="dropdown-content">
-                    <a href="#">New project</a>
-                    <a href="#">Open...</a>
-                    <a href="#">Save...</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Edit</button>
-                <div class="dropdown-content">
-                    <a href="#">Undo</a>
-                    <a href="#">Redo</a>
-                    <a href="#">Clone</a>
-                    <a href="#">Delete</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Add</button>
-                <div class="dropdown-content">
-                    <a href="#" class="AddBox">Box</a>
-                    <a href="#" class="AddSphere">Sphere</a>
-                    <a href="#" class="AddSCylinder">Cylinder</a>
-                </div>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn">Play</button>
-            </div>
-        </div>
-        <div class="menuRightTop">
-            <div class="dropdown">
-                <button class="dropdown-toggle dropbtn dropbtnscene" type="button" data-target=".menuRightMiddle" data-toggle="collapse">Scene
-                    <span class="caret"></span></button>
-            </div>
+<div class="pure-container" data-effect="pure-effect-slide">
+    <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
+    <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left">
+        <span class="pure-toggle-icon"></span>
+    </label>
+    <nav class="pure-drawer" data-position="left">
+        <p style="padding: 100px 20px; margin: 0;">Insert your off-canvas content for the left drawer here</p>
+    </nav>
+    <div class="pure-pusher-container">
+        <div class="pure-pusher" id="mainView">
         </div>
     </div>
-
-    <div class="SceneView">
-        <div class="menuRightMiddle ui-widget-content">
-            <div class="containerOptions">
-                <button class="dropdown-toggle" type="button" data-target="#tree1" data-toggle="collapse">Scene objects
-                    <span class="caret"></span>
-                </button>
-                <div id="tree1">
-
-                </div>
-            </div>
-            <div class="containerOptions">
-                <button class="dropdown-toggle" type="button" data-target=".DetailsObject" data-toggle="collapse">Informations
-                    <span class="caret"></span>
-                </button>
-                <div class="DetailsObject">
-                    <div class="row-fluid">
-                        <label>Type</label>
-                        <textarea placeholder="object type" class="ObjSelectType" readonly></textarea>
-                    </div>
-                    <div class="row-fluid">
-                        <label>Name</label>
-                        <textarea class="objectName" placeholder="object name" readonly></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="containerOptions ">
-                <button class="dropdown-toggle" type="button" data-target=".inputTransformPosition" data-toggle="collapse">Transform
-                    <span class="caret"></span>
-                </button>
-                <div class="row-fluid inputTransformPosition">
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3 title"><label>Location</label></div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransPosX" placeholder="X" type="number" step="0.5" />
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransPosY" placeholder="Y" type="number" step="0.5"/>
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransPosZ" placeholder="Z" type="number" step="0.5"/>
-                    </div>
-                </div>
-                <div class="row-fluid inputTransformPosition">
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3 title"><label>Rotation</label></div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransRotX" placeholder="X" type="number" step="0.5"/>
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransRotY" placeholder="Y" type="number" step="0.5"/>
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransRotZ" placeholder="Z" type="number" step="0.5"/>
-                    </div>
-                </div>
-                <div class="row-fluid inputTransformPosition">
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3 title"><label>Scale</label></div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransScaleX" placeholder="X" type="number" step="0.5"/>
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransScaleY" placeholder="Y" type="number" step="0.5"/>
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 my-col-3">
-                        <input class="TransScaleZ" placeholder="Z" type="number" step="0.5"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
 </div>
-</div>
-
-
 <script src="lib/ui.js"></script>
 <script src="lib/ui.three.js"></script>
+<script src="lib/three.js"></script>
 <script src="lib/three.js"></script>
 <script src="lib/jquery.mousewheel.min.js"></script>
 <script src="out/js/index.js"></script>
