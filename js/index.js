@@ -42,7 +42,7 @@ class Creator {
 
     addSphere() {
         var geometry = new THREE.SphereGeometry( 5, 32, 32 );
-        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
         var sphere = new THREE.Mesh( geometry, material );
         sphere.userData.id = _.uniqueId();
         sphere.name= 'sphere_' + sphere.userData.id;
@@ -55,7 +55,7 @@ class Creator {
 
     addCylinder() {
         var geometry = new THREE.CylinderGeometry( 5, 5, 20, 32 );
-        var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
         var cylinder = new THREE.Mesh( geometry, material );
         cylinder.userData.id = _.uniqueId();
         cylinder.name= 'cylinder_' + cylinder.userData.id;
@@ -195,12 +195,17 @@ class UI {
         if (mod == 'TransScaleX' || mod == 'TransScaleY' || mod == "TransScaleZ") {
             that.currentObject.scale.set($('.TransScaleX').val(), $('.TransScaleY').val(), $('.TransScaleZ').val());
         }
+        if (mod == 'MaterialColor') {
+            console.log($('.MaterialColor').val());
+            that.currentObject.material.color = new THREE.Color($('.MaterialColor').val());
+        }
         that.currentObject.needsUpdate = true;
         that.currentObject.updateMatrix();
     }
 
     pushDataInView (object) {
         this.currentObject = object;
+        $('.MaterialColor').val("#" + object.material.color.getHexString());
         $('.ObjSelectType').val(object.objType);
         $(".objectName").val(object.name);
         $(".TransPosX").val(object.position.x);
@@ -223,7 +228,7 @@ class UI {
 }
 
 var ui = new UI();
-var creator = new Creator($(window).width(), $(window).height(), ui);
+var creator = new Creator($(window).width(), $(window).height() - $('.menuTop').height()-5, ui);
 ui.setViewPort(creator);
 creator.addBox();
 creator.addLight();
@@ -244,34 +249,3 @@ $(window).resize(function () {
 $(".menuRightMiddle").draggable({containment: '.SceneView'});
 
 $(".menuLeftMiddle").draggable({containment: '.SceneView'});
-
-/*
-var data = [
-    {
-        label: 'Main Camera',
-        children: [
-            { label: 'Sphere',
-            children : [
-                { label : 'DirectionalLight' },
-                { label : 'SpotLight'},
-                { label : 'Material'}
-            ]},
-            {
-                label: 'Cube',
-                children: [{
-                    label: 'material'
-                }]
-            }
-        ]
-    }
-];
-
-$(function() {
-    $('#tree1').tree({
-        data: data,
-        dragAndDrop: true,
-        autoOpen: 0
-    });
-});
-
-*/
