@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,900" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"></script>
@@ -15,28 +16,40 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="http://mbraak.github.io/jqTree/jqtree.css">
+    <link rel="stylesheet" href="css/normalize.css"/>
     <link rel="stylesheet" href="css/pure-drawer.css"/>
+    <link rel="stylesheet" href="css/creator.css"/>
+
 
 </head>
 <body>
 <div class="pure-container" data-effect="pure-effect-slide">
     <input type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
     <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left">
-        <span class="pure-toggle-icon"></span>
+        <span class="menu-link pure-toggle-icon"></span>
     </label>
-    <nav class="pure-drawer" data-position="left">
-        <p style="padding: 100px 20px; margin: 0;">Insert your off-canvas content for the left drawer here</p>
-    </nav>
-    <div class="pure-pusher-container">
-        <div class="pure-pusher" id="mainView">
-        </div>
+    <div id="menu" class="panel" role="navigation"
+         style="position: fixed; top: 0px; bottom: 0px; height: 100%; left: 0px; width: 15.625em; transition: left 300ms ease;">
+        <img src="img/slide.svg" width="60">
+        <ul>
+            <li><a href="https://github.com/ascott1/bigSlide.js"><span class="icon-github nav-icon"></span>Github</a>
+            </li>
+            <li><a href="https://raw.github.com/ascott1/bigSlide.js/master/dist/bigSlide.min.js"><span
+                    class="icon-download nav-icon"></span>Compressed </a></li>
+            <li><a href="https://raw.github.com/ascott1/bigSlide.js/master/dist/bigSlide.js"><span
+                    class="icon-download nav-icon"></span>Uncompressed</a></li>
+            <li><a href="#how"><span class="icon-book nav-icon"></span>How to</a></li>
+            <li><a href="#options"><span class="icon-cog nav-icon"></span>Options</a></li>
+        </ul>
     </div>
-    <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label>
+    <div class="wrap push" style="left: 15.625em; transition: left 300ms ease;">
+    </div>
 </div>
 <script src="lib/ui.js"></script>
 <script src="lib/ui.three.js"></script>
 <script src="lib/three.js"></script>
 <script src="lib/jquery.mousewheel.min.js"></script>
-<script src="creator.js"></script>
+<script src="lib/bigSlide.min.js"></script>
+<script src="build/creator.js"></script>
 </body>
 </html>

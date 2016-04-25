@@ -1,26 +1,43 @@
 var path = require('path');
 var webpack = require('webpack');
+var OfflinePlugin = require('offline-plugin');
 
 module.exports = {
-    entry: './es6/index.js',
+    entry: './js/index.js',
     output: {
         path: __dirname,
-        filename: 'creator.js'
+        filename: './build/creator.js'
     },
     module: {
         loaders: [
             {
                 loader: 'babel-loader',
-                test: path.join(__dirname, 'es6'),
+                test: path.join(__dirname, 'js'),
                 query: {
-                    presets: 'es2015',
-                },
+                    presets: 'es2015'
+                }
             }
         ]
     },
     plugins: [
         // Avoid publishing files when compilation fails
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        //new webpack.optimize.UglifyJsPlugin(),
+        //new OfflinePlugin({
+        //    // All options are optional
+        //    caches: 'all',
+        //    scope: '/',
+        //    updateStrategy: 'all',
+        //    version: 'v1',
+        //
+        //    ServiceWorker: {
+        //        output: 'sw.js'
+        //    },
+        //
+        //    AppCache: {
+        //        directory: 'appcache/'
+        //    }
+        //})
     ],
     stats: {
         // Nice colored output

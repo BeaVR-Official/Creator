@@ -1,4 +1,4 @@
 /node_modules
-/out
+/build
 /.idea/watcherTasks.xml
 /.idea/jsLibraryMappings.xml
