@@ -1644,7 +1644,7 @@ THREE.Vector2.prototype = {
                 this.y = value;
                 break;
             default:
-                throw new Error('index is build of range: ' + index);
+                throw new Error('index is buildPath of range: ' + index);
 
         }
 
@@ -1659,7 +1659,7 @@ THREE.Vector2.prototype = {
             case 1:
                 return this.y;
             default:
-                throw new Error('index is build of range: ' + index);
+                throw new Error('index is buildPath of range: ' + index);
 
         }
 
@@ -2122,7 +2122,7 @@ THREE.Vector3.prototype = {
                 this.z = value;
                 break;
             default:
-                throw new Error('index is build of range: ' + index);
+                throw new Error('index is buildPath of range: ' + index);
 
         }
 
@@ -2139,7 +2139,7 @@ THREE.Vector3.prototype = {
             case 2:
                 return this.z;
             default:
-                throw new Error('index is build of range: ' + index);
+                throw new Error('index is buildPath of range: ' + index);
 
         }
 
@@ -2937,7 +2937,7 @@ THREE.Vector4.prototype = {
                 this.w = value;
                 break;
             default:
-                throw new Error('index is build of range: ' + index);
+                throw new Error('index is buildPath of range: ' + index);
 
         }
 
@@ -2956,7 +2956,7 @@ THREE.Vector4.prototype = {
             case 3:
                 return this.w;
             default:
-                throw new Error('index is build of range: ' + index);
+                throw new Error('index is buildPath of range: ' + index);
 
         }
 
@@ -4120,7 +4120,7 @@ THREE.Box2.prototype = {
 
     intersectsBox: function (box) {
 
-        // using 6 splitting planes to rule build intersections.
+        // using 6 splitting planes to rule buildFiles intersections.
 
         if (box.max.x < this.min.x || box.min.x > this.max.x ||
             box.max.y < this.min.y || box.min.y > this.max.y) {
@@ -4444,7 +4444,7 @@ THREE.Box3.prototype = {
 
     intersectsBox: function (box) {
 
-        // using 6 splitting planes to rule build intersections.
+        // using 6 splitting planes to rule buildFiles intersections.
 
         if (box.max.x < this.min.x || box.min.x > this.max.x ||
             box.max.y < this.min.y || box.min.y > this.max.y ||
@@ -12717,7 +12717,7 @@ THREE.AnimationClip = function (name, duration, tracks) {
     this.tracks = tracks;
     this.duration = ( duration !== undefined ) ? duration : -1;
 
-    // this means it should figure build its duration by scanning the tracks
+    // this means it should figure buildFiles its duration by scanning the tracks
     if (this.duration < 0) {
 
         this.resetDuration();
@@ -12945,7 +12945,7 @@ Object.assign(THREE.AnimationClip, {
                 THREE.AnimationUtils.flattenJSON(
                     animationKeys, times, values, propertyName);
 
-                // empty keys are filtered build, so check again
+                // empty keys are filtered buildFiles, so check again
                 if (times.length !== 0) {
 
                     destTracks.push(new trackType(trackName, times, values));
@@ -12976,7 +12976,7 @@ Object.assign(THREE.AnimationClip, {
             // with AnimationHandler.init( animation )
             if (animationKeys[0].morphTargets) {
 
-                // figure build all morph targets used in this track
+                // figure buildFiles all morph targets used in this track
                 var morphTargetNames = {};
                 for (var k = 0; k < animationKeys.length; k++) {
 
@@ -13718,7 +13718,7 @@ THREE.AnimationMixer._Action.prototype = {
 
                     if (interpolantValue === 0) {
 
-                        // faded build, disable
+                        // faded buildFiles, disable
                         this.enabled = false;
 
                     }
@@ -14080,7 +14080,7 @@ Object.assign(THREE.AnimationMixer.prototype, {
 
             var bindings = action._propertyBindings;
 
-            // increment reference counts / sort build state
+            // increment reference counts / sort buildFiles state
             for (var i = 0, n = bindings.length; i !== n; ++i) {
 
                 var binding = bindings[i];
@@ -14106,7 +14106,7 @@ Object.assign(THREE.AnimationMixer.prototype, {
 
             var bindings = action._propertyBindings;
 
-            // decrement reference counts / sort build state
+            // decrement reference counts / sort buildFiles state
             for (var i = 0, n = bindings.length; i !== n; ++i) {
 
                 var binding = bindings[i];
@@ -15259,7 +15259,7 @@ THREE.KeyframeTrack.prototype = {
 
             if (prevTime !== null && prevTime > currTime) {
 
-                console.error("build of order keys", this, i, currTime, prevTime);
+                console.error("buildPath of order keys", this, i, currTime, prevTime);
                 valid = false;
                 break;
 
@@ -19016,7 +19016,7 @@ THREE.JSONLoader.prototype = {
             // parse implicit morph animations
             if (geometry.morphTargets) {
 
-                // TODO: Figure build what an appropraite FPS is for morph target animations -- defaulting to 10, but really it is completely arbitrary.
+                // TODO: Figure buildFiles what an appropraite FPS is for morph target animations -- defaulting to 10, but really it is completely arbitrary.
                 var morphAnimationClips = THREE.AnimationClip.CreateClipsFromMorphTargetSequences(geometry.morphTargets, 10);
                 outputAnimations = outputAnimations.concat(morphAnimationClips);
 
@@ -29697,7 +29697,7 @@ THREE.WebGLProgram = (function () {
 
         } else if (parameters.morphTargets === true) {
 
-            // programs with morphTargets displace position build of attribute 0
+            // programs with morphTargets displace position buildFiles of attribute 0
             gl.bindAttribLocation(program, 0, 'position');
 
         }
@@ -35952,7 +35952,7 @@ THREE.BoxBufferGeometry = function (width, height, depth, widthSegments, heightS
     // group variables
     var groupStart = 0;
 
-    // build each side of the box geometry
+    // buildFiles each side of the box geometry
     buildPlane('z', 'y', 'x', -1, -1, depth, height, width, depthSegments, heightSegments, 0); // px
     buildPlane('z', 'y', 'x', 1, -1, depth, height, -width, depthSegments, heightSegments, 1); // nx
     buildPlane('x', 'z', 'y', 1, 1, width, depth, height, widthSegments, depthSegments, 2); // py
@@ -35960,7 +35960,7 @@ THREE.BoxBufferGeometry = function (width, height, depth, widthSegments, heightS
     buildPlane('x', 'y', 'z', 1, -1, width, height, depth, widthSegments, heightSegments, 4); // pz
     buildPlane('x', 'y', 'z', -1, -1, width, height, -depth, widthSegments, heightSegments, 5); // nz
 
-    // build geometry
+    // buildFiles geometry
     this.setIndex(new THREE.BufferAttribute(indices, 1));
     this.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
     this.addAttribute('normal', new THREE.BufferAttribute(normals, 3));
@@ -36255,7 +36255,7 @@ THREE.CylinderBufferGeometry = function (radiusTop, radiusBottom, height, radial
 
     }
 
-    // build geometry
+    // buildFiles geometry
 
     this.setIndex(indices);
     this.addAttribute('position', vertices);
@@ -37577,7 +37577,7 @@ THREE.LatheBufferGeometry = function (points, segments, phiStart, phiLength) {
 
     }
 
-    // build geometry
+    // buildFiles geometry
 
     this.setIndex(indices);
     this.addAttribute('position', vertices);
@@ -37908,7 +37908,7 @@ THREE.RingBufferGeometry = function (innerRadius, outerRadius, thetaSegments, ph
 
     }
 
-    // build geometry
+    // buildFiles geometry
 
     this.setIndex(indices);
     this.addAttribute('position', vertices);
@@ -38254,7 +38254,7 @@ THREE.TorusBufferGeometry = function (radius, tube, radialSegments, tubularSegme
 
     }
 
-    // build geometry
+    // buildFiles geometry
     this.setIndex(new THREE.BufferAttribute(indices, 1));
     this.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
     this.addAttribute('normal', new THREE.BufferAttribute(normals, 3));
@@ -38440,7 +38440,7 @@ THREE.TorusKnotBufferGeometry = function (radius, tube, tubularSegments, radialS
 
     }
 
-    // build geometry
+    // buildFiles geometry
 
     this.setIndex(indices);
     this.addAttribute('position', vertices);

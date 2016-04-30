@@ -11,7 +11,7 @@ BeaVR est une plateforme d'apprentissage utilisant la réalité virtuelle afin d
 Pour les acteurs nous mettons à disposition le Store depuis lequel pourront être téléchargées les applications depuis une interface simple d'utilisation et intuitive.
 Pour les créateur de contenu expérimentés, une interface spécifique permet de publier et de gérer ses applications sur le Store.
 
-Enfin, pour les personnes désireuse de partager leur savoir sans pour autant posséder des compétence techniques, nous mettons à disposition gratuitement un créateur d'applications, notre Creator. Ce dernier, user-friendly et simple d'utilisation, permet à chacun de concevoir en quelques clics sa propre application d'apprentissage afin de la publier directement sur le Store pour la partager avec la communauté.
+Enfin, pour les personnes désireuses de partager leur savoir sans pour autant posséder des compétence techniques, nous mettons à disposition gratuitement un créateur d'applications, notre Creator. Ce dernier, user-friendly et simple d'utilisation, permet à chacun de concevoir en quelques clics sa propre application d'apprentissage afin de la publier directement sur le Store pour la partager avec la communauté.
 
 ## Version <img style="width:10%; text-align:center;s" src="https://travis-ci.com/ekersale/beavr-creator.svg?token=x7qbxW6dvqqfhQ4xsHKt&branch=master">
 
@@ -22,44 +22,69 @@ Enfin, pour les personnes désireuse de partager leur savoir sans pour autant po
 
 Avant de pouvoir utiliser le programme, l'installation de plusieurs packages est nécessaire.
 
-Rouler afin d'installer les dépendances :
+Lancer afin d'installer les dépendances :
 ```bash
 npm install
 ```
 
-## Configuration de WebStorm avec Babel
+## Configuration de WebStorm pour Gulp+Webpack
 
-<img src="/README/Configuration-babel-webstorm.jpg">
+<img src="/README/Conf-Gulp-Files.png">
 
-Lien vers la doc officielle : http://blog.jetbrains.com/webstorm/2015/05/ecmascript-6-in-webstorm-transpiling/
+Configuration obligatoire pour la compilation automatique des fichiers.
 
 ## Architecture de développement
 
 ```
 beavr-creator
-|__ css
-|   |____ Styles css
-|
-|__ js (src in ES6)
-|   |____ index.js
-|   |____ Folder Module
-|         |____ src js modules
-|
-|__ lib
-|   |____ js librairies
-|
-|__ out (src compiled automaticaly in ES5)
-|   |____ index.js
-|   |____ Folder Module
-|         |____ src js modules
-|
-|__ README (readme content)
-|
-|__ index.html (website entry)
-|
-|__ package.json (npm conf)
-|
-|__ README.md
+├── app
+│   ├── out (Code compilé)
+│   ├── assets (Ressources statiques)
+│   │   ├── 3dmodels
+│   │   ├── css
+│   │   │   ├── creator.css
+│   │   │   └── vendors
+│   │   └── images
+│   ├── libs (Librairies JS externes / Vendors)
+│   │   ├── bigslide
+│   │   ├── jquery
+│   │   ├── threejs
+│   │   └── ...
+│   ├── src (Code source)
+│   │   ├── creator.js
+│   │   ├── helpers (Snippets)
+│   │   ├── models (Modèles de données)
+│   │   └── modules (Modules ES6)
+│   │       ├── Creator.js
+│   │       ├── Creator.ui.js
+│   │       ├── NavDrawer.js
+│   │       └── ...
+│   ├── tests (Batterie de tests)
+│   │   ├── index.html
+│   │   └── tests.js
+│   └── index.html
+├── README
+├── README.md
+├── package.json (Configuration NPM)
+├── webpack.config.js (Configuration Webpack)
+├── gulpfile.js (Configuration des taches)
+├── .eslintrc (Configuration de la norme)
+├── .travis.yml (Configuration déploiement Travis)
+└── .gitignore
+```
+
+## Débugage
+
+
+
+## Commandes NPM
+
+```bash
+npm run clean
+npm run build
+npm run test
+npm run watch
+npm run watch-n-test
 ```
 
 ## Contributions

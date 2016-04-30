@@ -13,13 +13,10 @@
     <script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js"></script>
     <script src="http://mbraak.github.io/jqTree/tree.jquery.js"></script>
     <script src="http://underscorejs.org/underscore-min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="http://mbraak.github.io/jqTree/jqtree.css">
-    <link rel="stylesheet" href="css/normalize.css"/>
-    <link rel="stylesheet" href="css/pure-drawer.css"/>
-    <link rel="stylesheet" href="css/creator.css"/>
-
+    <link rel="stylesheet" href="assets/css/vendors/normalize.css"/>
+    <link rel="stylesheet" href="assets/css/vendors/pure-drawer.css"/>
+    <link rel="stylesheet" href="assets/css/creator.css"/>
 
 </head>
 <body>
@@ -32,24 +29,28 @@
          style="position: fixed; top: 0px; bottom: 0px; height: 100%; left: 0px; width: 15.625em; transition: left 300ms ease;">
         <img src="img/slide.svg" width="60">
         <ul>
-            <li><a href="https://github.com/ascott1/bigSlide.js"><span class="icon-github nav-icon"></span>Github</a>
+            <li>
+                <a id="addCube" href="#addCube"><span class="icon-book nav-icon"></span>Add Cube</a>
             </li>
-            <li><a href="https://raw.github.com/ascott1/bigSlide.js/master/dist/bigSlide.min.js"><span
-                    class="icon-download nav-icon"></span>Compressed </a></li>
-            <li><a href="https://raw.github.com/ascott1/bigSlide.js/master/dist/bigSlide.js"><span
-                    class="icon-download nav-icon"></span>Uncompressed</a></li>
-            <li><a href="#how"><span class="icon-book nav-icon"></span>How to</a></li>
-            <li><a href="#options"><span class="icon-cog nav-icon"></span>Options</a></li>
+            <li>
+                <a id="addSphere" href="#addSphere"><span class="icon-book nav-icon"></span>Add Sphere</a>
+            </li>
+            <li>
+                <a id="addCylinder" href="#addCylinder"><span class="icon-book nav-icon"></span>Add Cylinder</a>
+            </li>
+            <li>
+                <a id="addLight" href="#addCylinder"><span class="icon-book nav-icon"></span>Add Light</a>
+            </li>
         </ul>
     </div>
-    <div class="wrap push" style="left: 15.625em; transition: left 300ms ease;">
+    <div class="wrap push" id="mainView" style="left: 15.625em; transition: left 300ms ease;">
     </div>
 </div>
-<script src="lib/ui.js"></script>
-<script src="lib/ui.three.js"></script>
-<script src="lib/three.js"></script>
-<script src="lib/jquery.mousewheel.min.js"></script>
-<script src="lib/bigSlide.min.js"></script>
-<script src="build/creator.js"></script>
+<script src="./libs/threejs/ui.js"></script>
+<script src="./libs/threejs/ui.three.js"></script>
+<script src="./libs/threejs/three.js"></script>
+<script src="./libs/jquery/jquery.mousewheel.min.js"></script>
+<script src="./libs/bigslide/bigSlide.min.js"></script>
+<script src="./out/creator.js"></script>
 </body>
 </html>
