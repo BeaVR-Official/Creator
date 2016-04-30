@@ -4,7 +4,7 @@
 
 # BeaVR - CREATOR
 
-##Rappel du projet
+## Rappel du projet
 
 BeaVR est une plateforme d'apprentissage utilisant la réalité virtuelle afin de proposer une approche pédagogique innovante. Au travers du Store et du Creator, nous permettons à chaque utilisateur de se positionner en tant qu'acteur ou créateur de contenu sans restriction autre que de posséder le matériel de réalité virtuelle.
 
@@ -42,22 +42,14 @@ beavr-creator
 │   ├── assets (Ressources statiques)
 │   │   ├── 3dmodels
 │   │   ├── css
-│   │   │   ├── creator.css
-│   │   │   └── vendors
 │   │   └── images
 │   ├── libs (Librairies JS externes / Vendors)
-│   │   ├── bigslide
-│   │   ├── jquery
-│   │   ├── threejs
 │   │   └── ...
 │   ├── src (Code source)
 │   │   ├── creator.js
 │   │   ├── helpers (Snippets)
 │   │   ├── models (Modèles de données)
 │   │   └── modules (Modules ES6)
-│   │       ├── Creator.js
-│   │       ├── Creator.ui.js
-│   │       ├── NavDrawer.js
 │   │       └── ...
 │   ├── tests (Batterie de tests)
 │   │   ├── index.html
