@@ -3,6 +3,9 @@
  */
 
 import Creator from './Creator.js';
+import * as THREE from "three";
+
+debugger;
 
 class NavDrawer {
   addBox() {
@@ -10,14 +13,15 @@ class NavDrawer {
     let geometry = new THREE.BoxGeometry(5, 5, 5);
     let mesh     = new THREE.Mesh(geometry, material);
 
-    mesh.userData.id   = _.uniqueId();
-    mesh.name          = 'box_' + mesh.userData.id;
+    //mesh.userData.id   = _.uniqueId();
+    //mesh.name          = 'box_' + mesh.userData.id;
     mesh.mirroredLoop  = true;
     mesh.castShadow    = true;
     mesh.receiveShadow = true;
     mesh.objType       = 'box';
 
-    Creator.rootScene.add(mesh);
+    Creator._scene.add(mesh);
+    Creator._renderer.render(Creator._scene, Creator._camera);
   }
 
   addSphere() {
@@ -32,7 +36,7 @@ class NavDrawer {
     sphere.receiveShadow = true;
     sphere.objType       = 'sphere';
 
-    Creator.rootScene.add(sphere);
+    Creator._scene.add(sphere);
   }
 
   addCylinder() {
@@ -47,14 +51,14 @@ class NavDrawer {
     cylinder.receiveShadow = true;
     cylinder.objType       = 'cylinder';
 
-    Creator.rootScene.add(cylinder);
+    Creator._scene.add(cylinder);
   }
 
   addLight() {
     let light = new THREE.PointLight(0xFFFF00);
     light.position.set(10, 0, 10);
 
-    Creator.rootScene.add(light);
+    Creator._scene.add(light);
   }
 }
 

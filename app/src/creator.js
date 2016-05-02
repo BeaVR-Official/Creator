@@ -3,6 +3,14 @@
  */
 
 import CreatorUI from './modules/Creator.ui.js';
+import Creator from './modules/Creator.js';
+
+debugger;
 
 // require('offline-plugin/runtime').install();
-new CreatorUI("#mainView");
+
+let creatorUI = new CreatorUI("#mainView", Creator);
+
+// Sample
+Creator.addCircle(5,32, 32);
+Creator.addLight();

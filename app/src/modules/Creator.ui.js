@@ -5,24 +5,27 @@
 import Creator from './Creator.js';
 import NavDrawerUI from './NavDrawer.ui.js';
 
+debugger;
+
 class CreatorUI {
 
-  constructor(htmlNodeId) {
-    this.adaptToWindow();
-    $(htmlNodeId).append(this.renderer.domElement);
-    $(window).resize(this.adaptToWindow());
-    Creator.renderer.render(Creator.rootScene, Creator.mainCamera);
+  constructor(htmlNodeId, creator) {
+    this.adaptToWindow(creator);
+    $(htmlNodeId).append(creator._renderer.domElement);
+    $(window).resize(this.adaptToWindow(creator));
+    creator._renderer.render(creator._scene, creator._camera);
   }
 
-  adaptToWindow() {
+  adaptToWindow(creator) {
 
     let parentWidth  = $(window).width();
     let parentHeight = $(window).height();
 
-    Creator.mainCamera.aspect = parentWidth / parentHeight;
-    Creator.mainCamera.updateProjectionMatrix();
-    Creator.renderer.setSize(parentWidth, parentHeight);
+    creator._camera.aspect = parentWidth / parentHeight;
+    creator._camera.updateProjectionMatrix();
+    creator._renderer.setSize(parentWidth, parentHeight);
   }
+
 }
 
 export default CreatorUI;
