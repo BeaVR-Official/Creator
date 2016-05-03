@@ -3,7 +3,6 @@
  */
 
 import Creator from './Creator.js';
-import * as THREE from "three";
 
 debugger;
 
@@ -20,7 +19,7 @@ class NavDrawer {
     mesh.receiveShadow = true;
     mesh.objType       = 'box';
 
-    if (Creator == "undefined") {
+    if (Creator === "undefined") {
       alert("coucou");
     }
 

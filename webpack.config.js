@@ -33,7 +33,6 @@ module.exports = {
       mangle: {
         except: ['$super', '$', 'THREE']
       },
-      sourceMap: false
     }),
     new webpack.ProvidePlugin({
       "THREE": "three"
@@ -43,7 +42,7 @@ module.exports = {
   stats: {
     colors: true
   },
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   quiet: false,
   noInfo: false,
   lazy: true
