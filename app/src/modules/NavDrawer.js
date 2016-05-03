@@ -4,8 +4,6 @@
 
 import Creator from './Creator.js';
 
-debugger;
-
 class NavDrawer {
   addBox() {
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});

@@ -11,8 +11,7 @@ module.exports = {
     path: __dirname + '/app/dist/',
     sourceMapFilename: '[name].map',
     chunkFilename: '[id].chunk.js',
-    filename: '[name].js',
-    pathinfo: true
+    filename: '[name].js'
   },
   module: {
     loaders: [
@@ -26,24 +25,22 @@ module.exports = {
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      mangle: {
-        except: ['$super', '$', 'THREE']
-      },
-    }),
+    //new webpack.optimize.UglifyJsPlugin({
+    //  compress: {
+    //    warnings: false
+    //  },
+    //  mangle: {
+    //    except: ['$super', '$', 'THREE']
+    //  },
+    //  //sourceMap: false
+    //}),
     new webpack.ProvidePlugin({
       "THREE": "three"
     }),
-    new webpack.HotModuleReplacementPlugin()
+    //new webpack.HotModuleReplacementPlugin()
   ],
   stats: {
     colors: true
   },
-  devtool: 'source-map',
-  quiet: false,
-  noInfo: false,
-  lazy: true
+  devtool: 'source-map'
 };

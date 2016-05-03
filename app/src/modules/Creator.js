@@ -3,8 +3,6 @@
  * Created by urvoy_p on 24/04/16.
  */
 
-debugger;
-
 class Creator {
   constructor() {
     

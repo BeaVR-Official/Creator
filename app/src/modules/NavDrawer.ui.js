@@ -4,8 +4,6 @@
 
 import NavDrawer from './NavDrawer.js';
 
-debugger;
-
 class NavDrawerUI {
 
   constructor() {
