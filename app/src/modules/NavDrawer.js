@@ -3,6 +3,7 @@
  */
 
 import Creator from './Creator.js';
+import * as THREE from "three";
 
 debugger;
 
@@ -18,6 +19,10 @@ class NavDrawer {
     mesh.castShadow    = true;
     mesh.receiveShadow = true;
     mesh.objType       = 'box';
+
+    if (Creator == "undefined") {
+      alert("coucou");
+    }
 
     Creator._scene.add(mesh);
     Creator._renderer.render(Creator._scene, Creator._camera);
