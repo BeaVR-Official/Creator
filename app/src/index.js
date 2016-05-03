@@ -12,4 +12,5 @@ let creatorUI = new CreatorUI("#mainView", Creator);
 
 // Sample
 Creator.addCircle(5,32, 32);
+
 Creator.addLight();
