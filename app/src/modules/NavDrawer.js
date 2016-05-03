@@ -17,10 +17,6 @@ class NavDrawer {
     mesh.receiveShadow = true;
     mesh.objType       = 'box';
 
-    if (Creator === "undefined") {
-      alert("coucou");
-    }
-
     Creator._scene.add(mesh);
     Creator._renderer.render(Creator._scene, Creator._camera);
     Creator.lol();
@@ -39,6 +35,7 @@ class NavDrawer {
     sphere.objType       = 'sphere';
 
     Creator._scene.add(sphere);
+    Creator._renderer.render(Creator._scene, Creator._camera);
   }
 
   addCylinder() {
@@ -54,6 +51,7 @@ class NavDrawer {
     cylinder.objType       = 'cylinder';
 
     Creator._scene.add(cylinder);
+    Creator._renderer.render(Creator._scene, Creator._camera);
   }
 
   addLight() {
@@ -61,6 +59,7 @@ class NavDrawer {
     light.position.set(10, 0, 10);
 
     Creator._scene.add(light);
+    Creator._renderer.render(Creator._scene, Creator._camera);
   }
 }
 
