@@ -3,6 +3,7 @@
  */
 
 import NavDrawer from './NavDrawer.js';
+import Save from './Save.js';
 
 class NavDrawerUI {
 
@@ -18,6 +19,9 @@ class NavDrawerUI {
     });
     $('#addLight').click(function () {
       NavDrawer.addLight();
+    });
+    $('#save').click(function () {
+      Save.saveScene();
     });
   }
 }
