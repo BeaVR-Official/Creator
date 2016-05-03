@@ -8,7 +8,6 @@ import Creator from './modules/Creator.js';
 debugger;
 
 // require('offline-plugin/runtime').install();
-
 let creatorUI = new CreatorUI("#mainView", Creator);
 
 // Sample

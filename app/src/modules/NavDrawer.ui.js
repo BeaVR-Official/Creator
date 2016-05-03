@@ -9,7 +9,6 @@ debugger;
 class NavDrawerUI {
 
   constructor() {
-    $('.menu-link').bigSlide();
     $('#addCube').click(function () {
       NavDrawer.addBox();
     });

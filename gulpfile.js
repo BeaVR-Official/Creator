@@ -13,15 +13,11 @@ const webpackConf = require('./webpack.config.js');
 
 const paths = {
   scriptFiles: 'app/src/**/*.js',
-  buildPath: 'app/out/',
-  buildFiles: 'app/out/*.js',
+  distPath: 'app/dist/',
+  distFiles: ['app/dist/creator*', 'app/dist/tests*'],
   appIndex: 'app/index.html',
   testIndex: 'app/tests/index.html'
 };
-
-gulp.task('watch', function () {
-  gulp.watch(paths.scriptFiles, ['build']);
-});
 
 gulp.task('watch-n-test', function () {
   gulp.watch(paths.scriptFiles, ['build', 'test']);
@@ -30,7 +26,7 @@ gulp.task('watch-n-test', function () {
 gulp.task('build', function () {
   return gulp.src(paths.scriptFiles)
     .pipe(gulpWebpack(webpackConf))
-    .pipe(gulp.dest(paths.buildPath));
+    .pipe(gulp.dest(paths.distPath));
 });
 
 gulp.task('test', function () {
@@ -39,6 +35,6 @@ gulp.task('test', function () {
 });
 
 gulp.task('clean', function () {
-  return gulp.src(paths.buildPath, {read: false})
+  return gulp.src(paths.distFiles, {read: false})
     .pipe(gulpClean());
 });

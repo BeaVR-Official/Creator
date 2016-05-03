@@ -3,7 +3,6 @@
  */
 
 import Creator from './Creator.js';
-import * as THREE from "three";
 
 debugger;
 
