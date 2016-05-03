@@ -23,6 +23,7 @@ class NavDrawer {
 
     Creator._scene.add(mesh);
     Creator._renderer.render(Creator._scene, Creator._camera);
+    Creator.lol();
   }
 
   addSphere() {

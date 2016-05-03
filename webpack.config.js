@@ -17,8 +17,17 @@ module.exports = {
     loaders: [
       {
         loader: 'babel-loader',
-        query: {
-          presets: 'es2015'
+        include: __dirname + '/app/src/',
+        query: { //equivalent .babelrc
+          presets: [
+            'es2015-webpack'
+          ],
+          plugins: [
+            'transform-runtime',
+            ['transform-es2015-modules-commonjs-simple', {
+              noMangle: true
+            }]
+          ]
         }
       }
     ]
@@ -35,9 +44,7 @@ module.exports = {
     //  //sourceMap: false
     //}),
     new webpack.ProvidePlugin({
-      "THREE": "three"
-    }),
-    //new webpack.HotModuleReplacementPlugin()
+    })
   ],
   stats: {
     colors: true

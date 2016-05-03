@@ -105,6 +105,10 @@ class Creator {
   }
 
   get scene() { return this._scene; }
+
+  lol() {
+    console.log("KKKKKK");
+  }
 }
 
 export default new Creator();

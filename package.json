@@ -30,7 +30,10 @@
     "offline-plugin": "^2.1.1",
     "gulp-qunit": "^0.2.1",
     "gulp-clean": "^0.3.2",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "babel-plugin-transform-runtime": "^6.8.0",
+    "babel-preset-es2015-webpack": "^6.4.1",
+    "babel-plugin-transform-es2015-modules-commonjs-simple": "^6.7.4"
   },
   "dependencies": {
     "three": "0.76.1",
