@@ -9,7 +9,10 @@ module.exports = {
   },
   output: {
     path: __dirname + "/app/dist/",
-    filename: '[name].min.js'
+    sourceMapFilename: '[name].map',
+    chunkFilename: '[id].chunk.js',
+    filename: '[name].js',
+    pathinfo: true
   },
   module: {
     loaders: [

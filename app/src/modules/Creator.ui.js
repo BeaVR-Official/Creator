@@ -17,9 +17,6 @@ class CreatorUI {
 
   adaptToWindow(creator) {
     let parentWidth  = $(window).width();
-
-
-
     let parentHeight = $(window).height();
 
     creator._camera.aspect = parentWidth / parentHeight;
