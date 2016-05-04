@@ -23,7 +23,6 @@ module.exports = {
             'es2015-webpack'
           ],
           plugins: [
-            'transform-runtime',
             ['transform-es2015-modules-commonjs-simple', {
               noMangle: true
             }]

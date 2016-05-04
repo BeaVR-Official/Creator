@@ -5,7 +5,7 @@
 //
 // import ui from 'ui';
 //
-// class Creator {
+// class Scene {
 //    constructor(width, height, ui) {
 //        this.ui = ui;
 //        this.renderer = new THREE.WebGLRenderer();
@@ -114,7 +114,7 @@
 //
 //
 //
-// var creator = new Creator($(window).width(), $(window).height(), ui);
+// var creator = new Scene($(window).width(), $(window).height(), ui);
 // ui.setViewPort(creator);
 // creator.addBox();
 // creator.addLight();

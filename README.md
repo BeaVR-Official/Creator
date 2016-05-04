@@ -38,7 +38,7 @@ Configuration obligatoire pour la compilation automatique des fichiers.
 ```
 beavr-creator
 ├── app
-│   ├── out (Code compilé)
+│   ├── dist (Code compilé)
 │   ├── assets (Ressources statiques)
 │   │   ├── 3dmodels
 │   │   ├── css

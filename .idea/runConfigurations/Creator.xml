@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Creator" type="JavascriptDebugType" factoryName="JavaScript Debug" uri="http://localhost:63342/beavr-creator/app/index.html">
+    <mapping url="webpack:///." local-file="$PROJECT_DIR$" />
+    <mapping url="http://localhost:63342/beavr-creator/app/dist" local-file="$PROJECT_DIR$/app/dist" />
+    <method />
+  </configuration>
+</component>

@@ -1,3 +1,10 @@
+body {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+}
+
 .navbar {
     margin-bottom: 0 !important;
+    position: absolute !important;
+    width: 100% !important;
 }
