@@ -1,11 +1,11 @@
-///**
+// /**
 // * Created by kersal_e on 11/04/2016.
 // */
 //
 //
-//import ui from 'ui';
+// import ui from 'ui';
 //
-//class Creator {
+// class Creator {
 //    constructor(width, height, ui) {
 //        this.ui = ui;
 //        this.renderer = new THREE.WebGLRenderer();
@@ -110,34 +110,34 @@
 //        this.camera.updateProjectionMatrix();
 //        this.renderer.setSize(width, height);
 //    }
-//}
+// }
 //
 //
 //
-//var creator = new Creator($(window).width(), $(window).height(), ui);
-//ui.setViewPort(creator);
-//creator.addBox();
-//creator.addLight();
-//creator.render();
+// var creator = new Creator($(window).width(), $(window).height(), ui);
+// ui.setViewPort(creator);
+// creator.addBox();
+// creator.addLight();
+// creator.render();
 //
 //
-//window.scene = creator.getScene();
+// window.scene = creator.getScene();
 //
 //
-//$("body").bind("blur focus focusin focusout load resize scroll unload click" + " dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " + "mouseleave change select submit keydown keypress keyup error", function (e) {
+// $("body").bind("blur focus focusin focusout load resize scroll unload click" + " dblclick mousedown mouseup mousemove mouseover mouseout mouseenter " + "mouseleave change select submit keydown keypress keyup error", function (e) {
 //    creator.render();
-//});
+// });
 //
-//$(window).resize(function () {
+// $(window).resize(function () {
 //    creator.setRenderSize($(window).width(), $(window).height());
-//});
+// });
 //
-//$(".menuRightMiddle").draggable({containment: '.SceneView'});
+// $(".menuRightMiddle").draggable({containment: '.SceneView'});
 //
-//$(".menuLeftMiddle").draggable({containment: '.SceneView'});
+// $(".menuLeftMiddle").draggable({containment: '.SceneView'});
 //
-///*
-//var data = [
+// /*
+// var data = [
 //    {
 //        label: 'Main Camera',
 //        children: [
@@ -155,14 +155,14 @@
 //            }
 //        ]
 //    }
-//];
+// ];
 //
-//$(function() {
+// $(function() {
 //    $('#tree1').tree({
 //        data: data,
 //        dragAndDrop: true,
 //        autoOpen: 0
 //    });
-//});
+// });
 //
-//*/
+// */

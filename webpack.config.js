@@ -18,7 +18,7 @@ module.exports = {
       {
         loader: 'babel-loader',
         include: __dirname + '/app/src/',
-        query: { //equivalent .babelrc
+        query: { // equivalent .babelrc
           presets: [
             'es2015-webpack'
           ],

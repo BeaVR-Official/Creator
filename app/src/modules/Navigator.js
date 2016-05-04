@@ -2,16 +2,16 @@
  * Created by urvoy_p on 25/04/16.
  */
 
-import Creator from './Creator.js';
+import Creator from './Scene';
 
-class NavDrawer {
+class Navigator {
   addBox() {
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(5, 5, 5);
     let mesh     = new THREE.Mesh(geometry, material);
 
-    //mesh.userData.id   = _.uniqueId();
-    //mesh.name          = 'box_' + mesh.userData.id;
+    mesh.userData.id   = _.uniqueId();
+    mesh.name          = 'box_' + mesh.userData.id;
     mesh.mirroredLoop  = true;
     mesh.castShadow    = true;
     mesh.receiveShadow = true;
@@ -19,11 +19,10 @@ class NavDrawer {
 
     Creator._scene.add(mesh);
     Creator._renderer.render(Creator._scene, Creator._camera);
-    Creator.lol();
   }
 
   addSphere() {
-    let geometry = new THREE.SphereGeometry(5, 32, 32);
+    let geometry = new THREE.SphereGeometry(5, 5, 32);
     let material = new THREE.MeshBasicMaterial({color: 0xffff00});
     let sphere   = new THREE.Mesh(geometry, material);
 
@@ -33,9 +32,9 @@ class NavDrawer {
     sphere.castShadow    = true;
     sphere.receiveShadow = true;
     sphere.objType       = 'sphere';
+    this._scene.add(sphere);
+    this._renderer.render(Creator._scene, Creator._camera);
 
-    Creator._scene.add(sphere);
-    Creator._renderer.render(Creator._scene, Creator._camera);
   }
 
   addCylinder() {
@@ -55,7 +54,7 @@ class NavDrawer {
   }
 
   addLight() {
-    let light = new THREE.PointLight(0xFFFF00);
+    let light = new THREE.PointLight(0xFFFFFF);
     light.position.set(10, 0, 10);
 
     Creator._scene.add(light);
@@ -63,5 +62,4 @@ class NavDrawer {
   }
 }
 
-let NavDrawerInstance = new NavDrawer;
-export default NavDrawerInstance;
+export default new Navigator();
