@@ -17,17 +17,7 @@ module.exports = {
     loaders: [
       {
         loader: 'babel-loader',
-        include: __dirname + '/app/src/',
-        query: { // equivalent .babelrc
-          presets: [
-            'es2015-webpack'
-          ],
-          plugins: [
-            ['transform-es2015-modules-commonjs-simple', {
-              noMangle: true
-            }]
-          ]
-        }
+        include: __dirname + '/app/src/'
       }
     ]
   },
