@@ -27,6 +27,7 @@ class Scene {
       camSettings.far);
 
     this._camera.position.z = 300;
+    this._renderer.setClearColor(0xCECECE, 1);
     this._renderer.setSize(sceneSettings.width, sceneSettings.height);
   }
 }

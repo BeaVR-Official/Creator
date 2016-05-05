@@ -14,7 +14,7 @@
   "homepage": "https://github.com/ekersale/beavr-creator#readme",
   "scripts": {
     "0. watch": "webpack --watch --debug",
-    "1. build": "webpack --progress --debug",
+    "1. build": "webpack --debug",
     "2. clean": "gulp clean",
     "3. test": "gulp test",
     "4. watch-n-test": "gulp watch-n-test"
@@ -40,6 +40,7 @@
     "jquery-mousewheel": "3.1.13",
     "underscore": "1.8.3",
     "filesaverjs": "0.2.2",
-    "bootstrap": "3.3.6"
+    "bootstrap": "3.3.6",
+    "bootstrap-drawer": "1.0.5"
   }
 }
