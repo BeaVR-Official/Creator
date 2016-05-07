@@ -3,21 +3,22 @@ const webpack       = require('webpack');
 const OfflinePlugin = require('offline-plugin');
 
 module.exports = {
-  entry: {
+  entry:   {
     creator: __dirname + '/app/src/creator.js',
-    tests: __dirname + '/app/tests/tests.js'
+    tests:   __dirname + '/app/tests/tests.js'
   },
-  output: {
-    path: __dirname + '/app/dist/',
+  output:  {
+    path:              __dirname + '/app/dist/',
     sourceMapFilename: '[name].map',
-    chunkFilename: '[id].chunk.js',
-    filename: '[name].js'
+    chunkFilename:     '[id].chunk.js',
+    filename:          '[name].js'
   },
-  module: {
+  module:  {
     loaders: [
       {
-        loader: 'babel-loader',
-        include: __dirname + '/app/src/'
+        test:    /\.js$/,
+        loader:  'babel-loader',
+        exclude: /(node_modules)/
       }
     ]
   },
@@ -32,10 +33,9 @@ module.exports = {
     //  },
     //  //sourceMap: false
     //}),
-    new webpack.ProvidePlugin({
-    })
+    new webpack.ProvidePlugin({})
   ],
-  stats: {
+  stats:   {
     colors: true
   },
   devtool: 'source-map'

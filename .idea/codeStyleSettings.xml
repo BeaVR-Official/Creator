@@ -4,7 +4,9 @@
     <option name="PER_PROJECT_SETTINGS">
       <value>
         <JSCodeStyleSettings>
+          <option name="ALIGN_OBJECT_PROPERTIES" value="1" />
           <option name="ALIGN_MULTIPLE_ASSIGNMENTS" value="true" />
+          <option name="USE_DOUBLE_QUOTES" value="false" />
         </JSCodeStyleSettings>
         <MultiMarkdownCodeStyleSettings>
           <option name="RIGHT_MARGIN" value="72" />
@@ -13,9 +15,11 @@
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>
         <codeStyleSettings language="JavaScript">
+          <option name="LINE_COMMENT_ADD_SPACE" value="false" />
           <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
           <option name="CATCH_ON_NEW_LINE" value="true" />
           <option name="FINALLY_ON_NEW_LINE" value="true" />
+          <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
           <option name="WRAP_COMMENTS" value="true" />
           <indentOptions>
             <option name="INDENT_SIZE" value="2" />

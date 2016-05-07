@@ -11,12 +11,12 @@ body {
 }
 
 .btn-scenes {
-    top: 80px;
+    bottom: 15px;
     left: 15px;
 }
 
 .btn-prop {
-    top: 80px;
+    bottom: 15px;
     right: 15px;
 }
 
@@ -37,8 +37,7 @@ body {
     font-size: large !important;
 }
 
-.drawer {
-    -webkit-box-shadow: 0px 0 10px rgba(0, 0, 0, 0.3) !important;
+.drawer-contents {
     box-shadow: 0px 0 10px rgba(0, 0, 0, 0.3) !important;
 }
 
