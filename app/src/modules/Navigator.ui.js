@@ -3,7 +3,7 @@
  */
 
 import Navigator from './Navigator';
-import CreatorUI from './Scene.ui';
+import Save from './Save';
 
 class NavigatorUI {
   constructor() {
@@ -11,6 +11,7 @@ class NavigatorUI {
     $('#addSphere').click(() => Navigator.addSphere());
     $('#addCylinder').click(() => Navigator.addCylinder());
     $('#addLight').click(() => Navigator.addLight());
+    $('#save').click(() => Save.saveScene());
   }
 }
 
