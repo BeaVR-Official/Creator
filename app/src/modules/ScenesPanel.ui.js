@@ -12,10 +12,16 @@ class ScenesPanelUI {
             text:  "Child 1",
             nodes: [
               {
-                text: "Grandchild 1"
+                text: "Grandchild 1",
+                state: {
+                  checked: true
+                }
               },
               {
-                text: "Grandchild 2"
+                text: "Grandchild 2",
+                state: {
+                  checked: true
+                }
               }
             ]
           },
@@ -25,7 +31,20 @@ class ScenesPanelUI {
         ]
       },
       {
-        text: "Parent 2"
+        text: "Node 1",
+        icon: "glyphicon glyphicon-stop",
+        selectedIcon: "glyphicon glyphicon-stop",
+        color: "#000000",
+        backColor: "#FFFFFF",
+        href: "#node-1",
+        selectable: true,
+        state: {
+          checked: true,
+          disabled: false,
+          expanded: true,
+          selected: true
+        },
+        tags: ['available']
       },
       {
         text: "Parent 3"
@@ -46,7 +65,10 @@ class ScenesPanelUI {
     });
 
     $('#tree').treeview({
-      data: tree
+      data: tree,
+      onNodeSelected: function (event, data) {
+        //alert('lol');
+      }
     });
   }
 }
