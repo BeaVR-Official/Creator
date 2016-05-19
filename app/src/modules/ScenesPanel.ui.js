@@ -4,56 +4,57 @@
 
 class ScenesPanelUI {
   constructor() {
+
     var tree = [
       {
-        text:  "Parent 1",
-        nodes: [
+        text:       'Parent 1',
+        href:       '#parent1',
+        tags:       ['4'],
+        selectable: false,
+        nodes:      [
           {
-            text:  "Child 1",
+            text:  'Child 1',
+            href:  '#child1',
+            tags:  ['2'],
             nodes: [
               {
-                text: "Grandchild 1",
-                state: {
-                  checked: true
-                }
+                text: 'Grandchild 1',
+                href: '#grandchild1',
+                tags: ['0']
               },
               {
-                text: "Grandchild 2",
-                state: {
-                  checked: true
-                }
+                text: 'Grandchild 2',
+                href: '#grandchild2',
+                tags: ['0']
               }
             ]
           },
           {
-            text: "Child 2"
+            text: 'Child 2',
+            href: '#child2',
+            tags: ['0']
           }
         ]
       },
       {
-        text: "Node 1",
-        icon: "glyphicon glyphicon-stop",
-        selectedIcon: "glyphicon glyphicon-stop",
-        color: "#000000",
-        backColor: "#FFFFFF",
-        href: "#node-1",
-        selectable: true,
-        state: {
-          checked: true,
-          disabled: false,
-          expanded: true,
-          selected: true
-        },
-        tags: ['available']
+        text: 'Parent 2',
+        href: '#parent2',
+        tags: ['0']
       },
       {
-        text: "Parent 3"
+        text: 'Parent 3',
+        href: '#parent3',
+        tags: ['0']
       },
       {
-        text: "Parent 4"
+        text: 'Parent 4',
+        href: '#parent4',
+        tags: ['0']
       },
       {
-        text: "Parent 5"
+        text: 'Parent 5',
+        href: '#parent5',
+        tags: ['0']
       }
     ];
 
@@ -64,10 +65,15 @@ class ScenesPanelUI {
       handles:  "e" // coordonnées géographiques nswe
     });
 
-    $('#tree').treeview({
-      data: tree,
-      onNodeSelected: function (event, data) {
-        //alert('lol');
+    $('#sceneTree').treeview({
+      data:         tree,
+      showCheckbox: true,
+      selectable:   false,
+      collapseIcon: "glyphicon glyphicon-triangle-bottom",
+      expandIcon:   "glyphicon glyphicon-triangle-right",
+      onDrop:       function (event, data) {
+        //console.log(event);
+        //console.log(data);
       }
     });
   }

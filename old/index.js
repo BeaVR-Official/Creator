@@ -158,7 +158,7 @@
 // ];
 //
 // $(function() {
-//    $('#tree1').tree({
+//    $('#tree1').sugarmaple({
 //        data: data,
 //        dragAndDrop: true,
 //        autoOpen: 0

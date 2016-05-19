@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="libs/hamburger-menu/hamburger.bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="../node_modules/jquery-ui-bundle/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap-drawer/dist/css/bootstrap-drawer.css">
-    <link rel="stylesheet" href="assets/css/creator.css"/>
+    <link rel="stylesheet" href="src/assets/css/creator.css"/>
 </head>
 <body class="has-drawer">
 <a class="btn btn-primary btn-round c-hamburger c-hamburger--htla btn-scenes" href="#scenesPanel" data-toggle="drawer"
@@ -69,30 +69,17 @@
 <div id="scenesPanel" class="drawer dw-xs-10 dw-sm-6 dw-md-3 open" aria-labelledby="drawerExample">
     <div class="drawer-contents">
         <div class="drawer-heading">
-            <h2 class="drawer-title">Menu</h2>
+            <h3 class="drawer-title">Scenes</h3>
         </div>
         <div class="drawer-body">
-            <div id="tree"></div>
-            <p>
-                This is a properly padded container for content in the
-                drawer that isn't a navigation.
-            </p>
-            <a href="#">A Regular Link</a>
-        </div>
-        <ul class="drawer-nav">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">Profile</a></li>
-            <li role="presentation"><a href="#">Messages</a></li>
-        </ul>
-        <div class="drawer-footer">
-            <small>&copy; Caroline Amaba</small>
+            <ul id="sceneTree"></ul>
         </div>
     </div>
 </div>
 <div id="propertiesPanel" class="drawer drawer-right dw-xs-10 dw-sm-6 dw-md-3 open" aria-labelledby="drawerExample">
     <div class="drawer-contents">
         <div class="drawer-heading">
-            <h2 class="drawer-title">Menu</h2>
+            <h3 class="drawer-title">Menu</h3>
         </div>
         <div class="drawer-body">
             <p>
@@ -116,12 +103,13 @@
 <script src="../node_modules/jquery/dist/jquery.js"></script>
 <script src="../node_modules/jquery-ui-bundle/jquery-ui.js"></script>
 <script src="../node_modules/jquery-mousewheel/jquery.mousewheel.js"></script>
-<script src="../node_modules/jqtree/tree.jquery.js"></script>
+<script src="../node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 <script src="../node_modules/underscore/underscore-min.js"></script>
 <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script src="../node_modules/bootstrap-drawer/dist/js/drawer.min.js"></script>
-<script src="../node_modules/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
 <script src="../node_modules/three/three.min.js"></script>
+<script src="libs/bootstrap-treeview/bootstrap-treeview.js"></script>
+<script src="libs/bootstrap-treeview/nested-sortable.js"></script>
 <script src="libs/hamburger-menu/hamburger.js"></script>
 <script src="dist/creator.js"></script>
 </body>

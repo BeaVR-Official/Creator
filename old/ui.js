@@ -40,7 +40,7 @@
 //                'label' : (scene.children[i].name != "") ? scene.children[i].name : scene.children[i].type
 //            });
 //        }
-//        $('#tree1').tree('loadData', JSON.parse(JSON.stringify(data)));
+//        $('#tree1').sugarmaple('loadData', JSON.parse(JSON.stringify(data)));
 //    }
 //
 //    setViewPort (creator) {
@@ -68,7 +68,7 @@
 //                'label' : (scene.children[i].name != "") ? scene.children[i].name : scene.children[i].type
 //            });
 //        }
-//        $('#tree1').tree({
+//        $('#tree1').sugarmaple({
 //            data: JSON.parse(JSON.stringify(data)),
 //            dragAndDrop: true,
 //            autoOpen: 0

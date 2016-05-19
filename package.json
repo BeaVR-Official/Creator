@@ -43,6 +43,7 @@
     "filesaverjs": "0.2.2",
     "bootstrap": "3.3.6",
     "bootstrap-drawer": "1.0.5",
-    "bootstrap-treeview": "1.2.0"
+    "bootstrap-treeview": "1.2.0",
+    "jquery-ui-touch-punch": "0.2.3"
   }
 }
