@@ -1,18 +1,21 @@
 class Options {
   constructor(overrides) {
     this.events = {
-      onImport:    undefined,
-      onExport:    undefined,
-      onRender:    undefined
+      onImport: undefined,
+      onExport: undefined,
+      onRender: (node) => {
+        return node._name;
+      }
     };
 
     this.templates = {
-      list:        '<ul class="list-group"></ul>',
+      list:        '<ul class="list-group"><br></ul>',
       item:        '<li class="list-group-item"></li>',
-      itemContent: '<div></div>',
+      itemContent: '<div class="item-content"></div>',
       icon:        '<span class="icon"></span>',
       badge:       '<span class="badge"></span>',
-      link:        '<a href="#"></a>'
+      link:        '<a href="#"></a>',
+      checkbox:    '<input type="checkbox">'
     };
 
     this.templates.icons = {

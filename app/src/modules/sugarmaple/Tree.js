@@ -1,37 +1,38 @@
 import Options from './Options';
 
 class Node {
-  constructor() {
-    this._id       = null;
-    this._parent   = null;
+  constructor(name) {
+    this._name     = name;
+    this._id       = undefined;
+    this._parent   = undefined;
     this._children = [];
     this._data     = {};
   }
 }
 
 class Tree {
-  constructor(options = new Options()) {
-    this._options       = options;
-    this._rootNode      = new Node();
+  constructor(options) {
+    this._options       = new Options(options);
+    this._rootNode      = new Node("rootNode");
     this._rootNode._id  = 0;
     this._currentNodeId = 0;
   }
 
-  addChild(parentNode, node) {
+  attachNode(parentNode, node) {
     node._id                       = ++this._currentNodeId;
     node._parent                   = parentNode;
     parentNode._children[node._id] = node;
   }
 
-  getChildren(parentNode) {
-    return parentNode._children;
-  }
-
-  removeChild(node) {
+  detachNode(node) {
     if (node._parent !== 'undefined') {
       const parentNode = node._parent;
       delete parentNode._children[node._id];
     }
+  }
+
+  getNodeChild(node) {
+    return node._children;
   }
 
   /**
@@ -40,15 +41,15 @@ class Tree {
    * @param json
    * @param options
    */
-  static importTree(json, options = new Options()) {
+  static importTree(json, options) {
     // Load the content from JSON
-    let orphans    = [];
-    let loadedTree = JSON.parse(json, (key, val) => {
+    let orphans        = [];
+    let loadedTreeData = JSON.parse(json, (key, val) => {
       if (val !== null) {
         if (typeof val === 'object' && val.hasOwnProperty('_id')) {
           orphans.push(val);
           if (typeof options.events.onImport === 'function')
-            return options.events.onImport(key, val);
+            return options.events.onImport(val);
         }
 
         return val;
@@ -63,9 +64,9 @@ class Tree {
           break;
         }
 
-    // Say that the rootNode has no parent
-    loadedTree._rootNode._parent = null;
-    loadedTree._options          = options;
+    // put freshly extracted json into re-instantiated class
+    let loadedTree = new Tree(options);
+    Object.assign(loadedTree, loadedTreeData);
 
     return loadedTree;
   }
@@ -76,22 +77,16 @@ class Tree {
    * Triggers an event before the saving of a Node for modification
    */
   exportTree() {
-    const $this = this;
-
     return JSON.stringify(this, (key, val) => {
-      if (val === null) return null;
-      if (key === '_options') return null;
-      if (key === '_parent' && val !== null) return val._id;
+      if (val === null) return undefined;
+      if (key === '_options') return undefined;
+      if (key === '_parent' && val !== undefined) return val._id;
       if (typeof val === 'object' && val.hasOwnProperty('_id'))
-        if (typeof $this._options.events.onExport === 'function')
-          return $this._options.events.onExport(key, val);
+        if (typeof this._options.events.onExport === 'function')
+          return this._options.events.onExport(val);
 
       return val;
     });
-  }
-
-  getRootNode() {
-    return this._rootNode;
   }
 }
 

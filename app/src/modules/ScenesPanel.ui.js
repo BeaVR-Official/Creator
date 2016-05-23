@@ -65,17 +65,17 @@ class ScenesPanelUI {
       handles:  "e" // coordonnées géographiques nswe
     });
 
-    $('#sceneTree').treeview({
-      data:         tree,
-      showCheckbox: true,
-      selectable:   false,
-      collapseIcon: "glyphicon glyphicon-triangle-bottom",
-      expandIcon:   "glyphicon glyphicon-triangle-right",
-      onDrop:       function (event, data) {
-        //console.log(event);
-        //console.log(data);
-      }
-    });
+    //$('#sceneTre').treeview({
+    //  data:         tree,
+    //  showCheckbox: true,
+    //  selectable:   false,
+    //  collapseIcon: "glyphicon glyphicon-triangle-bottom",
+    //  expandIcon:   "glyphicon glyphicon-triangle-right",
+    //  onDrop:       function (event, data) {
+    //    //console.log(event);
+    //    //console.log(data);
+    //  }
+    //});
   }
 }
 
