@@ -23,7 +23,7 @@ class SugarMaple {
     //tree.attachNode(node4, node5);
 
     let expo = tree.exportTree();
-    //let impo = Tree.importTree(expo, options);
+    let impo = Tree.importTree(expo, options);
 
     //node1.disableCheckboxState();
     //console.log(typeof node1.disableCheckboxState);

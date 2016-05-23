@@ -50,14 +50,14 @@ class Render {
   }
 
   redrawNode(node) {
-    let $parent = $('[node-id=' + node._parent._id + ']');
-    let $node   = $('[node-id=' + node._id + ']').detach();
-    let $child  = $node.children('.list-group').detach();
+    let $node     = $('[node-id=' + node._id + ']').detach();
+    const $parent = $('[node-id=' + node._parent._id + ']');
+    const $child  = $node.children('.list-group').detach();
 
     $node = this.drawNode(node);
     $parent.append($node);
     $node.append($child);
-    
+
     this._plugins.onNodeRendered($node);
   }
 }
