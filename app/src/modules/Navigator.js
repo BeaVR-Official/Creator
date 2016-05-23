@@ -7,7 +7,7 @@ import Creator from './Scene';
 class Navigator {
   addBox() {
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let geometry = new THREE.BoxGeometry(5, 5, 5);
+    let geometry = new THREE.BoxGeometry(200, 200, 200);
     let mesh     = new THREE.Mesh(geometry, material);
 
     mesh.userData.id   = _.uniqueId();
@@ -22,7 +22,7 @@ class Navigator {
   }
 
   addSphere() {
-    let geometry = new THREE.SphereGeometry(5, 5, 32);
+    let geometry = new THREE.SphereGeometry(50, 50, 320);
     let material = new THREE.MeshBasicMaterial({color: 0xffff00});
     let sphere   = new THREE.Mesh(geometry, material);
 
@@ -32,9 +32,9 @@ class Navigator {
     sphere.castShadow    = true;
     sphere.receiveShadow = true;
     sphere.objType       = 'sphere';
-    this._scene.add(sphere);
-    this._renderer.render(Creator._scene, Creator._camera);
 
+    Creator._scene.add(sphere);
+    Creator._renderer.render(Creator._scene, Creator._camera);
   }
 
   addCylinder() {
@@ -55,9 +55,14 @@ class Navigator {
 
   addLight() {
     let light = new THREE.PointLight(0xFFFFFF);
-    light.position.set(10, 0, 10);
+    let helper = new THREE.PointLightHelper(light, 50);
+
+    light.position.set(1, 1, 1);
 
     Creator._scene.add(light);
+    helper.update();
+
+    Creator._scene.add(helper);
     Creator._renderer.render(Creator._scene, Creator._camera);
   }
 }
