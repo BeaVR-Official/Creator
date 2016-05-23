@@ -12,13 +12,17 @@ class Scene {
     };
     // set some camera attributes
     const camSettings   = {
-      fov: 45,
+      fov: 70,
       aspect: sceneSettings.width / sceneSettings.height,
-      near: 0.1,
-      far: 10000
+      near: 1,
+      far: 3000,
+      posX: 1000,
+      posY: 150,
+      posZ: 500
     };
 
     this._scene    = new THREE.Scene();
+    this._grid     = new THREE.GridHelper(500, 100);
     this._renderer = new THREE.WebGLRenderer();
     this._camera   = new THREE.PerspectiveCamera(
       camSettings.fov,
@@ -26,9 +30,15 @@ class Scene {
       camSettings.near,
       camSettings.far);
 
-    this._camera.position.z = 300;
+    this._scene.add(this._grid);
+    this._camera.position.set(camSettings.posX, camSettings.posY, camSettings.posZ);
+    this._camera.lookAt(new THREE.Vector3(0, 200, 0));
     this._renderer.setClearColor(0xCECECE, 1);
     this._renderer.setSize(sceneSettings.width, sceneSettings.height);
+  }
+
+  render() {
+    this._renderer.render(this._scene, this._camera);
   }
 }
 

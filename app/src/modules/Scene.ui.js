@@ -3,12 +3,16 @@
  */
 
 import Scene from './Scene';
+import SceneControls from './SceneControls';
 
 class CreatorUI {
   constructor() {
     this.adaptToWindow();
     $(window).resize(() => this.adaptToWindow());
     $('#mainView').append(Scene._renderer.domElement);
+
+    this.dragAndDrop = new DragAndDrop();
+    SceneControls.events();
   }
 
   adaptToWindow() {
