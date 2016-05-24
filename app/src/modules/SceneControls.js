@@ -8,7 +8,7 @@ class SceneControls {
   constructor() {
     this.sceneView        = $('#mainView');
     this.transformControl = new THREE.TransformControls(Scene._camera, Scene._renderer.domElement);
-    this.orbitControl     = new THREE.OrbitControls(Scene._camera);
+    this.orbitControl     = new THREE.OrbitControls(Scene._camera,  Scene._renderer.domElement);
     this.mouse            = new THREE.Vector2();
     this.raycaster        = new THREE.Raycaster();
     this.closest          = 'undefined';
