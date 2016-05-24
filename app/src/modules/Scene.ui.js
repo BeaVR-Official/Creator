@@ -11,7 +11,7 @@ class CreatorUI {
     $(window).resize(() => this.adaptToWindow());
     $('#mainView').append(Scene._renderer.domElement);
 
-    this.dragAndDrop = new DragAndDrop();
+    //this.dragAndDrop = new DragAndDrop();
     SceneControls.events();
   }
 

@@ -49,9 +49,13 @@ body {
     box-shadow: 0px 0 10px rgba(0, 0, 0, 0.3) !important;
 }
 
-.treeview {
+.sugarmaple {
     font-size: 1.2em !important;
     padding-left: 0 !important;
+}
+
+.sugarmaple .list-group-item {
+    border-radius: 3px;
 }
 
 .treeview .check-icon {
@@ -62,20 +66,16 @@ body {
     margin-top: 3px !important;
 }
 
-.treeview > ul ul {
+.sugarmaple ul {
     box-shadow: 1px 1px 6px -2px rgba(0, 0, 0, 0.30);
     margin-bottom: 1em;
 }
 
-.treeview > ul ul:nth-last-child(2) {
+.sugarmaple ul:nth-last-child(2) {
     margin-top: 1em !important;
 }
 
-.list-group-item > ul {
-    padding: 0 !important;
-}
-
-.list-group-item > input[type='checkbox'] {
+.sugarmaple .list-group-item > input[type='checkbox'] {
     float: right !important;
 }
 
