@@ -58,8 +58,13 @@ class SceneControls {
     //
     //  }
     //});
-
     this.sceneView.click(event => {
+
+      this.mouse = {
+        x: 2 * ( event.clientX / window.innerWidth ) - 1,
+        y: 1 - 2 * ( event.clientY / window.innerHeight )
+      };
+
       this.raycaster.setFromCamera(this.mouse, Scene._camera);
 
       let intersects = this.raycaster.intersectObjects(Scene._scene.children);
