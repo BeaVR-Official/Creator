@@ -7,7 +7,6 @@ class PropPanelUI {
     $('#propertiesPanel').resizable({
       minWidth: 200,
       maxWidth: $('#propertiesPanel').width(),
-      handles:  "w" // coordonnées géographiques nswe
     });
   }
 }

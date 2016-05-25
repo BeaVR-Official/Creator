@@ -49,6 +49,37 @@ body {
     box-shadow: 0px 0 10px rgba(0, 0, 0, 0.3) !important;
 }
 
+.drawer-positions{
+    max-width: 99%;
+}
+
+.drawer-positions-line{
+    max-width: 99%;
+}
+
+.object-properties div:first-child {
+    height: 32px;
+    margin: auto;
+    line-height: 30px;
+}
+
+.object-properties label {
+    max-width: 20%;
+}
+
+.object-properties input[type=number] {
+    max-width: 70%;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.object-properties input[type=text] {
+    max-width: 100%;
+    text-align: center;
+    border-radius: 3px;
+    background: transparent;
+}
+
 .sugarmaple {
     font-size: 1.2em !important;
     padding-left: 0 !important;
