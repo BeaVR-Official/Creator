@@ -2,7 +2,8 @@
  * Created by urvoy_p on 25/04/16.
  */
 
-import Creator from './Scene';
+import Scene from './Scene';
+import SceneUI from './Scene.ui.js';
 
 class Navigator {
   addBox() {
@@ -17,8 +18,8 @@ class Navigator {
     mesh.receiveShadow = true;
     mesh.objType       = 'box';
 
-    Creator._scene.add(mesh);
-    Creator._renderer.render(Creator._scene, Creator._camera);
+    Scene._scene.add(mesh);
+    Scene.render();
   }
 
   addSphere() {
@@ -33,8 +34,8 @@ class Navigator {
     sphere.receiveShadow = true;
     sphere.objType       = 'sphere';
 
-    Creator._scene.add(sphere);
-    Creator._renderer.render(Creator._scene, Creator._camera);
+    Scene._scene.add(sphere);
+    Scene.render();
   }
 
   addCylinder() {
@@ -49,21 +50,38 @@ class Navigator {
     cylinder.receiveShadow = true;
     cylinder.objType       = 'cylinder';
 
-    Creator._scene.add(cylinder);
-    Creator._renderer.render(Creator._scene, Creator._camera);
+    Scene._scene.add(cylinder);
+    Scene.render();
   }
 
   addLight() {
     let light = new THREE.PointLight(0xFFFFFF);
-    let helper = new THREE.PointLightHelper(light, 50);
+
+    light.userData.id = _.uniqueId();
+    light.name        = 'pointLight_' + light.userData.id;
 
     light.position.set(1, 1, 1);
+    this.addPicker(light);
+    Scene.render();
+  }
 
-    Creator._scene.add(light);
-    helper.update();
+  addPicker(light) {
+    let materialPicker = {
+      visible:   false,
+      color:     0xff0000,  // Debugging display
+      wireframe: true,      //
+      fog:       false      //
+    };
 
-    Creator._scene.add(helper);
-    Creator._renderer.render(Creator._scene, Creator._camera);
+    let geometry = new THREE.SphereGeometry(50, 4, 2);
+    let material = new THREE.MeshBasicMaterial(materialPicker);
+    let picker   = new THREE.Mesh(geometry, material);
+
+    picker.name = 'lightPicker';
+
+    picker.add(light);
+    Scene._scene.add(picker);
+    SceneUI.addLightHelper(picker);
   }
 }
 
