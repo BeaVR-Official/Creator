@@ -79,22 +79,97 @@
 <div id="propertiesPanel" class="drawer drawer-right dw-xs-10 dw-sm-6 dw-md-3 open" aria-labelledby="drawerExample">
     <div class="drawer-contents">
         <div class="drawer-heading">
-            <h3 class="drawer-title">Menu</h3>
+            <h3 class="drawer-title">Properties panel</h3>
         </div>
         <div class="drawer-body">
             <p>
-                This is a properly padded container for content in the
-                drawer that isn't a navigation.
+            <div class="drawer-positions">
+                <div>
+                    <h5>Object</h5>
+                    <div class="row object-properties">
+                        <div class="col-md-4 col-xs-4">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-md-8 col-xs-8">
+                            <input type="text" placeholder="object name">
+                        </div>
+                    </div>
+                    <div class="row object-properties">
+                        <div class="col-md-4 col-xs-4">
+                            <label>Type</label>
+                        </div>
+                        <div class="col-md-8 col-xs-8">
+                            <input type="text" placeholder="object type" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h5>Transformations</h5>
+                    <div class="row object-properties">
+                        <div class="col-md-3 col-xs-3">Location</div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>X</label>
+                            <input type="number"/>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>Y</label>
+                            <input type="number"/>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>Z</label>
+                            <input type="number"/>
+                        </div>
+                    </div>
+                    <div class="row object-properties">
+                        <div class="col-md-3 col-xs-3">Rotation</div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>X</label>
+                            <input type="number"/>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>Y</label>
+                            <input type="number"/>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>Z</label>
+                            <input type="number"/>
+                        </div>
+                    </div>
+                    <div class="row object-properties">
+                        <div class="col-md-3 col-xs-3">Scale</div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>X</label>
+                            <input type="number"/>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>Y</label>
+                            <input type="number"/>
+                        </div>
+                        <div class="col-md-3 col-xs-3">
+                            <label>Z</label>
+                            <input type="number"/>
+                        </div>
+                    </div>
+                </div>
+            <div>
+                <h5>Mesh</h5>
+                <div class="row object-properties">
+                    <div class="col-md-3 col-xs-3">
+                        <label>Visible</label>
+                    </div>
+                    <div class="col-md-9 col-xs-9">
+                        <input type="checkbox" />
+                    </div>
+                </div>
+                <div class="row object-properties">
+                    <div class="col-md-3 col-xs-3">Color</div>
+                    <div class="col-md-9"><input type="color"></div>
+                </div>
+            </div>
+            </div>
             </p>
-            <a href="#">A Regular Link</a>
         </div>
-        <ul class="drawer-nav">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">Profile</a></li>
-            <li role="presentation"><a href="#">Messages</a></li>
-        </ul>
         <div class="drawer-footer">
-            <small>&copy; Caroline Amaba</small>
         </div>
     </div>
 </div>
