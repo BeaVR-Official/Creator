@@ -3,6 +3,7 @@
  */
 
 import Scene from './Scene';
+import PropPanelUI from './PropPanel.ui';
 
 class SceneControls {
   constructor() {
@@ -45,8 +46,10 @@ class SceneControls {
       };
 
       this.closest = this.getClosestObject(click, Scene._scene.children, true);
-      if (this.closest !== null)
+      if (this.closest !== null) {
         this.transformControl.attach(this.closest);
+        PropPanelUI.loadObjectInfo(this.closest);
+      }
       else if (activeUpdate === false)
         this.transformControl.detach();
 
