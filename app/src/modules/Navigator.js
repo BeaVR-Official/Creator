@@ -24,7 +24,7 @@ class Navigator {
 
   addSphere() {
     let geometry = new THREE.SphereGeometry(50, 50, 320);
-    let material = new THREE.MeshBasicMaterial({color: 0xffff00});
+    let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let sphere   = new THREE.Mesh(geometry, material);
 
     sphere.userData.id   = _.uniqueId();
@@ -40,7 +40,7 @@ class Navigator {
 
   addCylinder() {
     let geometry = new THREE.CylinderGeometry(5, 5, 20, 32);
-    let material = new THREE.MeshBasicMaterial({color: 0xffff00});
+    let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let cylinder = new THREE.Mesh(geometry, material);
 
     cylinder.userData.id   = _.uniqueId();

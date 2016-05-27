@@ -11,19 +11,41 @@ class PropPanelUI {
       maxWidth: $('#propertiesPanel').width(),
     });
 
-    $(".Transformation-properties .object-properties input").change(function (event) {
+    $(".Transformation-properties .object-properties input[type=number]").change(function (event) {
       if (that.selectObject == undefined)
         return;
       that.modifyObjectProperties(event);
     });
 
     let that = this;
-    $(".Transformation-properties .object-properties input").on("mousewheel", function (event) {
+    $(".Transformation-properties .object-properties input[type=number]").on("mousewheel", function (event) {
       if (that.selectObject == undefined)
         return;
       that.modifyObjectProperties(event);
     });
 
+    $(".Mesh-properties .object-properties input[type=color]").change(function() {
+      that.changeObjectColor($(".Mesh-properties .object-properties input[type=color]")[0].value);
+    });
+
+    $(".Mesh-properties .object-properties input[type=checkbox]").change(() => {
+      this.setObjectVisibility($(".Mesh-properties .object-properties input[type=checkbox]")[0].checked);
+    });
+  }
+
+  changeObjectColor(color) {
+    try {
+      this.selectObject.material.color = new THREE.Color(color);
+    }
+    catch(err) {
+      this.selectObject.color = new THREE.Color(color);
+    }
+    Scene.render();
+  }
+
+  setObjectVisibility(state) {
+    this.selectObject.visible = state;
+    Scene.render();
   }
 
   modifyObjectProperties(event) {
@@ -32,11 +54,6 @@ class PropPanelUI {
       return;
     switch (elem) {
       case "location":
-        //let updatePos = new THREE.Vector3(
-        //  Math.round($(".Transformation-properties .object-properties input").eq(0).val()),
-        //  Math.round($(".Transformation-properties .object-properties input").eq(1).val()),
-        //  Math.round($(".Transformation-properties .object-properties input").eq(2).val()));
-        //this.selectObject.position.copy(updatePos);
         this.selectObject.position.set(
           Math.round($(".Transformation-properties .object-properties input").eq(0).val()),
           Math.round($(".Transformation-properties .object-properties input").eq(1).val()),
@@ -74,15 +91,31 @@ class PropPanelUI {
   loadObjectInfo(object) {
     if (object == null && this.selectObject == undefined)
       return;
-    if (object != null)
+    if (object != null) {
+      if (object.name == "lightPicker") {
+        object = object.children[0];
+      }
       this.selectObject = object;
+    }
+
     this.updateObjectGeneral(this.selectObject);
     this.updateTransformations(this.selectObject);
+    this.updateMesh(this.selectObject);
   }
 
   updateObjectGeneral(object) {
     $(".object input").first().val(object.name);
+    if (object.objType == undefined)
+      object.objType = object.type;
     $(".object input").eq(1).val(object.objType);
+  }
+
+  updateMesh(object) {
+    try {    $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + object.material.color.getHexString();}
+    catch (err){
+      $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + object.color.getHexString();
+    };
+    $(".Mesh-properties .object-properties input[type=checkbox]")[0].checked = object.visible;
   }
 
   updateTransformations(object) {
