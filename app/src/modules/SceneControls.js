@@ -3,6 +3,7 @@
  */
 
 import Scene from './Scene';
+import PropPanelUI from './PropPanel.ui';
 
 class SceneControls {
   constructor() {
@@ -21,6 +22,7 @@ class SceneControls {
     this.transformControl = new THREE.TransformControls(Scene._camera,
       Scene._renderer.domElement);
     this.transformControl.addEventListener('change', () => Scene.render());
+    this.transformControl.addEventListener('change', () => PropPanelUI.loadObjectInfo(null));
     Scene._sceneHelpers.add(this.transformControl);
   }
 
@@ -45,11 +47,14 @@ class SceneControls {
       };
 
       this.closest = this.getClosestObject(click, Scene._scene.children, true);
-      if (this.closest !== null)
+      if (this.closest !== null) {
+        PropPanelUI.loadObjectInfo(this.closest);
         this.transformControl.attach(this.closest);
-      else if (activeUpdate === false)
+      }
+      else if (activeUpdate === false) {
         this.transformControl.detach();
-
+        PropPanelUI.unselectObject();
+      }
       activeUpdate = false;
       Scene.render();
     });
