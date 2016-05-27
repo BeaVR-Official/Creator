@@ -11,14 +11,14 @@ class PropPanelUI {
       maxWidth: $('#propertiesPanel').width(),
     });
 
-    $(".Transformation-properties .object-properties input").change(function(event) {
+    $(".Transformation-properties .object-properties input").change(function (event) {
       if (that.selectObject == undefined)
         return;
       that.modifyObjectProperties(event);
     });
 
     let that = this;
-    $(".Transformation-properties .object-properties input").on("mousewheel", function(event) {
+    $(".Transformation-properties .object-properties input").on("mousewheel", function (event) {
       if (that.selectObject == undefined)
         return;
       that.modifyObjectProperties(event);
@@ -32,10 +32,15 @@ class PropPanelUI {
       return;
     switch (elem) {
       case "location":
+        //let updatePos = new THREE.Vector3(
+        //  Math.round($(".Transformation-properties .object-properties input").eq(0).val()),
+        //  Math.round($(".Transformation-properties .object-properties input").eq(1).val()),
+        //  Math.round($(".Transformation-properties .object-properties input").eq(2).val()));
+        //this.selectObject.position.copy(updatePos);
         this.selectObject.position.set(
-          $(".Transformation-properties .object-properties input").eq(0).val(),
-          $(".Transformation-properties .object-properties input").eq(1).val(),
-          $(".Transformation-properties .object-properties input").eq(2).val()
+          Math.round($(".Transformation-properties .object-properties input").eq(0).val()),
+          Math.round($(".Transformation-properties .object-properties input").eq(1).val()),
+          Math.round($(".Transformation-properties .object-properties input").eq(2).val())
         );
         break;
       case "rotation":
@@ -55,12 +60,14 @@ class PropPanelUI {
       default:
         break;
     }
+    //this.selectObject.matrixAutoUpdate = false;
     this.selectObject.needsUpdate = true;
     this.selectObject.updateMatrix();
+    //TODO update transformControl from SceneControls.js
     Scene.render();
   }
 
-  unselectObject () {
+  unselectObject() {
     this.selectObject = undefined;
   }
 
@@ -70,7 +77,7 @@ class PropPanelUI {
     if (object != null)
       this.selectObject = object;
     this.updateObjectGeneral(this.selectObject);
-      this.updateTransformations(this.selectObject);
+    this.updateTransformations(this.selectObject);
   }
 
   updateObjectGeneral(object) {
@@ -92,7 +99,6 @@ class PropPanelUI {
     $(".Transformation-properties .object-properties input").eq(6).val(object.scale.x);
     $(".Transformation-properties .object-properties input").eq(7).val(object.scale.y);
     $(".Transformation-properties .object-properties input").eq(8).val(object.scale.z);
-
 
   }
 }
