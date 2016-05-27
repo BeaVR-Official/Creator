@@ -28,6 +28,8 @@ class PropPanelUI {
 
   modifyObjectProperties(event) {
     var elem = $(event.target).closest(".object-properties").attr("data-type");
+    if (this.selectObject == undefined)
+      return;
     switch (elem) {
       case "location":
         this.selectObject.position.set(
@@ -53,24 +55,22 @@ class PropPanelUI {
       default:
         break;
     }
+    this.selectObject.needsUpdate = true;
     this.selectObject.updateMatrix();
     Scene.render();
   }
 
+  unselectObject () {
+    this.selectObject = undefined;
+  }
+
   loadObjectInfo(object) {
-    if (object == undefined)
+    if (object == null && this.selectObject == undefined)
       return;
-    this.selectObject = object;
-    let that = this;
-    this.updateObjectGeneral(object);
-    Object.observe(object, function(changes) {
-      changes.forEach(function(change) {
-        console.log(change.name);
-        if (change.name == "matrixWorldNeedsUpdate" && change.oldValue == false) {
-          that.updateTransformations(object);
-        }
-      });
-    });
+    if (object != null)
+      this.selectObject = object;
+    this.updateObjectGeneral(this.selectObject);
+      this.updateTransformations(this.selectObject);
   }
 
   updateObjectGeneral(object) {
@@ -79,10 +79,12 @@ class PropPanelUI {
   }
 
   updateTransformations(object) {
+    if (object == null || object == undefined)
+      return;
+
     $(".Transformation-properties .object-properties input").eq(0).val(object.position.x);
     $(".Transformation-properties .object-properties input").eq(1).val(object.position.y);
     $(".Transformation-properties .object-properties input").eq(2).val(object.position.z);
-
     $(".Transformation-properties .object-properties input").eq(3).val(object.rotation.x);
     $(".Transformation-properties .object-properties input").eq(4).val(object.rotation.y);
     $(".Transformation-properties .object-properties input").eq(5).val(object.rotation.z);
@@ -90,6 +92,8 @@ class PropPanelUI {
     $(".Transformation-properties .object-properties input").eq(6).val(object.scale.x);
     $(".Transformation-properties .object-properties input").eq(7).val(object.scale.y);
     $(".Transformation-properties .object-properties input").eq(8).val(object.scale.z);
+
+
   }
 }
 
