@@ -83,6 +83,55 @@ class Navigator {
     Scene._scene.add(picker);
     SceneUI.addLightHelper(picker);
   }
+
+  addExternal() {
+    var loader = new THREE.JSONLoader();
+    loader.load('models/horse.js', (geometry, materials) => {
+
+      let object = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+      let xmin   = Infinity;
+      let xmax   = -Infinity;
+      let ymin   = Infinity;
+      let ymax   = -Infinity;
+      let zmin   = Infinity;
+      let zmax   = -Infinity;
+      for (var i = 0; i < geometry.vertices.length; i++) {
+        let v = geometry.vertices[i];
+        if (v.x < xmin)
+          xmin = v.x;
+        else if (v.x > xmax)
+          xmax = v.x;
+        if (v.y < ymin)
+          ymin = v.y;
+        else if (v.y > ymax)
+          ymax = v.y;
+        if (v.z < zmin)
+          zmin = v.z;
+        else if (v.z > zmax)
+          zmax = v.z;
+      }
+
+      /* translate the center of the object to the origin */
+      let centerX = (xmin + xmax) / 2;
+      let centerY = (ymin + ymax) / 2;
+      let centerZ = (zmin + zmax) / 2;
+      let max   = Math.max(centerX - xmin, xmax - centerX);
+      max       = Math.max(max, Math.max(centerY - ymin, ymax - centerY));
+      max       = Math.max(max, Math.max(centerZ - zmin, zmax - centerZ));
+      let scale = max / 20;
+      object.position.set(-centerX, -centerY, -centerZ);
+      console.log("Loading finished, scaling object by " + scale);
+      console.log("Center at ( " + centerX + ", " + centerY + ", " + centerZ + " )");
+
+      /* Create the wrapper, model, to scale and rotate the object. */
+
+      let model = new THREE.Object3D();
+      model.add(object);
+      model.scale.set(scale, scale, scale);
+      Scene._scene.add(model);
+      Scene.render();
+    });
+  }
 }
 
 export default new Navigator();
