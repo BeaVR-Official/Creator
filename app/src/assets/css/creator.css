@@ -34,6 +34,17 @@ body {
     background-color: #26b99a;
 }
 
+.open {
+    z-index: 10 !important;
+    margin-top: 0 !important;
+}
+
+#scenesPanel {
+    z-index: -100;
+    margin-top: -100%;
+}
+
+
 .navbar-brand {
     color: #19405F !important;
     font-size: xx-large !important;
