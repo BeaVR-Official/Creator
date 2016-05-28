@@ -11,7 +11,7 @@ class PropPanelUI {
       maxWidth: $('#propertiesPanel').width(),
     });
 
-    $("#addItems").click(function() {
+    $(".addItems").click(function() {
       $('.ui.labeled.icon.sidebar')
         .sidebar('toggle')
       ;

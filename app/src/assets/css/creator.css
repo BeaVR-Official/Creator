@@ -20,6 +20,10 @@ body {
     right: 15px;
 }
 
+.speedLinks .addItems:hover img {
+    background: #556080;
+}
+
 /*Overrides*/
 .navbar {
     margin-bottom: 0 !important;
