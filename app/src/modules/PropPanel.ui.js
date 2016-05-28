@@ -11,6 +11,14 @@ class PropPanelUI {
       maxWidth: $('#propertiesPanel').width(),
     });
 
+    $("#addItems").click(function() {
+      $('.ui.labeled.icon.sidebar')
+        .sidebar('toggle')
+      ;
+      $(".pusher").css("height", "0px");
+      Scene.render();
+    });
+
     $(".Transformation-properties .object-properties input[type=number]").change(function (event) {
       if (that.selectObject == undefined)
         return;

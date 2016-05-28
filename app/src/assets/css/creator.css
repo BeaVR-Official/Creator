@@ -26,6 +26,12 @@ body {
     position: absolute !important;
     width: 100% !important;
     z-index: 50000 !important;
+    background-color: #556080;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background-color: #26b99a;
 }
 
 .navbar-brand {
@@ -110,4 +116,12 @@ body {
     float: right !important;
 }
 
+body.pushable>.pusher {
+    background: transparent !important;
+}
+
+.wrap {
+    top: 0;
+    position: absolute;
+}
 /*Overrides*/
