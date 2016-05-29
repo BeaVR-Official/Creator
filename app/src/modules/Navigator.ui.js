@@ -8,6 +8,9 @@ import Save from './Save';
 class NavigatorUI {
   constructor() {
     $('#addCube').click(() => Navigator.addBox());
+    $('#addSpotLight').click(() => Navigator.addSpotLight());
+    $('#addDirectionalLight').click(() => Navigator.addDirectionalLight());
+    $('#addAmbientLight').click(() => Navigator.addAmbientLight());
     $('#addSphere').click(() => Navigator.addSphere());
     $('#addCylinder').click(() => Navigator.addCylinder());
     $('#addLight').click(() => Navigator.addLight());

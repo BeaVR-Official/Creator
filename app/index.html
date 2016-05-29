@@ -43,6 +43,10 @@
     <a class="item" id="adapt">Adapt</a>
     <a class="item" id="addExternal">External</a>
 </div>
+
+<div class="ui right demo vertical inverted sidebar labeled icon menu" style="padding: 5px;">
+    <p style="color: white; margin-top: 5px; margin-bottom: 10px; background: #787878;">My scripts... Soon</p>
+</div>
 <div class="pusher">
 
 
@@ -181,29 +185,25 @@
             </div>
         </div>
     </div>
-    <div class="speedLinks" style="position: absolute; display: block; width: 33%; height: 65px; bottom: -10px; background: rgba(57,64,86,0.8); z-index: 50; border-radius: 5px; border-style: solid; border-width: 1px; border-color: black; left:33%; text-align: center; padding-top: 8px;">
-        <a class="c-hamburger c-hamburger--htla is-active" style="height: 40px !important; width:50px !important; margin-right:10px; font-size:10px; position: absolute; z-index: 10000; margin-top: -6px; left: 0px;"  href="#scenesPanel" data-toggle="drawer"
-           aria-foldedopen="true">
-            <span></span>
-        </a>
-        <a class="item addItems" style="text-align: center; margin-right: 15px;">
-            <img src="src/assets/images/addObject.png" style="height: 40px;" />
-        </a>
-        <a class="item addItems" style="text-align: center; margin-right: 15px;">
-            <img src="src/assets/images/addObject.png" style="height: 40px;" />
-        </a>
-        <a class="item addItems" style="text-align: center; margin-right: 15px;">
-            <img src="src/assets/images/addObject.png" style="height: 40px;" />
-        </a>
-        <a class="item addItems" style="text-align: center; margin-right: 15px;">
-            <img src="src/assets/images/addObject.png" style="height: 40px;" />
-        </a>
-        <a class="c-hamburger c-hamburger--htra is-active btn-prop" style="height: 40px !important; width:50px !important; font-size:10px; position: absolute; z-index: 10000;     right: 0px;
-    top: 2px;
-}" href="#propertiesPanel" data-toggle="drawer"
-           aria-foldedopen="true">
-            <span></span>
-        </a>
+    <div class="speedLinks">
+        <div class="speedLinksContainer">
+            <a class="c-hamburger c-hamburger--htla is-active" style=""  href="#scenesPanel" data-toggle="drawer"
+               aria-foldedopen="true">
+                <span></span>
+            </a>
+            <a class="item addItems">
+                <span class="tooltiptext">add Objects</span>
+                <img src="src/assets/images/addObject.png" style="height: 40px;" />
+            </a>
+            <a class="item addScript">
+                <span class="tooltiptext">add Script</span>
+                <img src="src/assets/images/script.png" style="height: 40px;" />
+            </a>
+            <a class="c-hamburger c-hamburger--htra is-active btn-prop" href="#propertiesPanel" data-toggle="drawer"
+               aria-foldedopen="true">
+                <span></span>
+            </a>
+        </div>
     </div>
 
     <div class="wrap" id="mainView"></div>

@@ -12,7 +12,15 @@ class PropPanelUI {
     });
 
     $(".addItems").click(function() {
-      $('.ui.labeled.icon.sidebar')
+      $('.ui.labeled.icon.sidebar.left')
+        .sidebar('toggle')
+      ;
+      $(".pusher").css("height", "0px");
+      Scene.render();
+    });
+
+    $(".addScript").click(function() {
+      $('.ui.labeled.icon.sidebar.right')
         .sidebar('toggle')
       ;
       $(".pusher").css("height", "0px");

@@ -65,6 +65,45 @@ class Navigator {
     Scene.render();
   }
 
+  addSpotLight() {
+    let spotLight = new THREE.SpotLight( 0xffffff );
+
+    spotLight.userData.id = _.uniqueId();
+    spotLight.name = 'spotLight_' + spotLight.userData.id;
+
+    spotLight.position.set( 100, 1000, 100 );
+
+    spotLight.castShadow = true;
+
+    spotLight.shadow.mapSize.width = 1024;
+    spotLight.shadow.mapSize.height = 1024;
+
+    spotLight.shadow.camera.near = 500;
+    spotLight.shadow.camera.far = 4000;
+    spotLight.shadow.camera.fov = 30;
+
+    this.addPicker(spotLight);
+    Scene.render();
+  }
+
+  addDirectionalLight() {
+    let directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+
+    directionalLight.userData.id = _.uniqueId();
+    directionalLight.name = 'directionalLight_' + directionalLight.userData.id;
+    directionalLight.position.set( 0, 1, 0 );
+    this.addPicker(directionalLight);
+    Scene.render();
+  }
+
+  addAmbientLight() {
+    let light = new THREE.AmbientLight( 0x404040 );
+    light.userData.id = _.uniqueId();
+    light.name = 'lightAmbient_' + light.userData.id;
+    this.addPicker(light);
+    Scene.render();
+  }
+
   addPicker(light) {
     let materialPicker = {
       visible:   false,
