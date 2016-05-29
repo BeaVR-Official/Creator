@@ -54,29 +54,44 @@ body {
     padding-left: 0 !important;
 }
 
+.sugarmaple .list-group {
+}
+
 .sugarmaple .list-group-item {
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.sugarmaple .placeholder {
+    height: 2px !important;
+    background: #ddb777;
+}
+
+.sugarmaple .item-container > .item-content > * {
+    z-index: 8000;
+}
+
+.sugarmaple .item-container {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
     border-radius: 3px;
+    border: 1px #e8e8e8 solid;
+    padding: 15px !important;
+    background: #ffffff;
 }
 
-.treeview .check-icon {
+.sugarmaple .item-container input[type='checkbox'] {
     float: right !important;
-    font-size: 1.3em !important;
-    color: #4E4E4E !important;
-    margin-right: 10px !important;
-    margin-top: 3px !important;
 }
 
-.sugarmaple ul {
-    box-shadow: 1px 1px 6px -2px rgba(0, 0, 0, 0.30);
-    margin-bottom: 1em;
+.sugarmaple .item-container .dragged {
+    background-color: #f0f0f0;
 }
 
-.sugarmaple ul:nth-last-child(2) {
-    margin-top: 1em !important;
-}
-
-.sugarmaple .list-group-item > input[type='checkbox'] {
-    float: right !important;
+.sugarmaple .item-container .overed {
+    background-color: #f7f7f7;
 }
 
 /*Overrides*/

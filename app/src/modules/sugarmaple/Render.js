@@ -25,40 +25,49 @@ class Render {
   }
 
   renderNode(node, $orphanNodes) {
-    let $node = this.drawNode(node);
+    let $parent;
+    const $node = this.drawNode(node);
 
-    $orphanNodes[node._id] = $node.children('.list-group');
+    $orphanNodes[node._id] = $node;
     if (node._parent !== undefined)
-      $orphanNodes[node._parent._id].append($node);
+      $parent = $($orphanNodes[node._parent._id].find('.list-group')[0]);
     else
-      this._$holder.append($node);
-    this._plugins.onNodeRendered($node);
+      $parent = this._$holder;
+    $parent.append($node);
+
+    // ugly workaround for nested sortables
+    $parent.find('.list-group').each(function () {
+      const pos    = $(this).position();
+      $(this).css('margin-top', -pos.top + 'px');
+      $(this).css('padding-top', pos.top + 'px');
+    });
+
+    this._plugins.onNodeRendered($node.children('.item-container'));
   }
 
   drawNode(node) {
-    const $node        = $(this._templ.item);
-    const $nodeChild   = $(this._templ.list);
-    const $nodeContent = $(this._templ.itemContent);
+    const $node          = $(this._templ.item);
+    const $nodeContainer = $(this._templ.container);
+    const $nodeContent   = $(this._templ.content);
+    const $nodeTitle     = $(this._templ.title);
+    const $nodeChild     = $(this._templ.list);
 
-    $nodeContent.append(this._tree._options.events.onRender(node));
-    $node.attr('node-id', node._id);
-    $node.append($nodeContent);
-    $node.append($nodeChild);
+    $nodeTitle.append(node._name);
+    if (this._tree._options.events.onRender === 'function')
+      $nodeContent.append(this._tree._options.events.onRender(node));
+    $nodeContent.append($nodeTitle);
+    $nodeContainer.attr('node-id', node._id);
+    $nodeContainer.append($nodeContent);
+    $nodeContainer.append($nodeChild);
+    $node.append($nodeContainer);
+
     $node.data('node', node);
+    $nodeContainer.data('node', node);
+    $nodeContent.data(node);
+    $nodeTitle.data(node);
+    $nodeChild.data('node', node);
 
     return $node;
-  }
-
-  redrawNode(node) {
-    let $node     = $('[node-id=' + node._id + ']').detach();
-    const $parent = $('[node-id=' + node._parent._id + ']');
-    const $child  = $node.children('.list-group').detach();
-
-    $node = this.drawNode(node);
-    $parent.append($node);
-    $node.append($child);
-
-    this._plugins.onNodeRendered($node);
   }
 }
 

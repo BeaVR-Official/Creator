@@ -22,15 +22,22 @@ class SugarMaple {
     tree.attachNode(node2, node5);
     //tree.attachNode(node4, node5);
 
-    let expo = tree.exportTree();
-    let impo = Tree.importTree(expo, options);
+    //let expo = tree.exportTree();
+    //let impo = Tree.importTree(expo, options);
 
     //node1.disableCheckboxState();
     //console.log(typeof node1.disableCheckboxState);
 
     r.render();
 
-    r._plugins.checkbox.check(node2);
+    r._plugins.checkbox.disable(node2);
+    //r._plugins.checkbox.toggleCheckAll(node1._parent);
+    let toto = r._plugins.checkbox.getDisabled(node1._parent);
+    let tota = r._plugins.checkbox.getEnabled(node1._parent);
+
+    //console.log(toto);
+    //console.log(tota);
+    //r._plugins.checkbox.enable(node2);
     //r._plugins.checkbox.disable(node1);
   }
 }
@@ -43,9 +50,9 @@ new SugarMaple({
     onExport: (node) => {
       return node;
     },
-    onRender: (node) => {
-      return "node " + node._id;
-    }
+    //onRender: (node) => {
+    //  return "node " + node._id;
+    //}
   },
   templates: {
     icons: {
@@ -56,12 +63,12 @@ new SugarMaple({
     drag:     {
       events:     {
         onReceive: (item, target) => {
-          console.log(item);
+          //console.log(item);
         }
       },
       parameters: {
         delay: 0,
-        axis:  'y'
+        axis:  'xy'
       }
     },
     checkbox: {
@@ -71,10 +78,9 @@ new SugarMaple({
         }
       },
       parameters: {
-        defaultState: 'enabled',
-        defaultValue: 'unchecked'
+        defaultEnabled: true,
+        defaultChecked: false
       }
     }
   }
 });
-

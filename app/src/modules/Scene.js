@@ -23,7 +23,7 @@ class Scene {
 
     this._scene    = new THREE.Scene();
     this._grid     = new THREE.GridHelper(500, 100);
-    this._renderer = new THREE.WebGLRenderer();
+    this._renderer = new THREE.WebGLRenderer({antialias: true});
     this._camera   = new THREE.PerspectiveCamera(
       camSettings.fov,
       camSettings.aspect,

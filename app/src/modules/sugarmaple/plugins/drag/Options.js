@@ -10,7 +10,9 @@ class Options {
     
     this.parameters = {
       delay: 0,
-      axis: 'xy'
+      axis: 'xy',
+      overClass: '',
+      dragClass: ''
     };
 
     this.applyOverrides(overrides);

@@ -12,39 +12,46 @@ class Drag extends AbstractPlugin {
   onNodeRendered($node) {
     const that = this;
 
-    $node.children('.list-group').sortable({
+    $node.click(function (event) {
+      //$(this).children('ul:not(:empty)').slideToggle({
+      //  //duration: 100000,
+      //  //easing: 'easeInOutQuint'
+      //});
+      event.stopImmediatePropagation();
+    });
+    $node.find('.list-group').sortable({
       dropOnEmpty: true,
       delay:       that._options.parameters.delay,
       axis:        that._options.parameters.axis,
       zIndex:      9999,
       connectWith: 'ul',
+      opacity:     0.8,
       items:       '> li',
       tolerance:   'intersect',
+      placeholder: 'placeholder',
       receive:     (event, ui) => {
         const detachedNode  = $(ui.item).data('node');
-        const newNodeParent = $(event.target).parent('li').data('node');
+        const newNodeParent = $(event.target).data('node');
 
         that._tree.detachNode(detachedNode);
         that._tree.attachNode(newNodeParent, detachedNode);
 
-        if (typeof that._options.events.onReceive === 'function')
-          that._options.events.onReceive(ui.item, event.target);
+        this._$holder.trigger('receive', {detachedNode: $(ui.item)[0], newParent: $(event.target)[0]});
       },
       out:         (event, ui) => {
-        if (typeof that._options.events.onOut === 'function')
-          that._options.events.onOut(ui.item, event.target);
+        $(event.target).removeClass('overed');
       },
       over:        (event, ui) => {
-        if (typeof that._options.events.onOver === 'function')
-          that._options.events.onOver(ui.item, event.target);
+        this._$holder.find('.overed').removeClass('overed');
+        $(event.target).closest('.item-content').addClass('overed');
       },
       stop:        (event, ui) => {
-        if (typeof that._options.events.onStop === 'function')
-          that._options.events.onStop(ui.item);
+        $(ui.item).closest('.item-content').removeClass('dragged');
+        this._$holder.find('.overed').removeClass('overed');
+
       },
       start:       (event, ui) => {
-        if (typeof that._options.events.onStart === 'function')
-          that._options.events.onStart(ui.item);
+        $(ui.item).closest('.item-content').addClass('dragged');
       }
     });
   }

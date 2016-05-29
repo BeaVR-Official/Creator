@@ -27,7 +27,7 @@ class Tree {
   detachNode(node) {
     if (node._parent !== 'undefined') {
       const parentNode = node._parent;
-      delete parentNode._children[node._id];
+      parentNode._children.splice(node._id, 1);
     }
   }
 
