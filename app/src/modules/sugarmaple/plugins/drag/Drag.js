@@ -13,23 +13,20 @@ class Drag extends AbstractPlugin {
     const that = this;
 
     $node.click(function (event) {
-      //$(this).children('ul:not(:empty)').slideToggle({
-      //  //duration: 100000,
-      //  //easing: 'easeInOutQuint'
-      //});
+      $(this).find('.node-child').eq(0).slideToggle();
       event.stopImmediatePropagation();
     });
-    $node.find('.list-group').sortable({
-      dropOnEmpty: true,
-      delay:       that._options.parameters.delay,
-      axis:        that._options.parameters.axis,
-      zIndex:      9999,
-      connectWith: 'ul',
-      opacity:     0.8,
-      items:       '> li',
-      tolerance:   'intersect',
-      placeholder: 'placeholder',
-      receive:     (event, ui) => {
+    $node.find('.node-child').sortable({
+      dropOnEmpty:          true,
+      delay:                that._options.parameters.delay,
+      axis:                 that._options.parameters.axis,
+      zIndex:               9999,
+      connectWith:          '.node-child',
+      opacity:              0.8,
+      items:                '> .node',
+      tolerance:            'intersect',
+      placeholder:          'placeholder',
+      receive:              (event, ui) => {
         const detachedNode  = $(ui.item).data('node');
         const newNodeParent = $(event.target).data('node');
 
@@ -38,20 +35,20 @@ class Drag extends AbstractPlugin {
 
         this._$holder.trigger('receive', {detachedNode: $(ui.item)[0], newParent: $(event.target)[0]});
       },
-      out:         (event, ui) => {
+      out:                  (event, ui) => {
         $(event.target).removeClass('overed');
       },
-      over:        (event, ui) => {
+      over:                 (event, ui) => {
         this._$holder.find('.overed').removeClass('overed');
-        $(event.target).closest('.item-content').addClass('overed');
+        $(event.target).closest('.node-content').addClass('overed');
       },
-      stop:        (event, ui) => {
-        $(ui.item).closest('.item-content').removeClass('dragged');
+      stop:                 (event, ui) => {
+        $(ui.item).find('.node-content').eq(0).removeClass('dragged');
         this._$holder.find('.overed').removeClass('overed');
 
       },
-      start:       (event, ui) => {
-        $(ui.item).closest('.item-content').addClass('dragged');
+      start:                (event, ui) => {
+        $(ui.item).find('.node-content').eq(0).addClass('dragged');
       }
     });
   }

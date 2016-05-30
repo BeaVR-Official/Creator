@@ -8,7 +8,7 @@ class Options {
     };
 
     this.templates = {
-      checkbox: '<input type="checkbox" class="item-checkbox"/>'
+      checkbox: '<input type="checkbox" class="node-checkbox"/>'
     };
 
     this.parameters = {

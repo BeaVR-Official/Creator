@@ -16,7 +16,7 @@ class Sort {
       items:       '> li',
       tolerance:   'intersect',
       receive:     (event, ui) => {
-        let detachedNode  = $(ui.item).data('node');
+        let detachedNode  = $(ui.node).data('node');
         let newNodeParent = $(event.target).parent('li').data('node');
 
         $this._tree.detachNode(detachedNode);

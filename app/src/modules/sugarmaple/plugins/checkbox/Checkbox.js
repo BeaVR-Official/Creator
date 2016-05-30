@@ -25,7 +25,7 @@ class Checkbox extends AbstractPlugin {
     $checkbox.on('pDisable', () => this.disable(node));
     $checkbox.on('pToggleDisable', () => this.toggleEnable(node));
 
-    $node.children('.item-content').prepend($checkbox);
+    $node.find('.node-content:eq(0)').prepend($checkbox);
   }
 
   initNode(node) {
@@ -41,16 +41,16 @@ class Checkbox extends AbstractPlugin {
   }
 
   checkboxOf(node) {
-    return $(this.elemOf(node).find('.item-checkbox').eq(0));
+    return $(this.elemOf(node).find('.node-checkbox').eq(0));
   }
 
   checkboxesOf(node) {
-    return this.elemOf(node).find('.item-checkbox');
+    return this.elemOf(node).find('.node-checkbox');
   }
 
   getChecked(node) {
     const $node        = this.elemOf(node);
-    const $checked     = $node.find('.list-group-item:has(.item-checkbox:checked)');
+    const $checked     = $node.find('.child-group-node:has(.node-checkbox:checked)');
     const checkedNodes = [];
 
     for (let checked of $checked)
@@ -61,7 +61,7 @@ class Checkbox extends AbstractPlugin {
 
   getUnChecked(node) {
     const $node          = this.elemOf(node);
-    const $unChecked     = $node.find('.list-group-item:has(.item-checkbox:not(:checked))');
+    const $unChecked     = $node.find('.child-group-node:has(.node-checkbox:not(:checked))');
     const unCheckedNodes = [];
 
     for (let unChecked of $unChecked)
@@ -72,7 +72,7 @@ class Checkbox extends AbstractPlugin {
 
   getDisabled(node) {
     const $node         = this.elemOf(node);
-    const $disabled     = $node.find('.list-group-item:has(.item-checkbox:disabled)');
+    const $disabled     = $node.find('.child-group-node:has(.node-checkbox:disabled)');
     const disabledNodes = [];
 
     for (let disabled of $disabled)
@@ -83,7 +83,7 @@ class Checkbox extends AbstractPlugin {
 
   getEnabled(node) {
     const $node        = this.elemOf(node);
-    const $enabled     = $node.find('.list-group-item:has(.item-checkbox:not(:disabled))');
+    const $enabled     = $node.find('.child-group-node:has(.node-checkbox:not(:disabled))');
     const enabledNodes = [];
 
     for (let enabled of $enabled)

@@ -112,44 +112,62 @@ body {
     padding-left: 0 !important;
 }
 
-.sugarmaple .list-group {
+.sugarmaple .node  {
+    position: relative;
 }
 
-.sugarmaple .list-group-item {
-    border: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
+.sugarmaple .node > .node-child:empty {
+    /*top: 0;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    /*position: absolute;*/
+    /*height: 40px;*/
 }
 
-.sugarmaple .placeholder {
-    height: 2px !important;
-    background: #ddb777;
+
+
+.sugarmaple .node .node-child {
+    padding-left: 1.5em !important;
+    /*overflow: hidden;*/
 }
 
-.sugarmaple .item-container > .item-content > * {
+.sugarmaple .node > .node-child-container {
+
+}
+
+.sugarmaple .node > .node-content {
+    border-radius: 3px;
+    background: white;
+    box-shadow: 1px 1px 6px -2px rgba(0, 0, 0, 0.30);
+    padding: 0.7em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.sugarmaple .node > .node-content > * {
     z-index: 8000;
 }
 
-.sugarmaple .item-container {
-    margin-top: 15px !important;
-    margin-bottom: 15px !important;
-    border-radius: 3px;
-    border: 1px #e8e8e8 solid;
-    padding: 15px !important;
-    background: #ffffff;
+.sugarmaple .node > .node-content > .node-title {
+
 }
 
-.sugarmaple .item-container input[type='checkbox'] {
+.sugarmaple .node .placeholder {
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(38, 185, 154, 0.51);
+}
+
+.sugarmaple .node > .node-content input[type='checkbox'] {
     float: right !important;
 }
 
-.sugarmaple .item-container .dragged {
-    background-color: #f0f0f0;
+.sugarmaple .node .dragged {
+    background-color: #556080;
 }
 
-.sugarmaple .item-container .overed {
-    background-color: #f7f7f7;
+.sugarmaple .node .overed {
+    background-color: red;
 }
 
 body.pushable>.pusher {
@@ -177,7 +195,7 @@ body.pushable>.pusher {
     z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
+/* Show the tooltip text when you mouse over the tooltip nodeContainer */
 .item:hover .tooltiptext {
     visibility: visible;
 }

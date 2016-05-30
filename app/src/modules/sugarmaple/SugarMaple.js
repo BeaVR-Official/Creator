@@ -63,7 +63,7 @@ new SugarMaple({
     drag:     {
       events:     {
         onReceive: (item, target) => {
-          //console.log(item);
+          //console.log(node);
         }
       },
       parameters: {

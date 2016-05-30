@@ -29,43 +29,38 @@ class Render {
     const $node = this.drawNode(node);
 
     $orphanNodes[node._id] = $node;
-    if (node._parent !== undefined)
-      $parent = $($orphanNodes[node._parent._id].find('.list-group')[0]);
-    else
+    if (node._parent !== undefined) {
+      $parent = $orphanNodes[node._parent._id];
+      $parent.find('.node-child:eq(0)').append($node);
+    }
+    else {
       $parent = this._$holder;
-    $parent.append($node);
+      $parent.append($node);
+    }
 
     // ugly workaround for nested sortables
-    $parent.find('.list-group').each(function () {
-      const pos    = $(this).position();
-      $(this).css('margin-top', -pos.top + 'px');
-      $(this).css('padding-top', pos.top + 'px');
-    });
 
-    this._plugins.onNodeRendered($node.children('.item-container'));
+    this._plugins.onNodeRendered($node);
   }
 
   drawNode(node) {
-    const $node          = $(this._templ.item);
-    const $nodeContainer = $(this._templ.container);
-    const $nodeContent   = $(this._templ.content);
-    const $nodeTitle     = $(this._templ.title);
-    const $nodeChild     = $(this._templ.list);
+    const $node    = $(this._templ.node);
+    const $content = $(this._templ.content);
+    const $title   = $(this._templ.title);
+    const $child   = $(this._templ.child);
 
-    $nodeTitle.append(node._name);
+    $node.attr('node-id', node._id);
     if (this._tree._options.events.onRender === 'function')
-      $nodeContent.append(this._tree._options.events.onRender(node));
-    $nodeContent.append($nodeTitle);
-    $nodeContainer.attr('node-id', node._id);
-    $nodeContainer.append($nodeContent);
-    $nodeContainer.append($nodeChild);
-    $node.append($nodeContainer);
+      $content.append(this._tree._options.events.onRender(node));
+    $title.append(node._name);
+    $content.append($title);
+    $node.append($content);
+    $node.append($child);
 
     $node.data('node', node);
-    $nodeContainer.data('node', node);
-    $nodeContent.data(node);
-    $nodeTitle.data(node);
-    $nodeChild.data('node', node);
+    $content.data('node', node);
+    $title.data('node', node);
+    $child.data('node', node);
 
     return $node;
   }
