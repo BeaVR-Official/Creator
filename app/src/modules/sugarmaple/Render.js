@@ -39,15 +39,20 @@ class Render {
     }
 
     // ugly workaround for nested sortables
+    const nodeHeight = ($node.height() / 100) * 50;
+    const $nodeChild = $node.find('.node-child').eq(0);
+    $nodeChild.css('padding-top', nodeHeight);
+    $nodeChild.css('margin-top', -nodeHeight);
 
     this._plugins.onNodeRendered($node);
   }
 
   drawNode(node) {
-    const $node    = $(this._templ.node);
-    const $content = $(this._templ.content);
-    const $title   = $(this._templ.title);
-    const $child   = $(this._templ.child);
+    const $node      = $(this._templ.node);
+    const $content   = $(this._templ.content);
+    const $title     = $(this._templ.title);
+    const $child     = $(this._templ.child);
+    const $childCont = $(this._templ.childCont);
 
     $node.attr('node-id', node._id);
     if (this._tree._options.events.onRender === 'function')
@@ -55,11 +60,13 @@ class Render {
     $title.append(node._name);
     $content.append($title);
     $node.append($content);
-    $node.append($child);
+    $childCont.append($child);
+    $node.append($childCont);
 
     $node.data('node', node);
     $content.data('node', node);
     $title.data('node', node);
+    $childCont.data('node', node);
     $child.data('node', node);
 
     return $node;

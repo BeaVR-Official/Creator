@@ -13,20 +13,21 @@ class Drag extends AbstractPlugin {
     const that = this;
 
     $node.click(function (event) {
-      $(this).find('.node-child').eq(0).slideToggle();
+      $(this).find('.node-child-container:has(.node-child:not(:empty))').eq(0).slideToggle();
       event.stopImmediatePropagation();
     });
     $node.find('.node-child').sortable({
-      dropOnEmpty:          true,
-      delay:                that._options.parameters.delay,
-      axis:                 that._options.parameters.axis,
-      zIndex:               9999,
-      connectWith:          '.node-child',
-      opacity:              0.8,
-      items:                '> .node',
-      tolerance:            'intersect',
-      placeholder:          'placeholder',
-      receive:              (event, ui) => {
+      dropOnEmpty: true,
+      delay:       that._options.parameters.delay + 50,
+      axis:        that._options.parameters.axis,
+      zIndex:      9999,
+      connectWith: '.node-child',
+      opacity:     0.8,
+      items:       '> .node',
+      tolerance:   'intersect',
+      placeholder: 'placeholder',
+      distance:    0,
+      receive:     (event, ui) => {
         const detachedNode  = $(ui.item).data('node');
         const newNodeParent = $(event.target).data('node');
 
@@ -35,20 +36,19 @@ class Drag extends AbstractPlugin {
 
         this._$holder.trigger('receive', {detachedNode: $(ui.item)[0], newParent: $(event.target)[0]});
       },
-      out:                  (event, ui) => {
-        $(event.target).removeClass('overed');
+      out:         (event, ui) => {
       },
-      over:                 (event, ui) => {
-        this._$holder.find('.overed').removeClass('overed');
-        $(event.target).closest('.node-content').addClass('overed');
+      over:        (event, ui) => {
       },
-      stop:                 (event, ui) => {
+      stop:        (event, ui) => {
         $(ui.item).find('.node-content').eq(0).removeClass('dragged');
-        this._$holder.find('.overed').removeClass('overed');
+        $(ui.item).removeClass('nobg');
 
       },
-      start:                (event, ui) => {
+      start:       (event, ui) => {
+        $(this).find('.node-child-container:has(.node-child:not(:empty))').eq(0).slideUp();
         $(ui.item).find('.node-content').eq(0).addClass('dragged');
+        $(ui.item).addClass('nobg');
       }
     });
   }
