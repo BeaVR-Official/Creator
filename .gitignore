@@ -1,0 +1,15 @@
+/.idea/beavr-creator.iml
+/.idea/encodings.xml
+/.idea/workspace.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/.idea/modules.xml
+/.idea/libraries/beavr_creator_node_modules.xml
+/semantic
+/node_modules
+/app/out
+/app/libs/node_modules
+/.idea/watcherTasks.xml
+/.idea/jsLibraryMappings.xml
+/app/dist/
+
