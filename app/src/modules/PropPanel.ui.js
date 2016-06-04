@@ -3,44 +3,42 @@
  */
 
 import Scene from './Scene';
+import SceneUI from './Scene.ui';
+import ObjectManager from './ObjectManager';
 
 class PropPanelUI {
   constructor() {
     $('#propertiesPanel').resizable({
       minWidth: 200,
-      maxWidth: $('#propertiesPanel').width(),
+      maxWidth: $('#propertiesPanel').width()
     });
 
-    $(".addItems").click(function() {
-      $('.ui.labeled.icon.sidebar.left')
-        .sidebar('toggle')
-      ;
+    $(".addItems").click(function () {
+      $('.ui.labeled.icon.sidebar.left').sidebar('toggle');
       $(".pusher").css("height", "0px");
       Scene.render();
     });
 
-    $(".addScript").click(function() {
-      $('.ui.labeled.icon.sidebar.right')
-        .sidebar('toggle')
-      ;
+    $(".addScript").click(function () {
+      $('.ui.labeled.icon.sidebar.right').sidebar('toggle');
       $(".pusher").css("height", "0px");
       Scene.render();
     });
 
     $(".Transformation-properties .object-properties input[type=number]").change(function (event) {
-      if (that.selectObject == undefined)
+      if (that.selectObject === undefined)
         return;
       that.modifyObjectProperties(event);
     });
 
     let that = this;
     $(".Transformation-properties .object-properties input[type=number]").on("mousewheel", function (event) {
-      if (that.selectObject == undefined)
+      if (that.selectObject === undefined)
         return;
       that.modifyObjectProperties(event);
     });
 
-    $(".Mesh-properties .object-properties input[type=color]").change(function() {
+    $(".Mesh-properties .object-properties input[type=color]").change(function () {
       that.changeObjectColor($(".Mesh-properties .object-properties input[type=color]")[0].value);
     });
 
@@ -53,7 +51,7 @@ class PropPanelUI {
     try {
       this.selectObject.material.color = new THREE.Color(color);
     }
-    catch(err) {
+    catch (err) {
       this.selectObject.color = new THREE.Color(color);
     }
     Scene.render();
@@ -65,38 +63,39 @@ class PropPanelUI {
   }
 
   modifyObjectProperties(event) {
-    var elem = $(event.target).closest(".object-properties").attr("data-type");
-    if (this.selectObject == undefined)
+    let elem = $(event.target).closest(".object-properties").attr("data-type");
+    if (this.selectObject === undefined)
       return;
     switch (elem) {
       case "location":
-        this.selectObject.position.set(
-          Math.round($(".Transformation-properties .object-properties input").eq(0).val()),
-          Math.round($(".Transformation-properties .object-properties input").eq(1).val()),
-          Math.round($(".Transformation-properties .object-properties input").eq(2).val())
-        );
+        let pos = {
+          x: Math.round($(".Transformation-properties .object-properties input").eq(0).val()),
+          y: Math.round($(".Transformation-properties .object-properties input").eq(1).val()),
+          z: Math.round($(".Transformation-properties .object-properties input").eq(2).val())
+        };
+        ObjectManager.setPos(this.selectObject, pos);
         break;
       case "rotation":
-        this.selectObject.rotation.set(
-          $(".Transformation-properties .object-properties input").eq(3).val(),
-          $(".Transformation-properties .object-properties input").eq(4).val(),
-          $(".Transformation-properties .object-properties input").eq(5).val()
-        );
+        let rotation = {
+          x: Math.round($(".Transformation-properties .object-properties input").eq(3).val()),
+          y: Math.round($(".Transformation-properties .object-properties input").eq(4).val()),
+          z: Math.round($(".Transformation-properties .object-properties input").eq(5).val())
+        };
+        ObjectManager.setRot(this.selectObject, rotation);
         break;
       case "scale":
-        this.selectObject.scale.set(
-          $(".Transformation-properties .object-properties input").eq(6).val(),
-          $(".Transformation-properties .object-properties input").eq(7).val(),
-          $(".Transformation-properties .object-properties input").eq(8).val()
-        )
+        let scale = {
+          x: $(".Transformation-properties .object-properties input").eq(6).val(),
+          y: $(".Transformation-properties .object-properties input").eq(7).val(),
+          z: $(".Transformation-properties .object-properties input").eq(8).val()
+        };
+        ObjectManager.setScale(this.selectObject, scale);
         break;
       default:
         break;
     }
-    //this.selectObject.matrixAutoUpdate = false;
     this.selectObject.needsUpdate = true;
-    this.selectObject.updateMatrix();
-    //TODO update transformControl from SceneControls.js
+    SceneUI.transformControls.update();
     Scene.render();
   }
 
@@ -105,10 +104,10 @@ class PropPanelUI {
   }
 
   loadObjectInfo(object) {
-    if (object == null && this.selectObject == undefined)
+    if (object === null && this.selectObject === undefined)
       return;
-    if (object != null) {
-      if (object.name == "lightPicker") {
+    if (object !== null) {
+      if (object.name === "lightPicker") {
         object = object.children[0];
       }
       this.selectObject = object;
@@ -121,16 +120,19 @@ class PropPanelUI {
 
   updateObjectGeneral(object) {
     $(".object input").first().val(object.name);
-    if (object.objType == undefined)
+    if (object.objType === undefined)
       object.objType = object.type;
     $(".object input").eq(1).val(object.objType);
   }
 
   updateMesh(object) {
-    try {    $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + object.material.color.getHexString();}
-    catch (err){
+    try {
+      $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + object.material.color.getHexString();
+    }
+    catch (err) {
       $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + object.color.getHexString();
-    };
+    }
+    ;
     $(".Mesh-properties .object-properties input[type=checkbox]")[0].checked = object.visible;
   }
 

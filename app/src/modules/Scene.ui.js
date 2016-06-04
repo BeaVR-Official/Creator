@@ -3,12 +3,13 @@
  */
 
 import Scene from './Scene';
+import PropPanelUI from './PropPanel.ui';
 import SceneControls from './SceneControls';
 
 class SceneUI {
   constructor() {
     this.addHelpers();
-    SceneControls.events();
+    new SceneControls(this.transformControls);
 
     this.adaptToWindow();
     $(window).resize(() => this.adaptToWindow());
@@ -32,13 +33,20 @@ class SceneUI {
    * Add basic helpers on sceneHelper.
    */
   addHelpers() {
-    this.grid         = new THREE.GridHelper(500, 50);
-    this.orbitControl = new THREE.OrbitControls(
+    this.grid             = new THREE.GridHelper(500, 50);
+    this.orbitControl     = new THREE.OrbitControls(
+      Scene._camera,
+      Scene._renderer.domElement);
+    this.transformControls = new THREE.TransformControls(
       Scene._camera,
       Scene._renderer.domElement);
 
     this.orbitControl.addEventListener('change', () => Scene.render());
+    this.transformControls.addEventListener('change', () => Scene.render());
+    this.transformControls.addEventListener('change', () => PropPanelUI.loadObjectInfo(null));
+
     Scene._sceneHelpers.add(this.grid);
+    Scene._sceneHelpers.add(this.transformControls);
   }
 
   /**

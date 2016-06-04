@@ -5,31 +5,19 @@
 import Scene from './Scene';
 import PropPanelUI from './PropPanel.ui';
 
-class SceneControls {
-  constructor() {
+export default class SceneControls {
+  constructor(transformControls) {
     this.sceneView = $('#mainView');
     this.mouse     = new THREE.Vector2();
     this.raycaster = new THREE.Raycaster();
     this.closest   = null;
-    this.addTransformControl();
-  }
-
-  /**
-   * Create and add 'transformControl" object to 'sceneHelper' scene.
-   * Served to update object position/rotation/scale.
-   */
-  addTransformControl() {
-    this.transformControl = new THREE.TransformControls(Scene._camera,
-      Scene._renderer.domElement);
-    this.transformControl.addEventListener('change', () => Scene.render());
-    this.transformControl.addEventListener('change', () => PropPanelUI.loadObjectInfo(null));
-    Scene._sceneHelpers.add(this.transformControl);
+    this.events(transformControls);
   }
 
   /**
    * Scene events : click detection
    */
-  events() {
+  events(transformControls) {
     let activeUpdate = false;
 
     this.sceneView.mousedown(() => {
@@ -49,10 +37,10 @@ class SceneControls {
       this.closest = this.getClosestObject(click, Scene._scene.children, true);
       if (this.closest !== null) {
         PropPanelUI.loadObjectInfo(this.closest);
-        this.transformControl.attach(this.closest);
+        transformControls.attach(this.closest);
       }
       else if (activeUpdate === false) {
-        this.transformControl.detach();
+        transformControls.detach();
         PropPanelUI.unselectObject();
       }
       activeUpdate = false;
@@ -90,5 +78,3 @@ class SceneControls {
     return null;
   }
 }
-
-export default new SceneControls();

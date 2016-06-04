@@ -3,7 +3,8 @@
  */
 
 import Scene from './Scene';
-import SceneUI from './Scene.ui.js';
+import SceneUI from './Scene.ui';
+import ObjectManager from './ObjectManager';
 
 class Navigator {
   addBox() {
@@ -18,8 +19,7 @@ class Navigator {
     mesh.receiveShadow = true;
     mesh.objType       = 'box';
 
-    Scene._scene.add(mesh);
-    Scene.render();
+    ObjectManager.addObject(mesh, Scene._scene);
   }
 
   addSphere() {
@@ -34,8 +34,7 @@ class Navigator {
     sphere.receiveShadow = true;
     sphere.objType       = 'sphere';
 
-    Scene._scene.add(sphere);
-    Scene.render();
+    ObjectManager.addObject(sphere, Scene._scene);
   }
 
   addCylinder() {
@@ -50,8 +49,7 @@ class Navigator {
     cylinder.receiveShadow = true;
     cylinder.objType       = 'cylinder';
 
-    Scene._scene.add(cylinder);
-    Scene.render();
+    ObjectManager.addObject(cylinder, Scene._scene);
   }
 
   addLight() {
