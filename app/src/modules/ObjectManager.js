@@ -1,9 +1,9 @@
 export default class ObjectManager extends THREE.Object3D {
-  constructor(mesh, scene) {
+  constructor(mesh) {
     super();
     this.mesh = mesh;
-
     scene.add(this.mesh);
+
   }
 
   setPosition(pos) {
@@ -24,5 +24,13 @@ export default class ObjectManager extends THREE.Object3D {
 
   setVisibility(state) {
     this.mesh.visible = state;
+  }
+
+  objToJSON() {
+    return {
+      mesh : JSON.stringify(this.mesh),
+      script : "typeofScript",
+      AnotherParam : 'plop'
+    };
   }
 }

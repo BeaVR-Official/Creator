@@ -44,6 +44,14 @@ class Scene {
     this.objList = [];
   }
 
+  serializeObj () {
+    let object = [];
+    this.objList.forEach(function(entry) {
+      object.push(entry.objToJSON());
+    });
+    return JSON.stringify(object);
+  }
+
   /**
    * Render the scene and sceneHelper.
    */
