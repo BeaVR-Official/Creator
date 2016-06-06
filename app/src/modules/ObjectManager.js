@@ -1,30 +1,28 @@
-import Scene from './Scene';
+export default class ObjectManager extends THREE.Object3D {
+  constructor(mesh, scene) {
+    super();
+    this.mesh = mesh;
 
-class ObjectManager {
-  constructor() {
-
+    scene.add(this.mesh);
   }
 
-  addObject(obj, scene) {
-    scene.add(obj);
-    Scene.render();
+  setPosition(pos) {
+    this.mesh.position.set(pos.x, pos.y, pos.z);
   }
-  
-  setPos(obj, pos) {
-    obj.position.set(pos.x, pos.y, pos.z);
+
+  setRotation(rot) {
+    this.mesh.rotation.set(rot.x, rot.y, rot.z);
   }
-  
-  setRot(obj, rotation) {
-    obj.rotation.set(rotation.x, rotation.y, rotation.z);
+
+  setScale(scale) {
+    this.mesh.scale.set(scale.x, scale.y, scale.z);
   }
-  
-  setScale(obj, scale) {
-    obj.scale.set(scale.x, scale.y, scale.z);
+
+  setColor(color) {
+    this.mesh.material.color.set(color);
   }
-  
-  updateMatrix(obj) {
-    obj.updateMatrix();
+
+  setVisibility(state) {
+    this.mesh.visible = state;
   }
 }
-
-export default new ObjectManager();

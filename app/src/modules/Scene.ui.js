@@ -33,8 +33,8 @@ class SceneUI {
    * Add basic helpers on sceneHelper.
    */
   addHelpers() {
-    this.grid             = new THREE.GridHelper(500, 50);
-    this.orbitControl     = new THREE.OrbitControls(
+    this.grid              = new THREE.GridHelper(500, 50);
+    this.orbitControl      = new THREE.OrbitControls(
       Scene._camera,
       Scene._renderer.domElement);
     this.transformControls = new THREE.TransformControls(
@@ -42,9 +42,10 @@ class SceneUI {
       Scene._renderer.domElement);
 
     this.orbitControl.addEventListener('change', () => Scene.render());
-    this.transformControls.addEventListener('change', () => Scene.render());
-    this.transformControls.addEventListener('change', () => PropPanelUI.loadObjectInfo(null));
-
+    this.transformControls.addEventListener('change', () =>  {
+      PropPanelUI.updateTransformations();
+      Scene.render();
+    });
     Scene._sceneHelpers.add(this.grid);
     Scene._sceneHelpers.add(this.transformControls);
   }

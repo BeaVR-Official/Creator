@@ -19,7 +19,8 @@ class Navigator {
     mesh.receiveShadow = true;
     mesh.objType       = 'box';
 
-    ObjectManager.addObject(mesh, Scene._scene);
+    Scene.objList.push(new ObjectManager(mesh, Scene._scene));
+    Scene.render();
   }
 
   addSphere() {
@@ -34,11 +35,12 @@ class Navigator {
     sphere.receiveShadow = true;
     sphere.objType       = 'sphere';
 
-    ObjectManager.addObject(sphere, Scene._scene);
+    Scene.objList.push(new ObjectManager(sphere, Scene._scene));
+    Scene.render();
   }
 
   addCylinder() {
-    let geometry = new THREE.CylinderGeometry(5, 5, 20, 32);
+    let geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let cylinder = new THREE.Mesh(geometry, material);
 
@@ -49,7 +51,8 @@ class Navigator {
     cylinder.receiveShadow = true;
     cylinder.objType       = 'cylinder';
 
-    ObjectManager.addObject(cylinder, Scene._scene);
+    Scene.objList.push(new ObjectManager(cylinder, Scene._scene));
+    Scene.render();
   }
 
   addLight() {
@@ -64,40 +67,39 @@ class Navigator {
   }
 
   addSpotLight() {
-    let spotLight = new THREE.SpotLight( 0xffffff );
+    let spotLight = new THREE.SpotLight(0xffffff);
 
-    spotLight.userData.id = _.uniqueId();
-    spotLight.name = 'spotLight_' + spotLight.userData.id;
-
-    spotLight.position.set( 100, 1000, 100 );
-
-    spotLight.castShadow = true;
-
-    spotLight.shadow.mapSize.width = 1024;
+    spotLight.userData.id           = _.uniqueId();
+    spotLight.name                  = 'spotLight_' + spotLight.userData.id;
+    spotLight.castShadow            = true;
+    spotLight.shadow.mapSize.width  = 1024;
     spotLight.shadow.mapSize.height = 1024;
+    spotLight.shadow.camera.near    = 500;
+    spotLight.shadow.camera.far     = 4000;
+    spotLight.shadow.camera.fov     = 30;
 
-    spotLight.shadow.camera.near = 500;
-    spotLight.shadow.camera.far = 4000;
-    spotLight.shadow.camera.fov = 30;
-
+    spotLight.position.set(100, 1000, 100);
     this.addPicker(spotLight);
     Scene.render();
   }
 
   addDirectionalLight() {
-    let directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+    let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 
     directionalLight.userData.id = _.uniqueId();
-    directionalLight.name = 'directionalLight_' + directionalLight.userData.id;
-    directionalLight.position.set( 0, 1, 0 );
+    directionalLight.name        = 'directionalLight_' + directionalLight.userData.id;
+
+    directionalLight.position.set(0, 1, 0);
     this.addPicker(directionalLight);
     Scene.render();
   }
 
   addAmbientLight() {
-    let light = new THREE.AmbientLight( 0x404040 );
+    let light = new THREE.AmbientLight(0x404040);
+
     light.userData.id = _.uniqueId();
-    light.name = 'lightAmbient_' + light.userData.id;
+    light.name        = 'lightAmbient_' + light.userData.id;
+
     this.addPicker(light);
     Scene.render();
   }
@@ -122,50 +124,16 @@ class Navigator {
   }
 
   addExternal() {
-    var loader = new THREE.JSONLoader();
-    loader.load('models/horse.js', (geometry, materials) => {
+    let loader = new THREE.JSONLoader();
+    loader.load('models/horse.js', (geometry, material) => {
+      let object = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(material));
 
-      let object = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-      let xmin   = Infinity;
-      let xmax   = -Infinity;
-      let ymin   = Infinity;
-      let ymax   = -Infinity;
-      let zmin   = Infinity;
-      let zmax   = -Infinity;
-      for (var i = 0; i < geometry.vertices.length; i++) {
-        let v = geometry.vertices[i];
-        if (v.x < xmin)
-          xmin = v.x;
-        else if (v.x > xmax)
-          xmax = v.x;
-        if (v.y < ymin)
-          ymin = v.y;
-        else if (v.y > ymax)
-          ymax = v.y;
-        if (v.z < zmin)
-          zmin = v.z;
-        else if (v.z > zmax)
-          zmax = v.z;
-      }
+      object.userData.id = _.uniqueId();
+      object.name        = 'horse_' + object.userData.id;
 
-      /* translate the center of the object to the origin */
-      let centerX = (xmin + xmax) / 2;
-      let centerY = (ymin + ymax) / 2;
-      let centerZ = (zmin + zmax) / 2;
-      let max   = Math.max(centerX - xmin, xmax - centerX);
-      max       = Math.max(max, Math.max(centerY - ymin, ymax - centerY));
-      max       = Math.max(max, Math.max(centerZ - zmin, zmax - centerZ));
-      let scale = max / 20;
-      object.position.set(-centerX, -centerY, -centerZ);
-      console.log("Loading finished, scaling object by " + scale);
-      console.log("Center at ( " + centerX + ", " + centerY + ", " + centerZ + " )");
-
-      /* Create the wrapper, model, to scale and rotate the object. */
-
-      let model = new THREE.Object3D();
-      model.add(object);
-      model.scale.set(scale, scale, scale);
-      Scene._scene.add(model);
+      object.scale.set(1, 1, 1);
+      object.position.set(0, 0, 0);
+      Scene.objList.push(new ObjectManager(object, Scene._scene));
       Scene.render();
     });
   }

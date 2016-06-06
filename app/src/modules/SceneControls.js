@@ -10,7 +10,7 @@ export default class SceneControls {
     this.sceneView = $('#mainView');
     this.mouse     = new THREE.Vector2();
     this.raycaster = new THREE.Raycaster();
-    this.closest   = null;
+    this.closeObj  = null;
     this.events(transformControls);
   }
 
@@ -34,10 +34,10 @@ export default class SceneControls {
         y: event.clientY / window.innerHeight
       };
 
-      this.closest = this.getClosestObject(click, Scene._scene.children, true);
-      if (this.closest !== null) {
-        PropPanelUI.loadObjectInfo(this.closest);
-        transformControls.attach(this.closest);
+      this.closeObj = this.getClosestObject(click, Scene._scene.children, true);
+      if (this.closeObj !== undefined) {
+        PropPanelUI.loadObjectInfo(this.closeObj);
+        transformControls.attach(this.closeObj.mesh);
       }
       else if (activeUpdate === false) {
         transformControls.detach();
@@ -73,8 +73,13 @@ export default class SceneControls {
    */
   getClosestObject(point, objects, recursive) {
     let intersects = this.getIntersectObjects(point, objects, recursive);
-    if (intersects.length > 0)
-      return intersects[0].object;
-    return null;
+    if (intersects.length > 0) {
+      return Scene.objList.find(object => {
+        if (object.mesh === intersects[0].object) {
+          return object;
+        }
+      });
+    }
+    return undefined;
   }
 }
