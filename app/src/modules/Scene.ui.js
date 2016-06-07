@@ -42,7 +42,7 @@ class SceneUI {
       Scene._renderer.domElement);
 
     this.orbitControl.addEventListener('change', () => Scene.render());
-    this.transformControls.addEventListener('change', () =>  {
+    this.transformControls.addEventListener('change', () => {
       PropPanelUI.updateTransformations();
       Scene.render();
     });
@@ -61,6 +61,10 @@ class SceneUI {
       object = object.children[0];
     if (object instanceof THREE.PointLight) {
       helper = new THREE.PointLightHelper(object, 50);
+    } else if (object instanceof THREE.SpotLight) {
+      helper = new THREE.SpotLightHelper(object);
+    } else if (object instanceof THREE.DirectionalLight) {
+      helper = new THREE.DirectionalLightHelper(object, 50);
     } else
       return;
 
