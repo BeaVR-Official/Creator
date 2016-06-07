@@ -1,5 +1,5 @@
 export default class ObjectManager extends THREE.Object3D {
-  constructor(mesh) {
+  constructor(mesh, scene) {
     super();
     this.mesh = mesh;
     scene.add(this.mesh);
