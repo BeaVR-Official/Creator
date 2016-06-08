@@ -2,8 +2,8 @@
  * Created by urvoy_p on 04/05/16.
  */
 
-import Scene from './Scene';
 import SceneUI from './Scene.ui';
+import Scene from './Scene';
 
 class PropPanelUI {
   constructor() {
@@ -25,14 +25,14 @@ class PropPanelUI {
     });
 
     $(".Transformation-properties .object-properties input[type=number]").change(function (event) {
-      if (that.selectObject === undefined)
+      if (that.selectedObj === undefined)
         return;
       that.modifyObjectProperties(event);
     });
 
     let that = this;
     $(".Transformation-properties .object-properties input[type=number]").on("mousewheel", function (event) {
-      if (that.selectObject === undefined)
+      if (that.selectedObj === undefined)
         return;
       that.modifyObjectProperties(event);
     });
@@ -48,17 +48,17 @@ class PropPanelUI {
 
   changeObjectColor(color) {
     let newColor = new THREE.Color(color);
-    this.selectObject.setColor(newColor);
+    this.selectedObj.setColor(newColor);
     Scene.render();
   }
 
   setObjectVisibility(state) {
-    this.selectObject.setVisibility(state);
+    this.selectedObj.setVisibility(state);
     Scene.render();
   }
 
   modifyObjectProperties(event) {
-    if (this.selectObject === undefined)
+    if (this.selectedObj === undefined)
       return;
     let elem          = $(event.target).closest(".object-properties").attr("data-type");
     let objProperties = $(".Transformation-properties .object-properties input");
@@ -69,7 +69,7 @@ class PropPanelUI {
           y: Math.round(objProperties.eq(1).val()),
           z: Math.round(objProperties.eq(2).val())
         };
-        this.selectObject.setPosition(pos);
+        this.selectedObj.updatePosition(pos);
         break;
       case "rotation":
         let rotation = {
@@ -77,7 +77,7 @@ class PropPanelUI {
           y: Math.round(objProperties.eq(4).val()),
           z: Math.round(objProperties.eq(5).val())
         };
-        this.selectObject.setRotation(rotation);
+        this.selectedObj.updateRotation(rotation);
         break;
       case "scale":
         let scale = {
@@ -85,74 +85,64 @@ class PropPanelUI {
           y: objProperties.eq(7).val(),
           z: objProperties.eq(8).val()
         };
-        this.selectObject.setScale(scale);
+        this.selectedObj.updateScale(scale);
         break;
       default:
         break;
     }
-    this.selectObject.needsUpdate = true;
-    //SceneUI.transformControls.update();
+    this.transformControls.update();
     Scene.render();
   }
 
   unselectObject() {
-    this.selectObject = undefined;
+    this.selectedObj = undefined;
   }
 
-  loadObjectInfo(object) {
-    console.log(object);
+  loadObjectInfo(object, transformControls) {
     if (object !== undefined) {
-      if (object.name === "lightPicker") {
+      if (object.name === "lightPicker")
         object = object.children[0];
-      }
-      this.selectObject = object;
+      this.selectedObj = object;
     }
+    if (transformControls !== undefined)
+      this.transformControls = transformControls;
     this.update();
   }
 
   update() {
-    this.updateMesh(this.selectObject.mesh);
-    this.updateObjectGeneral(this.selectObject.mesh);
+    this.updateMesh();
+    this.updateObjectGeneral();
     this.updateTransformations();
   }
 
-  updateObjectGeneral(object) {
-    let selectedMesh = this.selectObject.mesh;
-    $(".object input").first().val(selectedMesh.name);
-    if (selectedMesh.objType === undefined)
-      selectedMesh.objType = selectedMesh.type;
-    $(".object input").eq(1).val(selectedMesh.objType);
+  updateObjectGeneral() {
+    if (this.selectedObj.name !== undefined)
+      $(".object input").first().val(this.selectedObj.name);
+    if (this.selectedObj.objType !== undefined)
+      $(".object input").eq(1).val(this.selectedObj.objType);
   }
 
-  updateMesh(object) {
-    //console.log(object);
-    //let material = object.material;
-
-    try {
-      $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + object.material.color.getHexString();
-    }
-    catch (e) {
-      console.error("UpdateMesh: ", e);
-    }
-    ;
-    $(".Mesh-properties .object-properties input[type=checkbox]")[0].checked = object.visible;
+  updateMesh() {
+    let color = this.selectedObj.material.color;
+    if (color !== undefined)
+      $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + color.getHexString();
+    $(".Mesh-properties .object-properties input[type=checkbox]")[0].checked = this.selectedObj.visible;
   }
 
   updateTransformations() {
-    if (this.selectObject === undefined)
+    if (this.selectedObj === undefined)
       return;
 
     let objProperties = $(".Transformation-properties .object-properties input");
-    let selectedMesh  = this.selectObject.mesh;
-    objProperties.eq(0).val(selectedMesh.position.x);
-    objProperties.eq(1).val(selectedMesh.position.y);
-    objProperties.eq(2).val(selectedMesh.position.z);
-    objProperties.eq(3).val(selectedMesh.rotation.x);
-    objProperties.eq(4).val(selectedMesh.rotation.y);
-    objProperties.eq(5).val(selectedMesh.rotation.z);
-    objProperties.eq(6).val(selectedMesh.scale.x);
-    objProperties.eq(7).val(selectedMesh.scale.y);
-    objProperties.eq(8).val(selectedMesh.scale.z);
+    objProperties.eq(0).val(this.selectedObj.position.x);
+    objProperties.eq(1).val(this.selectedObj.position.y);
+    objProperties.eq(2).val(this.selectedObj.position.z);
+    objProperties.eq(3).val(this.selectedObj.rotation.x);
+    objProperties.eq(4).val(this.selectedObj.rotation.y);
+    objProperties.eq(5).val(this.selectedObj.rotation.z);
+    objProperties.eq(6).val(this.selectedObj.scale.x);
+    objProperties.eq(7).val(this.selectedObj.scale.y);
+    objProperties.eq(8).val(this.selectedObj.scale.z);
   }
 }
 

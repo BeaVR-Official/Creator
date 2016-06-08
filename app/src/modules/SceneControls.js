@@ -7,10 +7,11 @@ import PropPanelUI from './PropPanel.ui';
 
 export default class SceneControls {
   constructor(transformControls) {
-    this.sceneView = $('#mainView');
-    this.mouse     = new THREE.Vector2();
-    this.raycaster = new THREE.Raycaster();
-    this.closeObj  = null;
+    this._raycaster     = new THREE.Raycaster();
+    this._mouse         = new THREE.Vector2();
+    this._sceneView     = $('#mainView');
+    this._closestObj    = undefined;
+    this._mouseIsMoving = false;
     this.events(transformControls);
   }
 
@@ -18,31 +19,26 @@ export default class SceneControls {
    * Scene events : click detection
    */
   events(transformControls) {
-    let activeUpdate = false;
-
-    this.sceneView.mousedown(() => {
-      activeUpdate = false;
+    this._sceneView.mousedown(() => {
+      this._mouseIsMoving = false;
     });
 
-    this.sceneView.mousemove(() => {
-      activeUpdate = true;
+    this._sceneView.mousemove(() => {
+      this._mouseIsMoving = true;
     });
 
-    this.sceneView.mouseup(event => {
-      let click = {
-        x: event.clientX / window.innerWidth,
-        y: event.clientY / window.innerHeight
-      };
+    this._sceneView.mouseup(event => {
+      this._mouse.x = (event.clientX / window.innerWidth * 2) - 1;
+      this._mouse.y = -(event.clientY / window.innerHeight * 2) + 1;
 
-      this.closeObj = this.getClosestObject(click, Scene._scene.children, true);
-      if (this.closeObj !== undefined) {
-        PropPanelUI.loadObjectInfo(this.closeObj);
-        transformControls.attach(this.closeObj);
-      } else if (activeUpdate === false) {
+      this._closestObj = this.getClosestObject(Scene._scene.children, true);
+      if (this._closestObj !== undefined) {
+        PropPanelUI.loadObjectInfo(this._closestObj, transformControls);
+        transformControls.attach(this._closestObj);
+      } else if (this._mouseIsMoving === false) {
         transformControls.detach();
         PropPanelUI.unselectObject();
       }
-      activeUpdate = false;
       Scene.render();
     });
   }
@@ -55,11 +51,9 @@ export default class SceneControls {
    * @param recursive Recursive mode (true/false)
    * @returns {objects[]} All intersected objects
    */
-  getIntersectObjects(click, objects, recursive) {
-    this.mouse.x = (click.x * 2) - 1;
-    this.mouse.y = -(click.y * 2) + 1;
-    this.raycaster.setFromCamera(this.mouse, Scene._camera);
-    return this.raycaster.intersectObjects(objects, recursive);
+  getIntersectObjects(objects, recursive) {
+    this._raycaster.setFromCamera(this._mouse, Scene._camera);
+    return this._raycaster.intersectObjects(objects, recursive);
   }
 
   /**
@@ -70,13 +64,12 @@ export default class SceneControls {
    * @param recursive Recursive mode (true/false)
    * @returns {object} Closest object
    */
-  getClosestObject(point, objects, recursive) {
-    let intersects = this.getIntersectObjects(point, objects, recursive);
+  getClosestObject(objects, recursive) {
+    let intersects = this.getIntersectObjects(objects, recursive);
     if (intersects.length > 0) {
       return Scene._objList.find(object => {
-        if (object === intersects[0].object) {
+        if (object === intersects[0].object)
           return object;
-        }
       });
     }
     return undefined;

@@ -8,8 +8,16 @@ import SceneControls from './SceneControls';
 
 class SceneUI {
   constructor() {
+    this._grid              = new THREE.GridHelper(500, 50);
+    this._orbitControl      = new THREE.OrbitControls(
+      Scene._camera,
+      Scene._renderer.domElement);
+    this._transformControls = new THREE.TransformControls(
+      Scene._camera,
+      Scene._renderer.domElement);
     this.addHelpers();
-    new SceneControls(this.transformControls);
+
+    new SceneControls(this._transformControls);
 
     this.adaptToWindow();
     $(window).resize(() => this.adaptToWindow());
@@ -33,21 +41,13 @@ class SceneUI {
    * Add basic helpers on sceneHelper.
    */
   addHelpers() {
-    this.grid              = new THREE.GridHelper(500, 50);
-    this.orbitControl      = new THREE.OrbitControls(
-      Scene._camera,
-      Scene._renderer.domElement);
-    this.transformControls = new THREE.TransformControls(
-      Scene._camera,
-      Scene._renderer.domElement);
-
-    this.orbitControl.addEventListener('change', () => Scene.render());
-    this.transformControls.addEventListener('change', () => {
+    this._orbitControl.addEventListener('change', () => Scene.render());
+    this._transformControls.addEventListener('change', () => {
       PropPanelUI.updateTransformations();
       Scene.render();
     });
-    Scene._sceneHelpers.add(this.grid);
-    Scene._sceneHelpers.add(this.transformControls);
+    Scene._sceneHelpers.add(this._grid);
+    Scene._sceneHelpers.add(this._transformControls);
   }
 
   /**
