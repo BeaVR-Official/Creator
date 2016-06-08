@@ -37,9 +37,8 @@ export default class SceneControls {
       this.closeObj = this.getClosestObject(click, Scene._scene.children, true);
       if (this.closeObj !== undefined) {
         PropPanelUI.loadObjectInfo(this.closeObj);
-        transformControls.attach(this.closeObj.mesh);
-      }
-      else if (activeUpdate === false) {
+        transformControls.attach(this.closeObj);
+      } else if (activeUpdate === false) {
         transformControls.detach();
         PropPanelUI.unselectObject();
       }
@@ -74,8 +73,8 @@ export default class SceneControls {
   getClosestObject(point, objects, recursive) {
     let intersects = this.getIntersectObjects(point, objects, recursive);
     if (intersects.length > 0) {
-      return Scene.objList.find(object => {
-        if (object.mesh === intersects[0].object) {
+      return Scene._objList.find(object => {
+        if (object === intersects[0].object) {
           return object;
         }
       });

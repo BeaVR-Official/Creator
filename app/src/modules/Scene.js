@@ -3,6 +3,8 @@
  * Created by urvoy_p on 24/04/16.
  */
 
+import CustomObject from './CustomObject';
+
 class Scene {
   constructor() {
     // set the scene size
@@ -41,12 +43,19 @@ class Scene {
     this._renderer.setSize(sceneSettings.width, sceneSettings.height);
     this._renderer.autoClear = false;
 
-    this.objList = [];
+    this._objList = [];
   }
 
-  serializeObj () {
+  addObj(object) {
+    if (object instanceof CustomObject) {
+      this._scene.add(object);
+      this._objList.push(object);
+    }
+  }
+
+  serializeObj() {
     let object = [];
-    this.objList.forEach(function(entry) {
+    this._objList.forEach(function (entry) {
       object.push(entry.objToJSON());
     });
     return JSON.stringify(object);

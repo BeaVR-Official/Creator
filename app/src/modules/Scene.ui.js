@@ -57,8 +57,7 @@ class SceneUI {
    */
   addLightHelper(object) {
     let helper;
-    if (object.name === 'lightPicker')
-      object = object.children[0];
+
     if (object instanceof THREE.PointLight) {
       helper = new THREE.PointLightHelper(object, 50);
     } else if (object instanceof THREE.SpotLight) {
@@ -67,7 +66,6 @@ class SceneUI {
       helper = new THREE.DirectionalLightHelper(object, 50);
     } else
       return;
-
     Scene._sceneHelpers.add(helper);
   }
 }

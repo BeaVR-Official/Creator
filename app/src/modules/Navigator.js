@@ -4,54 +4,51 @@
 
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
-import ObjectManager from './ObjectManager';
+import CustomObject from './CustomObject';
 
 class Navigator {
   addBox() {
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(200, 200, 200);
-    let mesh     = new THREE.Mesh(geometry, material);
+    let box      = new CustomObject(geometry, material, 'box');
 
-    mesh.userData.id   = _.uniqueId();
-    mesh.name          = 'box_' + mesh.userData.id;
-    mesh.mirroredLoop  = true;
-    mesh.castShadow    = true;
-    mesh.receiveShadow = true;
-    mesh.objType       = 'box';
+    box.mirroredLoop  = true;
+    box.castShadow    = true;
+    box.receiveShadow = true;
 
-    Scene.objList.push(new ObjectManager(mesh, Scene._scene));
+    Scene.addObj(box);
     Scene.render();
   }
 
   addSphere() {
     let geometry = new THREE.SphereGeometry(50, 50, 320);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let sphere   = new THREE.Mesh(geometry, material);
+    let sphere   = new CustomObject(geometry, material);
 
+    sphere.objType       = 'sphere';
     sphere.userData.id   = _.uniqueId();
     sphere.name          = 'sphere_' + sphere.userData.id;
     sphere.mirroredLoop  = true;
     sphere.castShadow    = true;
     sphere.receiveShadow = true;
-    sphere.objType       = 'sphere';
 
-    Scene.objList.push(new ObjectManager(sphere, Scene._scene));
+    Scene.addObj(sphere);
     Scene.render();
   }
 
   addCylinder() {
     let geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let cylinder = new THREE.Mesh(geometry, material);
+    let cylinder = new CustomObject(geometry, material);
 
+    cylinder.objType       = 'cylinder';
     cylinder.userData.id   = _.uniqueId();
     cylinder.name          = 'cylinder_' + cylinder.userData.id;
     cylinder.mirroredLoop  = true;
     cylinder.castShadow    = true;
     cylinder.receiveShadow = true;
-    cylinder.objType       = 'cylinder';
 
-    Scene.objList.push(new ObjectManager(cylinder, Scene._scene));
+    Scene.addObj(cylinder);
     Scene.render();
   }
 
@@ -107,33 +104,29 @@ class Navigator {
   addPicker(light) {
     let materialPicker = {
       visible:   false,
-      color:     0xff0000,  // Debugging display
-      wireframe: true,      //
+      color:     0xff0000,  // Debugging display:
+      wireframe: true,      // Active with visible = true
       fog:       false      //
     };
 
     let geometry = new THREE.SphereGeometry(50, 4, 2);
     let material = new THREE.MeshBasicMaterial(materialPicker);
-    let picker   = new THREE.Mesh(geometry, material);
+    let picker   = new CustomObject(geometry, material, 'picker');
 
-    picker.name = 'lightPicker';
-
+    SceneUI.addLightHelper(light);
     picker.add(light);
-    Scene._scene.add(picker);
-    SceneUI.addLightHelper(picker);
+    Scene.addObj(picker);
   }
 
   addExternal() {
     let loader = new THREE.JSONLoader();
     loader.load('models/horse.js', (geometry, material) => {
-      let object = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(material));
+      let importedObj = new CustomObject(geometry, new THREE.MeshFaceMaterial(material), 'ObjectJs');
 
-      object.userData.id = _.uniqueId();
-      object.name        = 'horse_' + object.userData.id;
+      importedObj.scale.set(1, 1, 1);
+      importedObj.position.set(0, 0, 0);
 
-      object.scale.set(1, 1, 1);
-      object.position.set(0, 0, 0);
-      Scene.objList.push(new ObjectManager(object, Scene._scene));
+      Scene.addObj(importedObj);
       Scene.render();
     });
   }
