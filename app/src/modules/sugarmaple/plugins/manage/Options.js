@@ -1,21 +1,13 @@
 class Options {
   constructor(overrides) {
     this.events = {
-      onDrag: undefined,
-      onDrop: undefined
+      onAttach: undefined,
+      onDetach: undefined
     };
 
     this.parameters = {
       easing:          'swing',
-      revertDuration:  200,
-      effectsDuration: 400,
-      foldable:        true,
-      droppable:       true,
-      draggable:       true
-    };
-
-    this.templates = {
-      placeholder: '<div class="placeholder"></div>'
+      effectsDuration: 400
     };
 
     this.applyOverrides(overrides);

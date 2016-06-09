@@ -2,7 +2,7 @@ import AbstractPlugin from './plugins/AbstractPlugin';
 
 class Plugins {
   constructor(render) {
-    const options = render._tree._options;
+    const options = render.tree.options;
 
     if (options.plugins === undefined) return;
     for (let pName in options.plugins) {

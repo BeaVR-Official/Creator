@@ -1,7 +1,7 @@
 class Search {
   constructor(tree, options) {
-    this._tree = tree;
-    this._options = options;
+    this.tree    = tree;
+    this.options = options;
   }
 
   draggable($nodeList) {
@@ -19,8 +19,8 @@ class Search {
         let detachedNode  = $(ui.node).data('node');
         let newNodeParent = $(event.target).parent('li').data('node');
 
-        $this._tree.detachNode(detachedNode);
-        $this._tree.attachNode(newNodeParent, detachedNode);
+        $this.tree.detachNode(detachedNode);
+        $this.tree.attachNode(newNodeParent, detachedNode);
       }
     });
   }

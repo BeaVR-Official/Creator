@@ -7,14 +7,14 @@ class Options {
     };
 
     this.templates = {
-      node:      '<div class="node"></div>',
-      title:     '<div class="node-title"></div>',
-      content:   '<div class="node-content"></div>',
-      icon:      '<span class="icon"></span>',
-      badge:     '<span class="badge"></span>',
-      child:     '<div class="node-child"></div>',
-      childCont: '<div class="node-child-container"></div>',
-      link:      '<a href="#"></a>'
+      node:        '<div class="node"></div>',
+      title:       '<div class="node-title"></div>',
+      content:     '<div class="node-content"></div>',
+      icon:        '<span class="icon"></span>',
+      badge:       '<span class="badge"></span>',
+      child:       '<div class="node-child"></div>',
+      childCont:   '<div class="node-child-container"></div>',
+      link:        '<a href="#"></a>'
     };
 
     this.templates.icons = {

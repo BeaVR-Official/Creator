@@ -10,34 +10,35 @@ class Checkbox extends AbstractPlugin {
   }
 
   onNodeRendered($node) {
-    const node      = $node.data('node');
-    const $checkbox = $(this._options.templates.checkbox);
+    const node          = $node.data('node');
+    const $checkbox     = $(this.options.templates.checkbox);
+    const $checkboxCont = $(this.options.templates.checkboxCont);
 
     this.initNode(node);
 
-    $checkbox.prop('checked', node._checkbox.checked);
-    $checkbox.prop('disabled', !node._checkbox.enabled);
-    $checkbox.click(() => this.toggleCheck(node));
+    $checkbox.prop('checked', node.checkbox.checked);
+    $checkbox.prop('disabled', !node.checkbox.enabled);
     $checkbox.on('pCheck', () => this.check(node));
     $checkbox.on('pUnCheck', () => this.unCheck(node));
     $checkbox.on('pToggleCheck', () => this.toggleCheck(node));
     $checkbox.on('pEnable', () => this.enable(node));
     $checkbox.on('pDisable', () => this.disable(node));
     $checkbox.on('pToggleDisable', () => this.toggleEnable(node));
+    $checkbox.click((event) => {
+      this.toggleCheck(node);
+      event.stopPropagation();
+    });
+    $checkboxCont.append($checkbox);
 
-    $node.find('.node-content:eq(0)').prepend($checkbox);
+    $node.find('.node-content').eq(0).append($checkboxCont);
   }
 
   initNode(node) {
-    if (node._checkbox === undefined)
-      node._checkbox = {
-        checked: this._options.parameters.defaultChecked,
-        enabled: this._options.parameters.defaultEnabled
+    if (node.checkbox === undefined)
+      node.checkbox = {
+        checked: this.options.parameters.defaultChecked,
+        enabled: this.options.parameters.defaultEnabled
       };
-  }
-
-  elemOf(node) {
-    return $(this._$holder.find('[node-id=' + node._id + ']').eq(0));
   }
 
   checkboxOf(node) {
@@ -94,21 +95,21 @@ class Checkbox extends AbstractPlugin {
 
   enable(node) {
     this.initNode(node);
-    node._checkbox.enabled = true;
+    node.checkbox.enabled = true;
     this.checkboxOf(node).prop('disabled', false);
-    this._$holder.trigger('enable', node);
+    this.$holder.trigger('enable', node);
   }
 
   disable(node) {
     this.initNode(node);
-    node._checkbox.enabled = false;
+    node.checkbox.enabled = false;
     this.checkboxOf(node).prop('disabled', true);
-    this._$holder.trigger('disable', node);
+    this.$holder.trigger('disable', node);
   }
 
   toggleEnable(node) {
     this.initNode(node);
-    if (node._checkbox.enabled)
+    if (node.checkbox.enabled)
       this.disable(node);
     else
       this.enable(node);
@@ -128,21 +129,21 @@ class Checkbox extends AbstractPlugin {
 
   check(node) {
     this.initNode(node);
-    node._checkbox.checked = true;
+    node.checkbox.checked = true;
     this.checkboxOf(node).prop('checked', true);
-    this._$holder.trigger('check', node);
+    this.$holder.trigger('check', node);
   }
 
   unCheck(node) {
     this.initNode(node);
-    node._checkbox.checked = false;
+    node.checkbox.checked = false;
     this.checkboxOf(node).prop('checked', false);
-    this._$holder.trigger('unCheck', node);
+    this.$holder.trigger('unCheck', node);
   }
 
   toggleCheck(node) {
     this.initNode(node);
-    if (node._checkbox.checked)
+    if (node.checkbox.checked)
       this.unCheck(node);
     else
       this.check(node);
