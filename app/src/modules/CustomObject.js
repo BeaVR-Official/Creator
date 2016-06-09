@@ -9,9 +9,9 @@ export default class CustomObject extends THREE.Mesh {
     this._script     = 'script here';
   }
 
-  //addToScene(scene) {
+  // addToScene(scene) {
   //  this.dispatchEvent({type: 'add', message: this.name + ' Added!'});
-  //}
+  // }
 
   setPosition(pos) {
     this.position.set(pos.x, pos.y, pos.z);

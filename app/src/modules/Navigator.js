@@ -5,6 +5,7 @@
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
 import CustomObject from './CustomObject';
+import Example from './sugarmaple/Example';
 
 class Navigator {
   addBox() {
@@ -17,13 +18,14 @@ class Navigator {
     box.castShadow    = true;
     box.receiveShadow = true;
 
-    //Object.assign(CustomObject.prototype, THREE.EventDispatcher.prototype );
-    //box.addEventListener('add', function (event ) {
+    // Object.assign(CustomObject.prototype, THREE.EventDispatcher.prototype );
+    // box.addEventListener('add', function (event ) {
     //  console.log(event.message);
-    //} );
-    //box.addToScene(Scene._scene);
+    // } );
+    // box.addToScene(Scene._scene);
 
     Scene.addObj(box);
+    console.log(Scene._objList);
     Scene.render();
   }
 
