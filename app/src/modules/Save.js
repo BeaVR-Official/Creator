@@ -12,7 +12,8 @@ class Save {
 
   saveScene() {
 
-    let output = Scene._scene.toJSON();
+    /// ------> Récupération de la liste des objets serializés juste ici !!!
+    let output = Scene.serializeObj();
     try {
       output = JSON.stringify( output, null, '\t' );
       // transformation nécessaire pour l'uuid

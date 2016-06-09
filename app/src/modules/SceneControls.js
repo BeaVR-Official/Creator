@@ -5,57 +5,40 @@
 import Scene from './Scene';
 import PropPanelUI from './PropPanel.ui';
 
-class SceneControls {
-  constructor() {
-    this.sceneView = $('#mainView');
-    this.mouse     = new THREE.Vector2();
-    this.raycaster = new THREE.Raycaster();
-    this.closest   = null;
-    this.addTransformControl();
-  }
-
-  /**
-   * Create and add 'transformControl" object to 'sceneHelper' scene.
-   * Served to update object position/rotation/scale.
-   */
-  addTransformControl() {
-    this.transformControl = new THREE.TransformControls(Scene._camera,
-      Scene._renderer.domElement);
-    this.transformControl.addEventListener('change', () => Scene.render());
-    this.transformControl.addEventListener('change', () => PropPanelUI.loadObjectInfo(null));
-    Scene._sceneHelpers.add(this.transformControl);
+export default class SceneControls {
+  constructor(transformControls) {
+    this._raycaster     = new THREE.Raycaster();
+    this._mouse         = new THREE.Vector2();
+    this._sceneView     = $('#mainView');
+    this._closestObj    = undefined;
+    this._mouseIsMoving = false;
+    this.events(transformControls);
   }
 
   /**
    * Scene events : click detection
    */
-  events() {
-    let activeUpdate = false;
-
-    this.sceneView.mousedown(() => {
-      activeUpdate = false;
+  events(transformControls) {
+    this._sceneView.mousedown(() => {
+      this._mouseIsMoving = false;
     });
 
-    this.sceneView.mousemove(() => {
-      activeUpdate = true;
+    this._sceneView.mousemove(() => {
+      this._mouseIsMoving = true;
     });
 
-    this.sceneView.mouseup(event => {
-      let click = {
-        x: event.clientX / window.innerWidth,
-        y: event.clientY / window.innerHeight
-      };
+    this._sceneView.mouseup(event => {
+      this._mouse.x = (event.clientX / window.innerWidth * 2) - 1;
+      this._mouse.y = -(event.clientY / window.innerHeight * 2) + 1;
 
-      this.closest = this.getClosestObject(click, Scene._scene.children, true);
-      if (this.closest !== null) {
-        PropPanelUI.loadObjectInfo(this.closest);
-        this.transformControl.attach(this.closest);
-      }
-      else if (activeUpdate === false) {
-        this.transformControl.detach();
+      this._closestObj = this.getClosestObject(Scene._scene.children, true);
+      if (this._closestObj !== undefined) {
+        PropPanelUI.loadObjectInfo(this._closestObj, transformControls);
+        transformControls.attach(this._closestObj);
+      } else if (this._mouseIsMoving === false) {
+        transformControls.detach();
         PropPanelUI.unselectObject();
       }
-      activeUpdate = false;
       Scene.render();
     });
   }
@@ -68,11 +51,9 @@ class SceneControls {
    * @param recursive Recursive mode (true/false)
    * @returns {objects[]} All intersected objects
    */
-  getIntersectObjects(click, objects, recursive) {
-    this.mouse.x = (click.x * 2) - 1;
-    this.mouse.y = -(click.y * 2) + 1;
-    this.raycaster.setFromCamera(this.mouse, Scene._camera);
-    return this.raycaster.intersectObjects(objects, recursive);
+  getIntersectObjects(objects, recursive) {
+    this._raycaster.setFromCamera(this._mouse, Scene._camera);
+    return this._raycaster.intersectObjects(objects, recursive);
   }
 
   /**
@@ -83,12 +64,14 @@ class SceneControls {
    * @param recursive Recursive mode (true/false)
    * @returns {object} Closest object
    */
-  getClosestObject(point, objects, recursive) {
-    let intersects = this.getIntersectObjects(point, objects, recursive);
-    if (intersects.length > 0)
-      return intersects[0].object;
-    return null;
+  getClosestObject(objects, recursive) {
+    let intersects = this.getIntersectObjects(objects, recursive);
+    if (intersects.length > 0) {
+      return Scene._objList.find(object => {
+        if (object === intersects[0].object)
+          return object;
+      });
+    }
+    return undefined;
   }
 }
-
-export default new SceneControls();

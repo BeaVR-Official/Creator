@@ -2,45 +2,42 @@
  * Created by urvoy_p on 04/05/16.
  */
 
+import SceneUI from './Scene.ui';
 import Scene from './Scene';
 
 class PropPanelUI {
   constructor() {
     $('#propertiesPanel').resizable({
       minWidth: 200,
-      maxWidth: $('#propertiesPanel').width(),
+      maxWidth: $('#propertiesPanel').width()
     });
 
-    $(".addItems").click(function() {
-      $('.ui.labeled.icon.sidebar.left')
-        .sidebar('toggle')
-      ;
+    $(".addItems").click(function () {
+      $('.ui.labeled.icon.sidebar.left').sidebar('toggle');
       $(".pusher").css("height", "0px");
       Scene.render();
     });
 
-    $(".addScript").click(function() {
-      $('.ui.labeled.icon.sidebar.right')
-        .sidebar('toggle')
-      ;
+    $(".addScript").click(function () {
+      $('.ui.labeled.icon.sidebar.right').sidebar('toggle');
       $(".pusher").css("height", "0px");
       Scene.render();
     });
 
     $(".Transformation-properties .object-properties input[type=number]").change(function (event) {
-      if (that.selectObject == undefined)
+      if (that.selectedObj === undefined)
         return;
       that.modifyObjectProperties(event);
     });
 
     let that = this;
     $(".Transformation-properties .object-properties input[type=number]").on("mousewheel", function (event) {
-      if (that.selectObject == undefined)
+      if (that.selectedObj === undefined)
         return;
       that.modifyObjectProperties(event);
     });
 
-    $(".Mesh-properties .object-properties input[type=color]").change(function() {
+    $(".Mesh-properties .object-properties input[type=color]").change(function () {
       that.changeObjectColor($(".Mesh-properties .object-properties input[type=color]")[0].value);
     });
 
@@ -50,105 +47,102 @@ class PropPanelUI {
   }
 
   changeObjectColor(color) {
-    try {
-      this.selectObject.material.color = new THREE.Color(color);
-    }
-    catch(err) {
-      this.selectObject.color = new THREE.Color(color);
-    }
+    let newColor = new THREE.Color(color);
+    this.selectedObj.setColor(newColor);
     Scene.render();
   }
 
   setObjectVisibility(state) {
-    this.selectObject.visible = state;
+    this.selectedObj.setVisibility(state);
     Scene.render();
   }
 
   modifyObjectProperties(event) {
-    var elem = $(event.target).closest(".object-properties").attr("data-type");
-    if (this.selectObject == undefined)
+    if (this.selectedObj === undefined)
       return;
+    let elem          = $(event.target).closest(".object-properties").attr("data-type");
+    let objProperties = $(".Transformation-properties .object-properties input");
     switch (elem) {
       case "location":
-        this.selectObject.position.set(
-          Math.round($(".Transformation-properties .object-properties input").eq(0).val()),
-          Math.round($(".Transformation-properties .object-properties input").eq(1).val()),
-          Math.round($(".Transformation-properties .object-properties input").eq(2).val())
-        );
+        let pos = {
+          x: Math.round(objProperties.eq(0).val()),
+          y: Math.round(objProperties.eq(1).val()),
+          z: Math.round(objProperties.eq(2).val())
+        };
+        this.selectedObj.updatePosition(pos);
         break;
       case "rotation":
-        this.selectObject.rotation.set(
-          $(".Transformation-properties .object-properties input").eq(3).val(),
-          $(".Transformation-properties .object-properties input").eq(4).val(),
-          $(".Transformation-properties .object-properties input").eq(5).val()
-        );
+        let rotation = {
+          x: Math.round(objProperties.eq(3).val()),
+          y: Math.round(objProperties.eq(4).val()),
+          z: Math.round(objProperties.eq(5).val())
+        };
+        this.selectedObj.updateRotation(rotation);
         break;
       case "scale":
-        this.selectObject.scale.set(
-          $(".Transformation-properties .object-properties input").eq(6).val(),
-          $(".Transformation-properties .object-properties input").eq(7).val(),
-          $(".Transformation-properties .object-properties input").eq(8).val()
-        )
+        let scale = {
+          x: objProperties.eq(6).val(),
+          y: objProperties.eq(7).val(),
+          z: objProperties.eq(8).val()
+        };
+        this.selectedObj.updateScale(scale);
         break;
       default:
         break;
     }
-    //this.selectObject.matrixAutoUpdate = false;
-    this.selectObject.needsUpdate = true;
-    this.selectObject.updateMatrix();
-    //TODO update transformControl from SceneControls.js
+    this.transformControls.update();
     Scene.render();
   }
 
   unselectObject() {
-    this.selectObject = undefined;
+    this.selectedObj = undefined;
   }
 
-  loadObjectInfo(object) {
-    if (object == null && this.selectObject == undefined)
-      return;
-    if (object != null) {
-      if (object.name == "lightPicker") {
+  loadObjectInfo(object, transformControls) {
+    if (object !== undefined) {
+      if (object.name === "lightPicker")
         object = object.children[0];
-      }
-      this.selectObject = object;
+      this.selectedObj = object;
     }
-
-    this.updateObjectGeneral(this.selectObject);
-    this.updateTransformations(this.selectObject);
-    this.updateMesh(this.selectObject);
+    if (transformControls !== undefined)
+      this.transformControls = transformControls;
+    this.update();
   }
 
-  updateObjectGeneral(object) {
-    $(".object input").first().val(object.name);
-    if (object.objType == undefined)
-      object.objType = object.type;
-    $(".object input").eq(1).val(object.objType);
+  update() {
+    this.updateMesh();
+    this.updateObjectGeneral();
+    this.updateTransformations();
   }
 
-  updateMesh(object) {
-    try {    $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + object.material.color.getHexString();}
-    catch (err){
-      $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + object.color.getHexString();
-    };
-    $(".Mesh-properties .object-properties input[type=checkbox]")[0].checked = object.visible;
+  updateObjectGeneral() {
+    if (this.selectedObj.name !== undefined)
+      $(".object input").first().val(this.selectedObj.name);
+    if (this.selectedObj.objType !== undefined)
+      $(".object input").eq(1).val(this.selectedObj.objType);
   }
 
-  updateTransformations(object) {
-    if (object == null || object == undefined)
+  updateMesh() {
+    let color = this.selectedObj.material.color;
+    if (color !== undefined)
+      $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + color.getHexString();
+    $(".Mesh-properties .object-properties input[type=checkbox]")[0].checked = this.selectedObj.visible;
+  }
+
+  updateTransformations() {
+    if (this.selectedObj === undefined)
       return;
 
-    $(".Transformation-properties .object-properties input").eq(0).val(object.position.x);
-    $(".Transformation-properties .object-properties input").eq(1).val(object.position.y);
-    $(".Transformation-properties .object-properties input").eq(2).val(object.position.z);
-    $(".Transformation-properties .object-properties input").eq(3).val(object.rotation.x);
-    $(".Transformation-properties .object-properties input").eq(4).val(object.rotation.y);
-    $(".Transformation-properties .object-properties input").eq(5).val(object.rotation.z);
-
-    $(".Transformation-properties .object-properties input").eq(6).val(object.scale.x);
-    $(".Transformation-properties .object-properties input").eq(7).val(object.scale.y);
-    $(".Transformation-properties .object-properties input").eq(8).val(object.scale.z);
-
+    let objProperties = $(".Transformation-properties .object-properties input");
+    objProperties.eq(0).val(this.selectedObj.position.x);
+    objProperties.eq(1).val(this.selectedObj.position.y);
+    objProperties.eq(2).val(this.selectedObj.position.z);
+    objProperties.eq(3).val(this.selectedObj.rotation.x);
+    objProperties.eq(4).val(this.selectedObj.rotation.y);
+    objProperties.eq(5).val(this.selectedObj.rotation.z);
+    objProperties.eq(6).val(this.selectedObj.scale.x);
+    objProperties.eq(7).val(this.selectedObj.scale.y);
+    objProperties.eq(8).val(this.selectedObj.scale.z);
   }
 }
 

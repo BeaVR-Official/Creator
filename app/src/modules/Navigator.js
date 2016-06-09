@@ -3,54 +3,52 @@
  */
 
 import Scene from './Scene';
-import SceneUI from './Scene.ui.js';
+import SceneUI from './Scene.ui';
+import CustomObject from './CustomObject';
 
 class Navigator {
   addBox() {
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(200, 200, 200);
-    let mesh     = new THREE.Mesh(geometry, material);
+    let box      = new CustomObject(geometry, material, 'box');
 
-    mesh.userData.id   = _.uniqueId();
-    mesh.name          = 'box_' + mesh.userData.id;
-    mesh.mirroredLoop  = true;
-    mesh.castShadow    = true;
-    mesh.receiveShadow = true;
-    mesh.objType       = 'box';
+    box.mirroredLoop  = true;
+    box.castShadow    = true;
+    box.receiveShadow = true;
 
-    Scene._scene.add(mesh);
+    Scene.addObj(box);
     Scene.render();
   }
 
   addSphere() {
     let geometry = new THREE.SphereGeometry(50, 50, 320);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let sphere   = new THREE.Mesh(geometry, material);
+    let sphere   = new CustomObject(geometry, material);
 
+    sphere.objType       = 'sphere';
     sphere.userData.id   = _.uniqueId();
     sphere.name          = 'sphere_' + sphere.userData.id;
     sphere.mirroredLoop  = true;
     sphere.castShadow    = true;
     sphere.receiveShadow = true;
-    sphere.objType       = 'sphere';
 
-    Scene._scene.add(sphere);
+    Scene.addObj(sphere);
     Scene.render();
   }
 
   addCylinder() {
-    let geometry = new THREE.CylinderGeometry(5, 5, 20, 32);
+    let geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let cylinder = new THREE.Mesh(geometry, material);
+    let cylinder = new CustomObject(geometry, material);
 
+    cylinder.objType       = 'cylinder';
     cylinder.userData.id   = _.uniqueId();
     cylinder.name          = 'cylinder_' + cylinder.userData.id;
     cylinder.mirroredLoop  = true;
     cylinder.castShadow    = true;
     cylinder.receiveShadow = true;
-    cylinder.objType       = 'cylinder';
 
-    Scene._scene.add(cylinder);
+    Scene.addObj(cylinder);
     Scene.render();
   }
 
@@ -66,40 +64,39 @@ class Navigator {
   }
 
   addSpotLight() {
-    let spotLight = new THREE.SpotLight( 0xffffff );
+    let spotLight = new THREE.SpotLight(0xffffff);
 
-    spotLight.userData.id = _.uniqueId();
-    spotLight.name = 'spotLight_' + spotLight.userData.id;
-
-    spotLight.position.set( 100, 1000, 100 );
-
-    spotLight.castShadow = true;
-
-    spotLight.shadow.mapSize.width = 1024;
+    spotLight.userData.id           = _.uniqueId();
+    spotLight.name                  = 'spotLight_' + spotLight.userData.id;
+    spotLight.castShadow            = true;
+    spotLight.shadow.mapSize.width  = 1024;
     spotLight.shadow.mapSize.height = 1024;
+    spotLight.shadow.camera.near    = 500;
+    spotLight.shadow.camera.far     = 4000;
+    spotLight.shadow.camera.fov     = 30;
 
-    spotLight.shadow.camera.near = 500;
-    spotLight.shadow.camera.far = 4000;
-    spotLight.shadow.camera.fov = 30;
-
+    spotLight.position.set(100, 1000, 100);
     this.addPicker(spotLight);
     Scene.render();
   }
 
   addDirectionalLight() {
-    let directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+    let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 
     directionalLight.userData.id = _.uniqueId();
-    directionalLight.name = 'directionalLight_' + directionalLight.userData.id;
-    directionalLight.position.set( 0, 1, 0 );
+    directionalLight.name        = 'directionalLight_' + directionalLight.userData.id;
+
+    directionalLight.position.set(0, 1, 0);
     this.addPicker(directionalLight);
     Scene.render();
   }
 
   addAmbientLight() {
-    let light = new THREE.AmbientLight( 0x404040 );
+    let light = new THREE.AmbientLight(0x404040);
+
     light.userData.id = _.uniqueId();
-    light.name = 'lightAmbient_' + light.userData.id;
+    light.name        = 'lightAmbient_' + light.userData.id;
+
     this.addPicker(light);
     Scene.render();
   }
@@ -107,67 +104,29 @@ class Navigator {
   addPicker(light) {
     let materialPicker = {
       visible:   false,
-      color:     0xff0000,  // Debugging display
-      wireframe: true,      //
+      color:     0xff0000,  // Debugging display:
+      wireframe: true,      // Active with visible = true
       fog:       false      //
     };
 
     let geometry = new THREE.SphereGeometry(50, 4, 2);
     let material = new THREE.MeshBasicMaterial(materialPicker);
-    let picker   = new THREE.Mesh(geometry, material);
+    let picker   = new CustomObject(geometry, material, 'picker');
 
-    picker.name = 'lightPicker';
-
+    SceneUI.addLightHelper(light);
     picker.add(light);
-    Scene._scene.add(picker);
-    SceneUI.addLightHelper(picker);
+    Scene.addObj(picker);
   }
 
   addExternal() {
-    var loader = new THREE.JSONLoader();
-    loader.load('models/horse.js', (geometry, materials) => {
+    let loader = new THREE.JSONLoader();
+    loader.load('models/horse.js', (geometry, material) => {
+      let importedObj = new CustomObject(geometry, new THREE.MeshFaceMaterial(material), 'ObjectJs');
 
-      let object = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-      let xmin   = Infinity;
-      let xmax   = -Infinity;
-      let ymin   = Infinity;
-      let ymax   = -Infinity;
-      let zmin   = Infinity;
-      let zmax   = -Infinity;
-      for (var i = 0; i < geometry.vertices.length; i++) {
-        let v = geometry.vertices[i];
-        if (v.x < xmin)
-          xmin = v.x;
-        else if (v.x > xmax)
-          xmax = v.x;
-        if (v.y < ymin)
-          ymin = v.y;
-        else if (v.y > ymax)
-          ymax = v.y;
-        if (v.z < zmin)
-          zmin = v.z;
-        else if (v.z > zmax)
-          zmax = v.z;
-      }
+      importedObj.scale.set(1, 1, 1);
+      importedObj.position.set(0, 0, 0);
 
-      /* translate the center of the object to the origin */
-      let centerX = (xmin + xmax) / 2;
-      let centerY = (ymin + ymax) / 2;
-      let centerZ = (zmin + zmax) / 2;
-      let max   = Math.max(centerX - xmin, xmax - centerX);
-      max       = Math.max(max, Math.max(centerY - ymin, ymax - centerY));
-      max       = Math.max(max, Math.max(centerZ - zmin, zmax - centerZ));
-      let scale = max / 20;
-      object.position.set(-centerX, -centerY, -centerZ);
-      console.log("Loading finished, scaling object by " + scale);
-      console.log("Center at ( " + centerX + ", " + centerY + ", " + centerZ + " )");
-
-      /* Create the wrapper, model, to scale and rotate the object. */
-
-      let model = new THREE.Object3D();
-      model.add(object);
-      model.scale.set(scale, scale, scale);
-      Scene._scene.add(model);
+      Scene.addObj(importedObj);
       Scene.render();
     });
   }
