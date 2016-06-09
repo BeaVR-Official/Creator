@@ -2,62 +2,58 @@ import Plugins from './Plugins';
 
 class Render {
   constructor(tree, holder) {
-    this._$holder = $(holder);
-    this._tree    = tree;
-    this._templ   = tree._options.templates;
-    this._plugins = new Plugins(this);
+    this.$holder   = $(holder);
+    this.tree      = tree;
+    this.templates = tree.options.templates;
+    this.plugins   = new Plugins(this);
   }
 
-  render() {
-    this._$holder.empty();
+  renderTree() {
+    this.$holder.empty();
+    this.renderSubtree(this.tree);
+    this.plugins.onTreeRendered(this.$holder);
+  }
 
-    const $orphanNodes = [];
-    JSON.stringify(this._tree, (key, val) => {
+  renderSubtree(tree, $parents) {
+    if ($parents === undefined)
+      $parents = {};
+    JSON.stringify(tree, (key, val) => {
       if (val === null) return undefined;
-      if (key === '_options') return undefined;
-      if (key === '_parent') return undefined;
-      if (typeof val === 'object' && val.hasOwnProperty('_id'))
-        this.renderNode(val, $orphanNodes);
+      if (key === 'options') return undefined;
+      if (key === 'parent') return undefined;
+      if (typeof val === 'object' && val.hasOwnProperty('id'))
+        this.renderNode(val, $parents);
       return val;
     });
 
-    this._plugins.onTreeRendered(this._$holder);
   }
 
-  renderNode(node, $orphanNodes) {
+  renderNode(node, $parents) {
     let $parent;
     const $node = this.drawNode(node);
 
-    $orphanNodes[node._id] = $node;
-    if (node._parent !== undefined) {
-      $parent = $orphanNodes[node._parent._id];
-      $parent.find('.node-child:eq(0)').append($node);
-    }
-    else {
-      $parent = this._$holder;
-      $parent.append($node);
-    }
+    $parents[node.id] = $node;
+    if (node.parent !== undefined)
+      $parent = $parents[node.parent.id].find('.node-child').eq(0);
+    else
+      $parent = this.$holder;
 
-    // ugly workaround for nested sortables
-    const nodeHeight = ($node.height() / 100) * 50;
-    const $nodeChild = $node.find('.node-child').eq(0);
-    $nodeChild.css('padding-top', nodeHeight);
-    $nodeChild.css('margin-top', -nodeHeight);
+    $parent.append($node);
 
-    this._plugins.onNodeRendered($node);
+    this.plugins.onNodeRendered($node);
   }
 
   drawNode(node) {
-    const $node      = $(this._templ.node);
-    const $content   = $(this._templ.content);
-    const $title     = $(this._templ.title);
-    const $child     = $(this._templ.child);
-    const $childCont = $(this._templ.childCont);
+    const $node      = $(this.templates.node);
+    const $content   = $(this.templates.content);
+    const $title     = $(this.templates.title);
+    const $child     = $(this.templates.child);
+    const $childCont = $(this.templates.childCont);
 
-    $node.attr('node-id', node._id);
-    if (this._tree._options.events.onRender === 'function')
-      $content.append(this._tree._options.events.onRender(node));
-    $title.append(node._name);
+    $node.attr('node-id', node.id);
+    if (typeof this.tree.options.events.onRender === 'function')
+      $content.append(this.tree.options.events.onRender(node));
+    $title.append(node.name);
     $content.append($title);
     $node.append($content);
     $childCont.append($child);

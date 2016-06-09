@@ -7,21 +7,25 @@ class AbstractPlugin {
     let modulePath = this.constructor.name.toLowerCase();
     let Options    = require('./' + modulePath + '/Options.js').default;
 
-    this._render  = render;
-    this._tree    = render._tree;
-    this._$holder = render._$holder;
-    this._options = new Options(overrides);
+    this.render  = render;
+    this.tree    = render.tree;
+    this.$holder = render.$holder;
+    this.options = new Options(overrides);
 
     this.subscribeEvents();
   }
 
+  elemOf(node) {
+    return $(this.$holder.find('[node-id=' + node.id + ']').eq(0));
+  }
+
   subscribeEvents() {
-    if (this._options.hasOwnProperty('events')) {
-      const events = this._options.events;
+    if (this.options.hasOwnProperty('events')) {
+      const events = this.options.events;
 
       for (const event in events) {
         const eventName = this.getEventName(event);
-        this._$holder.on(eventName, events[event]);
+        this.$holder.on(eventName, events[event]);
       }
     }
   }
