@@ -8,6 +8,7 @@ import CustomObject from './CustomObject';
 
 class Navigator {
   addBox() {
+
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(200, 200, 200);
     let box      = new CustomObject(geometry, material, 'box');
@@ -15,6 +16,12 @@ class Navigator {
     box.mirroredLoop  = true;
     box.castShadow    = true;
     box.receiveShadow = true;
+
+    //Object.assign(CustomObject.prototype, THREE.EventDispatcher.prototype );
+    //box.addEventListener('add', function (event ) {
+    //  console.log(event.message);
+    //} );
+    //box.addToScene(Scene._scene);
 
     Scene.addObj(box);
     Scene.render();

@@ -9,6 +9,10 @@ export default class CustomObject extends THREE.Mesh {
     this._script     = 'script here';
   }
 
+  //addToScene(scene) {
+  //  this.dispatchEvent({type: 'add', message: this.name + ' Added!'});
+  //}
+
   setPosition(pos) {
     this.position.set(pos.x, pos.y, pos.z);
   }
@@ -34,17 +38,17 @@ export default class CustomObject extends THREE.Mesh {
     this.setPosition(pos);
     //Scene.render();
   }
-  
+
   updateRotation(rot) {
     this.setRotation(rot);
     //Scene.render();
   }
-  
+
   updateScale(scale) {
     this.setScale(scale);
     //Scene.render();
   }
-  
+
   objToJSON() {
     return {
       object:       JSON.stringify(this),
