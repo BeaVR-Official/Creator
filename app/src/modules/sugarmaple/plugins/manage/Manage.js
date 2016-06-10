@@ -2,12 +2,8 @@ import AbstractPlugin from '../AbstractPlugin';
 import {Node} from '../../Tree';
 
 class Manage extends AbstractPlugin {
-  constructor(render, options) {
-    super(render, options);
-  }
-
-  onTreeRendered() {
-    // nothing to be done for that plugin
+  constructor(renderer, options) {
+    super(renderer, options);
   }
 
   onNodeRendered() {
@@ -18,21 +14,27 @@ class Manage extends AbstractPlugin {
     return new Node(name, data);
   }
 
-  attachNodeToRoot(node) {
-    this.attachNode(this.tree.rootNode, node);
+  setRootNode(node) {
+    this.tree.setRootNode(node);
+    this.render.renderSubtree(node);
+  }
+
+  getRootNode(node) {
+    return this.tree.getRootNode();
   }
 
   attachNode(parentNode, node) {
     const $parents          = {};
-    $parents[parentNode.id] = this.elemOf(parentNode);
+    $parents[parentNode.id] = this.elementOf(parentNode);
 
+    this.detachNode(node);
     this.tree.attachNode(parentNode, node);
     this.render.renderSubtree(node, $parents);
   }
 
   detachNode(node) {
     this.tree.detachNode(node);
-    this.elemOf(node).remove();
+    this.elementOf(node).remove();
   }
 }
 

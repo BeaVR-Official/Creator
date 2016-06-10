@@ -1,54 +1,48 @@
 import Plugins from './Plugins';
 
-class Render {
+class Renderer {
   constructor(tree, holder) {
-    this.$holder   = $(holder);
-    this.tree      = tree;
-    this.templates = tree.options.templates;
-    this.plugins   = new Plugins(this);
-  }
-
-  renderTree() {
-    this.$holder.empty();
-    this.renderSubtree(this.tree);
-    this.plugins.onTreeRendered(this.$holder);
+    this.$holder = $(holder);
+    this.tree    = tree;
+    this.plugins = new Plugins(this);
   }
 
   renderSubtree(tree, $parents) {
-    if ($parents === undefined)
-      $parents = {};
+    if ($parents === undefined) $parents = {};
+
     JSON.stringify(tree, (key, val) => {
       if (val === null) return undefined;
       if (key === 'options') return undefined;
       if (key === 'parent') return undefined;
       if (typeof val === 'object' && val.hasOwnProperty('id'))
-        this.renderNode(val, $parents);
+        this._renderNode(val, $parents);
       return val;
     });
-
   }
 
-  renderNode(node, $parents) {
+  _renderNode(node, $parents) {
     let $parent;
-    const $node = this.drawNode(node);
+    const $node = this._drawNode(node);
 
     $parents[node.id] = $node;
     if (node.parent !== undefined)
       $parent = $parents[node.parent.id].find('.node-child').eq(0);
-    else
+    else {
       $parent = this.$holder;
+      $parent.empty();
+    }
 
     $parent.append($node);
 
     this.plugins.onNodeRendered($node);
   }
 
-  drawNode(node) {
-    const $node      = $(this.templates.node);
-    const $content   = $(this.templates.content);
-    const $title     = $(this.templates.title);
-    const $child     = $(this.templates.child);
-    const $childCont = $(this.templates.childCont);
+  _drawNode(node) {
+    const $node      = $(this.tree.options.templates.node);
+    const $content   = $(this.tree.options.templates.content);
+    const $title     = $(this.tree.options.templates.title);
+    const $child     = $(this.tree.options.templates.child);
+    const $childCont = $(this.tree.options.templates.childCont);
 
     $node.attr('node-id', node.id);
     if (typeof this.tree.options.events.onRender === 'function')
@@ -69,4 +63,4 @@ class Render {
   }
 }
 
-export default Render;
+export default Renderer;

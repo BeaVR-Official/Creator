@@ -1,16 +1,11 @@
 import AbstractPlugin from '../AbstractPlugin';
 
 class Drag extends AbstractPlugin {
-  constructor(render, options) {
-    super(render, options);
-    this.$rootNode    = undefined;
+  constructor(renderer, options) {
+    super(renderer, options);
     this.$overNode    = undefined;
     this.$dragNode    = undefined;
     this.$placeHolder = $(this.options.templates.placeholder);
-  }
-
-  onTreeRendered() {
-    // nothing to be done for that plugin
   }
 
   onNodeRendered($node) {
@@ -50,7 +45,7 @@ class Drag extends AbstractPlugin {
    */
   foldable(node) {
     node.drag.foldable = true;
-    this.makeFoldableFromElem(this.elemOf(node));
+    this.makeFoldableFromElem(this.elementOf(node));
   }
 
   /**
@@ -85,7 +80,7 @@ class Drag extends AbstractPlugin {
     if (!this.options.parameters.draggable) return;
 
     const that  = this;
-    const $node = this.elemOf(node);
+    const $node = this.elementOf(node);
     $node.draggable({
       scrollSensitivity: 20,
       scrollSpeed:       10,
@@ -172,7 +167,7 @@ class Drag extends AbstractPlugin {
     if (!this.options.parameters.droppable) return;
 
     const that  = this;
-    const $node = this.elemOf(node);
+    const $node = this.elementOf(node);
     $node.find('.node-content').eq(0).droppable({
       greedy:    true,
       accept:    '.node',

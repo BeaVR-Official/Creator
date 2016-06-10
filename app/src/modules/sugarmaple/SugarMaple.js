@@ -1,12 +1,12 @@
-import {Tree, Node} from './Tree';
-import Render from './Render';
+import {Tree} from './Tree';
+import Render from './Renderer';
 
 class SugarMaple {
-  constructor(parent, options) {
-    let tree   = new Tree(options);
-    let render = new Render(tree, parent);
+  constructor(holder, options) {
+    const tree    = new Tree(options);
+    const render  = new Render(tree, holder);
 
-    render.renderTree();
+    render.renderSubtree(tree);
 
     $.extend(true, this, render.plugins);
   }

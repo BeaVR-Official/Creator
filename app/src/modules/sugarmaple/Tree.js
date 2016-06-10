@@ -13,26 +13,38 @@ class Node {
 class Tree {
   constructor(options) {
     this.options       = new Options(options);
-    this.rootNode      = new Node("rootNode");
-    this.rootNode.id   = 0;
+    this.rootNode      = undefined;
     this.currentNodeId = 0;
   }
 
-  attachNode(parentNode, node) {
-    node.id                      = ++this.currentNodeId;
-    node.parent                  = parentNode;
-    parentNode.children[node.id] = node;
+  setRootNode(node) {
+    this.attachNode(undefined, node);
+    this.rootNode = node;
   }
 
-  detachNode(node) {
-    if (node.parent !== 'undefined') {
-      const parentNode = node.parent;
-      parentNode.children.splice(node.id, 1);
+  getRootNode() {
+    return this.rootNode;
+  }
+
+  attachNode(parentNode, node) {
+    this.detachNode(node); // detach if still has parent
+
+    if (node.id === undefined)
+      node.id = ++this.currentNodeId;
+
+    if (parentNode !== undefined) {
+      parentNode.children[node.id] = node;
+      node.parent                  = parentNode;
     }
   }
 
-  getNodeChild(node) {
-    return node.children;
+  detachNode(node) {
+    if (node.parent !== undefined) {
+      const parentNode = node.parent;
+
+      node.parent = undefined;
+      parentNode.children.splice(node.id, 1);
+    }
   }
 
   /**
