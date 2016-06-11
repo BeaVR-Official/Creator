@@ -151,13 +151,13 @@ body {
 }
 
 .sugarmaple .node .node-content {
+    background: white;
     padding: 0.6em;
     border-radius: 0.2em;
     box-shadow: 0.05em 0.05em 0.3em -0.1em rgba(0, 0, 0, 0.30);
 }
 
 .sugarmaple .node .basic {
-    background: white;
 }
 
 .sugarmaple .node .dragged {

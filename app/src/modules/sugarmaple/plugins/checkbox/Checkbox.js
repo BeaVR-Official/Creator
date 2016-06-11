@@ -42,15 +42,15 @@ class Checkbox extends AbstractPlugin {
   }
 
   checkboxOf(node) {
-    return $(this.elementOf(node).find('.node-checkbox').eq(0));
+    return $(this.elementFromNode(node).find('.node-checkbox').eq(0));
   }
 
   checkboxesOf(node) {
-    return this.elementOf(node).find('.node-checkbox');
+    return this.elementFromNode(node).find('.node-checkbox');
   }
 
   getChecked(node) {
-    const $node        = this.elementOf(node);
+    const $node        = this.elementFromNode(node);
     const $checked     = $node.find('.child-group-node:has(.node-checkbox:checked)');
     const checkedNodes = [];
 
@@ -61,7 +61,7 @@ class Checkbox extends AbstractPlugin {
   }
 
   getUnChecked(node) {
-    const $node          = this.elementOf(node);
+    const $node          = this.elementFromNode(node);
     const $unChecked     = $node.find('.child-group-node:has(.node-checkbox:not(:checked))');
     const unCheckedNodes = [];
 
@@ -72,7 +72,7 @@ class Checkbox extends AbstractPlugin {
   }
 
   getDisabled(node) {
-    const $node         = this.elementOf(node);
+    const $node         = this.elementFromNode(node);
     const $disabled     = $node.find('.child-group-node:has(.node-checkbox:disabled)');
     const disabledNodes = [];
 
@@ -83,7 +83,7 @@ class Checkbox extends AbstractPlugin {
   }
 
   getEnabled(node) {
-    const $node        = this.elementOf(node);
+    const $node        = this.elementFromNode(node);
     const $enabled     = $node.find('.child-group-node:has(.node-checkbox:not(:disabled))');
     const enabledNodes = [];
 

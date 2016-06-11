@@ -1,5 +1,8 @@
 import Options from './Options';
 
+/**
+ * Data structure representing a Node
+ */
 class Node {
   constructor(name, data) {
     this.id       = undefined;
@@ -10,6 +13,9 @@ class Node {
   }
 }
 
+/**
+ * Data structure holding all the Nodes
+ */
 class Tree {
   constructor(options) {
     this.options       = new Options(options);
@@ -17,31 +23,56 @@ class Tree {
     this.currentNodeId = 0;
   }
 
+  /**
+   * Makes a Node root
+   * @param node Node to be the new root
+   */
   setRootNode(node) {
     this.attachNode(undefined, node);
     this.rootNode = node;
   }
 
+  /**
+   * @returns Boolean rootNode
+   */
+  isRootNode(node) {
+    return this.rootNode === node;
+  }
+
+  /**
+   * @returns Node rootNode
+   */
   getRootNode() {
     return this.rootNode;
   }
 
-  attachNode(parentNode, node) {
-    this.detachNode(node); // detach if still has parent
-
+  /**
+   * Attaches node to a new parent
+   * @param parent
+   * @param node
+   */
+  attachNode(parent, node) {
+    // detach if still has parent
+    this.detachNode(node);
+    // if newly-created Node
     if (node.id === undefined)
       node.id = ++this.currentNodeId;
-
-    if (parentNode !== undefined) {
-      parentNode.children[node.id] = node;
-      node.parent                  = parentNode;
+    // Sets node as a child of parent
+    if (parent !== undefined) {
+      parent.children[node.id] = node;
+      node.parent              = parent;
     }
   }
 
+  /**
+   * Removes a Node from its parent
+   * @param node
+   */
   detachNode(node) {
+    // if Node is not the root or not detached already
     if (node.parent !== undefined) {
       const parentNode = node.parent;
-
+      // Make it orphan & remove from parent
       node.parent = undefined;
       parentNode.children.splice(node.id, 1);
     }

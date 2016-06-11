@@ -34,6 +34,9 @@ class Example {
     maple.manage.attachNode(totoNode, tataNode);
     maple.manage.attachNode(totoNode, tataNode);
     maple.manage.attachNode(totoNode, tataNode);
+    //maple.manage.detachNode(totoNode);
+    maple.manage.setRootNode(tataNode);
+
 
     console.log(maple);
   }

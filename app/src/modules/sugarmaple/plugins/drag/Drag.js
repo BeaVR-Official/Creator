@@ -1,5 +1,8 @@
 import AbstractPlugin from '../AbstractPlugin';
 
+/**
+ * Drag plugin, jQuery Sortable equivalent
+ */
 class Drag extends AbstractPlugin {
   constructor(renderer, options) {
     super(renderer, options);
@@ -9,17 +12,16 @@ class Drag extends AbstractPlugin {
   }
 
   onNodeRendered($node) {
-    const node = $node.data('node');
+    const node = this.nodeFromElement($node);
 
     this.initNode(node);
 
+    // set the basic css for a non-dragged node
     $node.find('.node-content').eq(0).addClass('basic');
     if (node.parent !== undefined) { // not applicable to rootNode
       this.foldable(node);
       this.draggable(node);
       this.droppable(node);
-    } else {
-      this.$rootNode = $node;
     }
   }
 
@@ -45,7 +47,7 @@ class Drag extends AbstractPlugin {
    */
   foldable(node) {
     node.drag.foldable = true;
-    this.makeFoldableFromElem(this.elementOf(node));
+    this.makeFoldableFromElem(this.elementFromNode(node));
   }
 
   /**
@@ -80,7 +82,7 @@ class Drag extends AbstractPlugin {
     if (!this.options.parameters.draggable) return;
 
     const that  = this;
-    const $node = this.elementOf(node);
+    const $node = this.elementFromNode(node);
     $node.draggable({
       scrollSensitivity: 20,
       scrollSpeed:       10,
@@ -93,7 +95,7 @@ class Drag extends AbstractPlugin {
       },
       helper:            function () {
         // create a foldable clone of the dragged node
-        that.$helper          = $(this).clone(true);
+        that.$helper          = $(this).clone();
         that.$helper.$content = that.$helper.find('.node-content').eq(0);
         // please fold
         that.makeFoldableFromElem(that.$helper);
@@ -167,7 +169,7 @@ class Drag extends AbstractPlugin {
     if (!this.options.parameters.droppable) return;
 
     const that  = this;
-    const $node = this.elementOf(node);
+    const $node = this.elementFromNode(node);
     $node.find('.node-content').eq(0).droppable({
       greedy:    true,
       accept:    '.node',
