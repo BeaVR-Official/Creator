@@ -16,13 +16,13 @@ class Drag extends AbstractPlugin {
 
     this.initNode(node);
 
-    // set the basic css for a non-dragged node
+    // set the basic css/state for a non-dragged node
     $node.find('.node-content').eq(0).addClass('basic');
     if (node.parent !== undefined) { // not applicable to rootNode
       this.foldable(node);
       this.draggable(node);
-      this.droppable(node);
     }
+    this.droppable(node);
   }
 
   /**
@@ -41,13 +41,26 @@ class Drag extends AbstractPlugin {
   }
 
   /**
+   * Make a not not foldable
+   * @param node
+   */
+  notFoldable(node) {
+    const $node = this.elementFromNode(node);
+
+    node.drag.foldable = false;
+    $node.unbind('fold expand');
+  }
+
+  /**
    * Gives a node the ability to be folded
    * (Useful while dragging a node with children)
    * @param node
    */
   foldable(node) {
+    const $node = this.elementFromNode(node);
+
     node.drag.foldable = true;
-    this.makeFoldableFromElem(this.elementFromNode(node));
+    this._makeFoldableFromElem($node);
   }
 
   /**
@@ -55,7 +68,7 @@ class Drag extends AbstractPlugin {
    * (Useful while dragging a node with children)
    * @param $node
    */
-  makeFoldableFromElem($node) {
+  _makeFoldableFromElem($node) {
     if (!this.options.parameters.foldable) return;
 
     const that            = this;
@@ -74,6 +87,18 @@ class Drag extends AbstractPlugin {
   }
 
   /**
+   * Make a node not draggable
+   * @param node
+   */
+  notDraggable(node) {
+    const $node = this.elementFromNode(node);
+
+    node.drag.draggable = false;
+    if ($node.draggable('instance') !== undefined)
+      $node.draggable('destroy');
+  }
+
+  /**
    * Gives a node the ability to be dragged
    * @param node
    */
@@ -84,6 +109,7 @@ class Drag extends AbstractPlugin {
     const that  = this;
     const $node = this.elementFromNode(node);
     $node.draggable({
+      handle:            '> .node-content',
       scrollSensitivity: 20,
       scrollSpeed:       10,
       zIndex:            9999,
@@ -98,7 +124,7 @@ class Drag extends AbstractPlugin {
         that.$helper          = $(this).clone();
         that.$helper.$content = that.$helper.find('.node-content').eq(0);
         // please fold
-        that.makeFoldableFromElem(that.$helper);
+        that._makeFoldableFromElem(that.$helper);
 
         return that.$helper;
       },
@@ -111,9 +137,11 @@ class Drag extends AbstractPlugin {
         const distance   = dragOffset.top - overOffset.top;
         // determine dragged relative position to the overed node
         if (Math.abs(distance) <= overHeight / 2) {
-          if (distance >= -overHeight / 2 && distance <= 0)
-            that.$helper.pos = 'top';
-          else if (distance > 0 && distance <= overHeight / 2)
+          if (distance >= -overHeight / 2 && distance <= 0) {
+            // Cannot append Node to the top of Root
+            if (!that.tree.isRootNode(that.$overNode.data('node')))
+              that.$helper.pos = 'top';
+          } else if (distance > 0 && distance <= overHeight / 2)
             that.$helper.pos = 'bottom';
           // move the placeholder relative to the position of the helper
           that.addRelativelyToOverNode(that.$placeHolder);
@@ -149,19 +177,38 @@ class Drag extends AbstractPlugin {
   }
 
   /**
-   * Adds an element above or under the current overed node
+   * Adds an $element above or under the current overed node
    * The helper indicates its position relatively to the overed node
+   * @return Boolean Whether the node receiving $element is droppable or not
    * @param $element
    */
   addRelativelyToOverNode($element) {
-    if (this.$helper.pos === 'top')
-      $element.insertBefore(this.$overNode);
-    else if (this.$helper.pos === 'bottom')
-      this.$overNode.$child.prepend($element);
+    if (this.$helper.pos === 'top') {
+      if (this.$overNode.parents('.node').eq(0).find('.node-content').eq(0).droppable('instance') !== undefined)
+        $element.insertBefore(this.$overNode);
+      else return false;
+    } else if (this.$helper.pos === 'bottom') {
+      if (this.$overNode.find('.node-content').eq(0).droppable('instance') !== undefined)
+        this.$overNode.$child.prepend($element);
+      else return false;
+    }
+    return true;
   }
 
   /**
-   * Gives a node the ability to be dropped
+   * Make a node not droppable
+   * @param node
+   */
+  notDroppable(node) {
+    const $node = this.elementFromNode(node).find('.node-content').eq(0);
+
+    node.drag.droppable = false;
+    if ($node.droppable('instance') !== undefined)
+      $node.droppable('destroy');
+  }
+
+  /**
+   * Gives a node the ability to receive draggable ones
    * @param node
    */
   droppable(node) {
@@ -175,8 +222,8 @@ class Drag extends AbstractPlugin {
       accept:    '.node',
       tolerance: 'pointer',
       create:    function () {
-        this.$dropNode          = $(this).parents('.node').eq(0);
-        this.$dropNode.$child   = this.$dropNode.find('.node-child').eq(0);
+        this.$dropNode          = $node;
+        this.$dropNode.$child   = $node.find('.node-child').eq(0);
         this.$dropNode.$content = $(this);
       },
       over:      function () {
