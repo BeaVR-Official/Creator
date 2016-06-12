@@ -1,13 +1,12 @@
 class Options {
   constructor(overrides) {
     this.events = {
-      onCheck:   undefined,
-      onUnCheck: undefined
+      onChecked:   undefined,
+      onUnchecked: undefined
     };
 
     this.templates = {
-      checkboxCont: '<div class="node-checkbox-container"/></div>',
-      checkbox:     '<input type="checkbox" class="node-checkbox"/>'
+      checkbox: '<input type="checkbox" class="node-checkbox"/>'
     };
 
     this.parameters = {

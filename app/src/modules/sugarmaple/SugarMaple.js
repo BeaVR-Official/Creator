@@ -6,8 +6,6 @@ class SugarMaple {
     const tree    = new Tree(options);
     const render  = new Render(tree, holder);
 
-    render.render(tree);
-
     $.extend(true, this, render.plugins);
   }
 }

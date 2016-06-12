@@ -79,6 +79,20 @@ class Tree {
   }
 
   /**
+   * Iterates over a node & its sons
+   * @param node
+   * @param callback The current iteration is sent to it
+   */
+  iterateOverNode(node, callback) {
+    const children = node.children;
+    callback(node);
+
+    for (let son in children) {
+      this.iterateOverNode(children[son], callback);
+    }
+  }
+
+  /**
    * Loads a new Tree from JSON and links the childs to their parents
    * Triggers an event before the load of a Node for modification
    * @param json

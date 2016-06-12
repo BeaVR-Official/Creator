@@ -1,4 +1,5 @@
 import Plugins from './Plugins';
+import {Tree} from './Tree';
 
 /**
  * Displays a node by building it & requesting plugins
@@ -18,14 +19,10 @@ class Renderer {
     const $parents = {};
 
     // Use of JSON to iterate over the Tree structure
-    JSON.stringify(tree, (key, val) => {
-      if (val === null) return undefined;
-      if (key === 'options') return undefined;
-      if (key === 'parent') return undefined;
-      // if its a node
-      if (typeof val === 'object' && val.hasOwnProperty('id'))
-        this._renderNode(val, $parents);
-      return val;
+    if (tree instanceof Tree)
+      tree = tree.getRootNode();
+    this.tree.iterateOverNode(tree, (node) => {
+      this._renderNode(node, $parents);
     });
   }
 
@@ -54,7 +51,8 @@ class Renderer {
 
     $parent.append($node);
     // Triggers the Renderer plugins
-    this.plugins.onNodeRendered($node);
+    this.plugins._initNode(node);
+    this.plugins._onNodeRendered($node);
   }
 
   /**

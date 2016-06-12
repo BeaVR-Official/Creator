@@ -20,13 +20,28 @@ class Plugins {
   }
 
   /**
-   * Calls the onNodeRendered method for all the (active) plugins
+   * Calls the _onNodeRendered method for all the (active) plugins
+   * When this is called, the HTMLElement of the Node is already
+   * appended and the plugins can modify it
    * @param $node
    */
-  onNodeRendered($node) {
+  _onNodeRendered($node) {
     for (let pluginName in this)
       if (this[pluginName] instanceof AbstractPlugin)
-        this[pluginName].onNodeRendered($node);
+        this[pluginName]._onNodeRendered($node);
+  }
+
+  /**
+   * Calls the _initNode method for all the (active) plugins
+   * When this is called, the HTMLElement of the Node is already
+   * appended and the plugins can add their data structure to the Node
+   * in order to be saved. This is called after _onNodeRendered
+   * @param $node
+   */
+  _initNode(node) {
+    for (let pluginName in this)
+      if (this[pluginName] instanceof AbstractPlugin)
+        this[pluginName]._initNode(node);
   }
 }
 

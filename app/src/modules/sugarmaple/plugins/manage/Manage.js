@@ -9,7 +9,11 @@ class Manage extends AbstractPlugin {
     super(renderer, options);
   }
 
-  onNodeRendered($node) {
+  _initNode(node) {
+    // nothing to be done for this plugin
+  }
+
+  _onNodeRendered($node) {
     // nothing to be done for this plugin
   }
 
@@ -34,10 +38,10 @@ class Manage extends AbstractPlugin {
   }
 
   /**
-   * @param node
+   * Delegate method for getRootNode
    * @returns {*|Node} Current root Node
    */
-  getRootNode(node) {
+  getRootNode() {
     return this.tree.getRootNode();
   }
 

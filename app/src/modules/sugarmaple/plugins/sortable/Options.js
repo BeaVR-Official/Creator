@@ -6,12 +6,14 @@ class Options {
     };
 
     this.parameters = {
-      easing:          'swing',
-      revertDuration:  200,
-      effectsDuration: 400,
-      foldable:        true,
-      droppable:       true,
-      draggable:       true
+      easing:           'swing',
+      revertDuration:   200,
+      effectsDuration:  400,
+      defaultFoldable:  true,
+      defaultDroppable: true,
+      defaultDraggable: true,
+      scrollSensitivity: 20,
+      scrollSpeed:       10
     };
 
     this.templates = {
