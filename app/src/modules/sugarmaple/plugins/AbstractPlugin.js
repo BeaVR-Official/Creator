@@ -14,12 +14,15 @@ class AbstractPlugin {
     // Make tools easily available for plugin
     this.renderer = renderer;
     this.tree     = renderer.tree;
+    this.widget   = renderer.widget;
     this.$holder  = renderer.$holder;
     this.options  = new Options(overrides);
     this.name     = this.constructor.name.toLowerCase();
 
     // Make the plugin events available to jQuery
     this._subscribeEvents();
+    // Make the plugin public methods available to the widget
+    this._registerMethods();
   }
 
   /**
@@ -27,7 +30,7 @@ class AbstractPlugin {
    * @param node
    * @returns {*|jQuery|HTMLElement}
    */
-  elementFromNode(node) {
+  _elementFromNode(node) {
     return this.renderer._elementFromNode(node);
   }
 
@@ -36,7 +39,7 @@ class AbstractPlugin {
    * @param $node
    * @returns {*|jQuery|HTMLElement}
    */
-  nodeFromElement($node) {
+  _nodeFromElement($node) {
     return this.renderer._nodeFromElement($node);
   }
 
@@ -46,12 +49,29 @@ class AbstractPlugin {
    * @param node
    * @param callback
    */
-  iterateOverNode(node, callback) {
-    return this.tree.iterateOverNode(node, callback);
+  _iterateOverNode(node, callback) {
+    return this.tree._iterateOverNode(node, callback);
   }
 
-  trigger(eventName, data) {
-    this.$holder.trigger(this.name + '.' + eventName, parent);
+  _trigger(eventName, data) {
+    this.$holder.trigger(this.name + '.' + eventName, data);
+  }
+
+  /**
+   * Makes the public plugin methods available directly
+   * from the widget [PluginName].[MethodName]
+   * @private
+   */
+  _registerMethods() {
+    const that = this;
+    for (let methodName of Object.getOwnPropertyNames(Object.getPrototypeOf(this))) {
+      const method = this[methodName];
+
+      if (methodName.charAt(0) !== '_' && methodName !== 'constructor')
+        this.widget[this.name + '.' + methodName] = function () {
+          return Reflect.apply(method, that, arguments);
+        };
+    }
   }
 
   /**

@@ -23,7 +23,7 @@ class Manage extends AbstractPlugin {
    * @param data Additional Node information
    * @returns {Node}
    */
-  createNode(name, data) {
+  create(name, data) {
     return new Node(name, data);
   }
 
@@ -32,17 +32,17 @@ class Manage extends AbstractPlugin {
    * and displays it
    * @param node
    */
-  setRootNode(node) {
-    this.tree.setRootNode(node);
+  setRoot(node) {
+    this.tree.setRoot(node);
     this.renderer.render(node);
   }
 
   /**
-   * Delegate method for getRootNode
+   * Delegate method for getRoot
    * @returns {*|Node} Current root Node
    */
-  getRootNode() {
-    return this.tree.getRootNode();
+  getRoot() {
+    return this.tree.getRoot();
   }
 
   /**
@@ -51,9 +51,9 @@ class Manage extends AbstractPlugin {
    * @param parent
    * @param node
    */
-  attachNode(parent, node) {
-    this.detachNode(node);
-    this.tree.attachNode(parent, node);
+  attach(parent, node) {
+    this.detach(node);
+    this.tree.attach(parent, node);
     this.renderer.render(node);
   }
 
@@ -62,9 +62,9 @@ class Manage extends AbstractPlugin {
    * and displays it
    * @param node
    */
-  detachNode(node) {
-    this.tree.detachNode(node);
-    this.elementFromNode(node).remove();
+  detach(node) {
+    this.tree.detach(node);
+    this._elementFromNode(node).remove();
   }
 }
 

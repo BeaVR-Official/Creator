@@ -14,9 +14,9 @@ class Example {
           }
         },
         plugins: {
-          manage:   true,
-          sortable: true,
-          checkbox: true
+          manage:    true,
+          sortable:  true,
+          checkable: true
         }
       });
 
@@ -24,17 +24,17 @@ class Example {
       console.log('ooooo');
     });
 
-    const totoNode = maple.manage.createNode('Node de Toto', {lol: 'toto', age: 1});
-    const tataNode = maple.manage.createNode('Node de Tata', {lol: 'toto', age: 1});
-    const titiNode = maple.manage.createNode('Node de Titi', {lol: 'toto', age: 1});
-    const teteNode = maple.manage.createNode('Node de Tete', {lol: 'toto', age: 1});
-    const tutuNode = maple.manage.createNode('Node de Tutu', {lol: 'toto', age: 1});
+    const totoNode = maple.manage.create('Node de Toto', {lol: 'toto', age: 1});
+    const tataNode = maple.manage.create('Node de Tata', {lol: 'toto', age: 1});
+    const titiNode = maple.manage.create('Node de Titi', {lol: 'toto', age: 1});
+    const teteNode = maple.manage.create('Node de Tete', {lol: 'toto', age: 1});
+    const tutuNode = maple.manage.create('Node de Tutu', {lol: 'toto', age: 1});
 
-    maple.manage.setRootNode(totoNode);
-    maple.manage.attachNode(teteNode, tutuNode);
-    maple.manage.attachNode(totoNode, teteNode);
-    maple.manage.attachNode(totoNode, titiNode);
-    maple.manage.attachNode(totoNode, tataNode);
+    //maple.manage.setRoot(totoNode);
+    maple.manage.attach(teteNode, tutuNode);
+    maple.manage.attach(totoNode, teteNode);
+    maple.manage.attach(totoNode, titiNode);
+    maple.manage.attach(totoNode, tataNode);
     maple.sortable.notDroppable(teteNode);
     //maple.sortable.notDraggable(totoNode);
     //maple.checkbox.disabled(totoNode);

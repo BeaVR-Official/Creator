@@ -22,7 +22,7 @@ class Sortable extends AbstractPlugin {
   }
 
   _onNodeRendered($node) {
-    const node = this.nodeFromElement($node);
+    const node = this._nodeFromElement($node);
 
     // set the basic css/state for a non-dragged node
     $node.find('.node-content').eq(0).addClass('basic');
@@ -38,7 +38,7 @@ class Sortable extends AbstractPlugin {
    * @param node
    */
   notFoldable(node) {
-    const $node = this.elementFromNode(node);
+    const $node = this._elementFromNode(node);
 
     node.drag.foldable = false;
     $node.trigger('expand');
@@ -51,7 +51,7 @@ class Sortable extends AbstractPlugin {
    * @param node
    */
   foldable(node) {
-    const $node = this.elementFromNode(node);
+    const $node = this._elementFromNode(node);
 
     node.drag.foldable = true;
     this._makeFoldableFromElem($node);
@@ -83,7 +83,7 @@ class Sortable extends AbstractPlugin {
    * @param node
    */
   notDraggable(node) {
-    const $node = this.elementFromNode(node);
+    const $node = this._elementFromNode(node);
 
     node.drag.draggable = false;
     if ($node.draggable('instance') !== undefined)
@@ -98,7 +98,7 @@ class Sortable extends AbstractPlugin {
     node.drag.draggable = true;
 
     const that  = this;
-    const $node = this.elementFromNode(node);
+    const $node = this._elementFromNode(node);
     $node.draggable({
       handle:            '> .node-content',
       zIndex:            9999,
@@ -148,7 +148,7 @@ class Sortable extends AbstractPlugin {
         that.$helper.addClass('no-bg');
         that.$helper.$content.addClass('dragged',
           that.options.parameters.effectsDuration);
-        that.trigger('drag', node);
+        that._trigger('dragged', [node]);
       },
       stop:              function () {
         // un-hide dragged node, expand & set basic state
@@ -175,17 +175,17 @@ class Sortable extends AbstractPlugin {
   addRelativelyToOverNode($element) {
     if (this.$helper.pos === 'top') {
       // Cannot append Node to the top of Root
-      if (this.tree.isRootNode(this.$overNode.data('node')))
+      if (this.tree.isRoot(this.$overNode.data('node')))
         return false;
       // Check if the top receiver ( = parent of overed node) is able to receive
       const $topParent = this.$overNode.parents('.node').eq(0).find('.node-content').eq(0);
       if ($topParent.droppable('instance') !== undefined) {
         $element.insertBefore(this.$overNode); // move in ui
         if ($element !== this.$placeHolder) { // move in tree data
-          const parent = this.nodeFromElement($topParent);
-          const moved = this.nodeFromElement($element);
-          this.tree.attachNode(parent, moved);
-          this.trigger('drop', parent);
+          const parent = this._nodeFromElement($topParent);
+          const moved = this._nodeFromElement($element);
+          this.tree.attach(parent, moved);
+          this._trigger('dropped', [parent, moved]);
         }
       } else return false;
     } else if (this.$helper.pos === 'bottom') {
@@ -194,10 +194,10 @@ class Sortable extends AbstractPlugin {
       if ($bottomParent.droppable('instance') !== undefined) {
         this.$overNode.$child.prepend($element); // move in ui
         if ($element !== this.$placeHolder) { // move in tree data
-          const parent = this.nodeFromElement(this.$overNode);
-          const moved = this.nodeFromElement($element);
-          this.tree.attachNode(parent, moved);
-          this.trigger('drop', parent);
+          const parent = this._nodeFromElement(this.$overNode);
+          const moved = this._nodeFromElement($element);
+          this.tree.attach(parent, moved);
+          this._trigger('dropped', [parent, moved]);
         }
       } else return false;
     }
@@ -210,7 +210,7 @@ class Sortable extends AbstractPlugin {
    * @param node
    */
   notDroppable(node) {
-    const $node = this.elementFromNode(node).find('.node-content').eq(0);
+    const $node = this._elementFromNode(node).find('.node-content').eq(0);
 
     node.drag.droppable = false;
     if ($node.droppable('instance') !== undefined)
@@ -225,7 +225,7 @@ class Sortable extends AbstractPlugin {
     node.drag.droppable = true;
 
     const that  = this;
-    const $node = this.elementFromNode(node);
+    const $node = this._elementFromNode(node);
     $node.find('.node-content').eq(0).droppable({
       greedy:    true,
       accept:    '.node',

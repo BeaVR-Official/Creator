@@ -16,11 +16,11 @@ class Checkable extends AbstractPlugin {
 
   _onNodeRendered($node) {
     const that      = this;
-    const node      = this.nodeFromElement($node);
+    const node      = this._nodeFromElement($node);
     const $checkbox = $(this.options.templates.checkbox);
 
     $node.find('.node-content').eq(0).append($checkbox);
-    $checkbox.click(() => that.toggleChecked(node));
+    $checkbox.click(() => that.toggleCheck(node));
 
     this._update(node);
   }
@@ -31,7 +31,7 @@ class Checkable extends AbstractPlugin {
    * @private
    */
   _checkboxFromNode(node) {
-    return $(this.elementFromNode(node).find('.node-checkbox').eq(0));
+    return $(this._elementFromNode(node).find('.node-checkbox').eq(0));
   }
 
   /**
@@ -42,27 +42,27 @@ class Checkable extends AbstractPlugin {
     node.checkbox.checked = true;
 
     this._update(node);
-    this.trigger('checked', node);
+    this._trigger('checked', [node]);
   }
 
   /**
    * Unchecks a checkbox
    * @param node
    */
-  unchecked(node) {
+  uncheck(node) {
     node.checkbox.checked = false;
 
     this._update(node);
-    this.trigger('unchecked', node);
+    this._trigger('unchecked', [node]);
   }
 
   /**
    * Toggles a checkbox
    * @param node
    */
-  toggleChecked(node) {
+  toggleCheck(node) {
     if (node.checkbox.checked)
-      this.unchecked(node);
+      this.uncheck(node);
     else this.checked(node);
   }
 
@@ -71,10 +71,10 @@ class Checkable extends AbstractPlugin {
    * @param node
    */
   getChecked(node) {
-    if (node === undefined) node = this.tree.getRootNode();
+    if (node === undefined) node = this.tree.getRoot();
 
     let checkedNodes = [];
-    this.iterateOverNode(node, (iNode) => {
+    this._iterateOverNode(node, (iNode) => {
       if (iNode.checkbox.checked === true)
         checkedNodes.push(iNode);
     });
@@ -87,10 +87,10 @@ class Checkable extends AbstractPlugin {
    * @param node
    */
   getUnchecked(node) {
-    if (node === undefined) node = this.tree.getRootNode();
+    if (node === undefined) node = this.tree.getRoot();
 
     let unCheckedNodes = [];
-    this.iterateOverNode(node, (iNode) => {
+    this._iterateOverNode(node, (iNode) => {
       if (iNode.checkbox.checked === false)
         unCheckedNodes.push(iNode);
     });
@@ -102,7 +102,7 @@ class Checkable extends AbstractPlugin {
    * Enables a checkbox
    * @param node
    */
-  enabled(node) {
+  enable(node) {
     node.checkbox.enabled = true;
 
     this._update(node);
@@ -112,7 +112,7 @@ class Checkable extends AbstractPlugin {
    * Disables a checkbox
    * @param node
    */
-  disabled(node) {
+  disable(node) {
     node.checkbox.enabled = false;
 
     this._update(node);
@@ -122,10 +122,10 @@ class Checkable extends AbstractPlugin {
    * Toggles the state of a checkbox
    * @param node
    */
-  toggleEnabled(node) {
+  toggleEnable(node) {
     if (node.checkbox.enabled)
-      this.disabled(node);
-    else this.enabled(node);
+      this.disable(node);
+    else this.enable(node);
   }
 
   /**
@@ -133,10 +133,10 @@ class Checkable extends AbstractPlugin {
    * @param node
    */
   getEnabled(node) {
-    if (node === undefined) node = this.tree.getRootNode();
+    if (node === undefined) node = this.tree.getRoot();
 
     let enabledNodes = [];
-    this.iterateOverNode(node, (iNode) => {
+    this._iterateOverNode(node, (iNode) => {
       if (iNode.checkbox.enabled === true)
         enabledNodes.push(iNode);
     });
@@ -149,10 +149,10 @@ class Checkable extends AbstractPlugin {
    * @param node
    */
   getDisabled(node) {
-    if (node === undefined) node = this.tree.getRootNode();
+    if (node === undefined) node = this.tree.getRoot();
 
     let disabledNodes = [];
-    this.iterateOverNode(node, (iNode) => {
+    this._iterateOverNode(node, (iNode) => {
       if (iNode.checkbox.enabled === true)
         disabledNodes.push(iNode);
     });

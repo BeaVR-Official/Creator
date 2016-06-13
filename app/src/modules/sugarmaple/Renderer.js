@@ -5,9 +5,10 @@ import {Tree} from './Tree';
  * Displays a node by building it & requesting plugins
  */
 class Renderer {
-  constructor(tree, holder) {
-    this.$holder = $(holder);
+  constructor(tree, widget) {
     this.tree    = tree;
+    this.widget  = widget;
+    this.$holder = $(widget.element);
     this.plugins = new Plugins(this);
   }
 
@@ -17,11 +18,9 @@ class Renderer {
    */
   render(tree) {
     const $parents = {};
-
-    // Use of JSON to iterate over the Tree structure
     if (tree instanceof Tree)
-      tree = tree.getRootNode();
-    this.tree.iterateOverNode(tree, (node) => {
+      tree = tree.getRoot();
+    this.tree.iterateOver(tree, (node) => {
       this._renderNode(node, $parents);
     });
   }
@@ -38,7 +37,7 @@ class Renderer {
 
     $parents[node.id] = $node;
     // if the node is not the root
-    if (!this.tree.isRootNode(node)) {
+    if (!this.tree.isRoot(node)) {
       // if rendering a subtree, finds its DOM parent
       if ($parents[node.parent.id] === undefined)
         $parents[node.parent.id] = this._elementFromNode(node.parent);

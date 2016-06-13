@@ -1,8 +1,8 @@
 class Options {
   constructor(overrides) {
     this.events = {
-      onDrag: undefined,
-      onDrop: undefined
+      onDragged: undefined,
+      onDropped: undefined
     };
 
     this.parameters = {

@@ -27,22 +27,22 @@ class Tree {
    * Makes a Node root
    * @param node Node to be the new root
    */
-  setRootNode(node) {
-    this.attachNode(undefined, node);
+  setRoot(node) {
+    this.attach(undefined, node);
     this.rootNode = node;
   }
 
   /**
    * @returns Boolean rootNode
    */
-  isRootNode(node) {
+  isRoot(node) {
     return this.rootNode === node;
   }
 
   /**
    * @returns Node rootNode
    */
-  getRootNode() {
+  getRoot() {
     return this.rootNode;
   }
 
@@ -51,9 +51,9 @@ class Tree {
    * @param parent
    * @param node
    */
-  attachNode(parent, node) {
+  attach(parent, node) {
     // detach if still has parent
-    this.detachNode(node);
+    this.detach(node);
     // if newly-created Node
     if (node.id === undefined)
       node.id = ++this.currentNodeId;
@@ -68,7 +68,7 @@ class Tree {
    * Removes a Node from its parent
    * @param node
    */
-  detachNode(node) {
+  detach(node) {
     // if Node is not the root or not detached already
     if (node.parent !== undefined) {
       const parentNode = node.parent;
@@ -83,12 +83,12 @@ class Tree {
    * @param node
    * @param callback The current iteration is sent to it
    */
-  iterateOverNode(node, callback) {
+  iterateOver(node, callback) {
     const children = node.children;
     callback(node);
 
     for (let son in children) {
-      this.iterateOverNode(children[son], callback);
+      this.iterateOver(children[son], callback);
     }
   }
 
