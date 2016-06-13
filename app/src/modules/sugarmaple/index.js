@@ -30,9 +30,9 @@ const sm = $('#sceneTree').sugarmaple({
  *  manage pour gerer les nodes
  *  sortable pour organiser les nodes
  */
-const titi = sm.sugarmaple('manage.create', '1', 'tete');
-const tita = sm.sugarmaple('manage.create', '2', 'tete');
-const tito = sm.sugarmaple('manage.create', '3', 'tete');
+const titi = sm.sugarmaple('manage.create', 'titi', 'tete');
+const tita = sm.sugarmaple('manage.create', 'tita', {a: 'tete',b: 2});
+const tito = sm.sugarmaple('manage.create', 'tito', ['tete']);
 sm.sugarmaple('manage.attach', titi, tita);
 sm.sugarmaple('manage.attach', titi, tito);
 sm.sugarmaple('manage.setRoot', titi);
