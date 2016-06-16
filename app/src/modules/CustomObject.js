@@ -4,9 +4,11 @@ export default class CustomObject extends THREE.Mesh {
   constructor(geometry, material, type) {
     super(geometry, material);
     this.objType     = type;
-    this.userData.id = _.uniqueId();
-    this.name        = type + '_' + this.userData.id;
     this._script     = 'script here';
+    // That mean load
+    let id = _.uniqueId();
+    this.userData.id = id;
+    this.name        = type + '_' + this.userData.id;
   }
 
   setPosition(pos) {
@@ -49,7 +51,14 @@ export default class CustomObject extends THREE.Mesh {
     return {
       object:       JSON.stringify(this),
       _script:      'typeofScript',
-      AnotherParam: 'plop'
+      _anotherParam: 'plop'
     };
+  }
+
+  static fromJSON(entry) {
+    let customObject = new this(JSON.parse(entry.object).object);
+    customObject._script = entry._script;
+    customObject._anotherParam = entry._anotherParam;
+    return customObject;
   }
 }

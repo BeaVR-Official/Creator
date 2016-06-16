@@ -53,13 +53,11 @@ class Scene {
     }
   }
 
+  /*
+  // Supression de la methode pour la transférer dans la class Save
   serializeObj() {
-    let object = [];
-    this._objList.forEach(function (entry) {
-      object.push(entry.objToJSON());
-    });
-    return JSON.stringify(object);
   }
+  */
 
   /**
    * Render the scene and sceneHelper.

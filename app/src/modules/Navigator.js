@@ -12,6 +12,8 @@ class Navigator {
     let geometry = new THREE.BoxGeometry(200, 200, 200);
     let box      = new CustomObject(geometry, material, 'box');
 
+    box.userData.id   = _.uniqueId();
+    box.name          = 'box_' + box.userData.id;
     box.mirroredLoop  = true;
     box.castShadow    = true;
     box.receiveShadow = true;
@@ -23,9 +25,8 @@ class Navigator {
   addSphere() {
     let geometry = new THREE.SphereGeometry(50, 50, 320);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let sphere   = new CustomObject(geometry, material);
+    let sphere   = new CustomObject(geometry, material, 'sphere');
 
-    sphere.objType       = 'sphere';
     sphere.userData.id   = _.uniqueId();
     sphere.name          = 'sphere_' + sphere.userData.id;
     sphere.mirroredLoop  = true;
@@ -39,9 +40,8 @@ class Navigator {
   addCylinder() {
     let geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let cylinder = new CustomObject(geometry, material);
+    let cylinder = new CustomObject(geometry, material, 'cylinder');
 
-    cylinder.objType       = 'cylinder';
     cylinder.userData.id   = _.uniqueId();
     cylinder.name          = 'cylinder_' + cylinder.userData.id;
     cylinder.mirroredLoop  = true;

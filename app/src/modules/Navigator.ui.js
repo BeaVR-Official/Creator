@@ -15,7 +15,8 @@ class NavigatorUI {
     $('#addCylinder').click(() => Navigator.addCylinder());
     $('#addLight').click(() => Navigator.addLight());
     $('#addExternal').click(() => Navigator.addExternal());
-    $('#save').click(() => Save.saveScene());
+    $('#save').click(() => Save.saveCustomObjects());
+    $('#load').click(() => Save.loadCustomObjetcs());
   }
 }
 
