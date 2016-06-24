@@ -5,9 +5,11 @@
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
 import CustomObject from './CustomObject';
+import Example from './sugarmaple/Example';
 
 class Navigator {
   addBox() {
+
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(200, 200, 200);
     let box      = new CustomObject(geometry, material, 'box');
@@ -18,7 +20,14 @@ class Navigator {
     box.castShadow    = true;
     box.receiveShadow = true;
 
+    // Object.assign(CustomObject.prototype, THREE.EventDispatcher.prototype );
+    // box.addEventListener('add', function (event ) {
+    //  console.log(event.message);
+    // } );
+    // box.addToScene(Scene._scene);
+
     Scene.addObj(box);
+    console.log(Scene._objList);
     Scene.render();
   }
 

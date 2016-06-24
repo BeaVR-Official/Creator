@@ -1,38 +1,95 @@
 import Options from './Options';
 
+/**
+ * Data structure representing a Node
+ */
 class Node {
-  constructor(name) {
-    this._name     = name;
-    this._id       = undefined;
-    this._parent   = undefined;
-    this._children = [];
-    this._data     = {};
+  constructor(name, data) {
+    this.id       = undefined;
+    this.parent   = undefined;
+    this.children = [];
+    this.name     = name;
+    this.data     = data;
   }
 }
 
+/**
+ * Data structure holding all the Nodes
+ */
 class Tree {
   constructor(options) {
-    this._options       = new Options(options);
-    this._rootNode      = new Node("rootNode");
-    this._rootNode._id  = 0;
-    this._currentNodeId = 0;
+    this.options       = new Options(options);
+    this.rootNode      = undefined;
+    this.currentNodeId = 0;
   }
 
-  attachNode(parentNode, node) {
-    node._id                       = ++this._currentNodeId;
-    node._parent                   = parentNode;
-    parentNode._children[node._id] = node;
+  /**
+   * Makes a Node root
+   * @param node Node to be the new root
+   */
+  setRoot(node) {
+    this.attach(undefined, node);
+    this.rootNode = node;
   }
 
-  detachNode(node) {
-    if (node._parent !== 'undefined') {
-      const parentNode = node._parent;
-      parentNode._children.splice(node._id, 1);
+  /**
+   * @returns Boolean rootNode
+   */
+  isRoot(node) {
+    return this.rootNode === node;
+  }
+
+  /**
+   * @returns Node rootNode
+   */
+  getRoot() {
+    return this.rootNode;
+  }
+
+  /**
+   * Attaches node to a new parent
+   * @param parent
+   * @param node
+   */
+  attach(parent, node) {
+    // detach if still has parent
+    this.detach(node);
+    // if newly-created Node
+    if (node.id === undefined)
+      node.id = ++this.currentNodeId;
+    // Sets node as a child of parent
+    if (parent !== undefined) {
+      parent.children[node.id] = node;
+      node.parent              = parent;
     }
   }
 
-  getNodeChild(node) {
-    return node._children;
+  /**
+   * Removes a Node from its parent
+   * @param node
+   */
+  detach(node) {
+    // if Node is not the root or not detached already
+    if (node.parent !== undefined) {
+      const parentNode = node.parent;
+      // Make it orphan & remove from parent
+      node.parent = undefined;
+      parentNode.children.splice(node.id, 1);
+    }
+  }
+
+  /**
+   * Iterates over a node & its sons
+   * @param node
+   * @param callback The current iteration is sent to it
+   */
+  iterateOver(node, callback) {
+    const children = node.children;
+    callback(node);
+
+    for (let son in children) {
+      this.iterateOver(children[son], callback);
+    }
   }
 
   /**
@@ -46,7 +103,7 @@ class Tree {
     let orphans        = [];
     let loadedTreeData = JSON.parse(json, (key, val) => {
       if (val !== null) {
-        if (typeof val === 'object' && val.hasOwnProperty('_id')) {
+        if (typeof val === 'object' && val.hasOwnProperty('id')) {
           orphans.push(val);
           if (typeof options.events.onImport === 'function')
             return options.events.onImport(val);
@@ -59,8 +116,8 @@ class Tree {
     // Link child & parents
     for (let orphan of orphans)
       for (let parent of orphans)
-        if (orphan._parent === parent._id) {
-          orphan._parent = parent;
+        if (orphan.parent === parent.id) {
+          orphan.parent = parent;
           break;
         }
 
@@ -79,11 +136,11 @@ class Tree {
   exportTree() {
     return JSON.stringify(this, (key, val) => {
       if (val === null) return undefined;
-      if (key === '_options') return undefined;
-      if (key === '_parent' && val !== undefined) return val._id;
-      if (typeof val === 'object' && val.hasOwnProperty('_id'))
-        if (typeof this._options.events.onExport === 'function')
-          return this._options.events.onExport(val);
+      if (key === 'options') return undefined;
+      if (key === 'parent' && val !== undefined) return val.id;
+      if (typeof val === 'object' && val.hasOwnProperty('id'))
+        if (typeof this.options.events.onExport === 'function')
+          return this.options.events.onExport(val);
 
       return val;
     });

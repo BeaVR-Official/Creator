@@ -1,10 +1,8 @@
 class Options {
   constructor(overrides) {
     this.events = {
-      onCheck: undefined,
-      onUnCheck: undefined,
-      onEnable: undefined,
-      onDisable: undefined
+      onChecked:   undefined,
+      onUnchecked: undefined
     };
 
     this.templates = {
@@ -13,7 +11,7 @@ class Options {
 
     this.parameters = {
       defaultChecked: false,
-      defaultEnabled: false
+      defaultEnabled: true
     };
 
     this.applyOverrides(overrides);

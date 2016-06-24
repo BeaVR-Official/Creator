@@ -4,12 +4,14 @@ export default class CustomObject extends THREE.Mesh {
   constructor(geometry, material, type) {
     super(geometry, material);
     this.objType     = type;
-    this._script     = 'script here';
-    // That mean load
-    let id = _.uniqueId();
-    this.userData.id = id;
+    this.userData.id = _.uniqueId();
     this.name        = type + '_' + this.userData.id;
+    this._script     = 'script here';
   }
+
+  // addToScene(scene) {
+  //  this.dispatchEvent({type: 'add', message: this.name + ' Added!'});
+  // }
 
   setPosition(pos) {
     this.position.set(pos.x, pos.y, pos.z);
@@ -51,7 +53,7 @@ export default class CustomObject extends THREE.Mesh {
     return {
       object:       JSON.stringify(this),
       _script:      'typeofScript',
-      _anotherParam: 'plop'
+      AnotherParam: 'plop'
     };
   }
 

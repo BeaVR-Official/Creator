@@ -1,18 +1,8 @@
 class Options {
   constructor(overrides) {
-    this.events = {
-      onReceive: undefined,
-      onOver: undefined,
-      onOut: undefined,
-      onStart: undefined,
-      onStop: undefined
-    };
-    
     this.parameters = {
-      delay: 0,
-      axis: 'xy',
-      overClass: '',
-      dragClass: ''
+      easing:          'swing',
+      effectsDuration: 400
     };
 
     this.applyOverrides(overrides);
