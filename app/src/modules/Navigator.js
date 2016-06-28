@@ -5,7 +5,7 @@
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
 import CustomObject from './CustomObject';
-import Example from './sugarmaple/Example';
+//import Example from './sugarmaple/Example';
 
 class Navigator {
   addBox() {
@@ -101,12 +101,12 @@ class Navigator {
   }
 
   addAmbientLight() {
-    let light = new THREE.AmbientLight(0x404040);
+    let ambientLight = new THREE.AmbientLight(0x404040);
 
-    light.userData.id = _.uniqueId();
-    light.name        = 'lightAmbient_' + light.userData.id;
+    ambientLight.userData.id = _.uniqueId();
+    ambientLight.name        = 'ambientLight_' + ambientLight.userData.id;
 
-    this.addPicker(light);
+    this.addPicker(ambientLight);
     Scene.render();
   }
 

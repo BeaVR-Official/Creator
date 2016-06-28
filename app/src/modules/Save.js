@@ -15,13 +15,15 @@ class Save {
     let stored = localStorage['save'];
     let savedObjects  = JSON.parse(stored);
 
-    Scene.scene = new THREE.Scene();
+    Scene.render();
+    Scene.removeObjects();
 
     savedObjects.forEach(function (entry) {
       // La deserialization ce passe dans la method fromJSON
       // en cas de modification des paramètres les changer uniquement dans la class CustomObj (objToJSON & fromJSON)
       Scene.addObj(CustomObject.fromJSON(entry));
     });
+    Scene.render();
   }
 
 
@@ -45,6 +47,9 @@ class Save {
 
     // Dernière Partie temporaire
     localStorage['save'] = output;
+
+
+    //localStorage['scene'] = Scene._scene.toJSON();
   }
 
 }
