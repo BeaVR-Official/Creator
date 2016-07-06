@@ -3,12 +3,12 @@ import Scene from './Scene';
 export default class CustomObject {
   constructor(mesh, type, script) {
 
-    this.obj = mesh;
-    this.objType     = type;
+    this.obj     = mesh;
+    this.objType = type;
 
     this.obj.userData.id = _.uniqueId();
-    this.name        = type + '_' + this.obj.userData.id;
-    this._script = script;
+    this.name            = type + '_' + this.obj.userData.id;
+    this._script         = script;
 
   }
 
@@ -41,21 +41,21 @@ export default class CustomObject {
     this.obj.setPosition(pos);
     //Scene.render();
   }
-  
+
   updateRotation(rot) {
     this.obj.setRotation(rot);
     //Scene.render();
   }
-  
+
   updateScale(scale) {
     this.obj.setScale(scale);
     //Scene.render();
   }
-  
+
   objToJSON() { //ne marche pas pour le moment
     return {
-      object:       this.obj.toJSON(), //method toJSON de THREE.MEsh
-      _script:      this._script // A passer dans userData
+      object:  this.obj.toJSON(), //method toJSON de THREE.MEsh
+      _script: this._script // A passer dans userData
     };
   }
 

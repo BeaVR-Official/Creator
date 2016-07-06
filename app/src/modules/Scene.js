@@ -37,13 +37,6 @@ class Scene {
 
   addObj(customObject) {
     if (customObject instanceof CustomObject) {
-      // if (object.objType === 'picker') {
-      //   let node = Example.maple.manage.createNode(object.children[0].name);
-      //   Example.maple.manage.attachNodeToRoot(node);
-      // } else {
-      //   let node = Example.maple.manage.createNode(object.name);
-      //   Example.maple.manage.attachNodeToRoot(node);
-      // }
       this._scene.add(customObject.obj);
       this._objList.push(customObject);
     }

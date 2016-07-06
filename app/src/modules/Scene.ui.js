@@ -68,6 +68,10 @@ class SceneUI {
       return;
     Scene._sceneHelpers.add(helper);
   }
+  
+  updateTransformControls() {
+    this._transformControls.update();
+  }
 }
 
 export default new SceneUI();

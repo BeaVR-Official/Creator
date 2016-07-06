@@ -2,7 +2,7 @@
  * Created by urvoy_p on 04/05/16.
  */
 
-import SceneUI from './Scene.ui';
+import * as SceneUI from './Scene.ui';
 import Scene from './Scene';
 
 class PropPanelUI {
@@ -77,6 +77,7 @@ class PropPanelUI {
           y: Math.round(objProperties.eq(4).val()),
           z: Math.round(objProperties.eq(5).val())
         };
+        console.log(this.selectedObj);
         this.selectedObj.updateRotation(rotation);
         break;
       case "scale":
@@ -90,7 +91,7 @@ class PropPanelUI {
       default:
         break;
     }
-    this.transformControls.update();
+    SceneUI.default.updateTransformControls();
     Scene.render();
   }
 
@@ -98,14 +99,12 @@ class PropPanelUI {
     this.selectedObj = undefined;
   }
 
-  loadObjectInfo(object, transformControls) {
+  loadObjectInfo(object) {
     if (object !== undefined) {
       if (object.name === "lightPicker")
         object = object.children[0];
-      this.selectedObj = object.obj;
+      this.selectedObj = object;
     }
-    if (transformControls !== undefined)
-      this.transformControls = transformControls;
     this.update();
   }
 
