@@ -3,7 +3,6 @@
  * Created by urvoy_p on 24/04/16.
  */
 
-import CustomObject from './CustomObject';
 import Constants from './Constants';
 //import Example from './sugarmaple/Example';
 import Node from './sugarmaple/Tree';
@@ -35,8 +34,8 @@ class Scene {
     this._objList = [];
   }
 
-  addObj(customObject) {
-    if (customObject instanceof CustomObject) {
+  addObj(object) {
+    if (object instanceof THREE.Mesh) {
       // if (object.objType === 'picker') {
       //   let node = Example.maple.manage.createNode(object.children[0].name);
       //   Example.maple.manage.attachNodeToRoot(node);
@@ -44,8 +43,8 @@ class Scene {
       //   let node = Example.maple.manage.createNode(object.name);
       //   Example.maple.manage.attachNodeToRoot(node);
       // }
-      this._scene.add(customObject.obj);
-      this._objList.push(customObject);
+      this._scene.add(object);
+      this._objList.push(object);
     }
   }
 
@@ -67,7 +66,7 @@ class Scene {
   removeObjects() {
     let scene = this._scene;
     this._objList.forEach(function (entry) {
-      scene.remove(entry.obj);
+      scene.remove(entry);
     });
     // and rest camera
     /*    let camSettings = Constants.getCamSettings();

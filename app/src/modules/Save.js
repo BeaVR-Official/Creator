@@ -3,7 +3,6 @@
  */
 
 import {saveAs} from "../../../node_modules/filesaverjs/FileSaver";
-import CustomObject from "./CustomObject";
 import Scene from './Scene';
 
 class Save {
@@ -12,7 +11,6 @@ class Save {
 
 
   loadCustomObjetcs() {
-
     let stored = localStorage['save2'];
     Scene.removeObjects();
     Scene.render();
@@ -21,19 +19,17 @@ class Save {
     let loadedObjects = JSON.parse(stored);
     loadedObjects.forEach((entry) => {
       let loadedMesh = loader.parse(entry);
-      let customObject = new CustomObject(loadedMesh, 'box');
       Scene.addObj(loadedMesh);
-      Scene.render();
     });
+    Scene.render();
   }
 
 
   saveCustomObjects() {
-
     // Partie 2
     let object = [];
     Scene._objList.forEach(function (entry) {
-      object.push(entry.obj.toJSON());
+      object.push(entry.toJSON());
     });
 
     // Partie 3

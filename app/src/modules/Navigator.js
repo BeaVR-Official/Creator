@@ -4,7 +4,6 @@
 
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
-import CustomObject from './CustomObject';
 //import Example from './sugarmaple/Example';
 
 class Navigator {
@@ -12,14 +11,11 @@ class Navigator {
 
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(200, 200, 200);
-    let box      = new CustomObject(
-      new THREE.Mesh(geometry, material),
-      'box'
-    );
+    let box      = new THREE.Mesh(geometry, material);
 
-    box.obj.mirroredLoop  = true;
-    box.obj.castShadow    = true;
-    box.obj.receiveShadow = true;
+    box.mirroredLoop  = true;
+    box.castShadow    = true;
+    box.receiveShadow = true;
 
     // Object.assign(CustomObject.prototype, THREE.EventDispatcher.prototype );
     // box.addEventListener('add', function (event ) {
@@ -35,10 +31,7 @@ class Navigator {
   addSphere() {
     let geometry = new THREE.SphereGeometry(50, 50, 320);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let sphere   = new CustomObject(
-      new THREE.Mesh(geometry, material),
-      'sphere'
-    );
+    let sphere   = new THREE.Mesh(geometry, material);
 
     sphere.mirroredLoop  = true;
     sphere.castShadow    = true;
@@ -51,10 +44,7 @@ class Navigator {
   addCylinder() {
     let geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-    let cylinder = new CustomObject(
-      new THREE.Mesh(geometry, material),
-      'cylinder'
-    );
+    let cylinder = new THREE.Mesh(geometry, material);
 
     cylinder.mirroredLoop  = true;
     cylinder.castShadow    = true;
@@ -123,10 +113,7 @@ class Navigator {
 
     let geometry = new THREE.SphereGeometry(50, 4, 2);
     let material = new THREE.MeshBasicMaterial(materialPicker);
-    let picker   = new CustomObject(
-      new THREE.Mesh(geometry, material),
-      'picker'
-    );
+    let picker   = new THREE.Mesh(geometry, material);
 
     SceneUI.addLightHelper(light);
     picker.add(light);
@@ -136,10 +123,7 @@ class Navigator {
   addExternal() {
     let loader = new THREE.JSONLoader();
     loader.load('models/horse.js', (geometry, material) => {
-      let importedObj = new CustomObject(
-        new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(material)),
-        'ObjectJs'
-      );
+      let importedObj = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(material));
 
       importedObj.scale.set(1, 1, 1);
       importedObj.position.set(0, 0, 0);
