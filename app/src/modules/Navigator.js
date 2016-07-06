@@ -7,6 +7,7 @@ import SceneUI from './Scene.ui';
 //import Example from './sugarmaple/Example';
 
 class Navigator {
+  
   addBox() {
 
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
@@ -16,6 +17,8 @@ class Navigator {
     box.mirroredLoop  = true;
     box.castShadow    = true;
     box.receiveShadow = true;
+    this.setMesh(box, 'box');
+
 
     // Object.assign(CustomObject.prototype, THREE.EventDispatcher.prototype );
     // box.addEventListener('add', function (event ) {
@@ -36,6 +39,7 @@ class Navigator {
     sphere.mirroredLoop  = true;
     sphere.castShadow    = true;
     sphere.receiveShadow = true;
+    this.setMesh(sphere, 'sphere');
 
     Scene.addObj(sphere);
     Scene.render();
@@ -49,6 +53,7 @@ class Navigator {
     cylinder.mirroredLoop  = true;
     cylinder.castShadow    = true;
     cylinder.receiveShadow = true;
+    this.setMesh(cylinder, 'cylinder');
 
     Scene.addObj(cylinder);
     Scene.render();
@@ -114,7 +119,8 @@ class Navigator {
     let geometry = new THREE.SphereGeometry(50, 4, 2);
     let material = new THREE.MeshBasicMaterial(materialPicker);
     let picker   = new THREE.Mesh(geometry, material);
-
+    this.setMesh(picker, 'picker');
+    
     SceneUI.addLightHelper(light);
     picker.add(light);
     Scene.addObj(picker);
@@ -127,10 +133,17 @@ class Navigator {
 
       importedObj.scale.set(1, 1, 1);
       importedObj.position.set(0, 0, 0);
+      this.setMesh(importedObj, 'importedObj');
 
       Scene.addObj(importedObj);
       Scene.render();
     });
+  }
+
+  setMesh(mesh, type) {
+    mesh.objType     = type;
+    mesh.userData.id = _.uniqueId();
+    mesh.name        = type + '_' + mesh.userData.id;
   }
 }
 
