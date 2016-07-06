@@ -42,17 +42,17 @@ export default class CustomObject extends THREE.Mesh {
     this.setPosition(pos);
     //Scene.render();
   }
-  
+
   updateRotation(rot) {
     this.setRotation(rot);
     //Scene.render();
   }
-  
+
   updateScale(scale) {
     this.setScale(scale);
     //Scene.render();
   }
-  
+
   objToJSON() {
 
     // let output = this.geometry.toJSON();
@@ -85,27 +85,26 @@ export default class CustomObject extends THREE.Mesh {
     //   output = JSON.stringify( output );
     // }
 
-
     // Temporaire
     // Avec ça le customObject marche mais pas la geometry & le material
     let materialBidon = new THREE.MeshLambertMaterial({color: 0xFF0000});
     let geometryBidon = new THREE.BoxGeometry(200, 200, 200);
 
-    let customObject = new this(
+    let customObject           = new this(
       geometryBidon,
       materialBidon,
       null,
       JSON.parse(entry.object).object
     );
-    customObject._script = entry._script;
+    customObject._script       = entry._script;
     customObject._anotherParam = entry._anotherParam;
 
     //test
     //let geometry = new THREE.Geometry(JSON.parse(entry.object).geometries[0]);
     //customObject.geometry = geometry;
     // ERR : [.CommandBufferContext.Offscreen-MainThread-03CC8358]RENDER WARNING: Render count or primcount is 0.
-    // Rf (à peu près) : https://stackoverflow.com/questions/35288245/three-js-imported-obj-model-commandbuffercontextrender-warning-render-count
-
+    // Rf (à peu près) :
+    // https://stackoverflow.com/questions/35288245/three-js-imported-obj-model-commandbuffercontextrender-warning-render-count
 
     return customObject;
   }

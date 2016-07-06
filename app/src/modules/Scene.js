@@ -4,9 +4,8 @@
  */
 
 import CustomObject from './CustomObject';
+import ScenesPanel from './ScenesPanel.ui';
 import Constants from './Constants';
-//import Example from './sugarmaple/Example';
-import Node from './sugarmaple/Tree';
 
 class Scene {
   constructor() {
@@ -37,13 +36,7 @@ class Scene {
 
   addObj(object) {
     if (object instanceof CustomObject) {
-      // if (object.objType === 'picker') {
-      //   let node = Example.maple.manage.createNode(object.children[0].name);
-      //   Example.maple.manage.attachNodeToRoot(node);
-      // } else {
-      //   let node = Example.maple.manage.createNode(object.name);
-      //   Example.maple.manage.attachNodeToRoot(node);
-      // }
+      ScenesPanel.addObjectNode(object);
       this._scene.add(object);
       this._objList.push(object);
     }

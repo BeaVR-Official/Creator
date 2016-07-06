@@ -4,6 +4,7 @@
 
 import SceneUI from './Scene.ui';
 import Scene from './Scene';
+import * as THREE from 'three';
 
 class PropPanelUI {
   constructor() {
@@ -90,7 +91,7 @@ class PropPanelUI {
       default:
         break;
     }
-    this.transformControls.update();
+    SceneUI.default.updateTransformControls();
     Scene.render();
   }
 
@@ -98,14 +99,12 @@ class PropPanelUI {
     this.selectedObj = undefined;
   }
 
-  loadObjectInfo(object, transformControls) {
+  loadObjectInfo(object) {
     if (object !== undefined) {
       if (object.name === "lightPicker")
         object = object.children[0];
       this.selectedObj = object;
     }
-    if (transformControls !== undefined)
-      this.transformControls = transformControls;
     this.update();
   }
 
