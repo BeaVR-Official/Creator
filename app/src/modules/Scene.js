@@ -35,8 +35,8 @@ class Scene {
     this._objList = [];
   }
 
-  addObj(object) {
-    if (object instanceof CustomObject) {
+  addObj(customObject) {
+    if (customObject instanceof CustomObject) {
       // if (object.objType === 'picker') {
       //   let node = Example.maple.manage.createNode(object.children[0].name);
       //   Example.maple.manage.attachNodeToRoot(node);
@@ -44,8 +44,8 @@ class Scene {
       //   let node = Example.maple.manage.createNode(object.name);
       //   Example.maple.manage.attachNodeToRoot(node);
       // }
-      this._scene.add(object);
-      this._objList.push(object);
+      this._scene.add(customObject.obj);
+      this._objList.push(customObject);
     }
   }
 
@@ -67,7 +67,7 @@ class Scene {
   removeObjects() {
     let scene = this._scene;
     this._objList.forEach(function (entry) {
-      scene.remove(entry);
+      scene.remove(entry.obj);
     });
     // and rest camera
     /*    let camSettings = Constants.getCamSettings();

@@ -1,16 +1,15 @@
 import Scene from './Scene';
 
-export default class CustomObject extends THREE.Mesh {
-  constructor(geometry, material, type, loadedCustomObjectData) {
-    super(geometry, material);
-    if (loadedCustomObjectData) {
-      Object.assign(loadedCustomObjectData, this);
-    } else {
-      this.objType     = type;
-      this.userData.id = _.uniqueId();
-      this.name        = type + '_' + this.userData.id;
-      this._script     = 'script here';
-    }
+export default class CustomObject {
+  constructor(mesh, type) {
+
+    this.obj = mesh;
+    this.objType     = type;
+
+    this.obj.userData.id = _.uniqueId();
+    this.name        = type + '_' + this.obj.userData.id;
+    this._script     = 'script here';
+
   }
 
   // addToScene(scene) {
@@ -18,38 +17,38 @@ export default class CustomObject extends THREE.Mesh {
   // }
 
   setPosition(pos) {
-    this.position.set(pos.x, pos.y, pos.z);
+    this.obj.position.set(pos.x, pos.y, pos.z);
   }
 
   setRotation(rot) {
-    this.rotation.set(rot.x, rot.y, rot.z);
+    this.obj.rotation.set(rot.x, rot.y, rot.z);
   }
 
   setScale(scale) {
     if (scale.x > 0 && scale.y > 0 && scale.z > 0)
-      this.scale.set(scale.x, scale.y, scale.z);
+      this.obj.scale.set(scale.x, scale.y, scale.z);
   }
 
   setColor(color) {
-    this.material.color.set(color);
+    this.obj.material.color.set(color);
   }
 
   setVisibility(state) {
-    this.visible = state;
+    this.obj.visible = state;
   }
 
   updatePosition(pos) {
-    this.setPosition(pos);
+    this.obj.setPosition(pos);
     //Scene.render();
   }
   
   updateRotation(rot) {
-    this.setRotation(rot);
+    this.obj.setRotation(rot);
     //Scene.render();
   }
   
   updateScale(scale) {
-    this.setScale(scale);
+    this.obj.setScale(scale);
     //Scene.render();
   }
   

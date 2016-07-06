@@ -68,8 +68,8 @@ export default class SceneControls {
     let intersects = this.getIntersectObjects(objects, recursive);
     if (intersects.length > 0) {
       return Scene._objList.find(object => {
-        if (object === intersects[0].object)
-          return object;
+        if (object.obj === intersects[0].object)
+          return object.obj;
       });
     }
     return undefined;

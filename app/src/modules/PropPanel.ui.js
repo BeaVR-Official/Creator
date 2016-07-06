@@ -102,7 +102,7 @@ class PropPanelUI {
     if (object !== undefined) {
       if (object.name === "lightPicker")
         object = object.children[0];
-      this.selectedObj = object;
+      this.selectedObj = object.obj;
     }
     if (transformControls !== undefined)
       this.transformControls = transformControls;
