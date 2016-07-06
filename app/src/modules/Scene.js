@@ -12,9 +12,9 @@ class Scene {
     this._scene        = new THREE.Scene();
     window.scene       = this._scene;
 
-    this._renderer = new THREE.WebGLRenderer({antialias: true});
+    this._renderer  = new THREE.WebGLRenderer({antialias: true});
     let camSettings = Constants.getCamSettings();
-    this._camera   = new THREE.PerspectiveCamera(
+    this._camera    = new THREE.PerspectiveCamera(
       camSettings.fov,
       camSettings.aspect,
       camSettings.near,
@@ -34,11 +34,9 @@ class Scene {
   }
 
   addObj(object) {
-    if (object instanceof CustomObject) {
-      ScenesPanel.addObjectNode(object);
-      this._scene.add(object);
-      this._objList.push(object);
-    }
+    ScenesPanel.addObjectNode(object);
+    this._scene.add(object);
+    this._objList.push(object);
   }
 
   /*
@@ -78,6 +76,5 @@ class Scene {
      */
   }
 }
-
 
 export default new Scene();
