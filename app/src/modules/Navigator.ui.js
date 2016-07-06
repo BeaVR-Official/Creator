@@ -16,7 +16,8 @@ class NavigatorUI {
     $('#addLight').click(() => Navigator.addLight());
     $('#addExternal').click(() => Navigator.addExternal());
     $('#save').click(() => Save.saveCustomObjects());
-    $('#load').click(() => Save.loadCustomObjetcs());
+    //$('#load').click(() => Save.loadCustomObjects());
+    $('.inputfile').change((e) => Save.loadCustomObjects(e));
   }
 }
 
