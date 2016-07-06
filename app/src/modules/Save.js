@@ -12,39 +12,19 @@ class Save {
 
 
   loadCustomObjetcs() {
+
     let stored = localStorage['save2'];
-
-
-    //let savedObjects  = JSON.parse(stored);
-
-    Scene.render();
     Scene.removeObjects();
-
+    Scene.render();
 
     let loader = new THREE.ObjectLoader();
-    let loadedGeometry = JSON.parse(stored);
-
-    loadedGeometry.forEach((entry) => {
-      let loadedMesh = loader.parse(loadedGeometry[0]);
+    let loadedObjects = JSON.parse(stored);
+    loadedObjects.forEach((entry) => {
+      let loadedMesh = loader.parse(entry);
       let customObject = new CustomObject(loadedMesh, 'box');
       Scene.addObj(loadedMesh);
       Scene.render();
     });
-
-
-/*    savedObjects.forEach((entry) => {
-
-
-      let vari = loader.parse(entry);
-      console.info(vari);
-
-
-      // La deserialization ce passe dans la method fromJSON
-      // en cas de modification des paramètres les changer uniquement dans la class CustomObj (objToJSON & fromJSON)
-      //Scene.addObj();
-    });*/
-
-
   }
 
 
@@ -53,7 +33,7 @@ class Save {
     // Partie 2
     let object = [];
     Scene._objList.forEach(function (entry) {
-      object.push(entry.obj.toJSON()); //method toJSON de THREE.MEsh
+      object.push(entry.obj.toJSON());
     });
 
     // Partie 3
@@ -69,9 +49,6 @@ class Save {
 
     // Dernière Partie temporaire
     localStorage['save2'] = output;
-
-
-    //localStorage['scene'] = Scene._scene.toJSON();
   }
 
 }
