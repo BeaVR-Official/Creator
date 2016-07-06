@@ -10,18 +10,28 @@ class Save {
   }
 
 
-  loadCustomObjetcs() {
-    let stored = localStorage['save2'];
+  loadCustomObjects(event) {
+    //let stored = localStorage['save2'];
     Scene.removeObjects();
     Scene.render();
 
-    let loader = new THREE.ObjectLoader();
-    let loadedObjects = JSON.parse(stored);
-    loadedObjects.forEach((entry) => {
-      let loadedMesh = loader.parse(entry);
-      Scene.addObj(loadedMesh);
-    });
-    Scene.render();
+    //Grep du code d'Elliot
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function(e) {
+
+      let loader = new THREE.ObjectLoader();
+      //let loadedObjects = JSON.parse(stored);
+      let loadedObjects = JSON.parse(e.target.result);
+      loadedObjects.forEach((entry) => {
+        let loadedMesh = loader.parse(entry);
+        Scene.addObj(loadedMesh);
+      });
+      Scene.render();
+
+    };
+
   }
 
 
@@ -44,7 +54,11 @@ class Save {
     }
 
     // Dernière Partie temporaire
-    localStorage['save2'] = output;
+    //localStorage['save2'] = output;
+
+    // Dernière Partie temporaire
+    var blob = new Blob([JSON.stringify(object)], {type: "application/json;charset=utf-8"});
+    saveAs(blob, "SaveSample.json");
   }
 
 }
