@@ -48,12 +48,12 @@ class PropPanelUI {
 
   changeObjectColor(color) {
     let newColor = new THREE.Color(color);
-    this.selectedObj.setColor(newColor);
+    this.selectedObj.material.color.set(newColor);
     Scene.render();
   }
 
   setObjectVisibility(state) {
-    this.selectedObj.setVisibility(state);
+    this.selectedObj.visible = state;
     Scene.render();
   }
 
@@ -69,7 +69,7 @@ class PropPanelUI {
           y: Math.round(objProperties.eq(1).val()),
           z: Math.round(objProperties.eq(2).val())
         };
-        this.selectedObj.updatePosition(pos);
+        this.selectedObj.position.set(pos.x, pos.y, pos.z);
         break;
       case "rotation":
         let rotation = {
@@ -78,7 +78,7 @@ class PropPanelUI {
           z: Math.round(objProperties.eq(5).val())
         };
         console.log(this.selectedObj);
-        this.selectedObj.updateRotation(rotation);
+        this.selectedObj.rotation.set(rotation.x, rotation.y, rotation.z);
         break;
       case "scale":
         let scale = {
@@ -86,7 +86,8 @@ class PropPanelUI {
           y: objProperties.eq(7).val(),
           z: objProperties.eq(8).val()
         };
-        this.selectedObj.updateScale(scale);
+        if (scale.x > 0 && scale.y > 0 && scale.z > 0)
+          this.selectedObj.scale.set(scale.x, scale.y, scale.z);
         break;
       default:
         break;

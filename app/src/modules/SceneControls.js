@@ -35,7 +35,7 @@ export default class SceneControls {
       console.log(this._closestObj);
       if (this._closestObj !== undefined) {
         PropPanelUI.loadObjectInfo(this._closestObj);
-        transformControls.attach(this._closestObj.obj);
+        transformControls.attach(this._closestObj);
       } else if (this._mouseIsMoving === false) {
         transformControls.detach();
         PropPanelUI.unselectObject();
@@ -69,8 +69,7 @@ export default class SceneControls {
     let intersects = this.getIntersectObjects(objects, recursive);
     if (intersects.length > 0) {
       return Scene._objList.find(object => {
-        if (object.obj === intersects[0].object) {
-          console.log(object);
+        if (object === intersects[0].object) {
           return object;
         }
       });
