@@ -39,7 +39,6 @@ export default class SceneControls {
         transformControls.detach();
         PropPanelUI.unselectObject();
       }
-      console.log(this._closestObj);
       Scene.render();
     });
   }
