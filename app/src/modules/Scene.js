@@ -3,9 +3,8 @@
  * Created by urvoy_p on 24/04/16.
  */
 
+import ScenesPanel from './ScenesPanel.ui';
 import Constants from './Constants';
-//import Example from './sugarmaple/Example';
-import Node from './sugarmaple/Tree';
 
 class Scene {
   constructor() {
@@ -35,14 +34,8 @@ class Scene {
   }
 
   addObj(object) {
-    if (object instanceof THREE.Mesh) {
-      // if (object.objType === 'picker') {
-      //   let node = Example.maple.manage.createNode(object.children[0].name);
-      //   Example.maple.manage.attachNodeToRoot(node);
-      // } else {
-      //   let node = Example.maple.manage.createNode(object.name);
-      //   Example.maple.manage.attachNodeToRoot(node);
-      // }
+    if (object instanceof CustomObject) {
+      ScenesPanel.addObjectNode(object);
       this._scene.add(object);
       this._objList.push(object);
     }
@@ -66,7 +59,7 @@ class Scene {
   removeObjects() {
     let scene = this._scene;
     this._objList.forEach(function (entry) {
-      scene.remove(entry);
+      scene.remove(entry.obj);
     });
     // and rest camera
     /*    let camSettings = Constants.getCamSettings();

@@ -2,8 +2,9 @@
  * Created by urvoy_p on 04/05/16.
  */
 
-import SceneUI from './Scene.ui';
+import * as SceneUI from './Scene.ui';
 import Scene from './Scene';
+import * as THREE from 'three';
 
 class PropPanelUI {
   constructor() {
@@ -48,12 +49,12 @@ class PropPanelUI {
 
   changeObjectColor(color) {
     let newColor = new THREE.Color(color);
-    this.selectedObj.setColor(newColor);
+    this.selectedObj.material.color.set(newColor);
     Scene.render();
   }
 
   setObjectVisibility(state) {
-    this.selectedObj.setVisibility(state);
+    this.selectedObj.visible = state;
     Scene.render();
   }
 
@@ -69,7 +70,7 @@ class PropPanelUI {
           y: Math.round(objProperties.eq(1).val()),
           z: Math.round(objProperties.eq(2).val())
         };
-        this.selectedObj.updatePosition(pos);
+        this.selectedObj.position.set(pos.x, pos.y, pos.z);
         break;
       case "rotation":
         let rotation = {
@@ -77,7 +78,8 @@ class PropPanelUI {
           y: Math.round(objProperties.eq(4).val()),
           z: Math.round(objProperties.eq(5).val())
         };
-        this.selectedObj.updateRotation(rotation);
+        console.log(this.selectedObj);
+        this.selectedObj.rotation.set(rotation.x, rotation.y, rotation.z);
         break;
       case "scale":
         let scale = {
@@ -85,12 +87,13 @@ class PropPanelUI {
           y: objProperties.eq(7).val(),
           z: objProperties.eq(8).val()
         };
-        this.selectedObj.updateScale(scale);
+        if (scale.x > 0 && scale.y > 0 && scale.z > 0)
+          this.selectedObj.scale.set(scale.x, scale.y, scale.z);
         break;
       default:
         break;
     }
-    this.transformControls.update();
+    SceneUI.default.updateTransformControls();
     Scene.render();
   }
 
@@ -98,14 +101,12 @@ class PropPanelUI {
     this.selectedObj = undefined;
   }
 
-  loadObjectInfo(object, transformControls) {
+  loadObjectInfo(object) {
     if (object !== undefined) {
       if (object.name === "lightPicker")
         object = object.children[0];
-      this.selectedObj = object.obj;
+      this.selectedObj = object;
     }
-    if (transformControls !== undefined)
-      this.transformControls = transformControls;
     this.update();
   }
 

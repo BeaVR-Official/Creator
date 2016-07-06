@@ -68,6 +68,22 @@ class SceneUI {
       return;
     Scene._sceneHelpers.add(helper);
   }
+
+  attachToTransform(object) {
+    this._transformControls.attach(object);
+    PropPanelUI.loadObjectInfo(object);
+    Scene.render();
+  }
+
+  detachTransform() {
+    this._transformControls.detach();
+    PropPanelUI.unselectObject();
+    Scene.render();
+  }
+  
+  updateTransformControls() {
+    this._transformControls.update();
+  }
 }
 
 export default new SceneUI();
