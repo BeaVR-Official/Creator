@@ -3,7 +3,6 @@
  */
 
 import {saveAs} from "../../../node_modules/filesaverjs/FileSaver";
-import CustomObject from "./CustomObject";
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
 
@@ -12,17 +11,16 @@ class Save {
   }
 
   loadCustomObjetcs() {
-    let stored       = localStorage['save'];
-    let savedObjects = JSON.parse(stored);
-
-    Scene.render();
+    let stored = localStorage['save2'];
     Scene.removeObjects();
+    Scene.render();
     SceneUI.init();
-    
-    savedObjects.forEach(entry => {
-      // La deserialization SE passe dans la method fromJSON
-      // en cas de modification des paramètres les changer uniquement dans la class CustomObj (objToJSON & fromJSON)
-      Scene.addObj(CustomObject.fromJSON(entry));
+
+    let loader        = new THREE.ObjectLoader();
+    let loadedObjects = JSON.parse(stored);
+    loadedObjects.forEach((entry) => {
+      let loadedMesh = loader.parse(entry);
+      Scene.addObj(loadedMesh);
     });
     Scene.render();
   }
@@ -30,8 +28,8 @@ class Save {
   saveCustomObjects() {
     // Partie 2
     let object = [];
-    Scene._objList.forEach(entry => {
-      object.push(entry.objToJSON());
+    Scene._objList.forEach(function (entry) {
+      object.push(entry.toJSON());
     });
 
     // Partie 3
@@ -47,11 +45,8 @@ class Save {
     }
 
     // Dernière Partie temporaire
-    localStorage['save'] = output;
-
-    //localStorage['scene'] = Scene._scene.toJSON();
+    localStorage['save2'] = output;
   }
-
 }
 
 export default new Save();
