@@ -8,20 +8,31 @@ import SceneControls from './SceneControls';
 
 class SceneUI {
   constructor() {
-    this._grid              = new THREE.GridHelper(500, 50);
     this._orbitControl      = new THREE.OrbitControls(
       Scene._camera,
       Scene._renderer.domElement);
-    this._transformControls = new THREE.TransformControls(
-      Scene._camera,
-      Scene._renderer.domElement);
-    this.addHelpers();
 
-    new SceneControls(this._transformControls);
+    this._orbitControl.addEventListener('change', () => Scene.render());
+    this.init();
 
     this.adaptToWindow();
     $(window).resize(() => this.adaptToWindow());
     $('#mainView').append(Scene._renderer.domElement);
+  }
+
+  init() {
+    this._grid              = new THREE.GridHelper(500, 50);
+    this._transformControls = new THREE.TransformControls(
+      Scene._camera,
+      Scene._renderer.domElement);
+    this._transformControls.addEventListener('change', () => {
+      PropPanelUI.updateTransformations();
+      Scene.render();
+    });
+
+    Scene._sceneHelpers.add(this._grid);
+    Scene._sceneHelpers.add(this._transformControls);
+    new SceneControls(this._transformControls);
   }
 
   /**
@@ -35,19 +46,6 @@ class SceneUI {
     Scene._camera.updateProjectionMatrix();
     Scene._renderer.setSize(parentWidth, parentHeight);
     Scene.render();
-  }
-
-  /**
-   * Add basic helpers on sceneHelper.
-   */
-  addHelpers() {
-    this._orbitControl.addEventListener('change', () => Scene.render());
-    this._transformControls.addEventListener('change', () => {
-      PropPanelUI.updateTransformations();
-      Scene.render();
-    });
-    Scene._sceneHelpers.add(this._grid);
-    Scene._sceneHelpers.add(this._transformControls);
   }
 
   /**
