@@ -4,9 +4,8 @@
  */
 
 import CustomObject from './CustomObject';
+import ScenesPanel from './ScenesPanel.ui';
 import Constants from './Constants';
-//import Example from './sugarmaple/Example';
-import Node from './sugarmaple/Tree';
 
 class Scene {
   constructor() {
@@ -35,10 +34,11 @@ class Scene {
     this._objList = [];
   }
 
-  addObj(customObject) {
-    if (customObject instanceof CustomObject) {
-      this._scene.add(customObject.obj);
-      this._objList.push(customObject);
+  addObj(object) {
+    if (object instanceof CustomObject) {
+      ScenesPanel.addObjectNode(object);
+      this._scene.add(object);
+      this._objList.push(object);
     }
   }
 
@@ -60,7 +60,7 @@ class Scene {
   removeObjects() {
     let scene = this._scene;
     this._objList.forEach(function (entry) {
-      scene.remove(entry.obj);
+      scene.remove(entry);
     });
     // and rest camera
     /*    let camSettings = Constants.getCamSettings();

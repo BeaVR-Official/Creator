@@ -4,6 +4,7 @@
 
 import * as SceneUI from './Scene.ui';
 import Scene from './Scene';
+import * as THREE from 'three';
 
 class PropPanelUI {
   constructor() {
