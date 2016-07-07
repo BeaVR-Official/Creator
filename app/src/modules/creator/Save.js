@@ -2,28 +2,38 @@
  * Created by giraud_d on 08/05/2016.
  */
 
-import {saveAs} from "../../../../node_modules/filesaverjs/FileSaver";
-import CustomObject from "./CustomObject";
+import {saveAs} from "../../../node_modules/filesaverjs/FileSaver";
 import Scene from './Scene';
+import SceneUI from './Scene.ui';
 
 class Save {
   constructor() {
   }
 
 
-  loadCustomObjetcs() {
-    let stored = localStorage['save'];
-    let savedObjects  = JSON.parse(stored);
-
-    Scene.render();
+  loadCustomObjects() {
+    let stored = localStorage['save2'];
     Scene.removeObjects();
-
-    savedObjects.forEach(function (entry) {
-      // La deserialization ce passe dans la method fromJSON
-      // en cas de modification des paramètres les changer uniquement dans la class CustomObj (objToJSON & fromJSON)
-      Scene.addObj(CustomObject.fromJSON(entry));
-    });
     Scene.render();
+    SceneUI.init();
+
+//Grep du code d'Elliot
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function(e) {
+
+      let loader = new THREE.ObjectLoader();
+      //let loadedObjects = JSON.parse(stored);
+      let loadedObjects = JSON.parse(e.target.result);
+      loadedObjects.forEach((entry) => {
+        let loadedMesh = loader.parse(entry);
+        Scene.addObj(loadedMesh);
+      });
+      Scene.render();
+
+    };
+
   }
 
 
@@ -31,25 +41,27 @@ class Save {
     // Partie 2
     let object = [];
     Scene._objList.forEach(function (entry) {
-      object.push(entry.objToJSON());
+      object.push(entry.toJSON());
     });
 
     // Partie 3
     let output;
     try {
-      output = JSON.stringify( object, null, '\t' );
+      output = JSON.stringify(object, null, '\t');
       // transformation nécessaire pour l'uuid
-      output = output.replace( /[\n\t]+([\d\.e\-\[\]]+)/g, '$1' );
-    } catch ( e ) {
+      output = output.replace(/[\n\t]+([\d\.e\-\[\]]+)/g, '$1');
+    }
+    catch (e) {
       // TODO catch exception
-      output = JSON.stringify( output );
+      output = JSON.stringify(output);
     }
 
     // Dernière Partie temporaire
-    localStorage['save'] = output;
+    //localStorage['save2'] = output;
 
-
-    //localStorage['scene'] = Scene._scene.toJSON();
+    // Dernière Partie temporaire
+    var blob = new Blob([JSON.stringify(object)], {type: "application/json;charset=utf-8"});
+    saveAs(blob, "SaveSample.json");
   }
 
 }

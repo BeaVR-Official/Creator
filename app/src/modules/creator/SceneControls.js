@@ -32,8 +32,9 @@ export default class SceneControls {
       this._mouse.y = -(event.clientY / window.innerHeight * 2) + 1;
 
       this._closestObj = this.getClosestObject(Scene._scene.children, true);
+      console.log(this._closestObj);
       if (this._closestObj !== undefined) {
-        PropPanelUI.loadObjectInfo(this._closestObj, transformControls);
+        PropPanelUI.loadObjectInfo(this._closestObj);
         transformControls.attach(this._closestObj);
       } else if (this._mouseIsMoving === false) {
         transformControls.detach();
@@ -68,8 +69,9 @@ export default class SceneControls {
     let intersects = this.getIntersectObjects(objects, recursive);
     if (intersects.length > 0) {
       return Scene._objList.find(object => {
-        if (object === intersects[0].object)
+        if (object === intersects[0].object) {
           return object;
+        }
       });
     }
     return undefined;

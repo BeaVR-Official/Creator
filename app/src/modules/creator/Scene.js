@@ -3,10 +3,8 @@
  * Created by urvoy_p on 24/04/16.
  */
 
-import CustomObject from './CustomObject';
+import ScenesPanel from './ScenesPanel.ui';
 import Constants from './Constants';
-//import Example from './sugarmaple/Example';
-import Node from './../sugarmaple/Tree';
 
 class Scene {
   constructor() {
@@ -14,9 +12,9 @@ class Scene {
     this._scene        = new THREE.Scene();
     window.scene       = this._scene;
 
-    this._renderer = new THREE.WebGLRenderer({antialias: true});
+    this._renderer  = new THREE.WebGLRenderer({antialias: true});
     let camSettings = Constants.getCamSettings();
-    this._camera   = new THREE.PerspectiveCamera(
+    this._camera    = new THREE.PerspectiveCamera(
       camSettings.fov,
       camSettings.aspect,
       camSettings.near,
@@ -36,17 +34,9 @@ class Scene {
   }
 
   addObj(object) {
-    if (object instanceof CustomObject) {
-      // if (object.objType === 'picker') {
-      //   let node = Example.maple.manage.createNode(object.children[0].name);
-      //   Example.maple.manage.attachNodeToRoot(node);
-      // } else {
-      //   let node = Example.maple.manage.createNode(object.name);
-      //   Example.maple.manage.attachNodeToRoot(node);
-      // }
-      this._scene.add(object);
-      this._objList.push(object);
-    }
+    ScenesPanel.addObjectNode(object);
+    this._scene.add(object);
+    this._objList.push(object);
   }
 
   /*
@@ -65,8 +55,14 @@ class Scene {
   }
 
   removeObjects() {
+    for (let i = this._sceneHelpers.children.length - 1; i >= 0; i--) {
+      let child = this._sceneHelpers.children[i];
+      console.log(child);
+      this._sceneHelpers.remove(child);
+    }
+
     let scene = this._scene;
-    this._objList.forEach(function (entry) {
+    this._objList.forEach(entry => {
       scene.remove(entry);
     });
     // and rest camera
@@ -86,6 +82,5 @@ class Scene {
      */
   }
 }
-
 
 export default new Scene();
