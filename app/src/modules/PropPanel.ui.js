@@ -78,7 +78,6 @@ class PropPanelUI {
           y: Math.round(objProperties.eq(4).val()),
           z: Math.round(objProperties.eq(5).val())
         };
-        console.log(this.selectedObj);
         this.selectedObj.rotation.set(rotation.x, rotation.y, rotation.z);
         break;
       case "scale":
