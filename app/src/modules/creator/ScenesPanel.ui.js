@@ -2,7 +2,7 @@
  * Created by urvoy_p on 04/05/16.
  */
 
-import SugarMaple from './sugarmaple/SugarMaple';
+import SugarMaple from '../sugarmaple/SugarMaple';
 import * as SceneUI from './Scene.ui';
 import * as Scene from './Scene';
 

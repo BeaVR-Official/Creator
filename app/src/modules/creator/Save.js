@@ -2,7 +2,7 @@
  * Created by giraud_d on 08/05/2016.
  */
 
-import {saveAs} from "../../../node_modules/filesaverjs/FileSaver";
+import {saveAs} from "../../../../node_modules/filesaverjs/FileSaver";
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
 
