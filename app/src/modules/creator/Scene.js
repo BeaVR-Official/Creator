@@ -37,6 +37,24 @@ class Scene {
     ScenesPanel.addObjectNode(object);
     this._scene.add(object);
     this._objList.push(object);
+    console.log(this._objList);
+    console.log(this._scene);
+  }
+
+  attachNewParent(node, parent) {
+    if (parent === undefined) {
+      console.log('parent undefined');
+      parent = this._scene;
+    } else {
+      parent = parent.data;
+    }
+    this._objList.find(object => {
+      if (object === node.data) {
+        console.log('parent: ');
+        console.log(parent);
+        THREE.SceneUtils.attach(object, this._scene, parent);
+      }
+    });
   }
 
   /*

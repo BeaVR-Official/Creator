@@ -29,7 +29,7 @@ class ScenesPanelUI {
       }
     });
 
-    this.sm = $('#sceneTree').sugarmaple({
+    this.sm       = $('#sceneTree').sugarmaple({
       events:  {
         onImport: (node) => {
           return node;
@@ -44,7 +44,7 @@ class ScenesPanelUI {
         checkable: true
       }
     });
-    this.rootNode = this.sm.sugarmaple('manage.create', 'Scene 1');
+    this.rootNode = this.sm.sugarmaple('manage.create', 'Scene 1', 'test');
     this.sm.sugarmaple('manage.setRoot', this.rootNode);
   }
 
@@ -81,12 +81,11 @@ class ScenesPanelUI {
 
     this.sm.on('sortable.dropped', (e, newParent, node) => {
       if (newParent === undefined && node.data !== undefined) {
-        //Faire rootMesh
-        THREE.SceneUtils.attach(node.data, Scene.default._scene, Scene.default.scene);
+        Scene.default.attachNewParent(node, newParent);
+        // THREE.SceneUtils.attach(node.data, Scene.default._scene, Scene.default.scene);
       } else if (node !== undefined && newParent.data !== undefined) {
-        console.log(newParent);
-        console.log(node);
-        THREE.SceneUtils.attach(node.data, Scene.default._scene, newParent.data);
+        Scene.default.attachNewParent(node, newParent);
+        // THREE.SceneUtils.attach(node.data, Scene.default._scene, newParent.data);
       }
     });
   }
