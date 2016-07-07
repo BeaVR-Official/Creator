@@ -3,7 +3,7 @@
  */
 
 import Scene from './Scene';
-import PropPanelUI from './PropPanel.ui';
+import PropPanelUI from './PropPanel.ui.js';
 
 export default class SceneControls {
   constructor(transformControls) {

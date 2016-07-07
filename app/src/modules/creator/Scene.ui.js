@@ -3,7 +3,7 @@
  */
 
 import Scene from './Scene';
-import PropPanelUI from './PropPanel.ui';
+import PropPanelUI from './PropPanel.ui.js';
 import SceneControls from './SceneControls';
 
 class SceneUI {

@@ -6,7 +6,7 @@
 import CustomObject from './CustomObject';
 import Constants from './Constants';
 //import Example from './sugarmaple/Example';
-import Node from './sugarmaple/Tree';
+import Node from './../sugarmaple/Tree';
 
 class Scene {
   constructor() {

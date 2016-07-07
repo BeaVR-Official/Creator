@@ -10,8 +10,8 @@ const paths = {
   scriptFiles: 'app/src/**/*.js',
   distPath: 'app/dist/',
   distFiles: ['app/dist/creator*', 'app/dist/tests*'],
-  appIndex: 'app/index.html',
-  testIndex: 'app/tests/index.html'
+  appIndex: 'app/creator.html',
+  testIndex: 'app/tests/creator.html'
 };
 
 gulp.task('test', function () {

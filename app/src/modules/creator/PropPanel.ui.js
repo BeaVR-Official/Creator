@@ -2,7 +2,7 @@
  * Created by urvoy_p on 04/05/16.
  */
 
-import SceneUI from './Scene.ui';
+import SceneUI from './Scene.ui.js';
 import Scene from './Scene';
 
 class PropPanelUI {

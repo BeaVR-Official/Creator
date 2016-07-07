@@ -3,7 +3,7 @@
  */
 
 import Scene from './Scene';
-import SceneUI from './Scene.ui';
+import SceneUI from './Scene.ui.js';
 import CustomObject from './CustomObject';
 //import Example from './sugarmaple/Example';
 
