@@ -59,7 +59,6 @@ export default class SceneControls {
       //   this._closestObj.add(box);
       //   Scene._objList.push(box);
       // }
-
       Scene.render();
     });
   }

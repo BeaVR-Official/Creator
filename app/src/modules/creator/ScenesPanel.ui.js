@@ -49,9 +49,10 @@ class ScenesPanelUI {
   }
 
   addObjectNode(object) {
+    let nodeName = object.name;
     if (object.objType === 'picker')
-      object = object.children[0];
-    let node = this.sm.sugarmaple('manage.create', object.name, object);
+      nodeName = object.children[0].name;
+    let node = this.sm.sugarmaple('manage.create', nodeName, object);
     this.sm.sugarmaple('manage.attach', this.rootNode, node);
   }
 

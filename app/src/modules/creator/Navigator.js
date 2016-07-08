@@ -7,7 +7,7 @@ import SceneUI from './Scene.ui';
 //import Example from './sugarmaple/Example';
 
 class Navigator {
-  
+
   addBox() {
 
     let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
@@ -19,7 +19,6 @@ class Navigator {
     box.receiveShadow = true;
     this.setMesh(box, 'box');
 
-
     // Object.assign(CustomObject.prototype, THREE.EventDispatcher.prototype );
     // box.addEventListener('add', function (event ) {
     //  console.log(event.message);
@@ -27,7 +26,6 @@ class Navigator {
     // box.addToScene(Scene._scene);
 
     Scene.addObj(box);
-    console.log(Scene._objList);
     Scene.render();
   }
 
@@ -120,7 +118,7 @@ class Navigator {
     let material = new THREE.MeshBasicMaterial(materialPicker);
     let picker   = new THREE.Mesh(geometry, material);
     this.setMesh(picker, 'picker');
-    
+
     SceneUI.addLightHelper(light);
     picker.add(light);
     Scene.addObj(picker);

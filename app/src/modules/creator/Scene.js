@@ -40,12 +40,19 @@ class Scene {
   }
 
   attachNewParent(node, parent) {
+    // if (node instanceof THREE.DirectionalLight ||
+    //   node instanceof THREE.AmbientLight ||
+    //   node instanceof THREE.PointLight ||
+    //   node instanceof THREE.SpotLight) {
+    //   parent = parent.parent;
+    // }
+
     this._objList.find(object => {
       if (object === node)
         THREE.SceneUtils.attach(object, this._scene, parent);
     });
   }
-  
+
   detachParent(node) {
     THREE.SceneUtils.detach(node, node.parent, this._scene);
   }
