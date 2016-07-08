@@ -3,8 +3,8 @@
  */
 
 import SugarMaple from '../sugarmaple/SugarMaple';
-import * as SceneUI from './Scene.ui';
 import * as Scene from './Scene';
+import * as SceneUI from './Scene.ui';
 
 class ScenesPanelUI {
   constructor() {
@@ -44,14 +44,11 @@ class ScenesPanelUI {
         checkable: true
       }
     });
-    this.rootNode = this.sm.sugarmaple('manage.create', 'Scene 1', 'test');
+    this.rootNode = this.sm.sugarmaple('manage.create', 'Scene 1', Scene.default._scene);
     this.sm.sugarmaple('manage.setRoot', this.rootNode);
   }
 
   addObjectNode(object) {
-    // Obj Scene OK ici
-    //console.log(Scene);
-
     if (object.objType === 'picker')
       object = object.children[0];
     let node = this.sm.sugarmaple('manage.create', object.name, object);
@@ -59,7 +56,6 @@ class ScenesPanelUI {
   }
 
   sugarMapleEvents() {
-    console.log(Scene);
     this.sm.on('checkable.checked', (e, node) => {
       if (node.data.parent.objType === 'picker')
         SceneUI.default.attachToTransform(node.data.parent);
@@ -74,19 +70,16 @@ class ScenesPanelUI {
     });
 
     this.sm.on('sortable.dragged', (e, node) => {
-      if (node !== undefined) {
-        THREE.SceneUtils.detach(node.data, node.data.parent, Scene.default._scene);
-      }
+      if (node !== undefined)
+        Scene.default.detachParent(node.data);
     });
 
     this.sm.on('sortable.dropped', (e, newParent, node) => {
-      if (newParent === undefined && node.data !== undefined) {
-        Scene.default.attachNewParent(node, newParent);
-        // THREE.SceneUtils.attach(node.data, Scene.default._scene, Scene.default.scene);
-      } else if (node !== undefined && newParent.data !== undefined) {
-        Scene.default.attachNewParent(node, newParent);
-        // THREE.SceneUtils.attach(node.data, Scene.default._scene, newParent.data);
-      }
+      console.log('attach new parent: ');
+      console.log(newParent);
+      if (newParent === undefined) //Bug spécifique de l'accordéon
+        return;
+      Scene.default.attachNewParent(node.data, newParent.data);
     });
   }
 }
