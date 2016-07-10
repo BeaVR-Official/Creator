@@ -18,6 +18,7 @@ class NavigatorUI {
     $('#save').click(() => Save.saveCustomObjects());
     //$('#load').click(() => Save.loadCustomObjects());
     $('.inputfile').change((e) => Save.loadCustomObjects(e));
+    $('#launch').click(() => Save.saveCustomObjects(true));
   }
 }
 
