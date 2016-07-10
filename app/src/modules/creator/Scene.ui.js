@@ -3,12 +3,12 @@
  */
 
 import Scene from './Scene';
-import PropPanelUI from './PropPanel.ui.js';
+import * as PropPanelUI from './PropPanel.ui.js';
 import SceneControls from './SceneControls';
 
 class SceneUI {
   constructor() {
-    this._orbitControl      = new THREE.OrbitControls(
+    this._orbitControl = new THREE.OrbitControls(
       Scene._camera,
       Scene._renderer.domElement);
 
@@ -26,7 +26,7 @@ class SceneUI {
       Scene._camera,
       Scene._renderer.domElement);
     this._transformControls.addEventListener('change', () => {
-      PropPanelUI.updateTransformations();
+      PropPanelUI.default.updateTransformations();
       Scene.render();
     });
 
@@ -69,16 +69,16 @@ class SceneUI {
 
   attachToTransform(object) {
     this._transformControls.attach(object);
-    PropPanelUI.loadObjectInfo(object);
+    PropPanelUI.default.loadObjectInfo(object);
     Scene.render();
   }
 
   detachTransform() {
     this._transformControls.detach();
-    PropPanelUI.unselectObject();
+    PropPanelUI.default.unselectObject();
     Scene.render();
   }
-  
+
   updateTransformControls() {
     this._transformControls.update();
   }

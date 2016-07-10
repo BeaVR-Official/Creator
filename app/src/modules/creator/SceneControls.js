@@ -3,7 +3,9 @@
  */
 
 import Scene from './Scene';
-import PropPanelUI from './PropPanel.ui.js';
+import * as PropPanelUI from './PropPanel.ui.js';
+
+import ScenesPanel from './ScenesPanel.ui';
 
 export default class SceneControls {
   constructor(transformControls) {
@@ -32,14 +34,31 @@ export default class SceneControls {
       this._mouse.y = -(event.clientY / window.innerHeight * 2) + 1;
 
       this._closestObj = this.getClosestObject(Scene._scene.children, true);
-      console.log(this._closestObj);
       if (this._closestObj !== undefined) {
-        PropPanelUI.loadObjectInfo(this._closestObj);
+        PropPanelUI.default.loadObjectInfo(this._closestObj);
         transformControls.attach(this._closestObj);
       } else if (this._mouseIsMoving === false) {
         transformControls.detach();
-        PropPanelUI.unselectObject();
+        PropPanelUI.default.unselectObject();
       }
+
+      // Child hierarchy test
+      // if (this._closestObj.objType === 'sphere') {
+      //   let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
+      //   let geometry = new THREE.BoxGeometry(200, 200, 200);
+      //   let box      = new THREE.Mesh(geometry, material);
+      //
+      //   box.mirroredLoop  = true;
+      //   box.castShadow    = true;
+      //   box.receiveShadow = true;
+      //   box.objType     = 'box';
+      //   box.userData.id = _.uniqueId();
+      //   box.name        = 'box' + '_' + box.userData.id;
+      //
+      //   ScenesPanel.addObjectNode(box);
+      //   this._closestObj.add(box);
+      //   Scene._objList.push(box);
+      // }
       Scene.render();
     });
   }
