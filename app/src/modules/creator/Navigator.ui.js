@@ -19,6 +19,7 @@ class NavigatorUI {
     //$('#load').click(() => Save.loadCustomObjects());
     $('.inputfile').change((e) => Save.loadCustomObjects(e));
     $('#launch').click(() => Save.saveCustomObjects(true));
+    $('#newScript').click(() => $('#scriptModal').modal('show'));
   }
 }
 
