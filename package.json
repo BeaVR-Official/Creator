@@ -17,7 +17,7 @@
     "1. build": "webpack --debug",
     "2. clean": "gulp clean",
     "3. test": "gulp test",
-    "4. watch-n-test": "gulp watch-n-test"
+    "4. watch-n-test": "gulp watch-n-test",
     "start": "http-server ./"
   },
   "devDependencies": {
