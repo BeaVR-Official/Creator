@@ -75,7 +75,6 @@ class Scene {
   removeObjects() {
     for (let i = this._sceneHelpers.children.length - 1; i >= 0; i--) {
       let child = this._sceneHelpers.children[i];
-      console.log(child);
       this._sceneHelpers.remove(child);
     }
 
