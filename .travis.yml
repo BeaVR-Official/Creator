@@ -5,6 +5,4 @@ branches:
   only:
     - master
 before_script:
-  - npm install -g bower <<EOF
-                         yes
-                         EOF
+  - npm install -g bower
