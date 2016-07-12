@@ -72,6 +72,7 @@
                     <li><a class="addItems" href="#">Add</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a id="newScript">Script</a></li>
                     <li><a id="save">Save</a></li>
                     <!-- tmp <li><a id="load">Load</a></li> -->
                     <li><a id="load">
@@ -210,7 +211,49 @@
             </a>
         </div>
     </div>
-
+    <div id="scriptModal" class="ui modal">
+        <div class="header">Create Script</div>
+        <div class="content">
+            <div id="actions" class="scriptConf">
+                Actions
+                <select id="scriptActions" class="ui fluid search dropdown" multiple="">
+                    <option value="">Actions</option>
+                    <option value="collision">On Collision</option>
+                    <option value="proximity">Proximity</option>
+                    <option value="position">On Position</option>
+                    <option value="orientation">On Orientation</option>
+                    <option value="timer">After Timer</option>
+                    <option value="signal">On Signal</option>
+                </select>
+            </div>
+            <div id="reactions" class="scriptConf">
+                Reactions
+                <select id="scriptReactions" class="ui fluid search dropdown" multiple="">
+                    <option value="">Reactions</option>
+                    <option value="collision">Be visible</option>
+                    <option value="proximity">Be invisible</option>
+                    <option value="position">Be destroyed</option>
+                    <option value="orientation">Change position</option>
+                    <option value="timer">Change orientation</option>
+                    <option value="signal">Send signal</option>
+                    <option value="signal">Wait</option>
+                </select>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui approve button conf">Save</div>
+            <div class="ui cancel button">Cancel</div>
+        </div>
+    </div>
+    <div id="scriptConfModal" class="ui modal">
+        <div class="header">Configure Script</div>
+        <div class="content">
+            Configuration
+        </div>
+        <div class="actions">
+            <div class="ui approve button">Save</div>
+        </div>
+    </div>
     <div class="wrap" id="mainView"></div>
 </div>
 
