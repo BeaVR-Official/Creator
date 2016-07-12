@@ -4,13 +4,12 @@
 
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
-//import Example from './sugarmaple/Example';
+import Loader from './Loader';
 
 class Navigator {
 
   addBox() {
-
-    let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
+    let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(200, 200, 200);
     let box      = new THREE.Mesh(geometry, material);
 
@@ -18,20 +17,14 @@ class Navigator {
     box.castShadow    = true;
     box.receiveShadow = true;
     this.setMesh(box, 'box');
-
-    // Object.assign(CustomObject.prototype, THREE.EventDispatcher.prototype );
-    // box.addEventListener('add', function (event ) {
-    //  console.log(event.message);
-    // } );
-    // box.addToScene(Scene._scene);
-
+    
     Scene.addObj(box);
     Scene.render();
   }
 
   addSphere() {
     let geometry = new THREE.SphereGeometry(50, 50, 320);
-    let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
+    let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let sphere   = new THREE.Mesh(geometry, material);
 
     sphere.mirroredLoop  = true;
@@ -45,7 +38,7 @@ class Navigator {
 
   addCylinder() {
     let geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
-    let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
+    let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let cylinder = new THREE.Mesh(geometry, material);
 
     cylinder.mirroredLoop  = true;
@@ -124,18 +117,10 @@ class Navigator {
     Scene.addObj(picker);
   }
 
-  addExternal() {
-    let loader = new THREE.JSONLoader();
-    loader.load('models/horse.js', (geometry, material) => {
-      let importedObj = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(material));
+  addExternal(explorerEvent) {
+    let file = explorerEvent.target.files[0];
 
-      importedObj.scale.set(1, 1, 1);
-      importedObj.position.set(0, 0, 0);
-      this.setMesh(importedObj, 'importedObj');
-
-      Scene.addObj(importedObj);
-      Scene.render();
-    });
+    Loader.loadFile(file);
   }
 
   setMesh(mesh, type) {

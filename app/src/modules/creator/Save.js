@@ -12,39 +12,61 @@ class Save {
 
 
   loadCustomObjects() {
-    let stored = localStorage['save2'];
+    //let stored = localStorage['save2'];
     Scene.removeObjects();
     Scene.render();
     SceneUI.init();
 
-//Grep du code d'Elliot
     let file = event.target.files[0];
     let reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function(e) {
-
       let loader = new THREE.ObjectLoader();
       //let loadedObjects = JSON.parse(stored);
       let loadedObjects = JSON.parse(e.target.result);
+
       loadedObjects.forEach((entry) => {
         let loadedMesh = loader.parse(entry);
-        Scene.addObj(loadedMesh);
+
+        // TODO voir prq je peux pas renvoyer un bool d'une methode static
+        let stop = false;
+        Scene._objList.forEach((entry) => {
+          if (entry.uuid === loadedMesh.uuid)
+            stop = true;
+        });
+        //if (Save.isDuplicatedChildren(loadedMesh) === false) {
+        if (stop === false) {
+
+          Scene.addObj(loadedMesh);
+          Save.loadChildren(loadedMesh);
+        }
       });
       Scene.render();
-
     };
 
   }
 
+  static isDuplicatedChildren(object) {
+    Scene._objList.forEach((entry) => {
+      if (entry.uuid === object.uuid)
+        return true;
+    });
+    return false;
+  }
 
-  saveCustomObjects() {
-    // Partie 2
+  static loadChildren(object) {
+    object.children.forEach((entry) => {
+      Scene._objList.push(entry);
+      Save.loadChildren(entry);
+    });
+  }
+
+  saveCustomObjects(runner) {
     let object = [];
     Scene._objList.forEach(function (entry) {
       object.push(entry.toJSON());
     });
 
-    // Partie 3
     let output;
     try {
       output = JSON.stringify(object, null, '\t');
@@ -57,30 +79,14 @@ class Save {
     }
 
     // Dernière Partie temporaire
-    //localStorage['save2'] = output;
-
-    // Dernière Partie temporaire
-    var blob = new Blob([JSON.stringify(object)], {type: "application/json;charset=utf-8"});
-    saveAs(blob, "SaveSample.json");
+    if (runner === true) {
+      localStorage['saveRunner'] = output;
+    } else {
+      let blob = new Blob([JSON.stringify(object)], {type: "application/json;charset=utf-8"});
+      saveAs(blob, "SaveSample.json");
+    }
   }
 
 }
 
 export default new Save();
-
-/*
- let outputJSON = Scene.serializeObj();
-
- let zip = new JSZip();
- zip.file("customObjects.json", outputJSON);
-
- let assets = zip.folder("assets");
- assets.file("test.txt", "a folder with assets");
-
- zip.generateAsync({type:"blob"}).then(function(content) {
- // FileSaver.js
- saveAs(content, "saveSampleV2.zip");
- });
-
- //saveAs(Scene.serializeObj(), "saveTmp.json");
- */

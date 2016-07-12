@@ -29,7 +29,7 @@ class ScenesPanelUI {
       }
     });
 
-    this.sm       = $('#sceneTree').sugarmaple({
+    this.sm = $('#sceneTree').sugarmaple({
       events:  {
         onImport: (node) => {
           return node;
@@ -49,6 +49,7 @@ class ScenesPanelUI {
   }
 
   addObjectNode(object) {
+    // TODO check également les chldren (en récursive) et les ajouter si il y en a @Vincent
     let nodeName = object.name;
     if (object.objType === 'picker')
       nodeName = object.children[0].name;
