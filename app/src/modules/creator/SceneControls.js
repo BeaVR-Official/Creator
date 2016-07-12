@@ -21,6 +21,8 @@ export default class SceneControls {
    * Scene events : click detection
    */
   events(transformControls) {
+    window.addEventListener('keypress', this.doKeyPress, false);
+
     this._sceneView.mousedown(() => {
       this._mouseIsMoving = false;
     });
@@ -41,26 +43,27 @@ export default class SceneControls {
         transformControls.detach();
         PropPanelUI.default.unselectObject();
       }
-
-      // Child hierarchy test
-      // if (this._closestObj.objType === 'sphere') {
-      //   let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-      //   let geometry = new THREE.BoxGeometry(200, 200, 200);
-      //   let box      = new THREE.Mesh(geometry, material);
-      //
-      //   box.mirroredLoop  = true;
-      //   box.castShadow    = true;
-      //   box.receiveShadow = true;
-      //   box.objType     = 'box';
-      //   box.userData.id = _.uniqueId();
-      //   box.name        = 'box' + '_' + box.userData.id;
-      //
-      //   ScenesPanel.addObjectNode(box);
-      //   this._closestObj.add(box);
-      //   Scene._objList.push(box);
-      // }
       Scene.render();
     });
+
+    console.log(this._sceneView);
+    this._sceneView.keypress(event => {
+      alert(event.code);
+    });
+
+    this._sceneView.keydown(event => {
+      alert(event.code);
+    });
+
+    // this._sceneView.addEventListener('keydown', this.doKeyDown, false);
+  }
+
+  doKeyPress(event) {
+    switch (event.code) {
+      case 'Delete':
+        console.log('Delete key pressed!');
+        break;
+    }
   }
 
   /**

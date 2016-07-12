@@ -37,6 +37,7 @@ class Scene {
     ScenesPanel.default.addObjectNode(object);
     this._scene.add(object);
     this._objList.push(object);
+    console.log(this._objList);
   }
 
   attachNewParent(node, parent) {
