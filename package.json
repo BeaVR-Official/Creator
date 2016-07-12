@@ -12,12 +12,19 @@
     "url": "https://github.com/ekersale/beavr-creator/issues"
   },
   "homepage": "https://github.com/ekersale/beavr-creator#readme",
+  "config": {
+    "semantic" : {
+      "install" : true,
+      "src": "./node_modules/semantic-ui/src/"
+    }
+  },
   "scripts": {
     "0. watch": "webpack --watch --debug",
     "1. build": "webpack --debug",
     "2. clean": "gulp clean",
     "3. test": "gulp test",
     "4. watch-n-test": "gulp watch-n-test",
+    "postinstall" : "[ \"$npm_package_config_semantic_install\" = \"true\" ] && npm run semantic ",
     "start": "http-server ./"
   },
   "devDependencies": {
