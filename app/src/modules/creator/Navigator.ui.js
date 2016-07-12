@@ -18,6 +18,7 @@ class NavigatorUI {
     $('#save').click(() => Save.saveCustomObjects());
     $('#fileScene').change((e) => Save.loadCustomObjects(e));
     $('#launch').click(() => Save.saveCustomObjects(true));
+    $('#newScript').click(() => $('#scriptModal').modal('show'));
   }
 }
 

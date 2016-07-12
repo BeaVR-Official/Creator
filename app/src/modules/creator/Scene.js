@@ -73,6 +73,7 @@ class Scene {
   }
 
   removeObjects() {
+    // TODO à corriger en récursive children @Vincent ?
     for (let i = this._sceneHelpers.children.length - 1; i >= 0; i--) {
       let child = this._sceneHelpers.children[i];
       this._sceneHelpers.remove(child);
