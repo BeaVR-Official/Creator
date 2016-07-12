@@ -49,7 +49,10 @@ class PropPanelUI {
 
   changeObjectColor(color) {
     let newColor = new THREE.Color(color);
-    this.selectedObj.material.color.set(newColor);
+    if (this.selectedObj.material === undefined)
+      this.selectedObj.color = newColor;
+    else
+      this.selectedObj.material.color = newColor;
     Scene.render();
   }
 
@@ -102,7 +105,7 @@ class PropPanelUI {
 
   loadObjectInfo(object) {
     if (object !== undefined) {
-      if (object.name === "lightPicker")
+      if (object.objType === "picker")
         object = object.children[0];
       this.selectedObj = object;
     }
@@ -123,7 +126,11 @@ class PropPanelUI {
   }
 
   updateMesh() {
-    let color = this.selectedObj.material.color;
+    let color;
+    if (this.selectedObj.material === undefined)
+      color = this.selectedObj.color;
+    else
+      color = this.selectedObj.material.color;
     if (color !== undefined)
       $(".Mesh-properties .object-properties input[type=color]")[0].value = "#" + color.getHexString();
     $(".Mesh-properties .object-properties input[type=checkbox]")[0].checked = this.selectedObj.visible;

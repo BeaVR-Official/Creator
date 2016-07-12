@@ -29,7 +29,7 @@ class ScenesPanelUI {
       }
     });
 
-    this.sm       = $('#sceneTree').sugarmaple({
+    this.sm = $('#sceneTree').sugarmaple({
       events:  {
         onImport: (node) => {
           return node;

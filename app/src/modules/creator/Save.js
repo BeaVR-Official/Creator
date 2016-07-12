@@ -36,8 +36,10 @@ class Save {
 
   }
 
-
-  saveCustomObjects() {
+/*
+** Si runner true, save dans le cache
+ */
+  saveCustomObjects(runner) {
     // Partie 2
     let object = [];
     Scene._objList.forEach(function (entry) {
@@ -56,12 +58,14 @@ class Save {
       output = JSON.stringify(output);
     }
 
-    // Dernière Partie temporaire
-    //localStorage['save2'] = output;
-
-    // Dernière Partie temporaire
-    var blob = new Blob([JSON.stringify(object)], {type: "application/json;charset=utf-8"});
-    saveAs(blob, "SaveSample.json");
+    if (runner === true) {
+      // Dernière Partie temporaire
+      localStorage['saveRunner'] = output;
+    } else {
+      // Dernière Partie temporaire
+      var blob = new Blob([JSON.stringify(object)], {type: "application/json;charset=utf-8"});
+      saveAs(blob, "SaveSample.json");
+    }
   }
 
 }
