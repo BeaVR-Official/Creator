@@ -39,7 +39,7 @@ export default class Event {
     default:
       instruction = null;
     }
-    if (condition === null) {
+    if (instruction === null) {
       return (-1);
     }
     this.instructionList.push(instruction);
