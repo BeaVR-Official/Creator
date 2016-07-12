@@ -11,7 +11,7 @@ class Save {
   }
 
 
-  loadCustomObjects() {
+  loadCustomObjects(event) {
     let stored = localStorage['save2'];
     Scene.removeObjects();
     Scene.render();

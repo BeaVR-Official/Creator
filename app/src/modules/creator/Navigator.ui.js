@@ -8,16 +8,15 @@ import Save from './Save';
 class NavigatorUI {
   constructor() {
     $('#addCube').click(() => Navigator.addBox());
-    $('#addSpotLight').click(() => Navigator.addSpotLight());
-    $('#addDirectionalLight').click(() => Navigator.addDirectionalLight());
-    $('#addAmbientLight').click(() => Navigator.addAmbientLight());
     $('#addSphere').click(() => Navigator.addSphere());
     $('#addCylinder').click(() => Navigator.addCylinder());
+    $('#fileObject').change((e) => Navigator.addExternal(e));
     $('#addLight').click(() => Navigator.addLight());
-    $('#addExternal').click(() => Navigator.addExternal());
+    $('#addSpotLight').click(() => Navigator.addSpotLight());
+    $('#addAmbientLight').click(() => Navigator.addAmbientLight());
+    $('#addDirectionalLight').click(() => Navigator.addDirectionalLight());
     $('#save').click(() => Save.saveCustomObjects());
-    //$('#load').click(() => Save.loadCustomObjects());
-    $('.inputfile').change((e) => Save.loadCustomObjects(e));
+    $('#fileScene').change((e) => Save.loadCustomObjects(e));
     $('#launch').click(() => Save.saveCustomObjects(true));
   }
 }
