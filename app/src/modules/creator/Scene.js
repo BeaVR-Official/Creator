@@ -85,17 +85,24 @@ class Scene {
    }
    */
 
+  removeAllSceneObject(scene) {
+    if (scene !== undefined) {
+      for (let i = scene.children.length - 1; i >= 0; i--) {
+        let child = scene.children[i];
+        scene.remove(child);
+      }
+    }
+  }
+
   removeObjects() {
     // TODO à corriger en récursive children @Vincent ?
-    for (let i = this._sceneHelpers.children.length - 1; i >= 0; i--) {
-      let child = this._sceneHelpers.children[i];
-      this._sceneHelpers.remove(child);
+    this.removeAllSceneObject(this._sceneHelpers);
+    this.removeAllSceneObject(this._scene);
+    
+    for (let i = this._objList.length - 1; i >= 0; i--) {
+      this._objList.splice(i, 1);
     }
 
-    let scene = this._scene;
-    this._objList.forEach(entry => {
-      scene.remove(entry);
-    });
     // and rest camera
     /*    let camSettings = Constants.getCamSettings();
      this._camera   = new THREE.PerspectiveCamera(
