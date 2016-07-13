@@ -221,7 +221,15 @@ class ScriptOrganizer {
     }
   }
 
-  /* Generic methods */
+  /* Generic methods used by the saving system (import export) and the UI */
+
+  setAllTriggers(triggerList) {
+    this.triggerList = triggerList;
+  }
+
+  setAllEvents(eventList) {
+    this.eventList = eventList;
+  }
 
   getAllTriggers() {
     return (this.triggerList);

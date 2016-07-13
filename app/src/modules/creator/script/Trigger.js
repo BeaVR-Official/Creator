@@ -17,6 +17,28 @@ export default class Trigger {
     this.name = name;
   }
 
+  /* Methods used by ScriptScheduler for execution process */
+
+  checkConditions(objectUuid) {
+    for (let condition in this.conditionList) {
+      if (condition.isTrue(objectUuid, this.connectedObjectData[objectUuid].configuration) === false) {
+        return (false);
+      }
+    }
+    return (true);
+  }
+
+  checkTriggeredObjects() {
+    let triggeredObjectList = [];
+    for (let objectUuid in this.connectedObjectList) {
+      if (this.connectedObjectData[objectUuid].activated === true &&
+        this.checkConditions(objectUuid) === true) {
+        triggeredObjectList.push([objectUuid]);
+      }
+    }
+    return (triggeredObjectList);
+  }
+
   /* Methods for Condition management */
 
   findCondition(conditionUid) {
@@ -102,7 +124,7 @@ export default class Trigger {
     if (index === -1) {
       return (-1);
     }
-    this.connectedObjectData[objectUuid]["configuration"][conditionUid] = data;
+    this.connectedObjectData[objectUuid].configuration[conditionUid] = data;
     return (0);
   }
 
@@ -111,7 +133,7 @@ export default class Trigger {
     if (index === -1) {
       return (-1);
     }
-    this.connectedObjectData[objectUuid]["targets"].push([targetObjectUuid, eventUid]);
+    this.connectedObjectData[objectUuid].targets.push([targetObjectUuid, eventUid]);
     return (0);
   }
 
@@ -120,10 +142,10 @@ export default class Trigger {
     if (index === -1) {
       return (-1);
     }
-    for (let targetIndex = 0; this.connectedObjectData[objectUuid]["targets"].length; targetIndex++) {
-      if ((this.connectedObjectData[objectUuid]["targets"][targetIndex][0] === targetObjectUuid) &&
-        (this.connectedObjectData[objectUuid]["targets"][targetIndex][1] === eventUid)) {
-        this.connectedObjectData[objectUuid]["targets"].splice(targetIndex, 1);
+    for (let targetIndex = 0; this.connectedObjectData[objectUuid].targets.length; targetIndex++) {
+      if ((this.connectedObjectData[objectUuid].targets[targetIndex][0] === targetObjectUuid) &&
+        (this.connectedObjectData[objectUuid].targets[targetIndex][1] === eventUid)) {
+        this.connectedObjectData[objectUuid].targets.splice(targetIndex, 1);
         return (0);
       }
     }

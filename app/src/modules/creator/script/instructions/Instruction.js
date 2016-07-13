@@ -8,8 +8,8 @@
  */
 
 export default class Instruction {
-  constructor(name) {
-    this.uuid = guid;
+  constructor() {
+    this.uid   = guid;
     this.type = 0;
   }
 
@@ -18,7 +18,7 @@ export default class Instruction {
 
   }
 
-  execute(data) {
+  execute(objectUuid, objectConfiguration) {
     return (true);
   }
 }
