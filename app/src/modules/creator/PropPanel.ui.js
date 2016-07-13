@@ -1,10 +1,4 @@
-/**
- * Created by urvoy_p on 04/05/16.
- */
-
-import * as SceneUI from './Scene.ui';
-import Scene from './Scene';
-import * as THREE from 'three';
+import * as Scene from './Scene';
 import ScriptOrganizer from './script/ScriptOrganizer';
 
 class PropPanelUI {
@@ -17,13 +11,13 @@ class PropPanelUI {
     $(".addItems").click(function () {
       $('.ui.labeled.icon.sidebar.left').sidebar('toggle');
       $(".pusher").css("height", "0px");
-      Scene.render();
+      Scene.default.render();
     });
 
     $(".addScript").click(function () {
       $('.ui.labeled.icon.sidebar.right').sidebar('toggle');
       $(".pusher").css("height", "0px");
-      Scene.render();
+      Scene.default.render();
     });
 
     $(".Transformation-properties .object-properties input[type=number]").change(function (event) {
@@ -75,12 +69,12 @@ class PropPanelUI {
       this.selectedObj.color = newColor;
     else
       this.selectedObj.material.color = newColor;
-    Scene.render();
+    Scene.default.render();
   }
 
   setObjectVisibility(state) {
     this.selectedObj.visible = state;
-    Scene.render();
+    Scene.default.render();
   }
 
   modifyObjectProperties(event) {
@@ -117,17 +111,32 @@ class PropPanelUI {
       default:
         break;
     }
-    SceneUI.default.updateTransformControls();
-    Scene.render();
+    Scene.default.updateTransformControls();
+    Scene.default.render();
   }
 
   unselectObject() {
     this.selectedObj = undefined;
   }
 
+  cleanPanel() {
+    let objectInfo         = $(".object input");
+    let transformationInfo = $(".Transformation-properties .object-properties input");
+    let meshColorInfo      = $(".Mesh-properties .object-properties input[type=color]")[0];
+    let meshVisibilityInfo = $(".Mesh-properties .object-properties input[type=checkbox]")[0];
+
+    for (let i = 0; i !== 8; i++)
+      transformationInfo.eq(i).val(0);
+    objectInfo.eq(0).val("");
+    objectInfo.eq(1).val("");
+
+    meshColorInfo.value        = "#000000";
+    meshVisibilityInfo.checked = false;
+  }
+
   loadObjectInfo(object) {
     if (object !== undefined) {
-      if (object.objType === "picker")
+      if (object.userData.objType === "picker")
         object = object.children[0];
       this.selectedObj = object;
     }
@@ -143,8 +152,8 @@ class PropPanelUI {
   updateObjectGeneral() {
     if (this.selectedObj.name !== undefined)
       $(".object input").first().val(this.selectedObj.name);
-    if (this.selectedObj.objType !== undefined)
-      $(".object input").eq(1).val(this.selectedObj.objType);
+    if (this.selectedObj.userData.objType !== undefined)
+      $(".object input").eq(1).val(this.selectedObj.userData.objType);
   }
 
   updateMesh() {

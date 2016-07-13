@@ -1,4 +1,5 @@
 import Scene from './Scene';
+import CreatorManagement from './CreatorManagement';
 
 class Loader {
   constructor() {
@@ -47,12 +48,12 @@ class Loader {
       geometry.sourceType = "ascii";
       geometry.sourceFile = file.name;
 
-      let mesh         = new THREE.Mesh(geometry, material);
-      mesh.objType     = 'external';
-      mesh.userData.id = _.uniqueId();
-      mesh.name        = file.name.replace(/\.[^/.]+$/, "");
+      let mesh              = new THREE.Mesh(geometry, material);
+      mesh.userData.objType = 'external';
+      mesh.userData.id      = _.uniqueId();
+      mesh.name             = file.name.replace(/\.[^/.]+$/, "");
       mesh.name += '_' + mesh.userData.id;
-      Scene.addObj(mesh);
+      CreatorManagement.addObject(mesh);
       Scene.render();
     }
   }

@@ -1,26 +1,22 @@
-/**
- * Created by vincent on 22/05/16.
- */
-
 import Scene from './Scene';
-import * as PropPanelUI from './PropPanel.ui.js';
+import CreatorManagement from './CreatorManagement';
 
-import ScenesPanel from './ScenesPanel.ui';
-
-export default class SceneControls {
-  constructor(transformControls) {
+class SceneControls {
+  constructor() {
     this._raycaster     = new THREE.Raycaster();
     this._mouse         = new THREE.Vector2();
     this._sceneView     = $('#mainView');
     this._closestObj    = undefined;
     this._mouseIsMoving = false;
-    this.events(transformControls);
+
+    this.clickEvents();
+    this.keyboardEvents();
   }
 
   /**
    * Scene events : click detection
    */
-  events(transformControls) {
+  clickEvents() {
     this._sceneView.mousedown(() => {
       this._mouseIsMoving = false;
     });
@@ -34,33 +30,26 @@ export default class SceneControls {
       this._mouse.y = -(event.clientY / window.innerHeight * 2) + 1;
 
       this._closestObj = this.getClosestObject(Scene._scene.children, true);
-      if (this._closestObj !== undefined) {
-        PropPanelUI.default.loadObjectInfo(this._closestObj);
-        transformControls.attach(this._closestObj);
-      } else if (this._mouseIsMoving === false) {
-        transformControls.detach();
-        PropPanelUI.default.unselectObject();
-      }
-
-      // Child hierarchy test
-      // if (this._closestObj.objType === 'sphere') {
-      //   let material = new THREE.MeshLambertMaterial({color: 0xFF0000});
-      //   let geometry = new THREE.BoxGeometry(200, 200, 200);
-      //   let box      = new THREE.Mesh(geometry, material);
-      //
-      //   box.mirroredLoop  = true;
-      //   box.castShadow    = true;
-      //   box.receiveShadow = true;
-      //   box.objType     = 'box';
-      //   box.userData.id = _.uniqueId();
-      //   box.name        = 'box' + '_' + box.userData.id;
-      //
-      //   ScenesPanel.addObjectNode(box);
-      //   this._closestObj.add(box);
-      //   Scene._objList.push(box);
-      // }
+      if (this._closestObj !== undefined)
+        CreatorManagement.objectSelection(this._closestObj);
+      else if (this._mouseIsMoving === false)
+        CreatorManagement.deselectObject();
       Scene.render();
     });
+  }
+
+  keyboardEvents() {
+    window.addEventListener('keypress', this.doKeyPress, false);
+  }
+
+  doKeyPress(event) {
+    switch (event.code) {
+      case 'Delete':
+        CreatorManagement.removeSelectedObject();
+        break;
+      default:
+        break;
+    }
   }
 
   /**
@@ -96,3 +85,4 @@ export default class SceneControls {
     return undefined;
   }
 }
+export default new SceneControls();
