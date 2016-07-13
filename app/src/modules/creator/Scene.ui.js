@@ -6,7 +6,7 @@ class SceneUI {
     this.adaptToWindow();
     $(window).resize(() => this.adaptToWindow());
     $('#mainView').append(Scene._renderer.domElement);
-    SceneControls.events();
+    SceneControls.constructor();
   }
 
   /**

@@ -31,6 +31,7 @@ class CreatorManagement {
   deselectObject() {
     this.selectedObject = undefined;
     PropPanelUI.unselectObject();
+    PropPanelUI.cleanPanel();
     Scene.detachTransform();
     Scene.render();
   }
@@ -41,8 +42,9 @@ class CreatorManagement {
     Scene._objList.push(object);
   }
 
-  removeObject(object) {
-
+  removeSelectedObject() {
+    Scene.removeObject(this.selectedObject);
+    this.deselectObject();
   }
 }
 

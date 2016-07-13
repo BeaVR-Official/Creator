@@ -11,7 +11,7 @@ class Scene {
 
     this.initRenderer();
     this.initCamera();
-    this.initMisc();
+    this.initHelpers();
   }
 
   initRenderer() {
@@ -38,7 +38,7 @@ class Scene {
     this._camera.lookAt(new THREE.Vector3(0, 200, 0));
   }
 
-  initMisc() {
+  initHelpers() {
     this._grid              = new THREE.GridHelper(500, 50);
     this._orbitControl      = new THREE.OrbitControls(
       this._camera,
@@ -106,6 +106,13 @@ class Scene {
      */
   }
 
+  removeObject(object) {
+    if (object !== undefined)
+      this._scene.remove(object);
+    let index = this._objList.indexOf(object);
+    this._objList.splice(index, 1);
+  }
+  
   attachToTransform(object) {
     this._transformControls.attach(object);
   }

@@ -8,7 +8,7 @@ class SceneControls {
     this._sceneView     = $('#mainView');
     this._closestObj    = undefined;
     this._mouseIsMoving = false;
-    
+
     this.clickEvents();
     this.keyboardEvents();
   }
@@ -45,7 +45,8 @@ class SceneControls {
   doKeyPress(event) {
     switch (event.code) {
       case 'Delete':
-        console.log('Delete key pressed!');
+        CreatorManagement.removeSelectedObject();
+        console.log(Scene._objList);
         break;
       default:
         break;
