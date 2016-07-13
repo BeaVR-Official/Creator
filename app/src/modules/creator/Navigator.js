@@ -13,7 +13,7 @@ class Navigator {
     box.mirroredLoop  = true;
     box.castShadow    = true;
     box.receiveShadow = true;
-    this.setMesh(box, 'box');
+    this.setMeshInfo(box, 'box');
 
     CreatorManagement.addObject(box);
     Scene.render();
@@ -27,7 +27,7 @@ class Navigator {
     sphere.mirroredLoop  = true;
     sphere.castShadow    = true;
     sphere.receiveShadow = true;
-    this.setMesh(sphere, 'sphere');
+    this.setMeshInfo(sphere, 'sphere');
 
     CreatorManagement.addObject(sphere);
     Scene.render();
@@ -41,7 +41,7 @@ class Navigator {
     cylinder.mirroredLoop  = true;
     cylinder.castShadow    = true;
     cylinder.receiveShadow = true;
-    this.setMesh(cylinder, 'cylinder');
+    this.setMeshInfo(cylinder, 'cylinder');
 
     CreatorManagement.addObject(cylinder);
     Scene.render();
@@ -50,9 +50,7 @@ class Navigator {
   addLight() {
     let light = new THREE.PointLight(0xFFFFFF);
 
-    light.userData.id = _.uniqueId();
-    light.name        = 'pointLight_' + light.userData.id;
-
+    this.setLightInfo(light, 'pointLight');
     light.position.set(1, 1, 1);
     this.addPicker(light);
     Scene.render();
@@ -61,8 +59,8 @@ class Navigator {
   addSpotLight() {
     let spotLight = new THREE.SpotLight(0xffffff);
 
-    spotLight.userData.id           = _.uniqueId();
-    spotLight.name                  = 'spotLight_' + spotLight.userData.id;
+    this.setLightInfo(spotLight, 'spotLight');
+
     spotLight.castShadow            = true;
     spotLight.shadow.mapSize.width  = 1024;
     spotLight.shadow.mapSize.height = 1024;
@@ -78,8 +76,7 @@ class Navigator {
   addDirectionalLight() {
     let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 
-    directionalLight.userData.id = _.uniqueId();
-    directionalLight.name        = 'directionalLight_' + directionalLight.userData.id;
+    this.setLightInfo(directionalLight, 'directionalLight');
 
     directionalLight.position.set(0, 1, 0);
     this.addPicker(directionalLight);
@@ -89,8 +86,7 @@ class Navigator {
   addAmbientLight() {
     let ambientLight = new THREE.AmbientLight(0x404040);
 
-    ambientLight.userData.id = _.uniqueId();
-    ambientLight.name        = 'ambientLight_' + ambientLight.userData.id;
+    this.setLightInfo(ambientLight, 'ambientLight');
 
     this.addPicker(ambientLight);
     Scene.render();
@@ -107,7 +103,7 @@ class Navigator {
     let geometry = new THREE.SphereGeometry(50, 4, 2);
     let material = new THREE.MeshBasicMaterial(materialPicker);
     let picker   = new THREE.Mesh(geometry, material);
-    this.setMesh(picker, 'picker');
+    this.setMeshInfo(picker, 'picker');
 
     SceneUI.addLightHelper(light);
     picker.add(light);
@@ -120,10 +116,16 @@ class Navigator {
     Loader.loadFile(file);
   }
 
-  setMesh(mesh, type) {
+  setMeshInfo(mesh, type) {
     mesh.userData.objType = type;
     mesh.userData.id      = _.uniqueId();
     mesh.name             = type + '_' + mesh.userData.id;
+  }
+
+  setLightInfo(light, type) {
+    light.userData.id      = _.uniqueId();
+    light.userData.objType = type;
+    light.name             = type + '_' + light.userData.id;
   }
 }
 
