@@ -1,7 +1,3 @@
-/**
- * Created by giraud_d on 17/06/2016.
- */
-
 // set the scene size
 const sceneSettings = {
   width:  500,

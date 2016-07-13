@@ -1,7 +1,3 @@
-/**
- * Created by urvoy_p on 25/04/16.
- */
-
 import Navigator from './Navigator';
 import Save from './Save';
 
