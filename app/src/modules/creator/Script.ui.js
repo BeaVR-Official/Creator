@@ -1,9 +1,13 @@
 /**
  * Created by urvoy_p on 11/07/16.
  */
+
+import Script from './Script';
+
 class ScriptUI {
 
   constructor() {
+/*
     $('#scriptModal').modal({
       allowMultiple: true
     });
@@ -18,7 +22,9 @@ class ScriptUI {
         $('#scriptConfModal').modal('show');
       });
     });
-
+*/
+    $('#scriptType').dropdown();
+    $('#scriptSave').click(() => Script.newTrigger());
   }
 
 }

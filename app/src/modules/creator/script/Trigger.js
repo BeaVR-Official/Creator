@@ -6,7 +6,7 @@ import Condition from "./conditions/Condition";
 
 export default class Trigger {
   constructor(name) {
-    this.uid                 = guid();
+    this.uuid                = generateUUID();
     this.name                = name;
     this.conditionList       = [];
     this.connectedObjectList = [];
@@ -21,7 +21,7 @@ export default class Trigger {
 
   findCondition(conditionUid) {
     for (let index = 0; index < this.conditionList.length; index++) {
-      if (this.conditionList[index].uid === conditionUid) {
+      if (this.conditionList[index].uuid === conditionUid) {
         return (index);
       }
     }
@@ -71,7 +71,7 @@ export default class Trigger {
 
   findConnectedObject(objectUuid) {
     for (let index = 0; index < this.connectedObjectList.length; index++) {
-      if (this.connectedObjectList[index].uid === objectUuid) {
+      if (this.connectedObjectList[index].uuid === objectUuid) {
         return (index);
       }
     }
@@ -134,3 +134,14 @@ export default class Trigger {
     return (this.connectedObjectList);
   }
 }
+
+//temp
+function generateUUID() {
+  var d = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = (d + Math.random()*16)%16 | 0;
+    d = Math.floor(d/16);
+    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+  });
+  return uuid;
+};

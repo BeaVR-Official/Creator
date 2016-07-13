@@ -5,6 +5,7 @@
 import * as SceneUI from './Scene.ui';
 import Scene from './Scene';
 import * as THREE from 'three';
+import ScriptOrganizer from './script/ScriptOrganizer';
 
 class PropPanelUI {
   constructor() {
@@ -44,6 +45,27 @@ class PropPanelUI {
 
     $(".Mesh-properties .object-properties input[type=checkbox]").change(() => {
       this.setObjectVisibility($(".Mesh-properties .object-properties input[type=checkbox]")[0].checked);
+    });
+
+  }
+
+  actionScriptListUpdate() {
+    let actionScript = document.getElementById("selectActionScript");
+    ScriptOrganizer.triggerList.forEach((entry) => {
+      let option = document.createElement("option");
+      option.text = entry.name;
+      option.value = entry.name;
+      actionScript.appendChild(option);
+    });
+  }
+
+  reactionScriptListUpdate() {
+    let reactionScript = document.getElementById("selectReactionScript");
+    ScriptOrganizer.triggerList.forEach((entry) => {
+      let option = document.createElement("option");
+      option.text = entry.name;
+      option.value = entry.name;
+      reactionScript.appendChild(option);
     });
   }
 

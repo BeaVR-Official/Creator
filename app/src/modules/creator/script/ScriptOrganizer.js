@@ -2,19 +2,20 @@
  * Created by Julien on 14/06/2016.
  */
 
-import Event from './Event';
-import Trigger from './Trigger';
+const Trigger = require('./Trigger.js').default;
+const Event = require('./Event.js').default;
 
 class ScriptOrganizer {
+
   constructor() {
-    this.uid         = guid();
+    this.uuid        = generateUUID();
     this.triggerList = [];
     this.eventList   = [];
   }
 
   findTrigger(triggerUid) {
     for (let index = 0; index < this.triggerList.length; index++) {
-      if (this.triggerList[index].uid === triggerUid) {
+      if (this.triggerList[index].uuid === triggerUid) {
         return (index);
       }
     }
@@ -23,7 +24,7 @@ class ScriptOrganizer {
 
   findEvent(eventUid) {
     for (let index = 0; index < this.eventList.length; index++) {
-      if (this.eventList[index].uid === eventUid) {
+      if (this.eventList[index].uuid === eventUid) {
         return (index);
       }
     }
@@ -246,3 +247,17 @@ class ScriptOrganizer {
     return (this.eventList[index].instructionList);
   }
 }
+
+export default new ScriptOrganizer();
+
+
+//temp
+function generateUUID() {
+  var d = new Date().getTime();
+  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = (d + Math.random()*16)%16 | 0;
+    d = Math.floor(d/16);
+    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+  });
+  return uuid;
+};

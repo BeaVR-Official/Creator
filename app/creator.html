@@ -186,6 +186,30 @@
                             <div class="col-md-9"><input type="color"></div>
                         </div>
                     </div>
+
+
+                    <div class="script">
+                        <h5>Script</h5>
+                        <div class="row object-properties">
+                            <div class="col-md-4 col-xs-4">
+                                <label>Action</label>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                <select id="selectActionScript">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row object-properties">
+                            <div class="col-md-4 col-xs-4">
+                                <label>Reaction</label>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                <select id="reactionActionScript">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 </p>
             </div>
@@ -216,34 +240,44 @@
     <div id="scriptModal" class="ui modal">
         <div class="header">Create Script</div>
         <div class="content">
-            <div id="actions" class="scriptConf">
-                Actions
-                <select id="scriptActions" class="ui fluid search dropdown" multiple="">
-                    <option value="">Actions</option>
-                    <option value="collision">On Collision</option>
-                    <option value="proximity">Proximity</option>
-                    <option value="position">On Position</option>
-                    <option value="orientation">On Orientation</option>
-                    <option value="timer">After Timer</option>
-                    <option value="signal">On Signal</option>
-                </select>
-            </div>
-            <div id="reactions" class="scriptConf">
-                Reactions
-                <select id="scriptReactions" class="ui fluid search dropdown" multiple="">
-                    <option value="">Reactions</option>
-                    <option value="collision">Be visible</option>
-                    <option value="proximity">Be invisible</option>
-                    <option value="position">Be destroyed</option>
-                    <option value="orientation">Change position</option>
-                    <option value="timer">Change orientation</option>
-                    <option value="signal">Send signal</option>
-                    <option value="signal">Wait</option>
-                </select>
-            </div>
+            Choose a name :
+            <input type="text" name="scriptName" id="scriptName">
+            <br>
+            Choose a type
+            <select id="scriptType" class="ui fluid search dropdown">
+                <option value="action">Action</option>
+                <option value="reaction">Reaction</option>
+            </select>
+            <!--
+<div id="actions" class="scriptConf">
+    Actions
+    <select id="scriptActions" class="ui fluid search dropdown" multiple="">
+        <option value="">Actions</option>
+        <option value="timer">After Timer</option>
+        <option value="proximity">Proximity</option>
+        <option value="collision">On Collision</option>
+        <option value="position">On Position</option>
+        <option value="orientation">On Orientation</option>
+        <option value="signal">On Signal</option>
+    </select>
+</div>
+<div id="reactions" class="scriptConf">
+    Reactions
+    <select id="scriptReactions" class="ui fluid search dropdown" multiple="">
+        <option value="">Reactions</option>
+        <option value="position">Be destroyed</option>
+        <option value="collision">Be visible</option>
+        <option value="proximity">Be invisible</option>
+        <option value="orientation">Change position</option>
+        <option value="timer">Change orientation</option>
+        <option value="signal">Send signal</option>
+        <option value="signal">Wait</option>
+    </select>
+</div>
+-->
         </div>
         <div class="actions">
-            <div class="ui approve button conf">Save</div>
+            <div id="scriptSave" class="ui approve button conf">Save</div>
             <div class="ui cancel button">Cancel</div>
         </div>
     </div>
