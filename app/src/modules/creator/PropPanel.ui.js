@@ -61,7 +61,7 @@ class PropPanelUI {
 
   reactionScriptListUpdate() {
     let reactionScript = document.getElementById("selectReactionScript");
-    ScriptOrganizer.triggerList.forEach((entry) => {
+    ScriptOrganizer.eventList.forEach((entry) => {
       let option = document.createElement("option");
       option.text = entry.name;
       option.value = entry.name;
