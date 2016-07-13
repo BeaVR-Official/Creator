@@ -46,7 +46,6 @@ class SceneControls {
     switch (event.code) {
       case 'Delete':
         CreatorManagement.removeSelectedObject();
-        console.log(Scene._objList);
         break;
       default:
         break;

@@ -121,9 +121,9 @@ class Navigator {
   }
 
   setMesh(mesh, type) {
-    mesh.objType     = type;
-    mesh.userData.id = _.uniqueId();
-    mesh.name        = type + '_' + mesh.userData.id;
+    mesh.userData.objType = type;
+    mesh.userData.id      = _.uniqueId();
+    mesh.name             = type + '_' + mesh.userData.id;
   }
 }
 

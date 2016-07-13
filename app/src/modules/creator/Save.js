@@ -25,8 +25,8 @@ class Save {
 
         // TODO voir prq je peux pas renvoyer un bool d'une methode static
         let stop = false;
-        Scene._objList.forEach((entry) => {
-          if (entry.uuid === loadedMesh.uuid)
+        Scene._objList.forEach((object) => {
+          if (object.uuid === loadedMesh.uuid)
             stop = true;
         });
         //if (Save.isDuplicatedChildren(loadedMesh) === false) {

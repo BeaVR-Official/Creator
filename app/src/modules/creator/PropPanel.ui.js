@@ -114,7 +114,7 @@ class PropPanelUI {
 
   loadObjectInfo(object) {
     if (object !== undefined) {
-      if (object.objType === "picker")
+      if (object.userData.objType === "picker")
         object = object.children[0];
       this.selectedObj = object;
     }
@@ -130,8 +130,8 @@ class PropPanelUI {
   updateObjectGeneral() {
     if (this.selectedObj.name !== undefined)
       $(".object input").first().val(this.selectedObj.name);
-    if (this.selectedObj.objType !== undefined)
-      $(".object input").eq(1).val(this.selectedObj.objType);
+    if (this.selectedObj.userData.objType !== undefined)
+      $(".object input").eq(1).val(this.selectedObj.userData.objType);
   }
 
   updateMesh() {

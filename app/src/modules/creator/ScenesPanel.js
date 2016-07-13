@@ -16,7 +16,7 @@ class ScenesPanel {
     //this.sm.sugarmaple('checkable.uncheck', node);}
 
     let objectNode;
-    if (node.data.parent.objType === 'picker')
+    if (node.data.parent.userData.objType === 'picker')
       objectNode = node.data.parent;
     else
       objectNode = node.data;
@@ -28,14 +28,11 @@ class ScenesPanel {
   }
 
   onDragged(node) {
-    // Scene.detachParent(node.data);
-
     let object = Scene.findObject(node.data);
     Scene.detachParent(object);
   }
 
   onDropped(newParent, node) {
-    console.log(newParent);
     let parent;
     if (newParent.data instanceof THREE.Scene) {
       parent = Scene._scene;
@@ -48,7 +45,7 @@ class ScenesPanel {
   addObjectNode(object) {
     // TODO check également les chldren (en récursive) et les ajouter si il y en a @Vincent
     let nodeName = object.name;
-    if (object.objType === 'picker')
+    if (object.userData.objType === 'picker')
       nodeName = object.children[0].name;
     let node = this.smTree.sugarmaple('manage.create', nodeName, object);
     this.smTree.sugarmaple('manage.attach', this.rootNode, node);
