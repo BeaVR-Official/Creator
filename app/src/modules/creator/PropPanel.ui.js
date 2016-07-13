@@ -43,12 +43,18 @@ class PropPanelUI {
 
   }
 
+  loadObjectScript() {
+    this.actionScriptListUpdate();
+    this.reactionScriptListUpdate();
+
+  }
+
   actionScriptListUpdate() {
     let actionScript = document.getElementById("selectActionScript");
     ScriptOrganizer.triggerList.forEach((entry) => {
       let option = document.createElement("option");
       option.text = entry.name;
-      option.value = entry.name;
+      option.value = entry.uuid;
       actionScript.appendChild(option);
     });
   }

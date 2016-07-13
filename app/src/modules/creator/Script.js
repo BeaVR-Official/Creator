@@ -2,26 +2,41 @@
  * Created by urvoy_p on 11/07/16.
  */
 
-import Trigger from './script/Trigger';
 import ScriptOrganizer from './script/ScriptOrganizer';
-import PropPanelUI from './PropPanel.ui';
+import CreatorManager from'./CreatorManagement';
+import ScriptUI from './Script.ui';
 
 class Script {
 
   constructor() {
+    this.selectedObject = null;
   };
 
-  newTrigger() {
+  createScript() {
     let scriptName  = document.getElementById("scriptName").value;
-    // sample
     let typeName = document.getElementById("scriptType").value;
     if (typeName == "action") {
       ScriptOrganizer.addTrigger(scriptName);
-      PropPanelUI.actionScriptListUpdate();
     } else if (typeName == "reaction") {
       ScriptOrganizer.addEvent(scriptName);
-      PropPanelUI.reactionScriptListUpdate();
     }
+  }
+
+  linkScript(isAction) {
+    if (isAction == true) {
+      CreatorManager.selectedObject.setUserData(
+        "actionScript",
+        ScriptOrganizer.findTrigger(document.getElementById("selectActionScript").value),
+        null
+      );
+    } else {
+      CreatorManager.selectedObject.setUserData(
+        "reactionScript",
+        ScriptOrganizer.findEvent(document.getElementById("selectReactionScript").value),
+        null
+      );
+    }
+    ScriptUI.areScriptsSelected(CreatorManager.selectedObject);
   }
 
 }

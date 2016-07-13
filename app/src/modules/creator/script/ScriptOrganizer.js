@@ -13,18 +13,18 @@ class ScriptOrganizer {
     this.eventList   = [];
   }
 
-  findTrigger(triggerUid) {
+  findTrigger(triggerUuid) {
     for (let index = 0; index < this.triggerList.length; index++) {
-      if (this.triggerList[index].uuid === triggerUid) {
+      if (this.triggerList[index].uuid === triggerUuid) {
         return (index);
       }
     }
     return (-1);
   }
 
-  findEvent(eventUid) {
+  findEvent(eventUuid) {
     for (let index = 0; index < this.eventList.length; index++) {
-      if (this.eventList[index].uuid === eventUid) {
+      if (this.eventList[index].uuid === eventUuid) {
         return (index);
       }
     }

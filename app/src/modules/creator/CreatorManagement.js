@@ -15,6 +15,7 @@ class CreatorManagement {
     if (object !== undefined) {
       this.setSelectedObject(object);
       PropPanelUI.loadObjectInfo(this.selectedObject);
+      PropPanelUI.loadObjectScript(this.selectedObject);
       Scene.attachToTransform(this.selectedObject);
       Scene.render();
     }

@@ -40,6 +40,7 @@ class SceneUI {
       return;
     Scene._sceneHelpers.add(helper);
   }
+  
 }
 
 export default new SceneUI();
