@@ -97,6 +97,21 @@ class PropPanelUI {
     this.selectedObj = undefined;
   }
 
+  cleanPanel() {
+    let objectInfo         = $(".object input");
+    let transformationInfo = $(".Transformation-properties .object-properties input");
+    let meshColorInfo      = $(".Mesh-properties .object-properties input[type=color]")[0];
+    let meshVisibilityInfo = $(".Mesh-properties .object-properties input[type=checkbox]")[0];
+
+    for (let i = 0; i !== 8; i++)
+      transformationInfo.eq(i).val(0);
+    objectInfo.eq(0).val("");
+    objectInfo.eq(1).val("");
+
+    meshColorInfo.value        = "#000000";
+    meshVisibilityInfo.checked = false;
+  }
+
   loadObjectInfo(object) {
     if (object !== undefined) {
       if (object.objType === "picker")
