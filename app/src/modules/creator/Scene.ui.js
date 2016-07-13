@@ -1,38 +1,12 @@
-/**
- * Created by urvoy_p on 25/04/16.
- */
-
 import Scene from './Scene';
-import * as PropPanelUI from './PropPanel.ui.js';
 import SceneControls from './SceneControls';
 
 class SceneUI {
   constructor() {
-    this._orbitControl = new THREE.OrbitControls(
-      Scene._camera,
-      Scene._renderer.domElement);
-
-    this._orbitControl.addEventListener('change', () => Scene.render());
-    this.init();
-
     this.adaptToWindow();
     $(window).resize(() => this.adaptToWindow());
     $('#mainView').append(Scene._renderer.domElement);
-  }
-
-  init() {
-    this._grid              = new THREE.GridHelper(500, 50);
-    this._transformControls = new THREE.TransformControls(
-      Scene._camera,
-      Scene._renderer.domElement);
-    this._transformControls.addEventListener('change', () => {
-      PropPanelUI.default.updateTransformations();
-      Scene.render();
-    });
-
-    Scene._sceneHelpers.add(this._grid);
-    Scene._sceneHelpers.add(this._transformControls);
-    new SceneControls(this._transformControls);
+    SceneControls.events();
   }
 
   /**
@@ -65,22 +39,6 @@ class SceneUI {
     } else
       return;
     Scene._sceneHelpers.add(helper);
-  }
-
-  attachToTransform(object) {
-    this._transformControls.attach(object);
-    PropPanelUI.default.loadObjectInfo(object);
-    Scene.render();
-  }
-
-  detachTransform() {
-    this._transformControls.detach();
-    PropPanelUI.default.unselectObject();
-    Scene.render();
-  }
-
-  updateTransformControls() {
-    this._transformControls.update();
   }
 }
 

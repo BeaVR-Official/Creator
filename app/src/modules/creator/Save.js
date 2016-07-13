@@ -1,7 +1,3 @@
-/**
- * Created by giraud_d on 08/05/2016.
- */
-
 import {saveAs} from "../../../../node_modules/filesaverjs/FileSaver";
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
@@ -10,18 +6,17 @@ class Save {
   constructor() {
   }
 
-
   loadCustomObjects() {
     //let stored = localStorage['save2'];
     Scene.removeObjects();
     Scene.render();
     SceneUI.init();
 
-    let file = event.target.files[0];
+    let file   = event.target.files[0];
     let reader = new FileReader();
     reader.readAsText(file);
-    reader.onload = function(e) {
-      let loader = new THREE.ObjectLoader();
+    reader.onload = function (e) {
+      let loader        = new THREE.ObjectLoader();
       //let loadedObjects = JSON.parse(stored);
       let loadedObjects = JSON.parse(e.target.result);
 

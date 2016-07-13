@@ -1,10 +1,4 @@
-/**
- * Created by urvoy_p on 04/05/16.
- */
-
-import * as SceneUI from './Scene.ui';
-import Scene from './Scene';
-import * as THREE from 'three';
+import * as Scene from './Scene';
 
 class PropPanelUI {
   constructor() {
@@ -16,13 +10,13 @@ class PropPanelUI {
     $(".addItems").click(function () {
       $('.ui.labeled.icon.sidebar.left').sidebar('toggle');
       $(".pusher").css("height", "0px");
-      Scene.render();
+      Scene.default.render();
     });
 
     $(".addScript").click(function () {
       $('.ui.labeled.icon.sidebar.right').sidebar('toggle');
       $(".pusher").css("height", "0px");
-      Scene.render();
+      Scene.default.render();
     });
 
     $(".Transformation-properties .object-properties input[type=number]").change(function (event) {
@@ -53,12 +47,12 @@ class PropPanelUI {
       this.selectedObj.color = newColor;
     else
       this.selectedObj.material.color = newColor;
-    Scene.render();
+    Scene.default.render();
   }
 
   setObjectVisibility(state) {
     this.selectedObj.visible = state;
-    Scene.render();
+    Scene.default.render();
   }
 
   modifyObjectProperties(event) {
@@ -95,8 +89,8 @@ class PropPanelUI {
       default:
         break;
     }
-    SceneUI.default.updateTransformControls();
-    Scene.render();
+    Scene.default.updateTransformControls();
+    Scene.default.render();
   }
 
   unselectObject() {

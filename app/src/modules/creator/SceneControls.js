@@ -1,28 +1,22 @@
-/**
- * Created by vincent on 22/05/16.
- */
-
 import Scene from './Scene';
-import * as PropPanelUI from './PropPanel.ui.js';
+import CreatorManagement from './CreatorManagement';
 
-import ScenesPanel from './ScenesPanel.ui';
-
-export default class SceneControls {
-  constructor(transformControls) {
+class SceneControls {
+  constructor() {
     this._raycaster     = new THREE.Raycaster();
     this._mouse         = new THREE.Vector2();
     this._sceneView     = $('#mainView');
     this._closestObj    = undefined;
     this._mouseIsMoving = false;
-    this.events(transformControls);
+    
+    this.clickEvents();
+    this.keyboardEvents();
   }
 
   /**
    * Scene events : click detection
    */
-  events(transformControls) {
-    window.addEventListener('keypress', this.doKeyPress, false);
-
+  clickEvents() {
     this._sceneView.mousedown(() => {
       this._mouseIsMoving = false;
     });
@@ -36,32 +30,24 @@ export default class SceneControls {
       this._mouse.y = -(event.clientY / window.innerHeight * 2) + 1;
 
       this._closestObj = this.getClosestObject(Scene._scene.children, true);
-      if (this._closestObj !== undefined) {
-        PropPanelUI.default.loadObjectInfo(this._closestObj);
-        transformControls.attach(this._closestObj);
-      } else if (this._mouseIsMoving === false) {
-        transformControls.detach();
-        PropPanelUI.default.unselectObject();
-      }
+      if (this._closestObj !== undefined)
+        CreatorManagement.objectSelection(this._closestObj);
+      else if (this._mouseIsMoving === false)
+        CreatorManagement.deselectObject();
       Scene.render();
     });
+  }
 
-    console.log(this._sceneView);
-    this._sceneView.keypress(event => {
-      alert(event.code);
-    });
-
-    this._sceneView.keydown(event => {
-      alert(event.code);
-    });
-
-    // this._sceneView.addEventListener('keydown', this.doKeyDown, false);
+  keyboardEvents() {
+    window.addEventListener('keypress', this.doKeyPress, false);
   }
 
   doKeyPress(event) {
     switch (event.code) {
       case 'Delete':
         console.log('Delete key pressed!');
+        break;
+      default:
         break;
     }
   }
@@ -99,3 +85,4 @@ export default class SceneControls {
     return undefined;
   }
 }
+export default new SceneControls();

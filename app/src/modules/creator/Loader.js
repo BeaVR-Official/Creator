@@ -1,4 +1,5 @@
 import Scene from './Scene';
+import CreatorManagement from './CreatorManagement';
 
 class Loader {
   constructor() {
@@ -52,7 +53,7 @@ class Loader {
       mesh.userData.id = _.uniqueId();
       mesh.name        = file.name.replace(/\.[^/.]+$/, "");
       mesh.name += '_' + mesh.userData.id;
-      Scene.addObj(mesh);
+      CreatorManagement.addObject(mesh);
       Scene.render();
     }
   }

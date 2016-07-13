@@ -1,10 +1,7 @@
-/**
- * Created by urvoy_p on 25/04/16.
- */
-
 import Scene from './Scene';
 import SceneUI from './Scene.ui';
 import Loader from './Loader';
+import CreatorManagement from './CreatorManagement';
 
 class Navigator {
 
@@ -17,8 +14,8 @@ class Navigator {
     box.castShadow    = true;
     box.receiveShadow = true;
     this.setMesh(box, 'box');
-    
-    Scene.addObj(box);
+
+    CreatorManagement.addObject(box);
     Scene.render();
   }
 
