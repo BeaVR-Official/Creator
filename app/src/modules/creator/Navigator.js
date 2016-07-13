@@ -29,7 +29,7 @@ class Navigator {
     sphere.receiveShadow = true;
     this.setMesh(sphere, 'sphere');
 
-    Scene.addObj(sphere);
+    CreatorManagement.addObject(sphere);
     Scene.render();
   }
 
@@ -43,7 +43,7 @@ class Navigator {
     cylinder.receiveShadow = true;
     this.setMesh(cylinder, 'cylinder');
 
-    Scene.addObj(cylinder);
+    CreatorManagement.addObject(cylinder);
     Scene.render();
   }
 
@@ -111,7 +111,7 @@ class Navigator {
 
     SceneUI.addLightHelper(light);
     picker.add(light);
-    Scene.addObj(picker);
+    CreatorManagement.addObject(picker);
   }
 
   addExternal(explorerEvent) {

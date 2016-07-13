@@ -12,6 +12,7 @@ class Scene {
     this.initRenderer();
     this.initCamera();
     this.initHelpers();
+    this.initOrbitControl();
   }
 
   initRenderer() {
@@ -40,14 +41,10 @@ class Scene {
 
   initHelpers() {
     this._grid              = new THREE.GridHelper(500, 50);
-    this._orbitControl      = new THREE.OrbitControls(
-      this._camera,
-      this._renderer.domElement);
     this._transformControls = new THREE.TransformControls(
       this._camera,
       this._renderer.domElement);
 
-    this._orbitControl.addEventListener('change', () => this.render());
     this._transformControls.addEventListener('change', () => {
       PropPanelUI.default.updateTransformations();
       this.render();
@@ -57,11 +54,21 @@ class Scene {
     this._sceneHelpers.add(this._transformControls);
   }
 
+  initOrbitControl() {
+    this._orbitControl = new THREE.OrbitControls(
+      this._camera,
+      this._renderer.domElement);
+
+    this._orbitControl.addEventListener('change', () => this.render());
+  }
+
   findObject(object) {
+    let foundObject = undefined;
     this._objList.find(currentObj => {
       if (currentObj === object)
-        return currentObj;
+        foundObject = currentObj;
     });
+    return foundObject;
   }
 
   attachNewParent(object, parent) {
@@ -112,7 +119,7 @@ class Scene {
     let index = this._objList.indexOf(object);
     this._objList.splice(index, 1);
   }
-  
+
   attachToTransform(object) {
     this._transformControls.attach(object);
   }

@@ -6,7 +6,7 @@ class ScenesPanel {
   }
 
   initTree(sugarMaple) {
-    this.smTree = sugarMaple;
+    this.smTree   = sugarMaple;
     this.rootNode = this.smTree.sugarmaple('manage.create', 'Scene 1', Scene._scene);
     this.smTree.sugarmaple('manage.setRoot', this.rootNode);
   }
@@ -28,14 +28,21 @@ class ScenesPanel {
   }
 
   onDragged(node) {
-    let parent = Scene.default.findObject(node.data);
-    Scene.default.detachParent(parent);
+    // Scene.detachParent(node.data);
+
+    let object = Scene.findObject(node.data);
+    Scene.detachParent(object);
   }
 
   onDropped(newParent, node) {
-    let parent = Scene.default.findObject(newParent.data);
-    let object = Scene.default.findObject(node.data);
-    Scene.default.attachNewParent(object, parent);
+    console.log(newParent);
+    let parent;
+    if (newParent.data instanceof THREE.Scene) {
+      parent = Scene._scene;
+    } else
+      parent = Scene.findObject(newParent.data);
+    let object = Scene.findObject(node.data);
+    Scene.attachNewParent(object, parent);
   }
 
   addObjectNode(object) {

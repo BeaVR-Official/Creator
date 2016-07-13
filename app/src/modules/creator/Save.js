@@ -1,6 +1,6 @@
 import {saveAs} from "../../../../node_modules/filesaverjs/FileSaver";
+import CreatorManagement from './CreatorManagement';
 import Scene from './Scene';
-import SceneUI from './Scene.ui';
 
 class Save {
   constructor() {
@@ -10,7 +10,7 @@ class Save {
     //let stored = localStorage['save2'];
     Scene.removeObjects();
     Scene.render();
-    SceneUI.init();
+    Scene.initHelpers();
 
     let file   = event.target.files[0];
     let reader = new FileReader();
@@ -32,7 +32,7 @@ class Save {
         //if (Save.isDuplicatedChildren(loadedMesh) === false) {
         if (stop === false) {
 
-          Scene.addObj(loadedMesh);
+          CreatorManagement.addObject(loadedMesh);
           Save.loadChildren(loadedMesh);
         }
       });

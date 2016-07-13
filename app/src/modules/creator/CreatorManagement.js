@@ -42,6 +42,7 @@ class CreatorManagement {
     Scene._objList.push(object);
   }
 
+  //TODO suppression recursive des enfants
   removeSelectedObject() {
     Scene.removeObject(this.selectedObject);
     this.deselectObject();
