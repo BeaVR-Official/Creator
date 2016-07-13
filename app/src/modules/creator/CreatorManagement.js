@@ -7,16 +7,8 @@ class CreatorManagement {
     this.selectedObject = undefined;
   }
 
-  getScene() {
-    return Scene._scene;
-  }
-
   setSelectedObject(object) {
     this.selectedObject = object;
-  }
-
-  getSelectedObject() {
-    return this.selectedObject;
   }
 
   objectSelection(object) {
