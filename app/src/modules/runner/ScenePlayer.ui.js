@@ -5,7 +5,7 @@ class ScenePlayerUI {
   constructor() {
     $('#mainView')
       .click(() => {
-        console.log(e);
+        //console.log(e);
         ScenePlayer.load();
       });
   }
