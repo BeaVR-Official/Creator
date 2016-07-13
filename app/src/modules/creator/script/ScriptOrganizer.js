@@ -7,7 +7,6 @@ import Trigger from './Trigger';
 
 class ScriptOrganizer {
   constructor() {
-    this.uid         = guid();
     this.triggerList = [];
     this.eventList   = [];
   }
@@ -220,7 +219,15 @@ class ScriptOrganizer {
     }
   }
 
-  /* Generic methods */
+  /* Generic methods used by the saving system (import export) and the UI */
+
+  setAllTriggers(triggerList) {
+    this.triggerList = triggerList;
+  }
+
+  setAllEvents(eventList) {
+    this.eventList = eventList;
+  }
 
   getAllTriggers() {
     return (this.triggerList);
@@ -246,3 +253,5 @@ class ScriptOrganizer {
     return (this.eventList[index].instructionList);
   }
 }
+
+export default new ScriptOrganizer();

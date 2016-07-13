@@ -8,7 +8,7 @@
  */
 
 export default class Condition {
-  constructor(name) {
+  constructor() {
     this.uid   = guid;
     this.type = 0;
   }
@@ -18,7 +18,7 @@ export default class Condition {
 
   }
 
-  isTrue(data) {
+  isTrue(objectUuid, objectConfiguration) {
     return (true);
   }
 }
