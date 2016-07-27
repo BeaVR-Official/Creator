@@ -13,8 +13,8 @@
   },
   "homepage": "https://github.com/ekersale/beavr-creator#readme",
   "config": {
-    "semantic" : {
-      "install" : true,
+    "semantic": {
+      "install": true,
       "src": "./node_modules/semantic-ui/src/"
     }
   },
@@ -24,35 +24,35 @@
     "2. clean": "gulp clean",
     "3. test": "gulp test",
     "4. watch-n-test": "gulp watch-n-test",
-    "postinstall" : "[ \"$npm_package_config_semantic_install\" = \"true\" ] && npm run semantic ",
+    "postinstall": "[ \"$npm_package_config_semantic_install\" = \"true\" ] && npm run semantic ",
     "start": "http-server ./"
   },
   "devDependencies": {
-    "webpack": "^2.1.0-beta.7",
-    "webpack-dev-server": "^1.9.0",
-    "eslint": "^2.8.0",
     "babel-loader": "^6.0.1",
-    "babel-preset-es2015-webpack": "^6.4.1",
     "babel-plugin-transform-es2015-modules-commonjs-simple": "6.7.4",
+    "babel-preset-es2015-webpack": "^6.4.1",
+    "es6-template-string-loader": "^1.0.0",
+    "eslint": "^2.8.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-qunit": "^0.2.1",
     "node-libs-browser": "^0.5.3",
     "offline-plugin": "^2.1.1",
-    "gulp-qunit": "^0.2.1",
-    "gulp-clean": "^0.3.2",
-    "gulp": "^3.9.1"
+    "webpack": "^2.1.0-beta.7",
+    "webpack-dev-server": "^1.9.0"
   },
   "dependencies": {
-    "bootstrap": "3.3.6",
-    "bootstrap-drawer": "1.0.5",
+    "backbone": "^1.3.3",
     "filesaverjs": "0.2.2",
-    "jszip" : "^3.0.0",
+    "http-server": "^0.9.0",
     "jqtree": "1.3.2",
     "jquery": "2.2.3",
     "jquery-mousewheel": "3.1.13",
     "jquery-ui-bundle": "1.11.4",
     "jquery-ui-touch-punch": "0.2.3",
+    "jszip": "^3.0.0",
     "semantic-ui": "^2.1.8",
     "three": "0.76.1",
-    "underscore": "1.8.3",
-    "http-server": "^0.9.0"
+    "underscore": "1.8.3"
   }
 }

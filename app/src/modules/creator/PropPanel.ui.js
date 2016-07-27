@@ -3,10 +3,12 @@ import ScriptOrganizer from './script/ScriptOrganizer';
 
 class PropPanelUI {
   constructor() {
+/*
     $('#propertiesPanel').resizable({
       minWidth: 200,
       maxWidth: $('#propertiesPanel').width()
     });
+*/
 
     $(".addItems").click(function () {
       $('.ui.labeled.icon.sidebar.left').sidebar('toggle');
