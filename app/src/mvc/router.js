@@ -3,6 +3,7 @@
  */
 
 import TopMenuView from './views/topMenu';
+import LeftMenuView from './views/leftMenu';
 
 class Router extends Backbone.Router {
 
@@ -16,11 +17,15 @@ class Router extends Backbone.Router {
         '': 'home'
       }
     });
+  }
 
+  static get urlBase() {
+    return 'http://beavr-api.herokuapp.com';
   }
 
   initialize() {
-    this.urlBase = 'http://beavr-api.herokuapp.com';
+    new TopMenuView({userModel : ($.cookie('beavr-token') !== undefined) ? $.cookie('beavr-token') : 'undefined'});
+    new LeftMenuView();
   }
 
   SelectedObject(id) {
@@ -29,7 +34,7 @@ class Router extends Backbone.Router {
 
   home() {
     console.log("hello");
-    new TopMenuView();
+
   }
 
 }

@@ -50,6 +50,7 @@
     "jquery-mousewheel": "3.1.13",
     "jquery-ui-bundle": "1.11.4",
     "jquery-ui-touch-punch": "0.2.3",
+    "jquery.cookie": "^1.4.1",
     "jszip": "^3.0.0",
     "semantic-ui": "^2.1.8",
     "three": "0.76.1",
