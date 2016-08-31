@@ -1,9 +1,0 @@
-body {
-    overflow-x: hidden !important;
-    overflow-y: hidden !important;
-    background: url("../images/2017_logo_beavr.png") center no-repeat;
-}
-
-#loadButton {
-    position: absolute;
-}

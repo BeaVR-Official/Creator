@@ -13,7 +13,7 @@ class SceneUI {
    * Adapter scene renderer when window is resizing.
    */
   adaptToWindow() {
-    let parentWidth  = $(window).width();
+    let parentWidth  = $(window).width() - ($('.categories-left-panel').width() + $('.properties-left-panel').outerWidth());
     let parentHeight = $(window).height();
 
     Scene._camera.aspect = parentWidth / parentHeight;

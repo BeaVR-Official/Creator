@@ -1,0 +1,84 @@
+<div class="ui grid" style="height: auto;">
+    <div class="computer tablet only row">
+        <div class="ui inverted fixed massive menu navbar page grid" style="background:#424242 !important; padding-left:0px;">
+            <a href="" class="brand item"><img src="assets/images/2017_logo_beavr.png" style="height: 35px; width: auto; margin-right: 30px;" /></a>
+            <a class="item">
+                <div class="ui grid" style="font-size: 12px;">
+                    <div class="row" style="padding: 0px;"><p style="color: cornflowerblue;">Unnamed Project</p></div>
+                    <p style="padding:0px;">Scene 1</p>
+                </div>
+            </a>
+            <a href="" class="active item">
+                <p style="margin:0px;">Scenes</p><span style="background: red; margin-left: 19px; border-radius: 20px; width: 30px; text-align: center;">4</span>
+            </a>
+            <div class="right menu">
+                <a class="item " style="padding-left: 40px;padding-right: 40px;">
+                    <div class="ui grid">
+                        <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/start-settings.png" style="height: 28px; margin: auto;" /></div>
+                        <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Launch</p></div>
+                    </div>
+                </a>
+                <a class="item" style="padding-left: 40px;padding-right: 40px;">
+                    <div class="ui grid">
+                        <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/save-file-option.png" style="height: 28px; margin: auto;" /></div>
+                        <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Save</p></div>
+                    </div>
+                </a>
+                <a class="ui dropdown item userMenuDropdown">
+                    <img class="profileImage" src="assets/images/user-count-icon.png" style="height: 35px; width: auto;"/>
+                    <i class="dropdown icon"></i>
+                </a>
+            </div>
+            <div class="ui fluid popup bottom center transition hidden inverted userMenuPopup" style="max-width: 150px; text-align:center;">
+                <a>
+                    <div class="blurring dimmable image" style="margin-bottom: 5px;">
+                        <div class="ui dimmer" style="background: transparent; height: 100%;">
+                            <div class="content">
+                                <div class="center">
+                                    <i class="photo icon" style="color: white;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="assets/images/user-count-icon.png" style="width: 50%; margin-top: 8px; margin-bottom: 3px;" />
+                    </div>
+                </a>
+                <a><p style="color: white; font-family: 'Apple SD Gothic Neo'; font-size: 15px; ">Hi Elliot !</p></a>
+                <a href=""><p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'; margin-top: 5px;">Store</p></a>
+                <a href=""><p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'">Account</p></a>
+                <a href=""><p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'">Projects</p></a>
+            </div>
+        </div>
+    </div>
+    <div class="mobile only row">
+        <div class="ui fixed inverted navbar menu">
+            <a href="" class="brand item"><img src="assets/images/2017_logo_beavr.png" style="height: 35px; width: auto; margin-right: 30px;" /></a>
+            <div class="right menu open">
+                <a href="" class="menu item">
+                    <i class="content icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript">
+    $('.userMenuDropdown').popup({
+        inline   : true,
+        hoverable: true,
+        position : 'bottom left',
+        popup    : $(".userMenuPopup"),
+        delay: {
+            show: 300,
+            hide: 800
+        }
+    });
+
+    $('.right.menu.open').on("click",function(e){
+        e.preventDefault();
+        $('.ui.vertical.menu').toggle();
+    });
+
+    $('.blurring.dimmable.image').dimmer({
+        on: 'hover'
+    });
+</script>
