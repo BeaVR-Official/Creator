@@ -7,7 +7,7 @@ import Category from '../models/leftCategoryModel';
 import Categories from '../collections/leftCategoryCollection';
 import ObjectMenuView from './objectsMenu';
 import PropertiesView from './propertiesPanel';
-import TreeViewView from './treeView';
+import TreeViewView from './treeViewView';
 import * as Backbone from 'backbone';
 
 class LeftMenuView extends Backbone.View {
