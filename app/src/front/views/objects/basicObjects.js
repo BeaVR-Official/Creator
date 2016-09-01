@@ -5,7 +5,7 @@
 import Loader from '../../utils';
 import Object3D from '../../models/objectModel';
 import Objects from '../../collections/objectCollection';
-import Navigator from '../../../modules/creator/navigator';
+import Navigator from '../../../modules/creator/Navigator';
 import * as Backbone from 'backbone';
 
 class BasicObjectsView extends Backbone.View {
