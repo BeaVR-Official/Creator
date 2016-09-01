@@ -22,7 +22,7 @@ class PropertiesView extends Backbone.View {
   }
 
   constructor(object) {
-    this.object = object;
+    //this.object = object;
     super();
   }
 
