@@ -4,7 +4,7 @@
 
 import Loader from '../utils';
 import SugarMaple from '../../modules/sugarmaple/SugarMaple';
-import ScenePanel from '../../modules/creator/ScenesPanel';
+import * as ScenePanel from '../../modules/creator/ScenesPanel';
 import * as Backbone from 'backbone';
 
 class TreeViewView extends Backbone.View {
@@ -19,13 +19,18 @@ class TreeViewView extends Backbone.View {
 
   constructor() {
     super();
+  }
+
+  initialize() {
+    this.render();
+
     $.widget("custom.sugarmaple", {
       _create: function () {
         new SugarMaple(this, this.options);
       }
     });
 
-    this.sm = $('.properties-left-panel').sugarmaple({
+    this.sm = $('#sceneTree').sugarmaple({
       events:  {
         onImport: (node) => {
           return node;
@@ -40,12 +45,8 @@ class TreeViewView extends Backbone.View {
         checkable: true
       }
     });
-  }
-
-  initialize() {
-    console.log(this.sm);
-    ScenePanel.initTree(this.sm);
-    this.render();
+    console.log($('#sceneTree'));
+    ScenePanel.default.initTree(this.sm);
   }
 
   render() {
