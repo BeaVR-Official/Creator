@@ -28,7 +28,6 @@ class Router extends Backbone.Router {
   initialize() {
     new TopMenuView({userModel : ($.cookie('beavr-token') !== undefined) ? $.cookie('beavr-token') : 'undefined'});
     new LeftMenuView();
-    new TreeViewView();
   }
 
   SelectedObject(id) {

@@ -27,7 +27,7 @@ class PropertiesView extends Backbone.View {
   }
 
   initialize() {
-    this.render();
+    //this.render();
   }
 
   render() {

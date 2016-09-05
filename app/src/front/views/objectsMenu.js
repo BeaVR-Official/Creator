@@ -37,7 +37,8 @@ class ObjectMenuView extends Backbone.View {
     object.push(new Object3D({name: "My library", logo:'assets/images/painter-palette.png'}));
     object.push(new Object3D({name: "Add folder", logo:'assets/images/add.png'}));
     this.objects = new Objects(object);
-    this.render();
+    this.basicObjectView = new BasicObjectsView();
+    this.basicLightView = new BasicLightsView();
   }
 
   render() {
@@ -55,10 +56,10 @@ class ObjectMenuView extends Backbone.View {
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
       case "Basic objects":
-        new BasicObjectsView();
+        this.basicObjectView.render();
         break;
       case "Lights":
-        new BasicLightsView();
+        this.basicLightView.render();
         break;
       case "Custom objects":
         break;

@@ -36,7 +36,13 @@ class LeftMenuView extends Backbone.View {
     category.push(new Category({ name: "Properties", logo:'assets/images/settings-gears.png'}));
     category.push(new Category({ name: "Add Object", logo:'assets/images/plus.png'}));
     this.categories = new Categories(category);
+
+    this.trewViewView = new TreeViewView();
+    this.propertiesView = new PropertiesView();
+    this.objectsMenu = new ObjectMenuView();
+
     this.render();
+    this.trewViewView.render();
   }
 
   render() {
@@ -53,15 +59,16 @@ class LeftMenuView extends Backbone.View {
     });
     var selectedElem = $(e.target).closest('.tab');
     selectedElem.addClass("active");
+    //TODO selectionner la TreeView
     switch (selectedElem.data("id")) {
       case "Tree View":
-        new TreeViewView();
+        this.trewViewView.render();
         break;
       case "Properties":
-        new PropertiesView();
+        this.propertiesView.render();
         break;
       case "Add Object":
-        new ObjectMenuView();
+        this.objectsMenu.render();
         break;
     }
   }

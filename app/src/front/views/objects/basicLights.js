@@ -34,7 +34,6 @@ class BasicLightsView extends Backbone.View {
     basicObject.push(new Object3D({name: "Point light", logo:'assets/images/pointlight.png'}));
     basicObject.push(new Object3D({name: "Spot Light", logo:'assets/images/spotLight.png'}));
     this.objects = new Objects(basicObject);
-    this.render();
   }
 
   render() {

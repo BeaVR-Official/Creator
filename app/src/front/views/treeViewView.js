@@ -22,8 +22,6 @@ class TreeViewView extends Backbone.View {
   }
 
   initialize() {
-    this.render();
-
     $.widget("custom.sugarmaple", {
       _create: function () {
         new SugarMaple(this, this.options);
