@@ -44,6 +44,8 @@ class LeftMenuView extends Backbone.View {
     this.render();
     this.trewViewView.render();
     this.trewViewView.initSugar();
+    $('#divTreeView').css("display","block");
+    $('.properties-left-panel').append($('#divTreeView'));
   }
 
   render() {
@@ -63,15 +65,17 @@ class LeftMenuView extends Backbone.View {
     //TODO selectionner la TreeView
     switch (selectedElem.data("id")) {
       case "Tree View":
+        $('#divTreeView').css("display","block");
+        $('.properties-left-panel').append($('#divTreeView'));
         this.trewViewView.render();
         break;
       case "Properties":
-        $('#divTreeView').prop('display', 'none');
+        $('#divTreeView').css("display","none");
         console.log($('#sceneTree'));
         this.propertiesView.render();
         break;
       case "Add Object":
-        $('#divTreeView').prop('display', 'none');
+        $('#divTreeView').css("display","none");
         this.objectsMenu.render();
         break;
     }
