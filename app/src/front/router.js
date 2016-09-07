@@ -4,7 +4,6 @@
 
 import TopMenuView from './views/topMenu';
 import LeftMenuView from './views/leftMenu';
-import TreeViewView from './views/treeView';
 import * as Backbone from 'backbone';
 
 class Router extends Backbone.Router {
@@ -28,7 +27,6 @@ class Router extends Backbone.Router {
   initialize() {
     new TopMenuView({userModel : ($.cookie('beavr-token') !== undefined) ? $.cookie('beavr-token') : 'undefined'});
     new LeftMenuView();
-    new TreeViewView();
   }
 
   SelectedObject(id) {

@@ -5,6 +5,7 @@
 import Loader from '../../utils';
 import Object3D from '../../models/objectModel';
 import Objects from '../../collections/objectCollection';
+import Navigator from '../../../modules/creator/Navigator';
 import * as Backbone from 'backbone';
 
 class BasicObjectsView extends Backbone.View {
@@ -28,12 +29,11 @@ class BasicObjectsView extends Backbone.View {
   }
 
   initialize() { // en dur pour le moment
-    var basicObject = [];
+    let basicObject = [];
     basicObject.push(new Object3D({name: "Cube", logo:'assets/images/cube.png'}));
     basicObject.push(new Object3D({name: "Cylinder", logo:'assets/images/cylinder.png'}));
     basicObject.push(new Object3D({name: "Sphere", logo:'assets/images/sphere.png'}));
     this.objects = new Objects(basicObject);
-    this.render();
   }
 
   render() {
@@ -47,14 +47,17 @@ class BasicObjectsView extends Backbone.View {
     $(".tab.active").each(function() {
       $(this).removeClass('active');
     });
-    var selectedElem = $(e.target).closest('.tab');
+    let selectedElem = $(e.target).closest('.tab');
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
-      case "Cube": //new cube
+      case "Cube":
+        Navigator.addBox();
         break;
-      case "Cylinder": //new cylinder
+      case "Cylinder":
+        Navigator.addCylinder();
         break;
-      case "Sphere": //new sphere
+      case "Sphere":
+        Navigator.addSphere();
         break;
     }
   }

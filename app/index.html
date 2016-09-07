@@ -5,6 +5,7 @@
     <title>Creator</title>
     <link rel="stylesheet" href="../node_modules/semantic-ui/dist/semantic.min.css">
     <link rel="stylesheet" href="assets/css/newCreator.css">
+    <link rel="stylesheet" href="assets/css/sugarmaple.css">
 </head>
 <body style="height: 100%;">
 <div class="ui grid" style="height: 100%;">
@@ -12,14 +13,18 @@
 
     </div>
     <div class="ui grid row" style="height: 100%; margin: auto; padding: 0; ">
-        <div class="one wide column categories-left-panel" style="background: #ffffff; height: 100%; max-width: 80px; min-width: 80px; padding:0px; padding-left: 14px;">
+        <div class="one wide column categories-left-panel"
+             style="background: #ffffff; height: 100%; max-width: 80px; min-width: 80px; padding:0px; padding-left: 14px;">
 
         </div>
-        <div class="three wide column properties-left-panel" style="background:grey; height: 100%; min-width:200px; max-width: 172px;">
-
+        <div class="three wide column properties-left-panel" style="background:grey; height: 100%; display: none">
+        </div>
+        <div class="three wide column treeview-left-panel" style="background:grey; height: 100%;">
+            <div class="sugarmaple" id="sceneTree"></div>
         </div>
         <div class="twelve wide column wrap" id="mainView" style="padding: 0px;">
         </div>
+
     </div>
 </div>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>

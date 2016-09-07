@@ -14,8 +14,8 @@ class CreatorManagement {
   objectSelection(object) {
     if (object !== undefined) {
       this.setSelectedObject(object);
-      PropPanelUI.loadObjectInfo(this.selectedObject);
-      PropPanelUI.loadObjectScript(this.selectedObject);
+      // PropPanelUI.loadObjectInfo(this.selectedObject);
+      // PropPanelUI.loadObjectScript(this.selectedObject);
       Scene.attachToTransform(this.selectedObject);
       Scene.render();
     }
@@ -23,8 +23,8 @@ class CreatorManagement {
 
   deselectObject() {
     this.selectedObject = undefined;
-    PropPanelUI.unselectObject();
-    PropPanelUI.cleanPanel();
+    // PropPanelUI.unselectObject();
+    // PropPanelUI.cleanPanel();
     Scene.detachTransform();
     Scene.render();
   }
