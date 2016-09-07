@@ -4,7 +4,6 @@
 
 import TopMenuView from './views/topMenu';
 import LeftMenuView from './views/leftMenu';
-import TreeViewView from './views/treeViewView';
 import * as Backbone from 'backbone';
 
 class Router extends Backbone.Router {
