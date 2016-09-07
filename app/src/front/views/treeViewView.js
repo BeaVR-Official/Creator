@@ -10,45 +10,18 @@ import * as Backbone from 'backbone';
 class TreeViewView extends Backbone.View {
 
   get template() {
-    return _.template(Loader.templates.TreeView);
+    //return _.template(Loader.templates.TreeView);
   }
 
   get $el() {
-    return $('.properties-left-panel');
+    return $('.treeview-left-panel');
   }
 
   constructor() {
     super();
   }
 
-  initialize() {
-    this.initSugar();
-  }
 
-  initSugar() {
-    $.widget("custom.sugarmaple", {
-      _create: function () {
-        new SugarMaple(this, this.options);
-      }
-    });
-
-    this.sm = $('#sceneTree').sugarmaple({
-      events:  {
-        onImport: (node) => {
-          return node;
-        },
-        onExport: (node) => {
-          return node;
-        }
-      },
-      plugins: {
-        manage:    true,
-        sortable:  true,
-        checkable: true
-      }
-    });
-    ScenePanel.default.initTree(this.sm);
-  }
 
   render() {
     this.$el.html(this.template);
