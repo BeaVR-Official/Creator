@@ -26,7 +26,9 @@ class SceneControls {
     });
 
     this._sceneView.mouseup(event => {
+      // TODO à changer c'ets en dur
       this._mouse.x = (event.clientX / window.innerWidth * 2) - 1;
+      // TODO à changer c'ets en dur
       this._mouse.y = -(event.clientY / window.innerHeight * 2) + 1;
 
       this._closestObj = this.getClosestObject(Scene._scene.children, true);
