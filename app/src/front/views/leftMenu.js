@@ -43,6 +43,7 @@ class LeftMenuView extends Backbone.View {
 
     this.render();
     this.trewViewView.render();
+    this.trewViewView.initSugar();
   }
 
   render() {
@@ -65,9 +66,12 @@ class LeftMenuView extends Backbone.View {
         this.trewViewView.render();
         break;
       case "Properties":
+        $('#divTreeView').prop('display', 'none');
+        console.log($('#sceneTree'));
         this.propertiesView.render();
         break;
       case "Add Object":
+        $('#divTreeView').prop('display', 'none');
         this.objectsMenu.render();
         break;
     }

@@ -22,6 +22,10 @@ class TreeViewView extends Backbone.View {
   }
 
   initialize() {
+    this.initSugar();
+  }
+
+  initSugar() {
     $.widget("custom.sugarmaple", {
       _create: function () {
         new SugarMaple(this, this.options);
@@ -43,7 +47,6 @@ class TreeViewView extends Backbone.View {
         checkable: true
       }
     });
-    console.log($('#sceneTree'));
     ScenePanel.default.initTree(this.sm);
   }
 
