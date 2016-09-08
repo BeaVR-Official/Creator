@@ -1,4 +1,5 @@
 import Scene from './Scene';
+import Constants from './Constants';
 import SceneControls from './SceneControls';
 
 class SceneUI {
@@ -13,7 +14,10 @@ class SceneUI {
    * Adapter scene renderer when window is resizing.
    */
   adaptToWindow() {
-    let parentWidth  = $(window).width() - ($('.categories-left-panel').width() + $('.properties-left-panel').outerWidth());
+    // let parentWidth  = $(window).width() - ($('.categories-left-panel').width() +
+    // $('.properties-left-panel').outerWidth()); let parentHeight = $(window).height();
+
+    let parentWidth  = $(window).width() - Constants.getCanvasSettings().width;
     let parentHeight = $(window).height();
 
     Scene._camera.aspect = parentWidth / parentHeight;
@@ -40,7 +44,7 @@ class SceneUI {
       return;
     Scene._sceneHelpers.add(helper);
   }
-  
+
 }
 
 export default new SceneUI();

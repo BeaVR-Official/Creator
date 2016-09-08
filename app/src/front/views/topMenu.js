@@ -4,6 +4,7 @@
 
 import Loader from '../utils';
 import * as Backbone from 'backbone';
+import Save from '../../modules/creator/Save';
 
 class TopMenu extends Backbone.View {
 
@@ -13,6 +14,12 @@ class TopMenu extends Backbone.View {
 
   get $el() {
     return $('.nav-container');
+  }
+
+  get events() {
+    return {
+      'click #launch': 'launchApp'
+    };
   }
 
   constructor(params) {
@@ -26,6 +33,12 @@ class TopMenu extends Backbone.View {
 
   initialize() {
 
+  }
+
+  launchApp() {
+    Save.saveCustomObjects(true);
+    // En dur pour le moment
+    document.location.href = "http://localhost:63342/Creator/app/runner.html";
   }
 
   render() {
