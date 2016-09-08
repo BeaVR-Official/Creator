@@ -22,7 +22,6 @@ class Scene {
     this._renderer.autoClear = false;
     this._renderer.setClearColor(0xB9B9B9, 1);
     this._renderer.setSize(sceneSettings.width, sceneSettings.height);
-    this._stereo = new THREE.StereoEffect(this._renderer);
 
   }
 
@@ -62,6 +61,18 @@ class Scene {
       this._renderer.domElement);
 
     this._orbitControl.addEventListener('change', () => this.render());
+  }
+
+  getRenderer() {
+    return (this._renderer);
+  }
+
+  getScene() {
+    return (this._scene);
+  }
+
+  getCamera() {
+    return (this._camera);
   }
 
   findObject(object) {
@@ -143,8 +154,8 @@ class Scene {
 
   render() {
     this._renderer.clear();
-    //this._renderer.render(this._scene, this._camera);
-    this._stereo.render(this._scene, this._camera);
+    this._renderer.render(this._scene, this._camera);
+    //this._stereo.render(this._scene, this._camera);
     this._renderer.render(this._sceneHelpers, this._camera);
   }
 

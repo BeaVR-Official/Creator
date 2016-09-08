@@ -17,6 +17,10 @@ class ScenePlayer {
     // desactiver le click
     // ajouter les scrips
     // ajouter la vr
+    this._renderer = Scene.getRenderer();
+    this._camera = Scene.getCamera();
+    this._scene = Scene.getScene();
+    this._effect = new THREE.StereoEffect(Scene.getRenderer());
     this.load();
   }
 
@@ -42,7 +46,8 @@ class ScenePlayer {
         Scene._scene.add(loadedMesh);
       }
     });
-    Scene.render();
+    //Scene.render();
+    this.render();
   }
 
   excludeChildren(object) {
@@ -52,6 +57,10 @@ class ScenePlayer {
     });
   }
 
+  render() {
+    this._renderer.clear();
+    this._effect.render(this._scene, this._camera);
+  }
   start() {
 
   }
