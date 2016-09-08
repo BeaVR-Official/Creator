@@ -5,6 +5,7 @@
 import Loader from '../../utils';
 import Object3D from '../../models/objectModel';
 import Objects from '../../collections/objectCollection';
+import Navigator from '../../../modules/creator/Navigator';
 import * as Backbone from 'backbone';
 
 class BasicLightsView extends Backbone.View {
@@ -51,12 +52,16 @@ class BasicLightsView extends Backbone.View {
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
       case "Ambiant Light":
+        Navigator.addAmbientLight();
         break;
       case "Directional Light":
+        Navigator.addDirectionalLight();
         break;
       case "Point light":
+        Navigator.addLight();
         break;
       case "Spot Light":
+        Navigator.addSpotLight();
         break;
     }
   }
