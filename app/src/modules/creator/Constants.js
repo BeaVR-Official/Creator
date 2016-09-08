@@ -14,6 +14,14 @@ const camSettings   = {
   posZ:   500
 };
 
+// set scene canvas positions
+const canvasSettings = {
+  width: $('.categories-left-panel').width() + $('.properties-left-panel').outerWidth(),
+  height: $('.nav-container').height()
+  // width: 80 + 607,
+  // height: 58
+};
+
 class Constants {
   constructor() {
   }
@@ -24,6 +32,10 @@ class Constants {
 
   getCamSettings() {
     return camSettings;
+  }
+
+  getCanvasSettings() {
+    return canvasSettings;
   }
 
 }
