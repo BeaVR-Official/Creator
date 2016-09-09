@@ -5,9 +5,9 @@
 import Loader from '../utils';
 import Object3D from '../models/objectModel';
 import Objects from '../collections/objectCollection';
-import * as Backbone from 'backbone';
 import BasicObjectsView from './objects/basicObjects';
 import BasicLightsView from './objects/basicLights';
+import * as Backbone from 'backbone';
 
 class ObjectMenuView extends Backbone.View {
 
