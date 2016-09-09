@@ -18,27 +18,38 @@ class TopMenu extends Backbone.View {
 
   get events() {
     return {
-      'click #launch': 'launchApp'
+      'click #launch': 'launchApp',
+      'click .openModalConnexion' : 'openModalConnexion'
     };
   }
 
   constructor(params) {
     super({
-      events: {
-      }
+      events: {}
     });
+    console.log(params);
+    if (params.userModel) {
+      var model = params.userModel;
+      model.fetch(function() {
+        console.log(model);
+      });
+    }
     this.currentUser = (params != undefined && params["model"]) ? params["model"] : undefined;
     this.render();
   }
 
   initialize() {
-
   }
 
   launchApp() {
     Save.saveCustomObjects(true);
     // En dur pour le moment
     document.location.href = "http://localhost:63342/Creator/app/runner.html";
+  }
+
+  openModalConnexion() {
+
+    $("#connexionModal").modal('show');
   }
 
   render() {
