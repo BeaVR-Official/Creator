@@ -92,6 +92,7 @@ class LeftMenuView extends Backbone.View {
       case "Properties":
         this.showSugarMaple(false);
         this.propertiesView.render();
+        this.propertiesView.fillInfo();
         break;
       case "Add Object":
         this.showSugarMaple(false);

@@ -2,8 +2,9 @@ import PropPanelUI from './PropPanel.ui.js';
 import Scene from './Scene';
 import ScenesPanel from './ScenesPanel';
 
-class CreatorManagement {
+class CreatorManagement extends EventEmitter {
   constructor() {
+    super();
     this.selectedObject = undefined;
   }
 
@@ -11,22 +12,24 @@ class CreatorManagement {
     this.selectedObject = object;
   }
 
+  getSelectedObject() {
+    return this.selectedObject;
+  }
+
   objectSelection(object) {
     if (object !== undefined) {
       this.setSelectedObject(object);
-      // PropPanelUI.loadObjectInfo(this.selectedObject);
-      // PropPanelUI.loadObjectScript(this.selectedObject);
       Scene.attachToTransform(this.selectedObject);
       Scene.render();
+      this.emit('selectedObject', this.selectedObject);
     }
   }
 
   deselectObject() {
     this.selectedObject = undefined;
-    // PropPanelUI.unselectObject();
-    // PropPanelUI.cleanPanel();
     Scene.detachTransform();
     Scene.render();
+    this.emit('deselectedObject', this.selectedObject);
   }
 
   addObject(object) {
