@@ -8,6 +8,7 @@ import Objects from '../collections/objectCollection';
 import * as Backbone from 'backbone';
 import BasicObjectsView from './objects/basicObjects';
 import BasicLightsView from './objects/basicLights';
+import CustomObjectsView from "./objects/customObjects";
 
 class ObjectMenuView extends Backbone.View {
 
@@ -29,6 +30,7 @@ class ObjectMenuView extends Backbone.View {
     super();
   }
 
+
   initialize() { // en dur pour le moment
     var object = [];
     object.push(new Object3D({name: "Basic objects", logo:'assets/images/multi-tab.png'}));
@@ -39,6 +41,7 @@ class ObjectMenuView extends Backbone.View {
     this.objects = new Objects(object);
     this.basicObjectView = new BasicObjectsView();
     this.basicLightView = new BasicLightsView();
+    //this.customObjectView = new CustomObjectView();
   }
 
   render() {
@@ -62,6 +65,7 @@ class ObjectMenuView extends Backbone.View {
         this.basicLightView.render();
         break;
       case "Custom objects":
+        new CustomObjectsView();
         break;
       case "My library":
         break;
