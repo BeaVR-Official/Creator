@@ -18,8 +18,6 @@ const camSettings   = {
 const canvasSettings = {
   width: $('.categories-left-panel').width() + $('.properties-left-panel').outerWidth(),
   height: $('.nav-container').height()
-  // width: 80 + 607,
-  // height: 58
 };
 
 class Constants {
