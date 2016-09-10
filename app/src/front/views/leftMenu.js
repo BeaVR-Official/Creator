@@ -43,7 +43,7 @@ class LeftMenuView extends Backbone.View {
 
     this.render();
     this.initializeSugar();
-    this.showTreeView(true);
+    this.showSugarMaple(true);
   }
 
   initializeSugar() {
@@ -69,6 +69,7 @@ class LeftMenuView extends Backbone.View {
       }
     });
     ScenePanel.default.initTree(this.sm);
+    this.sugarMapleEvents();
   }
 
   render() {
@@ -76,16 +77,6 @@ class LeftMenuView extends Backbone.View {
       categories: this.categories.toJSON()
     }));
     return this;
-  }
-
-  showTreeView(arg) {
-    if (arg === true) {
-      $('.treeview-left-panel').css("display", "block");
-      $('.properties-left-panel').css("display", "none");
-    } else {
-      $('.treeview-left-panel').css("display", "none");
-      $('.properties-left-panel').css("display", "block");
-    }
   }
 
   loadTabulation(e) {
@@ -96,18 +87,51 @@ class LeftMenuView extends Backbone.View {
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
       case "Tree View":
-        this.showTreeView(true);
+        this.showSugarMaple(true);
         break;
       case "Properties":
-        this.showTreeView(false);
+        this.showSugarMaple(false);
         this.propertiesView.render();
+        this.propertiesView.fillInfo();
         break;
       case "Add Object":
-        this.showTreeView(false);
+        this.showSugarMaple(false);
         this.objectsMenu.render();
         break;
     }
   }
+
+  showSugarMaple(arg) {
+    if (arg === true) {
+      $('.treeview-left-panel').css("display", "block");
+      $('.properties-left-panel').css("display", "none");
+    } else {
+      $('.treeview-left-panel').css("display", "none");
+      $('.properties-left-panel').css("display", "block");
+    }
+  }
+
+  sugarMapleEvents() {
+    this.sm.on('checkable.checked', (e, node) => {
+      if (node !== undefined)
+        ScenePanel.default.onChecked(node);
+    });
+
+    this.sm.on('checkable.unchecked', (e, node) => {
+      ScenePanel.default.onUnchecked();
+    });
+
+    this.sm.on('sortable.dragged', (e, node) => {
+      if (node !== undefined)
+        ScenePanel.default.onDragged(node);
+    });
+
+    this.sm.on('sortable.dropped', (e, newParent, node) => {
+      if (newParent !== undefined)
+        ScenePanel.default.onDropped(newParent, node);
+    });
+  }
+
 }
 
 export default LeftMenuView;
