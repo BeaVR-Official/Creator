@@ -9,6 +9,40 @@
     <link rel="stylesheet" href="libs/dropzone/min/dropzone.min.css"/>
 </head>
 <body style="height: 100%;">
+<div id="modals">
+    <div class="ui small modal top " id="connexionModal" style="max-width:600px; top:30% !important;">
+        <i class="close icon"></i>
+        <div class="header">
+            Se connecter
+        </div>
+        <div class="content">
+            <p><div class="ui left icon input" style="width:100%;">
+                <input id="connexionEmail" type="text" style="width:100%;" placeholder="Adresse e-mail">
+                <i class="mail icon"></i>
+            </div></p>
+            <p><div class="ui right action left icon input" style="width:100%;">
+                <i class="lock icon"></i>
+                <input id="connexionPassword" type="password" placeholder="Mot de passe">
+                <button class="ui teal right labeled icon button">
+                    <i class="privacy icon"></i>
+                    Mot de passe oublié ?
+                </button>
+            </div></p>
+            <p><div class="field">
+                <div class="ui toggle checkbox">
+                    <input id="connexionCheckbox" type="checkbox" name="checkbox" tabindex="0" >
+                    <label>Se souvenir de moi</label>
+                </div>
+            </div></p>
+
+            <p><button class="ui secondary button connexionAction" style="background-color: #1BB2BD !important; color: white !important;">Se connecter<span><i class="glyphicon glyphicon-refresh spinning"></i></span></button></p>
+        </div>
+        <div class="ui bottom attached warning message">
+            <i class="icon help"></i>
+            Pas encore inscrit ? L'inscription c'est par là</a> !
+        </div>
+    </div>
+</div>
 <div class="ui grid" style="height: 100%;">
     <div class="nav-container wrapper row" style="padding:0px;min-height: 73px; max-height: 73px;">
 
@@ -48,6 +82,7 @@
 <script src="../node_modules/three/examples/js/controls/TransformControls.js"></script>
 <script src="../node_modules/three/examples/js/controls/OrbitControls.js"></script>
 <script src="../node_modules/three/examples/js/effects/StereoEffect.js"></script>
+<script src="../node_modules/three/examples/js/controls/DeviceOrientationControls.js"></script>
 <script src="../node_modules/three/examples/js/libs/msgpack-js.js"></script>
 <script src="../node_modules/jszip/dist/jszip.js"></script>
 <script src="libs/hamburger-menu/hamburger.js"></script>

@@ -155,13 +155,7 @@ class Scene {
   render() {
     this._renderer.clear();
     this._renderer.render(this._scene, this._camera);
-    //this._stereo.render(this._scene, this._camera);
     this._renderer.render(this._sceneHelpers, this._camera);
-  }
-
-  renderStereo() {
-    this._renderer.clear();
-    this._stereo.render(this._scene, this._camera);
   }
 }
 

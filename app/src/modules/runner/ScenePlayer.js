@@ -7,12 +7,11 @@ class ScenePlayer {
 
   constructor() {
 
-    this._scene  = new THREE.Scene();
-    //window.scene = this._scene;
-    //this._camera = Scene.getCamera();
+    this._scene = new THREE.Scene();
     this.initCamera();
     this.initRenderer();
     this.initOrbitControl();
+    window.addEventListener('deviceorientation', () => this.setOrientationControls, true);
     this.load();
   }
 
@@ -42,36 +41,59 @@ class ScenePlayer {
   }
 
   initOrbitControl() {
-    this._orbitControl = new THREE.OrbitControls(
+    this._controls = new THREE.OrbitControls(
       this._camera,
       this._renderer.domElement);
     /*
-    this._orbitControl.rotateUp(Math.PI / 4);
-    this._orbitControl.target.set(this._camera.position.x + 0.1, this._camera.position.y, this._camera.position.z);
-    window.addEventListener("deviceOrientation", this.onOrientationChanged);
+    this._controls.target.set(
+      this._camera.position.x + 0.15,
+      this._camera.position.y,
+      this._camera.position.z
+    );
     */
-    this._orbitControl.addEventListener('change', () => this.render());
+    //this._controls.enablePan = false;
+    //this._controls.enableZoom = false;
+    /*
+    this._orbitControl = new THREE.OrbitControls(
+      this._camera,
+      this._renderer.domElement);
+      */
+    /*
+     this._orbitControl.rotateUp(Math.PI / 4);
+     this._orbitControl.target.set(this._camera.position.x + 0.1, this._camera.position.y, this._camera.position.z);
+     window.addEventListener("deviceOrientation", this.onOrientationChanged);
+     */
+    this._controls.addEventListener('change', () => this.render());
   }
 
-  /*
-  onOrientationChanged(event) {
+  setOrientationControls(event) {
     if (!event.alpha) {
       return;
     }
-
-    this._orbitControl = new THREE.DeviceOrientationControls(camera, true);
-    this._orbitControl.connect();
-    this._orbitControl.update();
-
-    window.removeEventListener("deviceOrientation", onOrientationChanged);
+    this._controls = new THREE.DeviceOrientationControls(this._camera, true);
+    this._controls.connect();
+    this._controls.update();
+    this.render();
+    //element.addEventListener('click', fullscreen, false);
   }
-  */
+  /*
+   onOrientationChanged(event) {
+   if (!event.alpha) {
+   return;
+   }
+
+   this._orbitControl = new THREE.DeviceOrientationControls(camera, true);
+   this._orbitControl.connect();
+   this._orbitControl.update();
+
+   window.removeEventListener("deviceOrientation", onOrientationChanged);
+   }
+   */
 
   load() {
     let stored        = localStorage['saveRunner'];
     let loader        = new THREE.ObjectLoader();
     let loadedObjects = JSON.parse(stored);
-    console.log(loadedObjects);
     loadedObjects.forEach((entry) => {
       let loadedMesh = loader.parse(entry);
       // on enregistre tout les enfants dans un premier temps
@@ -83,17 +105,13 @@ class ScenePlayer {
       listLoadedObjectsUuid.forEach((object) => {
         if (object === loadedMesh.uuid) {
           stop = true;
-          ;
         }
       });
       if (stop === false || listLoadedObjectsUuid.length === 0) {
-        console.log(loadedMesh);
         this._scene.add(loadedMesh);
-        //Scene._scene.add(loadedMesh);
       }
     });
     this.render();
-    //Scene.render();
   }
 
   excludeChildren(object) {
@@ -105,7 +123,6 @@ class ScenePlayer {
 
   render() {
     this._renderer.clear();
-    //this._renderer.render(this._scene, this._camera);
     this._effect.render(this._scene, this._camera);
   }
 
