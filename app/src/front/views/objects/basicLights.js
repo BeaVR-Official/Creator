@@ -30,7 +30,7 @@ class BasicLightsView extends Backbone.View {
 
   initialize() { // en dur pour le moment
     var basicObject = [];
-    basicObject.push(new Object3D({name: 'Ambiant Light', logo:'assets/images/ambiantLight.png'}));
+    basicObject.push(new Object3D({name: 'Ambient Light', logo:'assets/images/ambientLight.png'}));
     basicObject.push(new Object3D({name: "Directional Light", logo:'assets/images/directionalLight.png'}));
     basicObject.push(new Object3D({name: "Point light", logo:'assets/images/pointlight.png'}));
     basicObject.push(new Object3D({name: "Spot Light", logo:'assets/images/spotLight.png'}));
@@ -51,7 +51,7 @@ class BasicLightsView extends Backbone.View {
     var selectedElem = $(e.target).closest('.tab');
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
-      case "Ambiant Light":
+      case "Ambient Light":
         Navigator.addAmbientLight();
         break;
       case "Directional Light":
