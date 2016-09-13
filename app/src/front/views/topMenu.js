@@ -43,12 +43,11 @@ class TopMenu extends Backbone.View {
 
   launchApp() {
     Save.saveCustomObjects(true);
-    // En dur pour le moment
+    // TODO à terme : En dur pour le moment
     document.location.href = "http://localhost:63342/Creator/app/runner.html";
   }
 
   openModalConnexion() {
-
     $("#connexionModal").modal('show');
   }
 

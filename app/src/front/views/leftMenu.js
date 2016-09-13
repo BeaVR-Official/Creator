@@ -7,8 +7,7 @@ import Category from '../models/leftCategoryModel';
 import Categories from '../collections/leftCategoryCollection';
 import ObjectMenuView from './objectsMenu';
 import PropertiesView from './propertiesPanel';
-import SugarMaple from '../../modules/sugarmaple/SugarMaple';
-import * as ScenePanel from '../../modules/creator/ScenesPanel';
+import SugarMaple from './leftMenu.sugarMaple';
 import * as Backbone from 'backbone';
 
 class LeftMenuView extends Backbone.View {
@@ -40,36 +39,12 @@ class LeftMenuView extends Backbone.View {
 
     this.propertiesView = new PropertiesView();
     this.objectsMenu    = new ObjectMenuView();
+    this.sugarMaple     = new SugarMaple();
 
     this.render();
-    this.initializeSugar();
-    this.showSugarMaple(true);
-  }
-
-  initializeSugar() {
-    $.widget("custom.sugarmaple", {
-      _create: function () {
-        new SugarMaple(this, this.options);
-      }
-    });
-
-    this.sm = $('#sceneTree').sugarmaple({
-      events:  {
-        onImport: (node) => {
-          return node;
-        },
-        onExport: (node) => {
-          return node;
-        }
-      },
-      plugins: {
-        manage:    true,
-        sortable:  true,
-        checkable: true
-      }
-    });
-    ScenePanel.default.initTree(this.sm);
-    this.sugarMapleEvents();
+    $(".my-category-row:first-child").addClass("active");
+    this.sugarMaple.initializeSugar();
+    this.sugarMaple.showSugarMaple(true);
   }
 
   render() {
@@ -87,51 +62,19 @@ class LeftMenuView extends Backbone.View {
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
       case "Tree View":
-        this.showSugarMaple(true);
+        this.sugarMaple.showSugarMaple(true);
         break;
       case "Properties":
-        this.showSugarMaple(false);
+        this.sugarMaple.showSugarMaple(false);
         this.propertiesView.render();
         this.propertiesView.fillInfo();
         break;
       case "Add Object":
-        this.showSugarMaple(false);
+        this.sugarMaple.showSugarMaple(false);
         this.objectsMenu.render();
         break;
     }
   }
-
-  showSugarMaple(arg) {
-    if (arg === true) {
-      $('.treeview-left-panel').css("display", "block");
-      $('.properties-left-panel').css("display", "none");
-    } else {
-      $('.treeview-left-panel').css("display", "none");
-      $('.properties-left-panel').css("display", "block");
-    }
-  }
-
-  sugarMapleEvents() {
-    this.sm.on('checkable.checked', (e, node) => {
-      if (node !== undefined)
-        ScenePanel.default.onChecked(node);
-    });
-
-    this.sm.on('checkable.unchecked', (e, node) => {
-      ScenePanel.default.onUnchecked();
-    });
-
-    this.sm.on('sortable.dragged', (e, node) => {
-      if (node !== undefined)
-        ScenePanel.default.onDragged(node);
-    });
-
-    this.sm.on('sortable.dropped', (e, newParent, node) => {
-      if (newParent !== undefined)
-        ScenePanel.default.onDropped(newParent, node);
-    });
-  }
-
 }
 
 export default LeftMenuView;

@@ -22,10 +22,10 @@ class ObjectMenuView extends Backbone.View {
   get events() {
     return {
       'click .tab' : 'loadObjects',
-      'click .save' : 'openCustomObjectUploadModal'
     };
   }
 
+  // TODO : La modal ne marche pas pour le moment
   openCustomObjectUploadModal() {
     $('#CustomObjectUpload').modal('show');
   }
@@ -42,8 +42,11 @@ class ObjectMenuView extends Backbone.View {
     object.push(new Object3D({name: "My library", logo:'assets/images/painter-palette.png'}));
     object.push(new Object3D({name: "Add folder", logo:'assets/images/add.png'}));
     this.objects = new Objects(object);
+
     this.basicObjectView = new BasicObjectsView();
     this.basicLightView = new BasicLightsView();
+
+    // TODO : La modal ne marche pas pour le moment
     $('#CustomObjectUpload').modal("show");
   }
 
@@ -68,6 +71,7 @@ class ObjectMenuView extends Backbone.View {
         this.basicLightView.render();
         break;
       case "Custom objects":
+        // TODO : La modal ne marche pas pour le moment
         $('#CustomObjectUpload').modal("show");
         break;
       case "My library":

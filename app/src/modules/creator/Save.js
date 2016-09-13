@@ -3,10 +3,12 @@ import CreatorManagement from './CreatorManagement';
 import Scene from './Scene';
 
 class Save {
+
   constructor() {
   }
 
   loadCustomObjects() {
+
     //let stored = localStorage['save2'];
     Scene.removeObjects();
     Scene.render();
