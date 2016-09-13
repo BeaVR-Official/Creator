@@ -6,7 +6,7 @@
     width: 100%
 }
 .sugarmaple > .node {
-    background: none !important;
+    background-color: #F8F8F8 !important;
     padding-left: 0 !important;
 }
 
