@@ -21,8 +21,13 @@ class ObjectMenuView extends Backbone.View {
 
   get events() {
     return {
-      'click .tab' : 'loadObjects'
+      'click .tab' : 'loadObjects',
+      'click .save' : 'openCustomObjectUploadModal'
     };
+  }
+
+  openCustomObjectUploadModal() {
+    $('#CustomObjectUpload').modal('show');
   }
 
   constructor() {
@@ -39,7 +44,7 @@ class ObjectMenuView extends Backbone.View {
     this.objects = new Objects(object);
     this.basicObjectView = new BasicObjectsView();
     this.basicLightView = new BasicLightsView();
-    //this.customObjectView = new CustomObjectView();
+    $('#CustomObjectUpload').modal("show");
   }
 
   render() {
@@ -63,7 +68,7 @@ class ObjectMenuView extends Backbone.View {
         this.basicLightView.render();
         break;
       case "Custom objects":
-        new CustomObjectsView();
+        $('#CustomObjectUpload').modal("show");
         break;
       case "My library":
         break;
