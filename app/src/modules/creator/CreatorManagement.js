@@ -36,6 +36,7 @@ class CreatorManagement extends EventEmitter {
     ScenesPanel.addObjectNode(object);
     Scene._scene.add(object);
     Scene._objList.push(object);
+    this.objectSelection(object);
   }
 
   //TODO suppression recursive des enfants
