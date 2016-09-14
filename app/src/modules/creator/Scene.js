@@ -44,7 +44,6 @@ class Scene {
       this._renderer.domElement);
 
     this._transformControls.addEventListener('change', () => {
-      PropPanelUI.default.updateTransformations();
       this.render();
     });
 
