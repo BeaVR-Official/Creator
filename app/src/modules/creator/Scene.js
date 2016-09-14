@@ -99,7 +99,6 @@ class Scene {
   }
 
   removeObjects() {
-    // TODO à corriger en récursive children @Vincent ?
     this.removeAllSceneObject(this._sceneHelpers);
     this.removeAllSceneObject(this._scene);
 

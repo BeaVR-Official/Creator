@@ -38,7 +38,6 @@ class CreatorManagement extends EventEmitter {
     this.objectSelection(object);
   }
 
-  //TODO suppression recursive des enfants
   removeSelectedObject() {
     Scene.removeObject(this.selectedObject);
     this.deselectObject();
