@@ -35,7 +35,7 @@ class LeftMenuSugarMaple {
         manage:    true,
         sortable:  true,
         checkable: true,
-        threejs: true
+        threejs:   true
       }
     });
     ScenePanel.default.initTree(this.smTree);
@@ -65,6 +65,16 @@ class LeftMenuSugarMaple {
   }
 
   eventsReceived() {
+    CreatorManagement.on('selectedObject', object => {
+      let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
+      this.smTree.sugarmaple('checkable.setCheck', smNode, true);
+    });
+
+    CreatorManagement.on('deselectedObject', object => {
+      let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
+      this.smTree.sugarmaple('checkable.setCheck', smNode, false);
+    });
+
     CreatorManagement.on('removedObject', object => {
       let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
       this.smTree.sugarmaple('manage.detach', smNode);

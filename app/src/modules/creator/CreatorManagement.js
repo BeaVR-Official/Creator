@@ -25,13 +25,14 @@ class CreatorManagement extends EventEmitter {
   }
 
   deselectObject() {
+    this.emit('deselectedObject', this.selectedObject);
     this.selectedObject = undefined;
     Scene.detachTransform();
     Scene.render();
-    this.emit('deselectedObject', this.selectedObject);
   }
 
   addObject(object) {
+    this.deselectObject();
     ScenesPanel.addObjectNode(object);
     Scene._scene.add(object);
     Scene._objList.push(object);
