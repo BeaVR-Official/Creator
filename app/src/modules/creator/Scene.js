@@ -3,6 +3,7 @@ import Constants from './Constants';
 class Scene {
 
   constructor() {
+
     this._scene        = new THREE.Scene();
     this._sceneHelpers = new THREE.Scene();
     window.scene       = this._scene;
@@ -101,17 +102,21 @@ class Scene {
     // TODO à corriger en récursive children @Vincent ?
     this.removeAllSceneObject(this._sceneHelpers);
     this.removeAllSceneObject(this._scene);
-    
+
     for (let i = this._objList.length - 1; i >= 0; i--) {
       this._objList.splice(i, 1);
     }
   }
 
   removeObject(object) {
-    if (object !== undefined)
-      this._scene.remove(object);
-    let index = this._objList.indexOf(object);
-    this._objList.splice(index, 1);
+    if (object !== undefined) {
+      if (object.parent instanceof THREE.Scene)
+        this._scene.remove(object);
+      else
+        object.parent.remove(object);
+      let index = this._objList.indexOf(object);
+      this._objList.splice(index, 1);
+    }
   }
 
   attachToTransform(object) {
