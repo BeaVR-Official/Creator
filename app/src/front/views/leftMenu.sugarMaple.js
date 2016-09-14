@@ -3,6 +3,7 @@
  */
 
 import SugarMaple from '../../modules/sugarmaple/SugarMaple';
+import CreatorManagement from '../../modules/creator/CreatorManagement';
 import * as ScenePanel from '../../modules/creator/ScenesPanel';
 
 /**
@@ -21,7 +22,7 @@ class LeftMenuSugarMaple {
       }
     });
 
-    this.sm = $('#sceneTree').sugarmaple({
+    this.smTree = $('#sceneTree').sugarmaple({
       events:  {
         onImport: (node) => {
           return node;
@@ -33,41 +34,52 @@ class LeftMenuSugarMaple {
       plugins: {
         manage:    true,
         sortable:  true,
-        checkable: true
+        checkable: true,
+        threejs: true
       }
     });
-    ScenePanel.default.initTree(this.sm);
+    ScenePanel.default.initTree(this.smTree);
     this.sugarMapleEvents();
+    this.eventsReceived();
   }
 
   sugarMapleEvents() {
-    this.sm.on('checkable.checked', (e, node) => {
+    this.smTree.on('checkable.checked', (e, node) => {
       if (node !== undefined)
         ScenePanel.default.onChecked(node);
     });
 
-    this.sm.on('checkable.unchecked', (e, node) => {
+    this.smTree.on('checkable.unchecked', (e, node) => {
       ScenePanel.default.onUnchecked();
     });
 
-    this.sm.on('sortable.dragged', (e, node) => {
+    this.smTree.on('sortable.dragged', (e, node) => {
       if (node !== undefined)
         ScenePanel.default.onDragged(node);
     });
 
-    this.sm.on('sortable.dropped', (e, newParent, node) => {
+    this.smTree.on('sortable.dropped', (e, newParent, node) => {
       if (newParent !== undefined)
         ScenePanel.default.onDropped(newParent, node);
     });
   }
 
+  eventsReceived() {
+    CreatorManagement.on('removedObject', object => {
+      let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
+      this.smTree.sugarmaple('manage.detach', smNode);
+    });
+  }
+
   showSugarMaple(arg) {
+    let treeviewPanel   = $('.treeview-left-panel');
+    let propertiesPanel = $('.properties-left-panel');
     if (arg === true) {
-      $('.treeview-left-panel').css("display", "block");
-      $('.properties-left-panel').css("display", "none");
+      treeviewPanel.css("display", "block");
+      propertiesPanel.css("display", "none");
     } else {
-      $('.treeview-left-panel').css("display", "none");
-      $('.properties-left-panel').css("display", "block");
+      treeviewPanel.css("display", "none");
+      propertiesPanel.css("display", "block");
     }
   }
 }
