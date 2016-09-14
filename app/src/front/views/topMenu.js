@@ -5,6 +5,7 @@
 import Loader from '../utils';
 import * as Backbone from 'backbone';
 import Save from '../../modules/creator/Save';
+import SceneDropdownView from './topMenu/sceneDropdown';
 
 class TopMenu extends Backbone.View {
 
@@ -35,10 +36,11 @@ class TopMenu extends Backbone.View {
       });
     }
     this.currentUser = (params != undefined && params["model"]) ? params["model"] : undefined;
-    this.render();
   }
 
   initialize() {
+    // this.sceneDropDown = new SceneDropdownView();
+    this.render();
   }
 
   launchApp() {
@@ -53,6 +55,9 @@ class TopMenu extends Backbone.View {
 
   render() {
     this.$el.html(this.template(this.currentUser));
+    // this.sceneDropDown.$el = this.$('.scene-dropdown');
+    // this.sceneDropDown.render();
+    // this.sceneDropDown.delegateEvents();
     return this;
   }
 }

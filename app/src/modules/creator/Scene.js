@@ -1,5 +1,4 @@
 import Constants from './Constants';
-import * as PropPanelUI from './PropPanel.ui';
 
 class Scene {
 

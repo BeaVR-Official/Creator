@@ -1,4 +1,3 @@
-import PropPanelUI from './PropPanel.ui.js';
 import Scene from './Scene';
 import ScenesPanel from './ScenesPanel';
 

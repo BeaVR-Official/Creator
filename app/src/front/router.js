@@ -19,8 +19,6 @@ class Router extends Backbone.Router {
         '': 'home'
       }
     });
-
-
   }
 
   static get urlBase() {
@@ -56,13 +54,8 @@ class Router extends Backbone.Router {
     });
   }
 
-  SelectedObject(id) {
-
-  }
-
   home() {
     console.log("Backckbone routes init");
-
   }
 
 }
