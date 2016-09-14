@@ -17,6 +17,7 @@ class CreatorManagement extends EventEmitter {
 
   objectSelection(object) {
     if (object !== undefined) {
+      this.deselectObject();
       this.setSelectedObject(object);
       Scene.attachToTransform(this.selectedObject);
       Scene.render();
