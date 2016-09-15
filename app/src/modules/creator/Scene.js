@@ -109,10 +109,25 @@ class Scene {
 
   removeObject(object) {
     if (object !== undefined) {
-      if (object.parent instanceof THREE.Scene)
+      if (object.parent instanceof THREE.Scene) {
         this._scene.remove(object);
+      }
+      //TODO suppression lumière dans sceneHelper
+      // else if (object.userData.objType === "picker") {
+      //   let helper = undefined;
+      //   this._sceneHelpers.find(obj => {
+      //     if (obj.userData.id === object.userData.id)
+      //       helper = obj;
+      //   });
+      //   console.log(helper);
+      //   if (helper !== undefined) {
+      //     this._sceneHelpers.remove(helper);
+      //     object.parent.remove(object);
+      //   }
+      // }
       else
         object.parent.remove(object);
+
       let index = this._objList.indexOf(object);
       this._objList.splice(index, 1);
     }

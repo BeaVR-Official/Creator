@@ -40,9 +40,12 @@ class LeftMenuSugarMaple {
     });
     ScenePanel.default.initTree(this.smTree);
     this.sugarMapleEvents();
-    this.eventsReceived();
+    this.sceneEvents();
   }
 
+  /**
+   * Events send by sugarMaple
+   */
   sugarMapleEvents() {
     this.smTree.on('checkable.checked', (e, node) => {
       if (node !== undefined)
@@ -62,9 +65,18 @@ class LeftMenuSugarMaple {
       if (newParent !== undefined)
         ScenePanel.default.onDropped(newParent, node);
     });
+
+    this.smTree.on('threejs.deleteNode', (e, node) => {
+      if (node !== undefined) {
+        CreatorManagement.removeObject(node.data);
+      }
+    });
   }
 
-  eventsReceived() {
+  /**
+   * Events send by SceneView
+   */
+  sceneEvents() {
     CreatorManagement.on('selectedObject', object => {
       let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
       this.smTree.sugarmaple('checkable.setCheck', smNode, true);
@@ -81,6 +93,11 @@ class LeftMenuSugarMaple {
     });
   }
 
+  /**
+   * Changes state between panels (treeview & properties)
+   * Treeview's displayed with a true arg value
+   * @param arg
+   */
   showSugarMaple(arg) {
     let treeviewPanel   = $('.treeview-left-panel');
     let propertiesPanel = $('.properties-left-panel');

@@ -42,6 +42,7 @@ class SceneUI {
       helper = new THREE.DirectionalLightHelper(object, 50);
     } else
       return;
+    helper.userData.id = object.userData.id;
     Scene._sceneHelpers.add(helper);
   }
 

@@ -45,6 +45,15 @@ class CreatorManagement extends EventEmitter {
     Scene.removeObject(this.selectedObject);
     this.deselectObject();
   }
+
+  removeObject(object) {
+    if (object !== undefined) {
+      this.emit('removedObject', object);
+      Scene.removeObject(object);
+      Scene.detachTransform();
+      Scene.render();
+    }
+  }
 }
 
 export default new CreatorManagement();
