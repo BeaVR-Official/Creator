@@ -1,25 +1,10 @@
 <% _.each(categories, function(category, i){ %>
-<% if (i == 0) { %>
-<div class="row center tab hoverable active" style="height: 60px; background: white; border: 1px solid gray; border-top: none;" data-id="<%- category.name %>">
-    <div class="ui grid" style="padding:0px; width:100%; height: 100%; margin:auto; padding-top: 4px;">
-        <div class="row" style="padding:0px;">
-            <img src="<%- category.logo %>" style="height: 30px !important; margin:auto; !important" />
-        </div>
-        <div class="row" style="padding:0px;">
-            <p style="margin:auto; padding:0px; font-size: 12px; font-weight: bold;"><%- category.name %></p>
-        </div>
+<div class="row center tab hoverable twelve my-category-row" data-id="<%- category.name %>">
+    <div class="row my-category-logo-row">
+        <img src="<%- category.logo %>"/>
+    </div>
+    <div class="row my-category-text-row">
+        <p><%- category.name %></p>
     </div>
 </div>
-<% } else { %>
-<div class="row center tab hoverable" style="height: 60px; background: white; border: 1px solid gray; border-top: none;" data-id="<%- category.name %>">
-    <div class="ui grid" style="padding:0px; width:100%; height: 100%; margin:auto; padding-top: 4px;">
-        <div class="row" style="padding:0px;">
-            <img src="<%- category.logo %>" style="height: 30px !important; margin:auto; !important" />
-        </div>
-        <div class="row" style="padding:0px;">
-            <p style="margin:auto; padding:0px; font-size: 12px; font-weight: bold;"><%- category.name %></p>
-        </div>
-    </div>
-</div>
-<% } %>
 <% }); %>

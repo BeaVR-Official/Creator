@@ -12,10 +12,7 @@ class ScenesPanel {
   }
 
   onChecked(node) {
-    // console.log(this.sm.sugarmaple('manage.exportTree'));
-    //this.sm.sugarmaple('checkable.uncheck', node);}
-
-    let objectNode;
+    let objectNode = undefined;
     if (node.data.parent.userData.objType === 'picker')
       objectNode = node.data.parent;
     else

@@ -5,6 +5,7 @@
 import Loader from '../utils';
 import * as Backbone from 'backbone';
 import Save from '../../modules/creator/Save';
+import SceneDropdownView from './topMenu/sceneDropdown';
 
 class TopMenu extends Backbone.View {
 
@@ -27,33 +28,39 @@ class TopMenu extends Backbone.View {
     super({
       events: {}
     });
-    console.log(params);
-    if (params.userModel) {
-      var model = params.userModel;
-      model.fetch(function() {
-        console.log(model);
-      });
-    }
-    this.currentUser = (params != undefined && params["model"]) ? params["model"] : undefined;
+    this.model = params["userModel"];
     this.render();
+    _.bind(this.render, this);
+    this.model.bind('change', this.render);
+    this.model.bind('change', _.bind(this.render, this));
   }
 
   initialize() {
+    // this.sceneDropDown = new SceneDropdownView();
   }
 
   launchApp() {
     Save.saveCustomObjects(true);
-    // En dur pour le moment
+    // TODO à terme : En dur pour le moment
     document.location.href = "http://localhost:63342/Creator/app/runner.html";
   }
 
   openModalConnexion() {
-
     $("#connexionModal").modal('show');
   }
 
+  changeUser(user) {
+    this.model = user;
+    this.render();
+  }
+
   render() {
-    this.$el.html(this.template(this.currentUser));
+    this.$el.html(this.template({currentUser : (this.model.attributes.id != -1) ?
+                                               {firstName: this.model.attributes.firstName,
+                                                picture: this.model.attributes.picture} : undefined}));
+    // this.sceneDropDown.$el = this.$('.scene-dropdown');
+    // this.sceneDropDown.render();
+    // this.sceneDropDown.delegateEvents();
     return this;
   }
 }

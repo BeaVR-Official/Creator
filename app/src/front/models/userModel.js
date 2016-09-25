@@ -19,14 +19,12 @@ class User extends Backbone.Model {
 
   defaults() {
     return {
-      id: -1,
-      logo: '',
-      name: 'undefined'
+      id: -1
     };
   }
 
-  get(name) {
-    return this.attributes[name];
+  parse(response) {
+    return response.data;
   }
 }
 

@@ -1,14 +1,13 @@
 import Constants from './Constants';
-import * as PropPanelUI from './PropPanel.ui';
 
 class Scene {
+
   constructor() {
+
     this._scene        = new THREE.Scene();
     this._sceneHelpers = new THREE.Scene();
     window.scene       = this._scene;
-    // Seul var à nous
     this._objList      = [];
-
     this.initRenderer();
     this.initCamera();
     this.initHelpers();
@@ -22,7 +21,6 @@ class Scene {
     this._renderer.autoClear = false;
     this._renderer.setClearColor(0xB9B9B9, 1);
     this._renderer.setSize(sceneSettings.width, sceneSettings.height);
-
   }
 
   initCamera() {
@@ -47,7 +45,6 @@ class Scene {
       this._renderer.domElement);
 
     this._transformControls.addEventListener('change', () => {
-      PropPanelUI.default.updateTransformations();
       this.render();
     });
 
@@ -92,12 +89,6 @@ class Scene {
     THREE.SceneUtils.detach(object, object.parent, this._scene);
   }
 
-  /*
-   // Supression de la methode pour la transférer dans la class Save
-   serializeObj() {
-   }
-   */
-
   removeAllSceneObject(scene) {
     if (scene !== undefined) {
       for (let i = scene.children.length - 1; i >= 0; i--) {
@@ -108,36 +99,38 @@ class Scene {
   }
 
   removeObjects() {
-    // TODO à corriger en récursive children @Vincent ?
     this.removeAllSceneObject(this._sceneHelpers);
     this.removeAllSceneObject(this._scene);
-    
+
     for (let i = this._objList.length - 1; i >= 0; i--) {
       this._objList.splice(i, 1);
     }
-
-    // and rest camera
-    /*    let camSettings = Constants.getCamSettings();
-     this._camera   = new THREE.PerspectiveCamera(
-     camSettings.fov,
-     camSettings.aspect,
-     camSettings.near,
-     camSettings.far);
-
-     this._camera.position.set(
-     camSettings.posX,
-     camSettings.posY,
-     camSettings.posZ);
-     this._camera.lookAt(new THREE.Vector3(0, 200, 0));
-     this.render();
-     */
   }
 
   removeObject(object) {
-    if (object !== undefined)
-      this._scene.remove(object);
-    let index = this._objList.indexOf(object);
-    this._objList.splice(index, 1);
+    if (object !== undefined) {
+      if (object.parent instanceof THREE.Scene) {
+        this._scene.remove(object);
+      }
+      //TODO suppression lumière dans sceneHelper
+      // else if (object.userData.objType === "picker") {
+      //   let helper = undefined;
+      //   this._sceneHelpers.find(obj => {
+      //     if (obj.userData.id === object.userData.id)
+      //       helper = obj;
+      //   });
+      //   console.log(helper);
+      //   if (helper !== undefined) {
+      //     this._sceneHelpers.remove(helper);
+      //     object.parent.remove(object);
+      //   }
+      // }
+      else
+        object.parent.remove(object);
+
+      let index = this._objList.indexOf(object);
+      this._objList.splice(index, 1);
+    }
   }
 
   attachToTransform(object) {

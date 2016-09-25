@@ -19,8 +19,6 @@ class Router extends Backbone.Router {
         '': 'home'
       }
     });
-
-
   }
 
   static get urlBase() {
@@ -28,7 +26,7 @@ class Router extends Backbone.Router {
   }
 
   initialize() {
-    new TopMenuView({userModel : ($.cookie('beavr-token') !== undefined) ? $.cookie('beavr-token') : undefined});
+    var TopMenu = new TopMenuView({userModel : new User()});
     new LeftMenuView();
     $(".connexionAction").click(function(){
       var user = $("#connexionEmail").val();
@@ -46,23 +44,23 @@ class Router extends Backbone.Router {
           Backbone.$.ajaxSetup({
             headers: { 'Authorization': "Bearer " + res.data.token }
           });
-          new TopMenuView({userModel : new User({id: res.data.userId})});
-          console.log("connecté");
+          var user = new User({id: res.data.userId});
+          user.fetch({
+            success: function() {
+              TopMenu.changeUser(user);
+              $("#connexionModal").modal('hide');
+            }
+          });
         },
         error: function(err) {
-          console.log(err);
+          alert(err);
         }
       });
     });
   }
 
-  SelectedObject(id) {
-
-  }
-
   home() {
     console.log("Backckbone routes init");
-
   }
 
 }

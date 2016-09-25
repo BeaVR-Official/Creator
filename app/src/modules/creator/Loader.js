@@ -2,8 +2,8 @@ import Scene from './Scene';
 import CreatorManagement from './CreatorManagement';
 
 class Loader {
+  
   constructor() {
-
   }
 
   loadFile(file) {

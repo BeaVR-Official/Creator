@@ -1,4 +1,3 @@
-import PropPanelUI from './PropPanel.ui.js';
 import Scene from './Scene';
 import ScenesPanel from './ScenesPanel';
 
@@ -18,6 +17,7 @@ class CreatorManagement extends EventEmitter {
 
   objectSelection(object) {
     if (object !== undefined) {
+      this.deselectObject();
       this.setSelectedObject(object);
       Scene.attachToTransform(this.selectedObject);
       Scene.render();
@@ -26,22 +26,33 @@ class CreatorManagement extends EventEmitter {
   }
 
   deselectObject() {
+    this.emit('deselectedObject', this.selectedObject);
     this.selectedObject = undefined;
     Scene.detachTransform();
     Scene.render();
-    this.emit('deselectedObject', this.selectedObject);
   }
 
   addObject(object) {
+    this.deselectObject();
     ScenesPanel.addObjectNode(object);
     Scene._scene.add(object);
     Scene._objList.push(object);
+    this.objectSelection(object);
   }
 
-  //TODO suppression recursive des enfants
   removeSelectedObject() {
+    this.emit('removedObject', this.selectedObject);
     Scene.removeObject(this.selectedObject);
     this.deselectObject();
+  }
+
+  removeObject(object) {
+    if (object !== undefined) {
+      this.emit('removedObject', object);
+      Scene.removeObject(object);
+      Scene.detachTransform();
+      Scene.render();
+    }
   }
 }
 
