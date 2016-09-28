@@ -54,6 +54,7 @@
     "jszip": "^3.0.0",
     "semantic-ui": "^2.1.8",
     "three": "0.76.1",
-    "underscore": "1.8.3"
+    "underscore": "1.8.3",
+    "physijs": "0.0.4"
   }
 }
