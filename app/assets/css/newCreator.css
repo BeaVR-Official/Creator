@@ -9,3 +9,7 @@
 .properties-left-panel .hoverable:hover {
     background: #e8e8e8 !important;
 }
+
+.ui.popup{overflow:auto;}
+
+.ui.modal { top: 33%; text-align:center; margin:auto; }

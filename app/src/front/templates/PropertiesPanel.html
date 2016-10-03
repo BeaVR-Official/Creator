@@ -6,12 +6,7 @@
                 <input type="text" name="basicInfo[name]" placeholder="Name">
             </div>
             <div class="field">
-                <select class="ui dropdown" name="basicInfo[type]">
-                    <option value="">Type</option>
-                    <option value="0">Box</option>
-                    <option value="1">Cylinder</option>
-                    <option value="2">Sphere</option>
-                </select>
+                <input type="text" name="basicInfo[type]" placeholder="Type" disabled>
             </div>
         </div>
     </div>
@@ -23,13 +18,13 @@
             <label>Location</label>
             <div class="two fields">
                 <div class="field">
-                    <input type="text" name="location[x]" placeholder="x">
+                    <input type="number" name="location[x]" placeholder="x">
                 </div>
                 <div class="field">
-                    <input type="text" name="location[y]" placeholder="y">
+                    <input type="number" name="location[y]" placeholder="y">
                 </div>
                 <div class="field">
-                    <input type="text" name="location[z]" placeholder="z">
+                    <input type="number" name="location[z]" placeholder="z">
                 </div>
             </div>
         </div>
@@ -37,13 +32,13 @@
             <label>Rotation</label>
             <div class="two fields">
                 <div class="field">
-                    <input type="text" name="rotation[x]" placeholder="x">
+                    <input type="number" name="rotation[x]" placeholder="x">
                 </div>
                 <div class="field">
-                    <input type="text" name="rotation[y]" placeholder="y">
+                    <input type="number" name="rotation[y]" placeholder="y">
                 </div>
                 <div class="field">
-                    <input type="text" name="rotation[z]" placeholder="z">
+                    <input type="number" name="rotation[z]" placeholder="z">
                 </div>
             </div>
         </div>
@@ -51,13 +46,13 @@
             <label>Scale</label>
             <div class="two fields">
                 <div class="field">
-                    <input type="text" name="scale[x]" placeholder="x">
+                    <input type="number" name="scale[x]" placeholder="x">
                 </div>
                 <div class="field">
-                    <input type="text" name="scale[y]" placeholder="y">
+                    <input type="number" name="scale[y]" placeholder="y">
                 </div>
                 <div class="field">
-                    <input type="text" name="scale[z]" placeholder="z">
+                    <input type="number" name="scale[z]" placeholder="z">
                 </div>
             </div>
         </div>
@@ -70,7 +65,7 @@
             <div class="two fields">
                 <div class="field">
                     <label>Color</label>
-                    <input type="text" name="mesh[color]" placeholder="#ffffff">
+                    <input type="color" name="mesh[color]" placeholder="#ffffff">
                 </div>
                 <div class="field">
                     <label>Visible</label>

@@ -29,9 +29,11 @@
   "devDependencies": {
     "babel-loader": "^6.0.1",
     "babel-plugin-transform-es2015-modules-commonjs-simple": "6.7.4",
+    "babel-preset-es2015": "^6.14.0",
     "babel-preset-es2015-webpack": "^6.4.1",
     "es6-template-string-loader": "^1.0.0",
     "eslint": "^2.8.0",
+    "event-emitter-es6": "1.1.5",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-qunit": "^0.2.1",

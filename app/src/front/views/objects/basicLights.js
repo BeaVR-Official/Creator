@@ -5,6 +5,7 @@
 import Loader from '../../utils';
 import Object3D from '../../models/objectModel';
 import Objects from '../../collections/objectCollection';
+import Navigator from '../../../modules/creator/Navigator';
 import * as Backbone from 'backbone';
 
 class BasicLightsView extends Backbone.View {
@@ -29,12 +30,11 @@ class BasicLightsView extends Backbone.View {
 
   initialize() { // en dur pour le moment
     var basicObject = [];
-    basicObject.push(new Object3D({name: 'Ambiant Light', logo:'assets/images/ambiantLight.png'}));
+    basicObject.push(new Object3D({name: 'Ambient Light', logo:'assets/images/ambientLight.png'}));
     basicObject.push(new Object3D({name: "Directional Light", logo:'assets/images/directionalLight.png'}));
     basicObject.push(new Object3D({name: "Point light", logo:'assets/images/pointlight.png'}));
     basicObject.push(new Object3D({name: "Spot Light", logo:'assets/images/spotLight.png'}));
     this.objects = new Objects(basicObject);
-    this.render();
   }
 
   render() {
@@ -51,13 +51,17 @@ class BasicLightsView extends Backbone.View {
     var selectedElem = $(e.target).closest('.tab');
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
-      case "Ambiant Light":
+      case "Ambient Light":
+        Navigator.addAmbientLight();
         break;
       case "Directional Light":
+        Navigator.addDirectionalLight();
         break;
       case "Point light":
+        Navigator.addLight();
         break;
       case "Spot Light":
+        Navigator.addSpotLight();
         break;
     }
   }

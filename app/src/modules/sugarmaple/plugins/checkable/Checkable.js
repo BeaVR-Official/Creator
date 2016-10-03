@@ -57,6 +57,17 @@ class Checkable extends AbstractPlugin {
   }
 
   /**
+   * Set state's node (checkbox)
+   * @param node
+   * @param state
+   */
+  setCheck(node, state) {
+    node.checkbox.checked = state;
+
+    this._update(node);
+  }
+
+  /**
    * Toggles a checkbox
    * @param node
    */

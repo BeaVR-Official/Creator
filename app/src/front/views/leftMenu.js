@@ -7,7 +7,7 @@ import Category from '../models/leftCategoryModel';
 import Categories from '../collections/leftCategoryCollection';
 import ObjectMenuView from './objectsMenu';
 import PropertiesView from './propertiesPanel';
-import TreeViewView from './treeViewView';
+import SugarMaple from './leftMenu.sugarMaple';
 import * as Backbone from 'backbone';
 
 class LeftMenuView extends Backbone.View {
@@ -22,7 +22,7 @@ class LeftMenuView extends Backbone.View {
 
   get events() {
     return {
-      'click .tab' : 'loadTabulation'
+      'click .tab': 'loadTabulation'
     };
   }
 
@@ -31,37 +31,47 @@ class LeftMenuView extends Backbone.View {
   }
 
   initialize() {
-    var category = [];
-    category.push(new Category({ name: "Tree View", logo: 'assets/images/view-list.png'}));
-    category.push(new Category({ name: "Properties", logo:'assets/images/settings-gears.png'}));
-    category.push(new Category({ name: "Add Object", logo:'assets/images/plus.png'}));
+    let category = [];
+    category.push(new Category({name: "Tree View", logo: 'assets/images/view-list.png'}));
+    category.push(new Category({name: "Properties", logo: 'assets/images/settings-gears.png'}));
+    category.push(new Category({name: "Add Object", logo: 'assets/images/plus.png'}));
     this.categories = new Categories(category);
+
+    this.propertiesView = new PropertiesView();
+    this.objectsMenu    = new ObjectMenuView();
+    this.sugarMaple     = new SugarMaple();
+
     this.render();
+    $(".my-category-row:first-child").addClass("active");
+    this.sugarMaple.initializeSugar();
+    this.sugarMaple.showSugarMaple(true);
   }
 
   render() {
-    console.log(this.categories.toJSON());
     this.$el.html(this.template({
-      categories : this.categories.toJSON()
+      categories: this.categories.toJSON()
     }));
     return this;
   }
 
   loadTabulation(e) {
-    $(".tab.active").each(function() {
+    $(".tab.active").each(function () {
       $(this).removeClass('active');
     });
-    var selectedElem = $(e.target).closest('.tab');
+    let selectedElem = $(e.target).closest('.tab');
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
       case "Tree View":
-        new TreeViewView();
+        this.sugarMaple.showSugarMaple(true);
         break;
       case "Properties":
-        new PropertiesView();
+        this.sugarMaple.showSugarMaple(false);
+        this.propertiesView.render();
+        this.propertiesView.fillInfo();
         break;
       case "Add Object":
-        new ObjectMenuView();
+        this.sugarMaple.showSugarMaple(false);
+        this.objectsMenu.render();
         break;
     }
   }

@@ -1,6 +1,6 @@
 <div class="ui grid" style="height: auto;">
     <div class="computer tablet only row">
-        <div class="ui inverted fixed massive menu navbar page grid" style="background:#424242 !important; padding-left:0px;">
+        <div class="ui inverted fixed massive menu navbar page grid" style="background:#424242 !important; padding:0px;">
             <a href="" class="brand item"><img src="assets/images/2017_logo_beavr.png" style="height: 35px; width: auto; margin-right: 30px;" /></a>
             <a class="item">
                 <div class="ui grid" style="font-size: 12px;">
@@ -8,12 +8,12 @@
                     <p style="padding:0px;">Scene 1</p>
                 </div>
             </a>
-            <a href="" class="active item">
-                <p style="margin:0px;">Scenes</p><span style="background: red; margin-left: 19px; border-radius: 20px; width: 30px; text-align: center;">4</span>
-            </a>
-            <div class="right menu">
-                <a class="item " style="padding-left: 40px;padding-right: 40px;">
-                    <div class="ui grid">
+
+            <div class="scene-dropdown"></div>
+
+            <div class="right menu" >
+                <a class="item " style="padding-left: 40px;padding-right: 40px;" >
+                    <div class="ui grid" id="launch">
                         <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/start-settings.png" style="height: 28px; margin: auto;" /></div>
                         <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Launch</p></div>
                     </div>
@@ -30,6 +30,7 @@
                 </a>
             </div>
             <div class="ui fluid popup bottom center transition hidden inverted userMenuPopup" style="max-width: 150px; text-align:center;">
+                <% if (currentUser == undefined) { %>
                 <a>
                     <div class="blurring dimmable image" style="margin-bottom: 5px;">
                         <div class="ui dimmer" style="background: transparent; height: 100%;">
@@ -42,10 +43,28 @@
                         <img src="assets/images/user-count-icon.png" style="width: 50%; margin-top: 8px; margin-bottom: 3px;" />
                     </div>
                 </a>
-                <a><p style="color: white; font-family: 'Apple SD Gothic Neo'; font-size: 15px; ">Hi Elliot !</p></a>
-                <a href=""><p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'; margin-top: 5px;">Store</p></a>
-                <a href=""><p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'">Account</p></a>
-                <a href=""><p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'">Projects</p></a>
+                <a><p style="color: white; font-family: 'Apple SD Gothic Neo'; font-size: 15px; ">Hi ! Please log yourself</p></a>
+                <a class="openModalConnexion">
+                    <p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'; margin-top: 5px; margin-left:0;"><i class="sign in icon"/>Log in</p>
+                </a>
+                <% } else { %>
+                <a>
+                    <div class="blurring dimmable image" style="margin-bottom: 5px;">
+                        <div class="ui dimmer" style="background: transparent; height: 100%;">
+                            <div class="content">
+                                <div class="center">
+                                    <i class="photo icon" style="color: white;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="<%- currentUser.picture %>" style="width: 50%; margin-top: 8px; margin-bottom: 3px;" />
+                    </div>
+                </a>
+                <a><p style="color: white; font-family: 'Apple SD Gothic Neo'; font-size: 15px; ">Welcome <%- currentUser.firstName %> !</p></a>
+                <a class="logoutAction">
+                    <p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'; margin-top: 5px; margin-left:0;"><i class="sign in icon"/>Log out</p>
+                </a>
+                <% } %>
             </div>
         </div>
     </div>
@@ -62,6 +81,13 @@
 </div>
 
 <script type="application/javascript">
+
+    var resizePopup = function(){$('.ui.popup').css('max-height', $(window).height());};
+
+    $(window).resize(function(e){
+        resizePopup();
+    });
+
     $('.userMenuDropdown').popup({
         inline   : true,
         hoverable: true,
@@ -70,6 +96,10 @@
         delay: {
             show: 300,
             hide: 800
+        },
+        lastResort: 'bottom right',
+        onShow: function(){
+            resizePopup();
         }
     });
 
@@ -81,4 +111,6 @@
     $('.blurring.dimmable.image').dimmer({
         on: 'hover'
     });
+
+
 </script>

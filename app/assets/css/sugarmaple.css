@@ -5,8 +5,9 @@
 .sugarmaple .node {
     width: 100%
 }
+
 .sugarmaple > .node {
-    background: none !important;
+    background-color: #F8F8F8 !important;
     padding-left: 0 !important;
 }
 
@@ -85,4 +86,11 @@
 .sugarmaple .node-checkbox {
     display: inline-block;
     float: right;
+}
+
+.sugarmaple .node-deleteBtn {
+    display: inline-block;
+    float: right;
+    margin-right: 0.25em;
+    background-image: url('../images/cross.png');
 }

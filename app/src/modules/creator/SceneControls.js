@@ -1,4 +1,5 @@
 import Scene from './Scene';
+import Constants from './Constants';
 import CreatorManagement from './CreatorManagement';
 
 class SceneControls {
@@ -26,8 +27,14 @@ class SceneControls {
     });
 
     this._sceneView.mouseup(event => {
-      this._mouse.x = (event.clientX / window.innerWidth * 2) - 1;
-      this._mouse.y = -(event.clientY / window.innerHeight * 2) + 1;
+      let x = event.clientX - Constants.getCanvasSettings().width;
+      let y = event.clientY - Constants.getCanvasSettings().height;
+
+      let windowWidth  = window.innerWidth - Constants.getCanvasSettings().width;
+      let windowHeight = window.innerHeight - Constants.getCanvasSettings().height;
+
+      this._mouse.x = (x / windowWidth * 2) - 1;
+      this._mouse.y = -(y / windowHeight * 2) + 1;
 
       this._closestObj = this.getClosestObject(Scene._scene.children, true);
       if (this._closestObj !== undefined)

@@ -4,7 +4,7 @@
 
 import TopMenuView from './views/topMenu';
 import LeftMenuView from './views/leftMenu';
-import TreeViewView from './views/treeViewView';
+import User from './models/userModel';
 import * as Backbone from 'backbone';
 
 class Router extends Backbone.Router {
@@ -26,18 +26,41 @@ class Router extends Backbone.Router {
   }
 
   initialize() {
-    new TopMenuView({userModel : ($.cookie('beavr-token') !== undefined) ? $.cookie('beavr-token') : 'undefined'});
+    var TopMenu = new TopMenuView({userModel : new User()});
     new LeftMenuView();
-    new TreeViewView();
-  }
-
-  SelectedObject(id) {
-
+    $(".connexionAction").click(function(){
+      var user = $("#connexionEmail").val();
+      var password = $("#connexionPassword").val();
+      var checkbox = $("#connexionCheckbox").val();
+      $.ajax({
+        type: "POST",
+        url: "http://beavr.fr:3000/api/connection",
+        dataType: 'json',
+        data: {
+          email: user,
+          password: password
+        },
+        success: function(res) {
+          Backbone.$.ajaxSetup({
+            headers: { 'Authorization': "Bearer " + res.data.token }
+          });
+          var user = new User({id: res.data.userId});
+          user.fetch({
+            success: function() {
+              TopMenu.changeUser(user);
+              $("#connexionModal").modal('hide');
+            }
+          });
+        },
+        error: function(err) {
+          alert(err);
+        }
+      });
+    });
   }
 
   home() {
     console.log("Backckbone routes init");
-
   }
 
 }

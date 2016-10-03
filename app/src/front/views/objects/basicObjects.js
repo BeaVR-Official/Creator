@@ -34,7 +34,6 @@ class BasicObjectsView extends Backbone.View {
     basicObject.push(new Object3D({name: "Cylinder", logo:'assets/images/cylinder.png'}));
     basicObject.push(new Object3D({name: "Sphere", logo:'assets/images/sphere.png'}));
     this.objects = new Objects(basicObject);
-    this.render();
   }
 
   render() {

@@ -5,9 +5,9 @@
 import Loader from '../utils';
 import Object3D from '../models/objectModel';
 import Objects from '../collections/objectCollection';
-import * as Backbone from 'backbone';
 import BasicObjectsView from './objects/basicObjects';
 import BasicLightsView from './objects/basicLights';
+import * as Backbone from 'backbone';
 
 class ObjectMenuView extends Backbone.View {
 
@@ -21,8 +21,13 @@ class ObjectMenuView extends Backbone.View {
 
   get events() {
     return {
-      'click .tab' : 'loadObjects'
+      'click .tab' : 'loadObjects',
     };
+  }
+
+  // TODO : La modal ne marche pas pour le moment
+  openCustomObjectUploadModal() {
+    $('#CustomObjectUpload').modal('show');
   }
 
   constructor() {
@@ -37,7 +42,12 @@ class ObjectMenuView extends Backbone.View {
     object.push(new Object3D({name: "My library", logo:'assets/images/painter-palette.png'}));
     object.push(new Object3D({name: "Add folder", logo:'assets/images/add.png'}));
     this.objects = new Objects(object);
-    this.render();
+
+    this.basicObjectView = new BasicObjectsView();
+    this.basicLightView = new BasicLightsView();
+
+    // TODO : La modal ne marche pas pour le moment
+    $('#CustomObjectUpload').modal("show");
   }
 
   render() {
@@ -55,12 +65,14 @@ class ObjectMenuView extends Backbone.View {
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
       case "Basic objects":
-        new BasicObjectsView();
+        this.basicObjectView.render();
         break;
       case "Lights":
-        new BasicLightsView();
+        this.basicLightView.render();
         break;
       case "Custom objects":
+        // TODO : La modal ne marche pas pour le moment
+        $('#CustomObjectUpload').modal("show");
         break;
       case "My library":
         break;

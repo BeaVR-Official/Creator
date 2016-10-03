@@ -3,15 +3,16 @@
  */
 
 class Loader {
+
   constructor() {
     this.templates = {};
   }
 
   loadTemplates(names, callback) {
-    var that = this;
+    let that = this;
 
-    var loadTemplate = function (index) {
-      var name = names[index];
+    let loadTemplate = function (index) {
+      let name = names[index];
       $.get('src/front/templates/' + name + '.html', function (data) {
         that.templates[name] = data;
         index++;
