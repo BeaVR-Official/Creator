@@ -34,7 +34,9 @@ class ScriptOrganizer {
   /* Basic Trigger handling */
 
   addTrigger(name) {
-    this.triggerList.push(new Trigger(name));
+    let newTrigger = new Trigger(name);
+    this.triggerList.push(newTrigger);
+    return (newTrigger.uuid);
   }
 
   setTriggerName(triggerUid, name) {
@@ -85,7 +87,9 @@ class ScriptOrganizer {
   /* Basic Event handling */
 
   addEvent(name) {
-    this.eventList.push(new Event(name));
+    let newEvent = new Event(name);
+    this.eventList.push(newEvent);
+    return (newEvent.uuid);
   }
 
   setEventName(eventUid, name) {

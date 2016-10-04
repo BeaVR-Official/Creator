@@ -9,7 +9,7 @@
 
 export default class Instruction {
   constructor() {
-    this.uid   = guid;
+    this.uuid   = guid;
     this.type = 0;
   }
 
