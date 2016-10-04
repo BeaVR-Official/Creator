@@ -5,6 +5,9 @@
 import Loader from '../utils';
 import * as Backbone from 'backbone';
 import Save from '../../modules/creator/Save';
+import ProjectPanelView from './topMenu/ProjectPanel';
+import ScenePanelView from './topMenu/ScenePanel';
+import TopMenuUtils from "./TopMenu.utils";
 import SceneDropdownView from './topMenu/sceneDropdown';
 
 class TopMenu extends Backbone.View {
@@ -20,7 +23,9 @@ class TopMenu extends Backbone.View {
   get events() {
     return {
       'click #launch': 'launchApp',
-      'click .openModalConnexion' : 'openModalConnexion'
+      'click .openModalConnexion' : 'openModalConnexion',
+      'click #project_button' : 'openProjectPanel',
+      'click #scene_button' : 'openScenePanel'
     };
   }
 
@@ -36,7 +41,19 @@ class TopMenu extends Backbone.View {
   }
 
   initialize() {
-    // this.sceneDropDown = new SceneDropdownView();
+    this.projectPanelView = new ProjectPanelView();
+    this.scenePanelView = new ScenePanelView();
+    this.utils = new TopMenuUtils();
+  }
+
+  openProjectPanel() {
+    this.utils.setAndDisableActiveClass("#project_button", "#scene_button");
+    this.projectPanelView.render();
+  }
+
+  openScenePanel() {
+    this.utils.setAndDisableActiveClass("#scene_button", "#project_button");
+    this.scenePanelView.render();
   }
 
   launchApp() {
@@ -63,6 +80,7 @@ class TopMenu extends Backbone.View {
     // this.sceneDropDown.delegateEvents();
     return this;
   }
+  
 }
 
 export default TopMenu;

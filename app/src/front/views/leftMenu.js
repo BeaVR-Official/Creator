@@ -55,6 +55,8 @@ class LeftMenuView extends Backbone.View {
   }
 
   loadTabulation(e) {
+    $("#project_button").removeClass('active');
+    $("#scene_button").removeClass('active');
     $(".tab.active").each(function () {
       $(this).removeClass('active');
     });
