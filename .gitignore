@@ -7,7 +7,7 @@
 /.idea/vcs.xml
 /.idea/modules.xml
 /.idea/libraries/beavr_creator_node_modules.xml
-/semantic
+/app/libs/semantic
 /node_modules
 /app/out
 /app/libs/node_modules
