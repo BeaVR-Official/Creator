@@ -2,8 +2,8 @@
  * Created by kersal_e on 27/07/2016.
  */
 
-import TopMenuView from './views/topMenu';
 import LeftMenuView from './views/leftMenu';
+import TopMenuView from './views/topMenu';
 import User from './models/userModel';
 import * as Backbone from 'backbone';
 
@@ -26,7 +26,7 @@ class Router extends Backbone.Router {
   }
 
   initialize() {
-    var TopMenu = new TopMenuView({userModel : new User()});
+    let TopMenu = new TopMenuView({userModel : new User()});
     new LeftMenuView();
     $(".connexionAction").click(function(){
       var user = $("#connexionEmail").val();

@@ -7,7 +7,8 @@ import SceneManager from './SceneManager';
 class ProjectManager {
 
   constructor() {
-    this.sceneManager = new SceneManager();
+    this._sceneManager = new SceneManager();
+    this._name = "Unnamed Project";
   }
   
 }

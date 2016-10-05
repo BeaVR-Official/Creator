@@ -10,7 +10,7 @@ import PropertiesView from './propertiesPanel';
 import SugarMaple from './leftMenu.sugarMaple';
 import * as Backbone from 'backbone';
 
-class LeftMenuView extends Backbone.View {
+class LeftMenu extends Backbone.View {
 
   get template() {
     return _.template(Loader.templates.LeftMenuCategories);
@@ -79,4 +79,4 @@ class LeftMenuView extends Backbone.View {
   }
 }
 
-export default LeftMenuView;
+export default LeftMenu;

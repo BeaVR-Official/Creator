@@ -8,7 +8,8 @@ import Save from '../../modules/creator/Save';
 import ProjectPanelView from './topMenu/ProjectPanel';
 import ScenePanelView from './topMenu/ScenePanel';
 import TopMenuUtils from "./TopMenu.utils";
-import SceneDropdownView from './topMenu/sceneDropdown';
+import ProjectManager from '../../modules/creator/ProjectManager';
+import Scene from '../../modules/creator/Scene';
 
 class TopMenu extends Backbone.View {
 
@@ -72,7 +73,10 @@ class TopMenu extends Backbone.View {
   }
 
   render() {
-    this.$el.html(this.template({currentUser : (this.model.attributes.id != -1) ?
+    this.$el.html(this.template({
+      currentProject: {name : ProjectManager._name},
+      currentScene: {name: Scene._name},
+      currentUser : (this.model.attributes.id != -1) ?
                                                {firstName: this.model.attributes.firstName,
                                                 picture: this.model.attributes.picture} : undefined}));
     // this.sceneDropDown.$el = this.$('.scene-dropdown');
