@@ -64,8 +64,7 @@ class ScriptOrganizer {
     if (index === -1) {
       return (-1);
     }
-    this.triggerList[index].addCondition(type);
-    return (0);
+    return this.triggerList[index].addCondition(type);
   }
 
   editCondition(triggerUid, conditionUid, data) {
@@ -117,8 +116,7 @@ class ScriptOrganizer {
     if (index === -1) {
       return (-1);
     }
-    this.triggerList[index].addInstruction(type);
-    return (0);
+    return this.triggerList[index].addInstruction(type);
   }
 
   editInstruction(eventUid, instructionUid, data) {
