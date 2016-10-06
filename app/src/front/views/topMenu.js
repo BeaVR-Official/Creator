@@ -5,7 +5,11 @@
 import Loader from '../utils';
 import * as Backbone from 'backbone';
 import Save from '../../modules/creator/Save';
-import SceneDropdownView from './topMenu/sceneDropdown';
+import ProjectPanelView from './topMenu/ProjectPanel';
+import ScenePanelView from './topMenu/ScenePanel';
+import TopMenuUtils from "./TopMenu.utils";
+import ProjectManager from '../../modules/creator/ProjectManager';
+import Scene from '../../modules/creator/Scene';
 
 class TopMenu extends Backbone.View {
 
@@ -20,7 +24,9 @@ class TopMenu extends Backbone.View {
   get events() {
     return {
       'click #launch': 'launchApp',
-      'click .openModalConnexion' : 'openModalConnexion'
+      'click .openModalConnexion' : 'openModalConnexion',
+      'click #project_button' : 'openProjectPanel',
+      'click #scene_button' : 'openScenePanel'
     };
   }
 
@@ -36,7 +42,19 @@ class TopMenu extends Backbone.View {
   }
 
   initialize() {
-    // this.sceneDropDown = new SceneDropdownView();
+    this.projectPanelView = new ProjectPanelView();
+    this.scenePanelView = new ScenePanelView();
+    this.utils = new TopMenuUtils();
+  }
+
+  openProjectPanel() {
+    this.utils.setAndDisableActiveClass("#project_button", "#scene_button");
+    this.projectPanelView.render();
+  }
+
+  openScenePanel() {
+    this.utils.setAndDisableActiveClass("#scene_button", "#project_button");
+    this.scenePanelView.render();
   }
 
   launchApp() {
@@ -55,7 +73,10 @@ class TopMenu extends Backbone.View {
   }
 
   render() {
-    this.$el.html(this.template({currentUser : (this.model.attributes.id != -1) ?
+    this.$el.html(this.template({
+      currentProject: {name : ProjectManager._name},
+      currentScene: {name: Scene._name},
+      currentUser : (this.model.attributes.id != -1) ?
                                                {firstName: this.model.attributes.firstName,
                                                 picture: this.model.attributes.picture} : undefined}));
     // this.sceneDropDown.$el = this.$('.scene-dropdown');
@@ -63,6 +84,7 @@ class TopMenu extends Backbone.View {
     // this.sceneDropDown.delegateEvents();
     return this;
   }
+  
 }
 
 export default TopMenu;

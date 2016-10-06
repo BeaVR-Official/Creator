@@ -8,8 +8,11 @@
     ]
   ],
   "plugins": [
-    ["transform-es2015-modules-commonjs-simple", {
-      "noMangle": true
-    }]
+    [
+      "transform-es2015-modules-commonjs-simple",
+      {
+        "noMangle": true
+      }
+    ]
   ]
 }

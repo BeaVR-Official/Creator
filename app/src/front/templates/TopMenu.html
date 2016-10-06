@@ -4,10 +4,16 @@
     <div class="computer tablet only row">
         <div class="ui inverted fixed massive menu navbar page grid" style="background:#424242 !important; padding:0px;">
             <a href="" class="brand item"><img src="assets/images/2017_logo_beavr.png" style="height: 35px; width: auto; margin-right: 30px;" /></a>
-            <a class="item">
+            <a class="item" id="project_button">
+                <div class="ui grid" style="font-size: 12px;" >
+                    <div class="row" style="padding: 0px;"><p id="display_project_name" style="color: cornflowerblue;"><%- currentProject.name %></p></div>
+                    <p style="padding:0px;">Edit</p> <!-- A changer par une icone -->
+                </div>
+            </a>
+            <a class="item" id="scene_button">
                 <div class="ui grid" style="font-size: 12px;">
-                    <div class="row" style="padding: 0px;"><p style="color: cornflowerblue;">Unnamed Project</p></div>
-                    <p style="padding:0px;">Scene 1</p>
+                    <div class="row" style="padding: 0px;"><p id="display_scene_name" style="color: cornflowerblue;"><%- currentScene.name %></p></div>
+                    <p style="padding:0px;">Edit</p> <!-- A changer par une icone -->
                 </div>
             </a>
 
@@ -27,6 +33,12 @@
                     </div>
                 </a>
                 <% if (currentUser == undefined) { %>
+                <a class="item" style="padding-left: 40px;padding-right: 40px;">
+                    <div class="ui grid">
+                        <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/save-file-option.png" style="height: 28px; margin: auto;" /></div>
+                        <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Load</p></div>
+                    </div>
+                </a>
                 <a class="ui dropdown item userMenuDropdown">
                     <img class="profileImage" src="assets/images/user-count-icon.png" style="height: 35px; width: auto;"/>
                     <i class="dropdown icon"></i>
