@@ -9,7 +9,7 @@
 
 export default class Condition {
   constructor() {
-    this.uuid   = guid;
+    //this.uuid   = guid; marche pas
     this.type = 0;
     this.data = null;
   }

@@ -1,5 +1,9 @@
 {
+<<<<<<< Updated upstream
   "base": "semantic/",
+=======
+  "base": "app/libs/semantic",
+>>>>>>> Stashed changes
   "paths": {
     "source": {
       "config": "src/theme.config",

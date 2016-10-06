@@ -1,6 +1,6 @@
-import ScriptOrganizer from "./ScriptOrganizer";
-import ScriptScheduler from "./ScriptScheduler";
-import Trigger from "./Trigger";
+import ScriptOrganizer from "../../creator/script/ScriptOrganizer";
+import ScriptScheduler from "../../creator/script/ScriptScheduler";
+import Trigger from "../../creator/script/Trigger";
 
 class TestMain {
   constructor() {

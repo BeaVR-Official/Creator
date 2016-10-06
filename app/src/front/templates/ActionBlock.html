@@ -3,7 +3,7 @@
         <h4 class="ui dividing header">Block Name</h4>
         <div class="two fields">
             <div class="field">
-                <input type="text" name="basicInfo[name]" placeholder="Name">
+                <input type="text" name="basicInfo[name]" value="<%- actionBlock.name %>" placeholder="Name">
             </div>
 
         </div>
@@ -19,13 +19,13 @@
 
                     <input type="checkbox" name="position[activated]" disabled></div>
                 <div class="field">
-                    <input type="number" name="position[y]" placeholder="y" disabled>
+                    <input type="number" name="position[y]" placeholder="y" value="<%- actionBlock.conditions.position.y %>" disabled>
                 </div>
                 <div class="field">
-                    <input type="number" name="position[z]" placeholder="z" disabled>
+                    <input type="number" name="position[z]" placeholder="z" value="<%- actionBlock.conditions.position.z %>" disabled>
                 </div>
                 <div class="field">
-                    <input type="number" name="position[x]" placeholder="x" disabled>
+                    <input type="number" name="position[x]" placeholder="x" value="<%- actionBlock.conditions.position.x %>" disabled>
                 </div>
             </div>
             <div class="field">
@@ -37,7 +37,7 @@
 
                         <input type="checkbox" name="timer[activated]" disabled></div>
                     <div class="field">
-                        <input type="number" name="timer[time]" placeholder="time" disabled>
+                        <input type="number" name="timer[time]" value="<%- actionBlock.conditions.timer.value %>" placeholder="time" disabled>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
 
                     <input type="checkbox" name="proximity[activated]"></div>
                 <div class="field">
-                    <input type="number" name="proximity[distance]" placeholder="distance">
+                    <input type="number" name="proximity[distance]" value="<%- actionBlock.conditions.proximity.value %>" placeholder="distance">
                 </div>
             </div>
         </div>
@@ -66,6 +66,10 @@
             </div>
         </div>
     </div>
+
+    <button name="actionBlock[validate]" class="ui primary button" id="validate">
+        Validate
+    </button>
 
 
 </div>
