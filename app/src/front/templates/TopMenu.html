@@ -1,3 +1,5 @@
+
+
 <div class="ui grid" style="height: auto;">
     <div class="computer tablet only row">
         <div class="ui inverted fixed massive menu navbar page grid" style="background:#424242 !important; padding:0px;">
@@ -30,6 +32,7 @@
                         <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Save</p></div>
                     </div>
                 </a>
+                <% if (currentUser == undefined) { %>
                 <a class="item" style="padding-left: 40px;padding-right: 40px;">
                     <div class="ui grid">
                         <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/save-file-option.png" style="height: 28px; margin: auto;" /></div>
@@ -40,6 +43,12 @@
                     <img class="profileImage" src="assets/images/user-count-icon.png" style="height: 35px; width: auto;"/>
                     <i class="dropdown icon"></i>
                 </a>
+                <% } else { %>
+                <a class="ui dropdown item userMenuDropdown">
+                    <img class="profileImage" src="<%- currentUser.picture %>" style="height: 35px; width: auto;"/>
+                    <i class="dropdown icon"></i>
+                </a>
+                <% } %>
             </div>
             <div class="ui fluid popup bottom center transition hidden inverted userMenuPopup" style="max-width: 150px; text-align:center;">
                 <% if (currentUser == undefined) { %>
@@ -73,9 +82,13 @@
                     </div>
                 </a>
                 <a><p style="color: white; font-family: 'Apple SD Gothic Neo'; font-size: 15px; ">Welcome <%- currentUser.firstName %> !</p></a>
+                <a class="modalProjects">
+                    <p style="color: white; font-family: 'Apple SD Gothic Neo'; margin-top: 15px;">My projects</p>
+                </a>
                 <a class="logoutAction">
                     <p style="color: #3affc7; font-family: 'Apple SD Gothic Neo'; margin-top: 5px; margin-left:0;"><i class="sign in icon"/>Log out</p>
                 </a>
+
                 <% } %>
             </div>
         </div>
@@ -90,6 +103,59 @@
             </div>
         </div>
     </div>
+    <div class="ui fullscreen basic modal" style="margin-top: -234.5px !important;">
+        <i class="close icon"></i>
+        <div class="header" style="font-family: 'Arial'; font-weight: 200; font-size: 23px;">
+            Choose a project to load
+        </div>
+        <div class="content ui stackable four column grid" style="margin-top: 10px;">
+            <div class="project column" style="text-align:center; padding: 10px !important;">
+                <img src="http://html5gamedevelopment.com/wp-content/uploads/files/34/5/79/bloglarge/marblesoccer.png" style="width: 100%; height: 200px; max-width: 150px; border-radius: 4px;"/>
+                <div style="font-family: 'Comic Sans MS'">Dominos project</div>
+                <div style="text-align:left;margin-top: 10px;">
+                    <div>Started : 01/02/2015</div>
+                    <div>Updated : 20/01/2016</div>
+                    <div>Published : No</div>
+                </div>
+            </div>
+            <div class="project column" style="text-align:center; padding: 10px !important;">
+                <img src="http://html5gamedevelopment.com/wp-content/uploads/files/34/5/79/bloglarge/marblesoccer.png" style="width: 100%; height: 200px; max-width: 150px; border-radius: 4px;"/>
+                <div style="font-family: 'Comic Sans MS'">Dominos project</div>
+                <div style="text-align:left;margin-top: 10px;">
+                    <div>Started : 01/02/2015</div>
+                    <div>Updated : 20/01/2016</div>
+                    <div>Published : No</div>
+                </div>
+            </div>
+            <div class="project column" style="text-align:center; padding: 10px !important;">
+                <img src="http://html5gamedevelopment.com/wp-content/uploads/files/34/5/79/bloglarge/marblesoccer.png" style="width: 100%; height: 200px; max-width: 150px; border-radius: 4px;"/>
+                <div style="font-family: 'Comic Sans MS'">Dominos project</div>
+                <div style="text-align:left;margin-top: 10px;">
+                    <div>Started : 01/02/2015</div>
+                    <div>Updated : 20/01/2016</div>
+                    <div>Published : No</div>
+                </div>
+            </div>
+            <div class="project column" style="text-align:center; padding: 10px !important;">
+                <img src="http://html5gamedevelopment.com/wp-content/uploads/files/34/5/79/bloglarge/marblesoccer.png" style="width: 100%; height: 200px; max-width: 150px; border-radius: 4px;"/>
+                <div style="font-family: 'Comic Sans MS'">Dominos project</div>
+                <div style="text-align:left;margin-top: 10px;">
+                    <div>Started : 01/02/2015</div>
+                    <div>Updated : 20/01/2016</div>
+                    <div>Published : No</div>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="fluid ui inverted buttons">
+                <div class="ui ok green basic inverted button">
+                    <i class="plus icon"></i>
+                    Create a new project
+                </div>
+            </div>
+        </div>
+    </div>
+r
 </div>
 
 <script type="application/javascript">
