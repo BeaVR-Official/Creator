@@ -7,6 +7,7 @@ import Object3D from '../models/objectModel';
 import Objects from '../collections/objectCollection';
 import BasicObjectsView from './objects/basicObjects';
 import BasicLightsView from './objects/basicLights';
+import ActionBlockView from './objects/actionBlock';
 import * as Backbone from 'backbone';
 
 class ObjectMenuView extends Backbone.View {
@@ -31,6 +32,8 @@ class ObjectMenuView extends Backbone.View {
 
   initialize() { // en dur pour le moment
     var object = [];
+    object.push(new Object3D({name: "Add Action Block", logo:'assets/images/multi-tab.png'}));
+    object.push(new Object3D({name: "Add Reaction Block", logo:'assets/images/multi-tab.png'}));
     object.push(new Object3D({name: "Basic objects", logo:'assets/images/multi-tab.png'}));
     object.push(new Object3D({name: "Lights", logo:'assets/images/ambientLight.png'}));
     object.push(new Object3D({name: "Custom objects", logo:'assets/images/puzzle.png'}));
@@ -39,6 +42,7 @@ class ObjectMenuView extends Backbone.View {
     this.objects = new Objects(object);
     this.basicObjectView = new BasicObjectsView();
     this.basicLightView = new BasicLightsView();
+    this.actionBlock = new ActionBlockView();
   }
 
   render() {
@@ -66,6 +70,11 @@ class ObjectMenuView extends Backbone.View {
       case "My library":
         break;
       case "Add folder":
+        break;
+      case "Add Action Block":
+        this.actionBlock.render();
+        break;
+      case "Add Reaction Block":
         break;
     }
   }
