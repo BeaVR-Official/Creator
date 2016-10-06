@@ -60,6 +60,8 @@ class TestMain {
     // HOW TO ADD A TARGET TO A TRIGGER
     // When a Trigger is connected to an Object, a Target has to be specified: an Object connected to an Event
     let exampleEventUuid = ScriptOrganizer.addEvent("Reaction Example"); // Event used as a target
+    ScriptOrganizer.addInstruction(exampleEventUuid, 0);
+
     ScriptOrganizer.connectObject(exampleEventUuid, exampleTargetObject); // connection of the Event to the 3D Object
     ScriptOrganizer.addConnectedObjectTarget(newTriggerUuid, randomObjectUuid, exampleTargetObject, exampleEventUuid);
   }
