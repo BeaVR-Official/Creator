@@ -3,12 +3,23 @@
  */
 
 import Scene from './Scene';
+import UUID from './../utils/UUID';
 
 class SceneManager {
 
   constructor() {
-    this.scenes = new Array();
-    this.scenes[0] = Scene;
+    this._scenes    = new Array();
+    this._scenes[0] = {scene: Scene._scene, name: 'Unnamed scene', uuid: UUID.createUUID()};
+    this._i         = this._scenes[0].uuid;
+  }
+
+  deleteScene(uuid) {
+
+  }
+
+  addNewScene(name) {
+    let uuid = UUID.createUUID();
+
   }
 
 }

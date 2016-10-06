@@ -9,6 +9,7 @@
 import Loader from '../../utils';
 import * as Backbone from 'backbone';
 import Scene from '../../../modules/creator/Scene';
+import ProjectManager from '../../../modules/creator/ProjectManager';
 
 class ScenePanelView extends Backbone.View {
 
@@ -28,19 +29,22 @@ class ScenePanelView extends Backbone.View {
   }
 
   render() {
-    this.$el.html(this.template);
-    $("#scene_name").val(Scene._name);
+    this.$el.html(this.template({
+      sceneList : ProjectManager._sceneManager._scenes
+    }));
+    $("#scene_name").val(ProjectManager.getCurrentScene().name);
     return this;
   }
 
   get events() {
     return {
-      'click #validate_scene_name': 'changesceneName',
-      'click #validate_delete_scene': 'deleteScene'
+      'click #validate_scene_name': 'changeSceneName',
+      'click #validate_delete_scene': 'deleteScene',
+      'click #validate_new_scene': 'newScene'
     };
   }
 
-  changesceneName() {
+  changeSceneName() {
     let value = $("#scene_name").val();
     Scene._name = value;
     $("#display_scene_name").text(value);
@@ -48,6 +52,15 @@ class ScenePanelView extends Backbone.View {
 
   deleteScene() {
     // Todo dans sceneManager
+  }
+
+  newScene() {
+    // Changement coté back
+    ProjectManager._sceneManager.addNewScene($("#new_scene_name").val());
+
+
+    // Changement coté front
+    $("#display_scene_name").text(value);
   }
 }
 

@@ -1,5 +1,6 @@
 <div class="ui form">
     <div class="field">
+
         <h4 class="ui dividing header">Scene</h4>
         <div class="two fields">
             <div class="field">
@@ -7,9 +8,29 @@
             </div>
             <button id="validate_scene_name">Valider</button>
         </div>
+
         <h4 class="ui dividing header">Delete this scene</h4>
         <div class="one fields">
             <button id="validate_delete_scene">Delete this scene</button>
+        </div>
+
+        <h4 class="ui dividing header">Change scene</h4>
+        <div class="one fields">
+            <% _.each(sceneList, function(scene, i){ %>
+            <div class="my-object-column center tab hoverable active eight wide column" data-id="<%- scene._name %>">
+                <div class="my-object-logo-row row center">
+                    <p><%- scene._name %></p>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+
+        <h4 class="ui dividing header">Create a new scene named :</h4>
+        <div class="two fields">
+            <div class="field">
+                <input id="new_scene_name" type="text">
+            </div>
+            <button id="validate_new_scene">Create</button>
         </div>
     </div>
 </div>

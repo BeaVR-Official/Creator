@@ -9,7 +9,6 @@ import ProjectPanelView from './topMenu/ProjectPanel';
 import ScenePanelView from './topMenu/ScenePanel';
 import TopMenuUtils from "./TopMenu.utils";
 import ProjectManager from '../../modules/creator/ProjectManager';
-import Scene from '../../modules/creator/Scene';
 
 class TopMenu extends Backbone.View {
 
@@ -48,6 +47,7 @@ class TopMenu extends Backbone.View {
   }
 
   openProjectPanel() {
+    ProjectManager;
     this.utils.setAndDisableActiveClass("#project_button", "#scene_button");
     this.projectPanelView.render();
   }
@@ -73,15 +73,13 @@ class TopMenu extends Backbone.View {
   }
 
   render() {
+
     this.$el.html(this.template({
       currentProject: {name : ProjectManager._name},
-      currentScene: {name: Scene._name},
+      currentScene: {name: ProjectManager.getCurrentScene().name},
       currentUser : (this.model.attributes.id != -1) ?
                                                {firstName: this.model.attributes.firstName,
                                                 picture: this.model.attributes.picture} : undefined}));
-    // this.sceneDropDown.$el = this.$('.scene-dropdown');
-    // this.sceneDropDown.render();
-    // this.sceneDropDown.delegateEvents();
     return this;
   }
   

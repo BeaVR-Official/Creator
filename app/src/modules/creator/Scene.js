@@ -8,7 +8,6 @@ class Scene {
     this._sceneHelpers = new THREE.Scene();
     window.scene       = this._scene;
     this._objList      = [];
-    this._name         = "Unnamed scene";
     this.initRenderer();
     this.initCamera();
     this.initHelpers();
