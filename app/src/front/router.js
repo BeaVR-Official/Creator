@@ -49,6 +49,12 @@ class Router extends Backbone.Router {
             success: function() {
               TopMenu.changeUser(user);
               $("#connexionModal").modal('hide');
+              $(".basic.modal").modal({
+                observeChanges: true,
+                onVisible: function () {
+                $(".basic.modal").modal("refresh");
+              }}).modal("show");
+
             }
           });
         },

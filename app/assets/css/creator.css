@@ -129,3 +129,11 @@ body {
 .ui.popup{overflow:auto;}
 
 .ui.modal { top: 33%; text-align:center; margin:auto; }
+
+.project:hover {
+    background: rgb(50,50,50);
+}
+
+.header {
+    border: 1px solid white;
+}
