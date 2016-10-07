@@ -65,7 +65,7 @@ export default class Trigger {
       return (-1);
     }
     this.conditionList.push(condition);
-    return (0);
+    return (condition.uuid);
   }
 
   editCondition(conditionUid, data) {

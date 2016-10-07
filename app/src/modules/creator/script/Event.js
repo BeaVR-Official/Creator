@@ -43,7 +43,7 @@ export default class Event {
       return (-1);
     }
     this.instructionList.push(instruction);
-    return (0);
+    return (instruction.uuid);
   }
 
   editInstruction(instructionUid, data) {

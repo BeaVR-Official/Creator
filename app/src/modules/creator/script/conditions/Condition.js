@@ -9,11 +9,13 @@
 
 export default class Condition {
   constructor() {
-    this.uid   = guid;
+    //this.uuid   = guid; marche pas
     this.type = 0;
+    this.data = null;
   }
 
   configure(data) {
+    this.data = data;
     return (0);
 
   }

@@ -54,7 +54,9 @@
     "jquery.cookie": "^1.4.1",
     "jszip": "^3.0.0",
     "semantic-ui": "^2.1.8",
+    "physijs": "0.0.4",
     "three": "0.76.1",
     "underscore": "1.8.3"
+
   }
 }

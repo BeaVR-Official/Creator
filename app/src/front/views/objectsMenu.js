@@ -7,6 +7,7 @@ import Object3D from '../models/objectModel';
 import Objects from '../collections/objectCollection';
 import BasicObjectsView from './objects/basicObjects';
 import BasicLightsView from './objects/basicLights';
+import ActionBlockView from './objects/actionBlock';
 import * as Backbone from 'backbone';
 
 class ObjectMenuView extends Backbone.View {
@@ -25,19 +26,16 @@ class ObjectMenuView extends Backbone.View {
     };
   }
 
-  // TODO : La modal ne marche pas pour le moment
-  openCustomObjectUploadModal() {
-    $('#CustomObjectUpload').modal('show');
-  }
-
   constructor() {
     super();
   }
 
   initialize() { // en dur pour le moment
     var object = [];
+    object.push(new Object3D({name: "Add Action Block", logo:'assets/images/multi-tab.png'}));
+    object.push(new Object3D({name: "Add Reaction Block", logo:'assets/images/multi-tab.png'}));
     object.push(new Object3D({name: "Basic objects", logo:'assets/images/multi-tab.png'}));
-    object.push(new Object3D({name: "Lights", logo:'assets/images/ambientLight.png'}));
+    object.push(new Object3D({name: "Lights", logo:'assets/images/ambiantLight.png'}));
     object.push(new Object3D({name: "Custom objects", logo:'assets/images/puzzle.png'}));
     object.push(new Object3D({name: "My library", logo:'assets/images/painter-palette.png'}));
     object.push(new Object3D({name: "Add folder", logo:'assets/images/add.png'}));
@@ -45,9 +43,7 @@ class ObjectMenuView extends Backbone.View {
 
     this.basicObjectView = new BasicObjectsView();
     this.basicLightView = new BasicLightsView();
-
-    // TODO : La modal ne marche pas pour le moment
-    $('#CustomObjectUpload').modal("show");
+    this.actionBlock = new ActionBlockView();
   }
 
   render() {
@@ -71,12 +67,15 @@ class ObjectMenuView extends Backbone.View {
         this.basicLightView.render();
         break;
       case "Custom objects":
-        // TODO : La modal ne marche pas pour le moment
-        $('#CustomObjectUpload').modal("show");
         break;
       case "My library":
         break;
       case "Add folder":
+        break;
+      case "Add Action Block":
+        this.actionBlock.render();
+        break;
+      case "Add Reaction Block":
         break;
     }
   }

@@ -7,7 +7,7 @@ import Loader from './utils';
 
 class Application {
   constructor() {
-    Loader.loadTemplates(['TopMenu', 'LeftMenuCategories', 'ObjectMenu', 'PropertiesPanel', 'ProjectPanel', 'ScenePanel', 'ProjectHandler'], function() {
+    Loader.loadTemplates(['TopMenu', 'LeftMenuCategories', 'ObjectMenu', 'PropertiesPanel', 'ProjectPanel', 'ScenePanel', 'ProjectHandler', 'ScriptsMenu', 'ActionBlock', 'ActionBlockParams'], function() {
       new Router();
       Backbone.history.start();
     });
