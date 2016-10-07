@@ -1,0 +1,30 @@
+<div class="ui fullscreen basic modal" style="margin-top: -234.5px !important;">
+    <i class="close icon"></i>
+    <div class="header" style="font-family: 'Arial'; font-weight: 200; font-size: 23px;">
+        Choose a project to load
+    </div>
+    <% if (results != undefined && results.models != undefined) { %>
+        <% _.each(results.models, function(element){ %>
+        <div class="content ui stackable four column grid" style="margin-top: 10px;">
+            <div class="project column" style="text-align:center; padding: 10px !important;">
+             <img src="http://html5gamedevelopment.com/wp-content/uploads/files/34/5/79/bloglarge/marblesoccer.png" style="width: 100%; height: 200px; max-width: 150px; border-radius: 4px;"/>
+             <div style="font-family: 'Comic Sans MS'"><%= element.attributes.name %></div>
+             <div style="text-align:left;margin-top: 10px;">
+                <div>Started : <%= element.attributes.created_at %></div>
+                <div>Updated : <%= element.attributes.updated_at %></div>
+                <div>Published : <%= element.attributes.published %></div>
+                <a href="<%= element.attributes.sources%>"></a>
+            </div>
+        </div>
+    </div>
+        <% }) %>
+    <% } %>
+    <div class="actions">
+        <div class="fluid ui inverted buttons">
+            <div class="ui ok green basic inverted button">
+                <i class="plus icon"></i>
+                Create a new project
+            </div>
+        </div>
+    </div>
+</div>

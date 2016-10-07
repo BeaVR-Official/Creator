@@ -25,7 +25,9 @@ class TopMenu extends Backbone.View {
       'click #launch': 'launchApp',
       'click .openModalConnexion' : 'openModalConnexion',
       'click #project_button' : 'openProjectPanel',
-      'click #scene_button' : 'openScenePanel'
+      'click #scene_button' : 'openScenePanel',
+      'click .modalProjects' : 'openProjectModal',
+      'click .logoutAction' : ''
     };
   }
 
@@ -34,6 +36,7 @@ class TopMenu extends Backbone.View {
       events: {}
     });
     this.model = params["userModel"];
+    this.projectHandler = params["projectHandler"];
     this.render();
     _.bind(this.render, this);
     this.model.bind('change', this.render);
@@ -67,13 +70,26 @@ class TopMenu extends Backbone.View {
     $("#connexionModal").modal('show');
   }
 
+  openProjectModal() {
+    this.projectHandler.show();
+  }
+
+  logout() {
+    $.removeCookie("token");
+    $.removeCookie("userID");
+    this.user = undefined;
+    this.render();
+  }
+
   changeUser(user) {
     this.model = user;
+    this.projectHandler.update(this.model.attributes.id);
+    this.projectHandler.show();
     this.render();
   }
 
   render() {
-
+    if (this.$el)
     this.$el.html(this.template({
       currentProject: {name : ProjectManager._name},
       currentScene: {name: ProjectManager.getCurrentScene().name},

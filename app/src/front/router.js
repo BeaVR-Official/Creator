@@ -4,6 +4,7 @@
 
 import LeftMenuView from './views/leftMenu';
 import TopMenuView from './views/topMenu';
+import ProjectHandler from './views/projectHandler';
 import User from './models/userModel';
 import * as Backbone from 'backbone';
 
@@ -26,7 +27,21 @@ class Router extends Backbone.Router {
   }
 
   initialize() {
-    let TopMenu = new TopMenuView({userModel : new User()});
+    let user = new User({id: $.cookie("userID")});
+    let TopMenu;
+    if ($.cookie("token") && $.cookie("userID")) {
+      Backbone.$.ajaxSetup({
+        headers: {'Authorization': "Bearer " + $.cookie("token")}
+      });
+      TopMenu = new TopMenuView({userModel : user, projectHandler: new ProjectHandler()});
+      user.fetch({
+        success: function() {
+          TopMenu.changeUser(user);
+        }
+      });
+    }
+    else
+      TopMenu = new TopMenuView({userModel : new User(), projectHandler: new ProjectHandler()});
     new LeftMenuView();
     $(".connexionAction").click(function(){
       var user = $("#connexionEmail").val();
@@ -42,24 +57,20 @@ class Router extends Backbone.Router {
         },
         success: function(res) {
           Backbone.$.ajaxSetup({
-            headers: { 'Authorization': "Bearer " + res.data.token }
+            headers: {'Authorization': "Bearer " + res.data.token}
           });
           var user = new User({id: res.data.userId});
+          $.cookie("userID", res.data.userId);
+          $.cookie("token", res.data.token);
           user.fetch({
             success: function() {
               TopMenu.changeUser(user);
               $("#connexionModal").modal('hide');
-              $(".basic.modal").modal({
-                observeChanges: true,
-                onVisible: function () {
-                $(".basic.modal").modal("refresh");
-              }}).modal("show");
-
             }
           });
         },
         error: function(err) {
-          alert(err);
+          alert("Server unreachable please try again!!");
         }
       });
     });
