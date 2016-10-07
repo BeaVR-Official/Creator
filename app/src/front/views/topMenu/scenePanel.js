@@ -2,10 +2,6 @@
  * Created by giraud_d on 04/10/2016.
  */
 
-/**
- * Created by giraud_d on 04/10/2016.
- */
-
 import Loader from '../../utils';
 import * as Backbone from 'backbone';
 import Scene from '../../../modules/creator/Scene';
