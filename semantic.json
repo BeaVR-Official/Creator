@@ -20,3 +20,9 @@
   "rtl": false,
   "version": "2.2.4"
 }
+
+/*
+<<<<<<< Updated upstream
+  "base": "app/libs/semantic",
+>>>>>>> Stashed changes
+*/

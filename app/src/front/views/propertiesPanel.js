@@ -3,8 +3,12 @@
  */
 
 import Loader from '../utils';
+import BlockModel from '../models/blockModel';
+import Objects from '../collections/objectCollection';
 import Scene from '../../modules/creator/Scene';
 import CreatorManagement from '../../modules/creator/CreatorManagement';
+import ActionBlockParamsView from './objects/actionBlockParams';
+
 import * as Backbone from 'backbone';
 
 class PropertiesView extends Backbone.View {
@@ -19,7 +23,9 @@ class PropertiesView extends Backbone.View {
 
   get events() {
     return {
-      'change input': 'actionChanged'
+      'change input':         'actionChanged',
+      'click .actionblock':   'actionBlockClicked',
+      'click .reactionblock': 'reactionBlockClicked'
     };
   }
 
@@ -28,6 +34,14 @@ class PropertiesView extends Backbone.View {
   }
 
   initialize() {
+    var actions = [];
+    actions.push(new BlockModel({type: 'import', name: "Import Block"}));
+    this.actionBlocks = new Objects(actions);
+
+    var reactions = [];
+    reactions.push(new BlockModel({type: 'import', name: "Import Block"}));
+    this.reactionBlocks = new Objects(reactions);
+
     CreatorManagement.on('selectedObject', object => {
       this.object = object;
       this.fillInfo();
@@ -40,8 +54,47 @@ class PropertiesView extends Backbone.View {
   }
 
   render() {
-    this.$el.html(this.template);
+    this.$el.html(this.template({
+      actionBlocks:   this.actionBlocks.toJSON(),
+      reactionBlocks: this.reactionBlocks.toJSON()
+    }));
     return this;
+  }
+
+  actionBlockClicked(e) {
+    if (this.actionBlocks !== undefined) {
+      const elem  = $(e.currentTarget);
+      const found = this.actionBlocks.where({name: elem.data('id')});
+
+      found.forEach((clickedObject) => {
+        if (clickedObject.get('type') === 'import') {
+          this.actionBlocks.add(new BlockModel({name: "Test"}));
+          this.render();
+        } else {
+          const v = new ActionBlockParamsView(clickedObject); // passer l'objet de la collection cliqué à la view d'édition
+          v.render();
+        }
+      });
+    }
+
+  }
+
+  reactionBlockClicked(e) {
+    if (this.actionBlocks !== undefined) {
+      const elem  = $(e.currentTarget);
+      const found = this.reactionBlocks.where({name: elem.data('id')});
+
+      found.forEach((clickedObject) => {
+        if (clickedObject.get('type') === 'import') {
+          this.actionBlocks.add(new BlockModel({name: "Test"}));
+          this.render();
+        } else {
+
+        }
+      });
+    }
+
+    this.render();
   }
 
   actionChanged(e) {

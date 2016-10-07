@@ -34,7 +34,9 @@ class ScriptOrganizer {
   /* Basic Trigger handling */
 
   addTrigger(name) {
-    this.triggerList.push(new Trigger(name));
+    let newTrigger = new Trigger(name);
+    this.triggerList.push(newTrigger);
+    return (newTrigger.uuid);
   }
 
   setTriggerName(triggerUid, name) {
@@ -62,8 +64,7 @@ class ScriptOrganizer {
     if (index === -1) {
       return (-1);
     }
-    this.triggerList[index].addCondition(type);
-    return (0);
+    return this.triggerList[index].addCondition(type);
   }
 
   editCondition(triggerUid, conditionUid, data) {
@@ -85,7 +86,9 @@ class ScriptOrganizer {
   /* Basic Event handling */
 
   addEvent(name) {
-    this.eventList.push(new Event(name));
+    let newEvent = new Event(name);
+    this.eventList.push(newEvent);
+    return (newEvent.uuid);
   }
 
   setEventName(eventUid, name) {
@@ -113,8 +116,7 @@ class ScriptOrganizer {
     if (index === -1) {
       return (-1);
     }
-    this.triggerList[index].addInstruction(type);
-    return (0);
+    return this.triggerList[index].addInstruction(type);
   }
 
   editInstruction(eventUid, instructionUid, data) {

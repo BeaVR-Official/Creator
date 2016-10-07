@@ -6,11 +6,12 @@ import Loader from '../utils';
 import Category from '../models/leftCategoryModel';
 import Categories from '../collections/leftCategoryCollection';
 import ObjectMenuView from './objectsMenu';
+import ScriptsMenuView from './scriptsMenu';
 import PropertiesView from './propertiesPanel';
 import SugarMaple from './leftMenu.sugarMaple';
 import * as Backbone from 'backbone';
 
-class LeftMenu extends Backbone.View {
+class LeftMenuView extends Backbone.View {
 
   get template() {
     return _.template(Loader.templates.LeftMenuCategories);
@@ -35,10 +36,12 @@ class LeftMenu extends Backbone.View {
     category.push(new Category({name: "Tree View", logo: 'assets/images/view-list.png'}));
     category.push(new Category({name: "Properties", logo: 'assets/images/settings-gears.png'}));
     category.push(new Category({name: "Add Object", logo: 'assets/images/plus.png'}));
+    category.push(new Category({name: "Manage Blocks", logo: 'assets/images/blocks.png'}));
     this.categories = new Categories(category);
 
     this.propertiesView = new PropertiesView();
     this.objectsMenu    = new ObjectMenuView();
+    this.scriptsMenu    = new ScriptsMenuView();
     this.sugarMaple     = new SugarMaple();
 
     this.render();
@@ -75,8 +78,12 @@ class LeftMenu extends Backbone.View {
         this.sugarMaple.showSugarMaple(false);
         this.objectsMenu.render();
         break;
+      case "Manage Blocks":
+        this.showSugarMaple(false);
+        this.scriptsMenu.render();
+        break;
     }
   }
 }
 
-export default LeftMenu;
+export default LeftMenuView;
