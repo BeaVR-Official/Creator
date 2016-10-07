@@ -17,9 +17,9 @@
         <h4 class="ui dividing header">Change scene</h4>
         <div class="one fields">
             <% _.each(sceneList, function(scene, i){ %>
-            <div class="my-object-column center tab hoverable active eight wide column" data-id="<%- scene._name %>">
+            <div class="my-object-column center tab hoverable active eight wide column" data-id="<%- scene.name %>">
                 <div class="my-object-logo-row row center">
-                    <p><%- scene._name %></p>
+                    <p><%- scene.name %></p>
                 </div>
             </div>
             <% }); %>

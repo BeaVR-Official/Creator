@@ -79,7 +79,7 @@ class LeftMenuView extends Backbone.View {
         this.objectsMenu.render();
         break;
       case "Manage Blocks":
-        this.showSugarMaple(false);
+        this.sugarMaple.showSugarMaple(false);
         this.scriptsMenu.render();
         break;
     }

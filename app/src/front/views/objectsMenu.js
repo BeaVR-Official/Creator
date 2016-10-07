@@ -35,7 +35,7 @@ class ObjectMenuView extends Backbone.View {
     object.push(new Object3D({name: "Add Action Block", logo:'assets/images/multi-tab.png'}));
     object.push(new Object3D({name: "Add Reaction Block", logo:'assets/images/multi-tab.png'}));
     object.push(new Object3D({name: "Basic objects", logo:'assets/images/multi-tab.png'}));
-    object.push(new Object3D({name: "Lights", logo:'assets/images/ambiantLight.png'}));
+    object.push(new Object3D({name: "Lights", logo:'assets/images/ambientLight.png'}));
     object.push(new Object3D({name: "Custom objects", logo:'assets/images/puzzle.png'}));
     object.push(new Object3D({name: "My library", logo:'assets/images/painter-palette.png'}));
     object.push(new Object3D({name: "Add folder", logo:'assets/images/add.png'}));

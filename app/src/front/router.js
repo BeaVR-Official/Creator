@@ -26,8 +26,8 @@ class Router extends Backbone.Router {
   }
 
   initialize() {
-    let TopMenu = new TopMenuView({userModel : new User()});
-    new LeftMenuView();
+    this.topMenu = new TopMenuView({userModel : new User()});
+    this.leftMenu = new LeftMenuView();
     $(".connexionAction").click(function(){
       var user = $("#connexionEmail").val();
       var password = $("#connexionPassword").val();
@@ -47,7 +47,7 @@ class Router extends Backbone.Router {
           var user = new User({id: res.data.userId});
           user.fetch({
             success: function() {
-              TopMenu.changeUser(user);
+              this.topMenu.changeUser(user);
               $("#connexionModal").modal('hide');
               $(".basic.modal").modal({
                 observeChanges: true,

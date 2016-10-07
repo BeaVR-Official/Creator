@@ -47,7 +47,6 @@ class TopMenu extends Backbone.View {
   }
 
   openProjectPanel() {
-    ProjectManager;
     this.utils.setAndDisableActiveClass("#project_button", "#scene_button");
     this.projectPanelView.render();
   }
