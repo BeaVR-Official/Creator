@@ -27,7 +27,7 @@ class Objects extends Backbone.Collection {
       models: []
     };
   }
-
+    
   parse(response) {
     return response.data.projects;
   }

@@ -44,6 +44,7 @@ class ScenePanelView extends Backbone.View {
     let value = $("#scene_name").val();
     Scene._name = value;
     $("#display_scene_name").text(value);
+    // TODO actualiser le nom da la liste des scènes
   }
 
   deleteScene() {
@@ -53,8 +54,7 @@ class ScenePanelView extends Backbone.View {
   newScene() {
     // Changement coté back
     ProjectManager._sceneManager.addNewScene($("#new_scene_name").val());
-
-
+    
     // Changement coté front
     $("#display_scene_name").text(value);
   }

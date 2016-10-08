@@ -4,9 +4,9 @@
 
 import LeftMenuView from './views/leftMenu';
 import TopMenuView from './views/topMenu';
+import ProjectHandler from './views/projectHandler';
 import User from './models/userModel';
 import * as Backbone from 'backbone';
-import ProjectHandler from './views/projectHandler';
 
 class Router extends Backbone.Router {
 
