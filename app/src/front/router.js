@@ -28,20 +28,20 @@ class Router extends Backbone.Router {
 
   initialize() {
     let user = new User({id: $.cookie("userID")});
-    let TopMenu;
+    let topMenu;
     if ($.cookie("token") && $.cookie("userID")) {
       Backbone.$.ajaxSetup({
         headers: {'Authorization': "Bearer " + $.cookie("token")}
       });
-      TopMenu = new TopMenuView({userModel : user, projectHandler: new ProjectHandler()});
+      topMenu = new TopMenuView({userModel : user, projectHandler: new ProjectHandler()});
       user.fetch({
         success: function() {
-          TopMenu.changeUser(user);
+          topMenu.changeUser(user);
         }
       });
     }
     else
-      TopMenu = new TopMenuView({userModel : new User(), projectHandler: new ProjectHandler()});
+      topMenu = new TopMenuView({userModel : new User(), projectHandler: new ProjectHandler()});
     this.leftMenu = new LeftMenuView();
     $(".connexionAction").click(function(){
       var user = $("#connexionEmail").val();

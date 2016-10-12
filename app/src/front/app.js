@@ -18,7 +18,8 @@ class Application {
       'ScriptsMenu',
       'ActionBlock',
       'ActionBlockParams',
-      'ProjectHandler'], function() {
+      'ProjectHandler',
+      'CustomObject'], function() {
       new Router();
       Backbone.history.start();
     });

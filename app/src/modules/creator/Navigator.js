@@ -110,9 +110,7 @@ class Navigator {
     CreatorManagement.addObject(picker);
   }
 
-  addExternal(explorerEvent) {
-    let file = explorerEvent.target.files[0];
-
+  addExternal(file) {
     Loader.loadFile(file);
   }
 

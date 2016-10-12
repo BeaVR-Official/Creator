@@ -8,6 +8,7 @@ import Objects from '../collections/objectCollection';
 import BasicObjectsView from './objects/basicObjects';
 import BasicLightsView from './objects/basicLights';
 import ActionBlockView from './objects/actionBlock';
+import CustomObject from './objects/customObject';
 import * as Backbone from 'backbone';
 
 class ObjectMenuView extends Backbone.View {
@@ -44,6 +45,7 @@ class ObjectMenuView extends Backbone.View {
     this.basicObjectView = new BasicObjectsView();
     this.basicLightView = new BasicLightsView();
     this.actionBlock = new ActionBlockView();
+    this.customObject = new CustomObject();
   }
 
   render() {
@@ -67,6 +69,7 @@ class ObjectMenuView extends Backbone.View {
         this.basicLightView.render();
         break;
       case "Custom objects":
+        this.customObject.render();
         break;
       case "My library":
         break;
