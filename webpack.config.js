@@ -4,7 +4,8 @@ const OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   entry:   {
-    creator: __dirname + '/app/src/creator.js',
+    creator: [__dirname + '/app/libs/physijs/physi.js',
+      __dirname + '/app/src/creator.js'],
     runner: __dirname + '/app/src/runner.js',
     tests:   __dirname + '/app/tests/tests.js'
   },
@@ -18,7 +19,7 @@ module.exports = {
     loaders: [
       {
         test:    /\.js$/,
-        //loader:  'babel-loader', //TODO: décommenter sous Windows
+        loader:  'babel-loader', //TODO: décommenter sous Windows
         exclude: /(node_modules)/
       }
     ]
