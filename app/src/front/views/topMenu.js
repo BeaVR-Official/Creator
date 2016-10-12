@@ -5,9 +5,9 @@
 import Loader from '../utils';
 import * as Backbone from 'backbone';
 import Save from '../../modules/creator/Save';
-import ProjectPanelView from './topMenu/ProjectPanel';
-import ScenePanelView from './topMenu/ScenePanel';
-import TopMenuUtils from "./TopMenu.utils";
+import ProjectPanelView from './topMenu/projectPanel';
+import ScenePanelView from './topMenu/scenePanel';
+import TopMenuUtils from "./topMenu.utils";
 import ProjectManager from '../../modules/creator/ProjectManager';
 
 class TopMenu extends Backbone.View {
