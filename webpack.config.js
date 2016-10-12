@@ -18,7 +18,7 @@ module.exports = {
     loaders: [
       {
         test:    /\.js$/,
-        loader:  'babel-loader',
+        //loader:  'babel-loader', //TODO: décommenter sous Windows
         exclude: /(node_modules)/
       }
     ]
