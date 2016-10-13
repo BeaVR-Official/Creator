@@ -1,7 +1,4 @@
-var THREE = require('three');
-//var PhysijsWorker = require('./physijs_worker.js');
-
-module.exports = function () {
+window.Physijs = (function() {
 	'use strict';
 
 	var SUPPORT_TRANSFERABLE,
@@ -31,6 +28,8 @@ module.exports = function () {
 		COLLISIONREPORT_ITEMSIZE = 5,
 		VEHICLEREPORT_ITEMSIZE = 9,
 		CONSTRAINTREPORT_ITEMSIZE = 6;
+
+	Physijs.scripts = {};
 
 	Eventable = function() {
 		this._eventListeners = {};
@@ -391,7 +390,7 @@ module.exports = function () {
 		Eventable.call( this );
 		THREE.Scene.call( this );
 
-		this._worker = new PhysijsWorker();
+		this._worker = new Worker( Physijs.scripts.worker || 'physijs_worker.js' );
 		this._worker.transferableMessage = this._worker.webkitPostMessage || this._worker.postMessage;
 		this._materials_ref_counts = {};
 		this._objects = {};
@@ -486,6 +485,7 @@ module.exports = function () {
 
 
 		params = params || {};
+		params.ammo = Physijs.scripts.ammo || 'ammo.js';
 		params.fixedTimeStep = params.fixedTimeStep || 1 / 60;
 		params.rateLimit = params.rateLimit || true;
 		this.execute( 'init', params );
@@ -1400,4 +1400,4 @@ module.exports = function () {
 	};
 
 	return Physijs;
-}
+})();

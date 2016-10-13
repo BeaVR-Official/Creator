@@ -5,7 +5,7 @@ const OfflinePlugin = require('offline-plugin');
 module.exports = {
   entry:   {
     creator: __dirname + '/app/src/creator.js',
-    runner: __dirname + '/app/src/runner.js',
+    runner:  __dirname + '/app/src/runner.js',
     tests:   __dirname + '/app/tests/tests.js'
   },
   output:  {
@@ -34,7 +34,9 @@ module.exports = {
     //  },
     //  //sourceMap: false
     //}),
-    new webpack.ProvidePlugin({})
+    new webpack.ProvidePlugin({
+      //Physijs: Physijs
+    })
   ],
   stats:   {
     colors: true
