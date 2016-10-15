@@ -1,21 +1,11 @@
 import Constants from './Constants';
-/*
-// import Worker from '../../../../node_modules/physijs/src/physijs_worker';
-// import Ammo from '../../../../node_modules/ammo.js/ammo';
-*/
-
-import Physijs from '../../../libs/physijs/physi.js';
 
 class Scene {
 
   constructor() {
 
-/*    Physijs.scripts = [];
-    Physijs.scripts.worker = '../../../../node_modules/physijs/src/physijs_worker.js';
-    Physijs.scripts.ammo = '../../../../node_modules/ammo.js/ammo.js';*/
-
-    this._scene        = new THREE.Scene();
-    this._sceneHelpers = new THREE.Scene();
+    this._scene        = new Physijs.Scene();
+    this._sceneHelpers = new Physijs.Scene();
     window.scene       = this._scene;
     this._objList      = [];
     this.initRenderer();
