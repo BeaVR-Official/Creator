@@ -3,11 +3,15 @@ import Constants from '../creator/Constants';
 // Degeu car this = undefined donc un attribut c'ets pareil !
 var listLoadedObjectsUuid = [];
 
+Physijs.scripts.worker = 'http://localhost:63342/Creator/app/libs/physijs/physijs_worker.js';
+Physijs.scripts.ammo   = 'http://localhost:63342/Creator/app/libs/physijs/ammo.js';
+
 class ScenePlayer {
 
   constructor() {
 
-    this._scene = new THREE.Scene();
+    this._scene = new Physijs.Scene();
+    this._scene.setGravity(new THREE.Vector3(0, -1200, 0));
     this.initCamera();
     this.initRenderer();
     this.initOrbitControl();
@@ -45,25 +49,25 @@ class ScenePlayer {
       this._camera,
       this._renderer.domElement);
     /*
-    this._controls.target.set(
-      this._camera.position.x + 0.15,
-      this._camera.position.y,
-      this._camera.position.z
-    );
-    */
+     this._controls.target.set(
+     this._camera.position.x + 0.15,
+     this._camera.position.y,
+     this._camera.position.z
+     );
+     */
     //this._controls.enablePan = false;
     //this._controls.enableZoom = false;
     /*
-    this._orbitControl = new THREE.OrbitControls(
-      this._camera,
-      this._renderer.domElement);
-      */
+     this._orbitControl = new THREE.OrbitControls(
+     this._camera,
+     this._renderer.domElement);
+     */
     /*
      this._orbitControl.rotateUp(Math.PI / 4);
      this._orbitControl.target.set(this._camera.position.x + 0.1, this._camera.position.y, this._camera.position.z);
      window.addEventListener("deviceOrientation", this.onOrientationChanged);
      */
-    this._controls.addEventListener('change', () => this.render());
+    //this._controls.addEventListener('change', () => this.render());
   }
 
   setOrientationControls(event) {
@@ -73,9 +77,10 @@ class ScenePlayer {
     this._controls = new THREE.DeviceOrientationControls(this._camera, true);
     this._controls.connect();
     this._controls.update();
-    this.render();
+    //this.render();
     //element.addEventListener('click', fullscreen, false);
   }
+
   /*
    onOrientationChanged(event) {
    if (!event.alpha) {
@@ -111,7 +116,6 @@ class ScenePlayer {
         this._scene.add(loadedMesh);
       }
     });
-    this.render();
   }
 
   excludeChildren(object) {
@@ -119,11 +123,6 @@ class ScenePlayer {
       listLoadedObjectsUuid.push(entry.uuid);
       this.excludeChildren(entry);
     });
-  }
-
-  render() {
-    this._renderer.clear();
-    this._effect.render(this._scene, this._camera);
   }
 
   start() {
@@ -135,4 +134,13 @@ class ScenePlayer {
   }
 }
 
-export default new ScenePlayer();
+const scenePlayer = new ScenePlayer();
+
+scenePlayer.render = () => {
+  scenePlayer._scene.simulate(); // run physics
+  scenePlayer._renderer.clear();
+  scenePlayer._effect.render(scenePlayer._scene, scenePlayer._camera);
+  requestAnimationFrame(scenePlayer.render);
+};
+
+export default scenePlayer;

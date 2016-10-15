@@ -20,7 +20,7 @@ class CreatorManagement extends EventEmitter {
       this.deselectObject();
       this.setSelectedObject(object);
       Scene.attachToTransform(this.selectedObject);
-      Scene.render();
+      //Scene.render();
       this.emit('selectedObject', this.selectedObject);
     }
   }
@@ -29,7 +29,7 @@ class CreatorManagement extends EventEmitter {
     this.emit('deselectedObject', this.selectedObject);
     this.selectedObject = undefined;
     Scene.detachTransform();
-    Scene.render();
+    //Scene.render();
   }
 
   addObject(object) {
@@ -51,7 +51,7 @@ class CreatorManagement extends EventEmitter {
       this.emit('removedObject', object);
       Scene.removeObject(object);
       Scene.detachTransform();
-      Scene.render();
+      //Scene.render();
     }
   }
 }

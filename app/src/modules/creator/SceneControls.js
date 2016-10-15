@@ -41,7 +41,7 @@ class SceneControls {
         CreatorManagement.objectSelection(this._closestObj);
       else if (this._mouseIsMoving === false)
         CreatorManagement.deselectObject();
-      Scene.render();
+      //Scene.render();
     });
   }
 
