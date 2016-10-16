@@ -1,9 +1,17 @@
 body {
-    overflow-x: hidden !important;
-    overflow-y: hidden !important;
+    margin: 0px;
+    overflow: hidden !important;
     background: url("../images/2017_logo_beavr.png") center no-repeat;
 }
 
 #loadButton {
     position: absolute;
+}
+
+#mainView {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
