@@ -145,7 +145,7 @@ class PropertiesView extends Backbone.View {
           break;
       }
       Scene.updateTransformControls();
-      Scene.render();
+      //Scene.render();
     }
   }
 

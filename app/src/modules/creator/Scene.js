@@ -1,11 +1,14 @@
 import Constants from './Constants';
 
+Physijs.scripts.worker = 'http://localhost:63342/Creator/app/libs/physijs/physijs_worker.js';
+Physijs.scripts.ammo   = 'http://localhost:63342/Creator/app/libs/physijs/ammo.js';
+
 class Scene {
 
   constructor() {
-
-    this._scene        = new Physijs.Scene();
-    this._sceneHelpers = new Physijs.Scene();
+    this._scene = new Physijs.Scene();
+    this._sceneHelpers = new THREE.Scene();
+    this._scene.setGravity(new THREE.Vector3(0, -1200, 0));
     window.scene       = this._scene;
     this._objList      = [];
     this.initRenderer();
@@ -35,7 +38,7 @@ class Scene {
       camSettings.posX,
       camSettings.posY,
       camSettings.posZ);
-    this._camera.lookAt(new THREE.Vector3(0, 200, 0));
+    this._camera.lookAt(this._scene.position);
   }
 
   initHelpers() {
@@ -45,7 +48,7 @@ class Scene {
       this._renderer.domElement);
 
     this._transformControls.addEventListener('change', () => {
-      this.render();
+      //this.render();
     });
 
     this._sceneHelpers.add(this._grid);
@@ -57,7 +60,9 @@ class Scene {
       this._camera,
       this._renderer.domElement);
 
-    this._orbitControl.addEventListener('change', () => this.render());
+    this._orbitControl.addEventListener('change', () => {
+      //this.render()
+    });
   }
 
   getRenderer() {
@@ -144,12 +149,16 @@ class Scene {
   updateTransformControls() {
     this._transformControls.update();
   }
-
-  render() {
-    this._renderer.clear();
-    this._renderer.render(this._scene, this._camera);
-    this._renderer.render(this._sceneHelpers, this._camera);
-  }
 }
 
-export default new Scene();
+const scene = new Scene();
+
+scene.render = () => {
+  //scene._scene.simulate(); // run physics
+  scene._renderer.clear();
+  scene._renderer.render(scene._scene, scene._camera); // render the scene
+  scene._renderer.render(scene._sceneHelpers, scene._camera);
+  requestAnimationFrame(scene.render);
+};
+
+export default scene;

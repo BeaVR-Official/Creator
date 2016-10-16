@@ -25,7 +25,7 @@ class SceneUI {
     Scene._camera.aspect = parentWidth / parentHeight;
     Scene._camera.updateProjectionMatrix();
     Scene._renderer.setSize(parentWidth, parentHeight);
-    Scene.render();
+    //Scene.render();
   }
 
   /**

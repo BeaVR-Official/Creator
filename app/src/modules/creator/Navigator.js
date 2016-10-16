@@ -8,7 +8,7 @@ class Navigator {
   addBox() {
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(200, 200, 200);
-    let box      = new THREE.Mesh(geometry, material);
+    let box      = new Physijs.BoxMesh(geometry, material);
 
     box.mirroredLoop  = true;
     box.castShadow    = true;
@@ -16,13 +16,13 @@ class Navigator {
     this.setMeshInfo(box, 'box');
 
     CreatorManagement.addObject(box);
-    Scene.render();
+    //Scene.render();
   }
 
   addSphere() {
     let geometry = new THREE.SphereGeometry(50, 50, 320);
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
-    let sphere   = new THREE.Mesh(geometry, material);
+    let sphere   = new Physijs.SphereMesh(geometry, material);
 
     sphere.mirroredLoop  = true;
     sphere.castShadow    = true;
@@ -30,13 +30,13 @@ class Navigator {
     this.setMeshInfo(sphere, 'sphere');
 
     CreatorManagement.addObject(sphere);
-    Scene.render();
+    //Scene.render();
   }
 
   addCylinder() {
     let geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
-    let cylinder = new THREE.Mesh(geometry, material);
+    let cylinder = new Physijs.CylinderMesh(geometry, material);
 
     cylinder.mirroredLoop  = true;
     cylinder.castShadow    = true;
@@ -44,7 +44,7 @@ class Navigator {
     this.setMeshInfo(cylinder, 'cylinder');
 
     CreatorManagement.addObject(cylinder);
-    Scene.render();
+    //Scene.render();
   }
 
   addLight() {
@@ -53,7 +53,7 @@ class Navigator {
     this.setLightInfo(light, 'pointLight');
     light.position.set(1, 1, 1);
     this.addPicker(light);
-    Scene.render();
+    //Scene.render();
   }
 
   addSpotLight() {
@@ -70,7 +70,7 @@ class Navigator {
 
     spotLight.position.set(100, 1000, 100);
     this.addPicker(spotLight);
-    Scene.render();
+    //Scene.render();
   }
 
   addDirectionalLight() {
@@ -80,7 +80,7 @@ class Navigator {
 
     directionalLight.position.set(0, 1, 0);
     this.addPicker(directionalLight);
-    Scene.render();
+    //Scene.render();
   }
 
   addAmbientLight() {
@@ -89,7 +89,7 @@ class Navigator {
     this.setLightInfo(ambientLight, 'ambientLight');
 
     this.addPicker(ambientLight);
-    Scene.render();
+    //Scene.render();
   }
 
   addPicker(light) {
