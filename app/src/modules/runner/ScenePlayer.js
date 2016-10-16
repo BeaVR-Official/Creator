@@ -95,6 +95,17 @@ class ScenePlayer {
    }
    */
 
+  fillObjectAttributes(recvr, sendr) {
+    for (const prop in sendr) {
+      if (sendr.hasOwnProperty(prop))
+        if (typeof sendr[prop] === 'object') {
+          if (recvr[prop] === undefined)
+            recvr[prop] = {};
+          this.fillObjectAttributes(recvr[prop], sendr[prop]);
+        } else recvr[prop] = sendr[prop];
+    }
+  }
+
   load() {
     let stored        = localStorage['saveRunner'];
     let loader        = new THREE.ObjectLoader();
@@ -106,7 +117,33 @@ class ScenePlayer {
     });
     loadedObjects.forEach((entry) => {
       let loadedMesh = loader.parse(entry);
-      let stop       = false;
+
+      if (entry._physijs !== undefined) {
+        const geometry = loadedMesh.geometry;
+        const material = loadedMesh.material;
+        if (entry._physijs.type === 'plane')
+          loadedMesh = new Physijs.PlaneMesh(geometry, material);
+        if (entry._physijs.type === 'box')
+          loadedMesh = new Physijs.BoxMesh(geometry, material);
+        if (entry._physijs.type === 'sphere')
+          loadedMesh = new Physijs.SphereMesh(geometry, material);
+        if (entry._physijs.type === 'cylinder')
+          loadedMesh = new Physijs.CylinderMesh(geometry, material);
+        if (entry._physijs.type === 'cone')
+          loadedMesh = new Physijs.ConeMesh(geometry, material);
+        if (entry._physijs.type === 'capsule')
+          loadedMesh = new Physijs.CapsuleMesh(geometry, material);
+        if (entry._physijs.type === 'convex')
+          loadedMesh = new Physijs.ConvexMesh(geometry, material);
+        if (entry._physijs.type === 'concave')
+          loadedMesh = new Physijs.ConcaveMesh(geometry, material);
+        if (entry._physijs.type === 'heightfield')
+          loadedMesh = new Physijs.HeightfieldMesh(geometry, material);
+
+        this.fillObjectAttributes(loadedMesh._physijs, entry._physijs);
+      }
+
+      let stop = false;
       listLoadedObjectsUuid.forEach((object) => {
         if (object === loadedMesh.uuid) {
           stop = true;

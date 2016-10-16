@@ -18,7 +18,7 @@ class Save {
     let reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function (e) {
-      let loader        = new THREE.ObjectLoader();
+      let loader = new THREE.ObjectLoader();
       //let loadedObjects = JSON.parse(stored);
       let loadedObjects = JSON.parse(e.target.result);
 
@@ -61,7 +61,11 @@ class Save {
   saveCustomObjects(runner) {
     let object = [];
     Scene._objList.forEach(function (entry) {
-      object.push(entry.toJSON());
+      const e = entry.toJSON();
+
+      e._physijs = entry._physijs;
+
+      object.push(e);
     });
 
     let output;
