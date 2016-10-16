@@ -74,8 +74,21 @@ class ScenePlayer {
     this._controls.connect();
     this._controls.update();
     this.render();
-    //element.addEventListener('click', fullscreen, false);
+    this._renderer.domElement.addEventListener('click', this.fullscreen, false);
+    window.removeEventListener('deviceorientation', this.setOrientationControls, true);
   }
+
+  fullscreen() {
+  if (container.requestFullscreen) {
+    container.requestFullscreen();
+  } else if (container.msRequestFullscreen) {
+    container.msRequestFullscreen();
+  } else if (container.mozRequestFullScreen) {
+    container.mozRequestFullScreen();
+  } else if (container.webkitRequestFullscreen) {
+    container.webkitRequestFullscreen();
+  }
+}
   /*
    onOrientationChanged(event) {
    if (!event.alpha) {
