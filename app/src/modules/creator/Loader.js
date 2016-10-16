@@ -48,7 +48,7 @@ class Loader {
       geometry.sourceType = "ascii";
       geometry.sourceFile = file.name;
 
-      let mesh              = new THREE.Mesh(geometry, material);
+      let mesh              = new Physijs.BoxMesh(geometry, material);
       mesh.userData.objType = 'external';
       mesh.userData.id      = _.uniqueId();
       mesh.name             = file.name.replace(/\.[^/.]+$/, "");
