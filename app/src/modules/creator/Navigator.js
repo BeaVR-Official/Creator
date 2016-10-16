@@ -120,7 +120,7 @@ class Navigator {
     let groundMat = new THREE.MeshBasicMaterial({map: grassTex});
     let groundGeo = new THREE.PlaneGeometry(1000, 1000);
 
-    let ground         = new THREE.Mesh(groundGeo, groundMat);
+    let ground         = new Physijs.PlaneMesh(groundGeo, groundMat);
     ground.position.y  = 0;
     ground.rotation.x  = -Math.PI / 2;
     ground.doubleSided = true;
