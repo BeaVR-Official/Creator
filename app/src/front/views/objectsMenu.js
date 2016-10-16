@@ -9,6 +9,7 @@ import BasicObjectsView from './objects/basicObjects';
 import BasicLightsView from './objects/basicLights';
 import ActionBlockView from './objects/actionBlock';
 import CustomObject from './objects/customObject';
+import WorldCustomization from './objects/worldCustomization';
 import * as Backbone from 'backbone';
 
 class ObjectMenuView extends Backbone.View {
@@ -38,14 +39,14 @@ class ObjectMenuView extends Backbone.View {
     object.push(new Object3D({name: "Basic objects", logo:'assets/images/multi-tab.png'}));
     object.push(new Object3D({name: "Lights", logo:'assets/images/ambientLight.png'}));
     object.push(new Object3D({name: "Custom objects", logo:'assets/images/puzzle.png'}));
-    object.push(new Object3D({name: "My library", logo:'assets/images/painter-palette.png'}));
-    object.push(new Object3D({name: "Add folder", logo:'assets/images/add.png'}));
+    object.push(new Object3D({name: "World", logo:'assets/images/painter-palette.png'}));
     this.objects = new Objects(object);
 
     this.basicObjectView = new BasicObjectsView();
     this.basicLightView = new BasicLightsView();
     this.actionBlock = new ActionBlockView();
     this.customObject = new CustomObject();
+    this.worldCustomization = new WorldCustomization();
   }
 
   render() {
@@ -71,9 +72,8 @@ class ObjectMenuView extends Backbone.View {
       case "Custom objects":
         this.customObject.render();
         break;
-      case "My library":
-        break;
-      case "Add folder":
+      case "World":
+        this.worldCustomization.render();
         break;
       case "Add Action Block":
         this.actionBlock.render();
