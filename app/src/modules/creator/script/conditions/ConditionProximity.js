@@ -12,10 +12,10 @@ export default class ConditionProximity {
     // example: 10.0
     let value = parseFloat(data);
     if (value < 0) {
-      return (-1);
+      return (false);
     }
     this.distance = value;
-    return (0);
+    return (true);
 
   }
 
