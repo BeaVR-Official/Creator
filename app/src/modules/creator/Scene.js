@@ -77,6 +77,22 @@ class Scene {
     return (this._camera);
   }
 
+  getObjectByUuid(objectUuid) {
+    //deprecated, can be removed if useless
+    //for (let index = 0; index < this._objList.length; index++) {
+    //  if (this._objList[index].uuid === objectUuid) {
+    //    return (this._objList[index]);
+    //  }
+    //}
+    //return (undefined);
+    let foundObject = undefined;
+    this._objList.find(currentObj => {
+      if (currentObj.uuid === objectUuid)
+        foundObject = currentObj;
+    });
+    return foundObject;
+  }
+
   findObject(object) {
     let foundObject = undefined;
     this._objList.find(currentObj => {
