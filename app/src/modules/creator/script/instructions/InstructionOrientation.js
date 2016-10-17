@@ -1,4 +1,4 @@
-export default class InstructionPosition {
+export default class InstructionRotation {
   constructor() {
     this.uuid       = generateUUID();
     this.type       = 1;
@@ -11,8 +11,8 @@ export default class InstructionPosition {
   configure(data) {
     // data content description:
     // type: [float, float, float]
-    // value: position vector
-    // example: [10.0, 1.0, 5.0]
+    // value: rotation vector
+    // example: [10.0, 0.0, 0.0]
     this.x = parseFloat(data[0]);
     this.y = parseFloat(data[1]);
     this.z = parseFloat(data[2]);
@@ -29,14 +29,14 @@ export default class InstructionPosition {
       if (objB === undefined) {
         return;
       }
-      objA.position.set(this.x + objB.position.x,
-                        this.y + objB.position.y,
-                        this.z + objB.position.z);
+      objA.rotation.set(this.x + objB.rotation.x,
+        this.y + objB.rotation.y,
+        this.z + objB.rotation.z);
     }
     else {
-      objA.position.set(this.x, this.y, this.z);
+      objA.rotation.set(this.x, this.y, this.z);
     }
-    objA.__dirtyPosition = true;
+    objA.__dirtyRotation = true;
   }
 }
 
