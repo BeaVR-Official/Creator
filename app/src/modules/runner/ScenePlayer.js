@@ -17,7 +17,7 @@ class ScenePlayer {
     this.initRenderer();
     this.initCamera();
     this.initOrbitControl();
-    this.setOrientationControls();
+    //this.setOrientationControls();
     //window.addEventListener('deviceorientation', () => this.setOrientationControls, true);
     window.addEventListener('deviceorientation', this.setOrientationControls, true);
     this.load();
@@ -54,7 +54,7 @@ class ScenePlayer {
      this._camera,
      this._renderer.domElement
     );
-    this._controls.rotateUp(Math.PI / 4);
+    //this._controls.rotateUp(Math.PI / 4);
     this._controls.target.set(
      this._camera.position.x + 0.15,
      this._camera.position.y,

@@ -62,7 +62,7 @@ class TopMenuView extends Backbone.View {
   launchApp() {
     Save.saveCustomObjects(true);
     // TODO à terme : En dur pour le moment
-    document.location.href = "http://creator.beavr.fr/app/runner.html";
+    document.location.href = "runner.html";
   }
 
   openModalConnexion() {
