@@ -57,7 +57,6 @@
     "nodejs-physijs": "^0.1.5",
     "physijs": "0.0.4",
     "physijs-webpack": "0.0.2",
-    "semantic-ui": "^2.1.8",
     "three": "0.76.1",
     "underscore": "1.8.3"
   }

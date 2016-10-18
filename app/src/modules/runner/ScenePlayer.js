@@ -3,19 +3,23 @@ import Constants from '../creator/Constants';
 // Degeu car this = undefined donc un attribut c'ets pareil !
 var listLoadedObjectsUuid = [];
 
-Physijs.scripts.worker = 'http://localhost:63342/Creator/app/libs/physijs/physijs_worker.js';
-Physijs.scripts.ammo   = 'http://localhost:63342/Creator/app/libs/physijs/ammo.js';
+Physijs.scripts.worker = 'http://creator.beavr.fr/app/libs/physijs/physijs_worker.js';
+Physijs.scripts.ammo   = 'http://creator.beavr.fr/app/libs/physijs/ammo.js';
 
 class ScenePlayer {
 
-  constructor() {
+//4K1h5TLd8n1C
 
+  constructor() {
+    console.info("v 0.0.1");
     this._scene = new Physijs.Scene();
     this._scene.setGravity(new THREE.Vector3(0, -1200, 0));
-    this.initCamera();
     this.initRenderer();
+    this.initCamera();
     this.initOrbitControl();
-    window.addEventListener('deviceorientation', () => this.setOrientationControls, true);
+    this.setOrientationControls();
+    //window.addEventListener('deviceorientation', () => this.setOrientationControls, true);
+    window.addEventListener('deviceorientation', this.setOrientationControls, true);
     this.load();
   }
 
@@ -42,32 +46,22 @@ class ScenePlayer {
       camSettings.posY,
       camSettings.posZ);
     this._camera.lookAt(new THREE.Vector3(0, 200, 0));
+    this._scene.add(this._camera);
   }
 
   initOrbitControl() {
     this._controls = new THREE.OrbitControls(
-      this._camera,
-      this._renderer.domElement);
-    /*
-     this._controls.target.set(
+     this._camera,
+     this._renderer.domElement
+    );
+    this._controls.rotateUp(Math.PI / 4);
+    this._controls.target.set(
      this._camera.position.x + 0.15,
      this._camera.position.y,
      this._camera.position.z
-     );
-     */
-    //this._controls.enablePan = false;
-    //this._controls.enableZoom = false;
-    /*
-     this._orbitControl = new THREE.OrbitControls(
-     this._camera,
-     this._renderer.domElement);
-     */
-    /*
-     this._orbitControl.rotateUp(Math.PI / 4);
-     this._orbitControl.target.set(this._camera.position.x + 0.1, this._camera.position.y, this._camera.position.z);
-     window.addEventListener("deviceOrientation", this.onOrientationChanged);
-     */
-    //this._controls.addEventListener('change', () => this.render());
+    );
+    this._controls.enablePan = false;
+    this._controls.enableZoom = false;
   }
 
   setOrientationControls(event) {
@@ -77,34 +71,24 @@ class ScenePlayer {
     this._controls = new THREE.DeviceOrientationControls(this._camera, true);
     this._controls.connect();
     this._controls.update();
-    //this.render();
     this._renderer.domElement.addEventListener('click', this.fullscreen, false);
     window.removeEventListener('deviceorientation', this.setOrientationControls, true);
   }
 
   fullscreen() {
-  if (container.requestFullscreen) {
-    container.requestFullscreen();
-  } else if (container.msRequestFullscreen) {
-    container.msRequestFullscreen();
-  } else if (container.mozRequestFullScreen) {
-    container.mozRequestFullScreen();
-  } else if (container.webkitRequestFullscreen) {
-    container.webkitRequestFullscreen();
+    if (container.requestFullscreen) {
+      container.requestFullscreen();
+    } else if (container.msRequestFullscreen) {
+      container.msRequestFullscreen();
+    } else if (container.mozRequestFullScreen) {
+      container.mozRequestFullScreen();
+    } else if (container.webkitRequestFullscreen) {
+      container.webkitRequestFullscreen();
+    }
   }
-}
+
   /*
-   onOrientationChanged(event) {
-   if (!event.alpha) {
-   return;
-   }
-
-   this._orbitControl = new THREE.DeviceOrientationControls(camera, true);
-   this._orbitControl.connect();
-   this._orbitControl.update();
-
-   window.removeEventListener("deviceOrientation", onOrientationChanged);
-   }
+  Seconde partie
    */
 
   fillObjectAttributes(recvr, sendr) {

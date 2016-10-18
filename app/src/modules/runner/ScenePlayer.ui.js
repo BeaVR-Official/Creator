@@ -14,15 +14,6 @@ class ScenePlayerUI {
     $('#mainView').append(ScenePlayer._renderer.domElement);
   }
 
-  /*
-  constructor() {
-    this.adaptToWindow();
-    //$(window).resize(() => this.adaptToWindow());
-    //$('#mainView').append(Scene._renderer.domElement);
-    //SceneControls.constructor();
-  }
-  */
-
   adaptToWindow() {
     // let parentWidth  = $(window).width() - ($('.categories-left-panel').width() +
     // $('.properties-left-panel').outerWidth()); let parentHeight = $(window).height();
@@ -33,7 +24,7 @@ class ScenePlayerUI {
     ScenePlayer._camera.aspect = parentWidth / parentHeight;
     ScenePlayer._camera.updateProjectionMatrix();
     ScenePlayer._renderer.setSize(parentWidth, parentHeight);
-    ScenePlayer.render();
+    //ScenePlayer.render();
   }
 
 }
