@@ -3,8 +3,8 @@ import Constants from '../creator/Constants';
 // Degeu car this = undefined donc un attribut c'ets pareil !
 var listLoadedObjectsUuid = [];
 
-Physijs.scripts.worker = 'http://creator.beavr.fr/app/libs/physijs/physijs_worker.js';
-Physijs.scripts.ammo   = 'http://creator.beavr.fr/app/libs/physijs/ammo.js';
+Physijs.scripts.worker = 'physijs_worker.js';
+Physijs.scripts.ammo   = 'ammo.js';
 
 class ScenePlayer {
 

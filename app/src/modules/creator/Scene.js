@@ -1,7 +1,7 @@
 import Constants from './Constants';
 
-Physijs.scripts.worker = 'http://localhost:63342/Creator/app/libs/physijs/physijs_worker.js';
-Physijs.scripts.ammo   = 'http://localhost:63342/Creator/app/libs/physijs/ammo.js';
+Physijs.scripts.worker = 'physijs_worker.js';
+Physijs.scripts.ammo   = 'ammo.js';
 
 class Scene {
 
