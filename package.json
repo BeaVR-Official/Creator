@@ -24,9 +24,10 @@
     "2. clean": "gulp clean",
     "3. test": "gulp test",
     "4. watch-n-test": "gulp watch-n-test",
-    "start": "http-server ./"
+    "start": "http-server ./",
+    "postinstall": "webpack --debug"
   },
-  "devDependencies": {
+  "dependencies": {
     "babel-loader": "^6.0.1",
     "babel-plugin-transform-es2015-modules-commonjs-simple": "6.7.4",
     "babel-preset-es2015": "^6.14.0",
@@ -40,9 +41,7 @@
     "node-libs-browser": "^0.5.3",
     "offline-plugin": "^2.1.1",
     "webpack": "^2.1.0-beta.7",
-    "webpack-dev-server": "^1.9.0"
-  },
-  "dependencies": {
+    "webpack-dev-server": "^1.9.0",
     "backbone": "^1.3.3",
     "bower": "^1.7.9",
     "filesaverjs": "0.2.2",
@@ -57,7 +56,6 @@
     "nodejs-physijs": "^0.1.5",
     "physijs": "0.0.4",
     "physijs-webpack": "0.0.2",
-    "semantic-ui": "^2.1.8",
     "three": "0.76.1",
     "underscore": "1.8.3"
   }
