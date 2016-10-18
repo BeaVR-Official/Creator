@@ -129,6 +129,22 @@ class Navigator {
     CreatorManagement.addObject(ground);
   }
 
+  addSky() {
+    let skyGeometry = new THREE.CubeGeometry(5000, 5000, 5000);
+
+    let materialArray = [];
+    for (let i = 0; i < 6; i++)
+      materialArray.push( new THREE.MeshBasicMaterial({
+        map: THREE.ImageUtils.loadTexture("assets/images/sky1.png"),
+        side: THREE.BackSide
+      }));
+    let skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+    let skyboxMesh = new THREE.Mesh( skyGeometry, skyMaterial );
+
+    this.setMeshInfo(skyboxMesh, 'skyBox');
+    CreatorManagement.addObject(skyboxMesh);
+  }
+
   addExternal(file) {
     Loader.loadFile(file);
   }

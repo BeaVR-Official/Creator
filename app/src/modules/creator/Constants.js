@@ -8,7 +8,7 @@ const camSettings   = {
   fov:    70,
   aspect: sceneSettings.width / sceneSettings.height,
   near:   1,
-  far:    3000,
+  far:    6000,
   posX:   1000,
   posY:   150,
   posZ:   500

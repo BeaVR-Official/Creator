@@ -18,7 +18,8 @@ class WorldCustomization extends Backbone.View {
 
   get events() {
     return {
-      'click #addGround': 'addGround'
+      'click #addGround': 'addGround',
+      'click #addSky': 'addSky'
     };
   }
 
@@ -37,6 +38,10 @@ class WorldCustomization extends Backbone.View {
 
   addGround() {
     Navigator.addGround();
+  }
+
+  addSky() {
+    Navigator.addSky();
   }
 }
 
