@@ -63,9 +63,11 @@ class ScenePlayer {
   }
 
   setOrientationControls(event) {
-/*    if (!event.alpha) {
+    if (!event.alpha) {
+      console.info("event.alpha = null");
       return;
-    }*/
+    }
+    console.info("event.alpha :)")
     this._controls = new THREE.DeviceOrientationControls(this._camera, true);
     this._controls.connect();
     this._controls.update();
