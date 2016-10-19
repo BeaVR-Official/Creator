@@ -157,11 +157,9 @@ class ScenePlayer {
   }
 
   start() {
-
   }
 
   pause() {
-
   }
 }
 
