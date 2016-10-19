@@ -79,24 +79,23 @@ class SceneOrganizer {
       return (undefined);
     }
     let newObject = {
-      "uuid":     generateUUID(),
-      "name":     nameString,
-      "type":     typeString,
-      "position": [0.0, 0.0, 0.0],
-      "rotation": [0.0, 0.0, 0.0],
-      "scale":    [0.0, 0.0, 0.0],
-      "color":    "0x000000",
-      "mesh":     undefined // TODO: Create temporary Physijs mesh
+      "uuid":      generateUUID(),
+      "name":      nameString,
+      "type":      typeString,
+      "position":  [0.0, 0.0, 0.0],
+      "rotation":  [0.0, 0.0, 0.0],
+      "scale":     [0.0, 0.0, 0.0],
+      "color":     "0x000000",
+      "collision": false,
+      "gravity":   false,
+      "mesh":      undefined // TODO: Create temporary Physijs mesh
     };
     this.scenesList[sceneIndex].objectsList.push(newObject);
     return (newObject.uuid);
   }
 
   removeObject(sceneUuid, objectUuid) {
-    let sceneIndex = this.findSceneIndex(sceneUuid);
-    if (sceneIndex === -1) {
-      return (false);
-    }
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
     let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
     if (objectIndex === -1) {
       return (false);
@@ -104,6 +103,143 @@ class SceneOrganizer {
     // TODO: Remove temporary Physijs object
     this.scenesList[sceneIndex].objectsList.splice(objectIndex, 1);
     return (true);
+  }
+
+  //
+  // Object properties methods
+  //
+
+  setObjectName(sceneUuid, objectUuid, nameString) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (false);
+    }
+    this.scenesList[sceneIndex].objectsList[objectIndex].name = nameString;
+    return (true);
+  }
+
+  getObjectName(sceneUuid, objectUuid) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (undefined);
+    }
+    return (this.scenesList[sceneIndex].objectsList[objectIndex].name);
+  }
+
+  setObjectPosition(sceneUuid, objectUuid, positionVector) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (false);
+    }
+    this.scenesList[sceneIndex].objectsList[objectIndex].position = positionVector;
+    return (true);
+  }
+
+  getObjectPosition(sceneUuid, objectUuid) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (undefined);
+    }
+    return (this.scenesList[sceneIndex].objectsList[objectIndex].position);
+  }
+
+  setObjectRotation(sceneUuid, objectUuid, rotationVector) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (false);
+    }
+    this.scenesList[sceneIndex].objectsList[objectIndex].rotation = rotationVector;
+    return (true);
+  }
+
+  getObjectRotation(sceneUuid, objectUuid) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (undefined);
+    }
+    return (this.scenesList[sceneIndex].objectsList[objectIndex].rotation);
+  }
+
+  setObjectScale(sceneUuid, objectUuid, scaleVector) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (false);
+    }
+    this.scenesList[sceneIndex].objectsList[objectIndex].scale = scaleVector;
+    return (true);
+  }
+
+  getObjectScale(sceneUuid, objectUuid) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (undefined);
+    }
+    return (this.scenesList[sceneIndex].objectsList[objectIndex].scale);
+  }
+
+  setObjectColor(sceneUuid, objectUuid, colorHexString) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (false);
+    }
+    this.scenesList[sceneIndex].objectsList[objectIndex].color = colorHexString;
+    return (true);
+  }
+
+  getObjectColor(sceneUuid, objectUuid) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (undefined);
+    }
+    return (this.scenesList[sceneIndex].objectsList[objectIndex].color);
+  }
+
+  setObjectCollisionStatus(sceneUuid, objectUuid, collisionStatusBool) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (false);
+    }
+    this.scenesList[sceneIndex].objectsList[objectIndex].collision = collisionStatusBool;
+    return (true);
+  }
+
+  getObjectCollisionStatus(sceneUuid, objectUuid) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (undefined);
+    }
+    return (this.scenesList[sceneIndex].objectsList[objectIndex].collision);
+  }
+
+  setObjectGravityStatus(sceneUuid, objectUuid, gravityStatusBool) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (false);
+    }
+    this.scenesList[sceneIndex].objectsList[objectIndex].gravity = gravityStatusBool;
+    return (true);
+  }
+
+  getObjectGravityStatus(sceneUuid, objectUuid) {
+    let sceneIndex  = this.findSceneIndex(sceneUuid);
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (undefined);
+    }
+    return (this.scenesList[sceneIndex].objectsList[objectIndex].gravity);
   }
 }
 
