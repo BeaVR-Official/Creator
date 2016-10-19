@@ -45,7 +45,9 @@ class SceneOrganizer {
     if (index === -1) {
       return (false);
     }
-    //TODO: Appeler removeObject pour tous les objets de cette Scene
+    for (let i = 0; i < this.scenesList[index].length; i += 1) {
+      this.removeObject(sceneUuid, this.scenesList[index].objectsList[i].uuid);
+    }
     this.scenesList.splice(index, 1);
     return (true);
   }
@@ -65,6 +67,43 @@ class SceneOrganizer {
       return (undefined);
     }
     return (this.scenesList[index].name);
+  }
+
+  //
+  // Object management methods
+  //
+
+  addObject(sceneUuid, nameString, typeString) {
+    let sceneIndex = this.findSceneIndex(sceneUuid);
+    if (sceneIndex === -1) {
+      return (undefined);
+    }
+    let newObject = {
+      "uuid":     generateUUID(),
+      "name":     nameString,
+      "type":     typeString,
+      "position": [0.0, 0.0, 0.0],
+      "rotation": [0.0, 0.0, 0.0],
+      "scale":    [0.0, 0.0, 0.0],
+      "color":    "0x000000",
+      "mesh":     undefined // TODO: Create temporary Physijs mesh
+    };
+    this.scenesList[sceneIndex].objectsList.push(newObject);
+    return (newObject.uuid);
+  }
+
+  removeObject(sceneUuid, objectUuid) {
+    let sceneIndex = this.findSceneIndex(sceneUuid);
+    if (sceneIndex === -1) {
+      return (false);
+    }
+    let objectIndex = this.findObjectIndex(sceneUuid, objectUuid);
+    if (objectIndex === -1) {
+      return (false);
+    }
+    // TODO: Remove temporary Physijs object
+    this.scenesList[sceneIndex].objectsList.splice(objectIndex, 1);
+    return (true);
   }
 }
 
