@@ -8,16 +8,14 @@ Physijs.scripts.ammo   = 'ammo.js';
 
 class ScenePlayer {
 
-//4K1h5TLd8n1C
-
   constructor() {
     this._scene = new Physijs.Scene();
     this._scene.setGravity(new THREE.Vector3(0, -1200, 0));
     this.initRenderer();
     this.initCamera();
     this.initOrbitControl();
-    //window.addEventListener('deviceorientation', () => this.setOrientationControls, true);
-    window.addEventListener('deviceorientation', this.setOrientationControls, true);
+    window.addEventListener('deviceorientation', () => this.setOrientationControls, true);
+    //window.addEventListener('deviceorientation', this.setOrientationControls, true);
     this.load();
   }
 
@@ -67,7 +65,7 @@ class ScenePlayer {
       console.info("event.alpha = null");
       return;
     }
-    console.info("event.alpha :)")
+    console.info("event.alpha :)");
     this._controls = new THREE.DeviceOrientationControls(this._camera, true);
     this._controls.connect();
     this._controls.update();
