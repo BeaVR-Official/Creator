@@ -1,19 +1,46 @@
 <div class="ui form">
     <div class="field">
+        <!--SkyBox section-->
         <h4 class="ui dividing header">Sky</h4>
         <div class="two fields">
-            <button name="actionBlock[validate]" class="ui primary button" id="addSky">
-                Add
-            </button>
+
+            <div class="field">
+                <select id="selectSky" class="three" name="selectSky" >
+                    <option value="1" selected="selected">Night sky</option>
+                    <option value="2">Desert</option>
+                    <option value="3">Town</option>
+                    <option value="4">Sky</option>
+                </select>
+            </div>
+
+            <div class="field text-center">
+                <button name="actionBlock[validate]" class="ui primary button" id="addSky">
+                    Add
+                </button>
+            </div>
+
         </div>
     </div>
 
-    <div class="field">
-        <h4 class="ui dividing header">Ground</h4>
-        <div class="two fields">
+
+    <!--Ground section-->
+    <h4 class="ui dividing header">Ground</h4>
+    <div class="two fields">
+
+        <div class="field">
+            <select id="selectGround" class="three" name="selectGround">
+                <option value="1" selected="selected">Grass</option>
+                <option value="2">Rock</option>
+                <option value="3">Snow</option>
+                <option value="4">Wood</option>
+            </select>
+        </div>
+
+        <div class="field text-center">
             <button name="actionBlock[validate]" class="ui primary button" id="addGround">
                 Add
             </button>
         </div>
+
     </div>
 </div>
