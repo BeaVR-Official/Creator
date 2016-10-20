@@ -134,8 +134,8 @@ class Navigator {
     let grassTex      = new THREE.TextureLoader().load(groundTex);
     grassTex.wrapS    = THREE.RepeatWrapping;
     grassTex.wrapT    = THREE.RepeatWrapping;
-    grassTex.repeat.x = 20;
-    grassTex.repeat.y = 20;
+    grassTex.repeat.x = 10;
+    grassTex.repeat.y = 10;
 
     let groundMat = new THREE.MeshBasicMaterial({map: grassTex});
     let groundGeo = new THREE.PlaneGeometry(1000, 1000);
