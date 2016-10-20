@@ -18,8 +18,10 @@ class WorldCustomization extends Backbone.View {
 
   get events() {
     return {
-      'click #addGround': 'addGround',
-      'click #addSky': 'addSky'
+      'change #selectSky':    'selectSky',
+      'change #selectGround': 'selectGround',
+      'click #addGround':     'addGround',
+      'click #addSky':        'addSky'
     };
   }
 
@@ -28,7 +30,8 @@ class WorldCustomization extends Backbone.View {
   }
 
   initialize() {
-
+    let skyBoxList = [];
+    skyBoxList.push();
   }
 
   render() {
@@ -36,12 +39,30 @@ class WorldCustomization extends Backbone.View {
     return this;
   }
 
-  addGround() {
-    Navigator.addGround();
+  selectSky(event) {
+    let skyFolder = event.target.value;
+    this.skyFolderPath = 'assets/images/skyBox/' + 'sky_' + skyFolder + '/';
+    console.log(this.skyFolderPath);
+  }
+
+  selectGround(event) {
+    let groundTex = event.target.value;
+    this.groundTexPath = 'assets/images/groundTex/' + 'ground_' + groundTex + '.png';
+    console.log(this.groundTexPath);
   }
 
   addSky() {
-    Navigator.addSky();
+    if (this.skyFolderPath !== undefined)
+      Navigator.addSky(this.skyFolderPath);
+    else
+      Navigator.addSky('assets/images/skyBox/sky_1/');
+  }
+
+  addGround() {
+    if (this.groundTexPath !== undefined)
+      Navigator.addGround(this.groundTexPath);
+    else
+      Navigator.addGround('assets/images/groundTex/ground_1.png');
   }
 }
 

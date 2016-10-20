@@ -110,8 +110,28 @@ class Navigator {
     CreatorManagement.addObject(picker);
   }
 
-  addGround() {
-    let grassTex      = new THREE.TextureLoader().load("assets/images/grass.png");
+  addSky(skyPath) {
+    let skyGeometry   = new THREE.CubeGeometry(5000, 5000, 5000);
+    let faces         = ['west', 'east', 'up', 'down', 'south', 'north'];
+    let materialArray = [];
+
+    faces.forEach(face => {
+      console.log(skyPath + face + ".png");
+      materialArray.push(new THREE.MeshBasicMaterial({
+        map:  THREE.ImageUtils.loadTexture(skyPath + face + ".png"),
+        side: THREE.BackSide
+      }));
+    });
+
+    let skyMaterial = new THREE.MeshFaceMaterial(materialArray);
+    let skyboxMesh  = new THREE.Mesh(skyGeometry, skyMaterial);
+
+    this.setMeshInfo(skyboxMesh, 'skyBox');
+    CreatorManagement.addObject(skyboxMesh);
+  }
+
+  addGround(groundTex) {
+    let grassTex      = new THREE.TextureLoader().load(groundTex);
     grassTex.wrapS    = THREE.RepeatWrapping;
     grassTex.wrapT    = THREE.RepeatWrapping;
     grassTex.repeat.x = 20;
@@ -127,22 +147,6 @@ class Navigator {
 
     this.setMeshInfo(ground, 'ground');
     CreatorManagement.addObject(ground);
-  }
-
-  addSky() {
-    let skyGeometry = new THREE.CubeGeometry(5000, 5000, 5000);
-
-    let materialArray = [];
-    for (let i = 0; i < 6; i++)
-      materialArray.push( new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture("assets/images/sky1.png"),
-        side: THREE.BackSide
-      }));
-    let skyMaterial = new THREE.MeshFaceMaterial( materialArray );
-    let skyboxMesh = new THREE.Mesh( skyGeometry, skyMaterial );
-
-    this.setMeshInfo(skyboxMesh, 'skyBox');
-    CreatorManagement.addObject(skyboxMesh);
   }
 
   addExternal(file) {

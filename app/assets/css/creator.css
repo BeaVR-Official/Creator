@@ -137,3 +137,9 @@ body {
 .header {
     border: 1px solid white;
 }
+
+
+/*WorldCustomization.html*/
+.text-center {
+    text-align: center;
+}
