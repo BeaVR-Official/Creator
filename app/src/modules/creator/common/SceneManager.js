@@ -1,5 +1,5 @@
-import SceneDescriptor from "../descriptors/SceneDescriptor";
-import ObjectDescriptor from "../descriptors/ObjectDescriptor";
+import SceneDescriptor from "SceneDescriptor";
+import ObjectDescriptor from "ObjectDescriptor";
 
 class SceneManager {
   constructor() {
