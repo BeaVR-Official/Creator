@@ -5,6 +5,7 @@ export default class ObjectDescriptor {
     this.uuid = UUID.createUUID();
     this.name = name;
     this.type = type;
+    this.children = [];
     this.position = [0.0, 0.0, 0.0];
     this.rotation = [0.0, 0.0, 0.0];
     this.scale = [0.0, 0.0, 0.0];
@@ -12,6 +13,20 @@ export default class ObjectDescriptor {
     this.gravityEffected = false;
     // TODO: support all the more specific properties
     // namely: Cameras, Skyboxes
+  }
+
+  addChild(objectUuid) {
+    this.children.push(objectUuid);
+  }
+
+  removeChild(objectUuid) {
+    for (let index = 0; index < this.children.length; index++) {
+      if (this.children[index].uuid === objectUuid) {
+        this.children.splice(index, 1);
+        return (true);
+      }
+    }
+    return (false);
   }
 
   setName(name) {
