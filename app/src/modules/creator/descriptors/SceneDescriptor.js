@@ -8,6 +8,10 @@ export default class SceneDescriptor {
     this.objectDescriptors = [];
   }
 
+  getUuid() {
+    return (this.uuid);
+  }
+
   setName(name) {
     this.name = name;
   }
@@ -26,7 +30,7 @@ export default class SceneDescriptor {
 
   getObjectDescriptorIndex(objectUuid) {
     for (let index = 0; index < this.objectDescriptors.length; index++) {
-      if (this.objectDescriptors[index].uuid === objectUuid) {
+      if (this.objectDescriptors[index].getUuid() === objectUuid) {
         return (index);
       }
     }
@@ -36,7 +40,7 @@ export default class SceneDescriptor {
   addObjectDescriptor(name, type) {
     let newObjectDescriptor = new ObjectDescriptor(name, type);
     this.objectDescriptors.push(newObjectDescriptor);
-    return (newObjectDescriptor.uuid);
+    return (newObjectDescriptor.getUuid());
   }
 
   removeObjectDescriptor(objectUuid) {
@@ -44,7 +48,13 @@ export default class SceneDescriptor {
     if (index === -1) {
       return (false);
     }
+    // TODO remove all children !!!
     this.objectDescriptors.splice(index, 1);
     return (true);
+  }
+
+  removeAllObjectDescriptors() {
+    this.objectDescriptors.splice(0, this.objectDescriptors.length);
+    //this.objectDescriptors = [];
   }
 }

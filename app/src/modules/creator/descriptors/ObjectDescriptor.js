@@ -2,17 +2,29 @@ import UUID from './../../utils/UUID';
 
 export default class ObjectDescriptor {
   constructor(name, type) {
-    this.uuid = UUID.createUUID();
-    this.name = name;
-    this.type = type;
-    this.children = [];
-    this.position = [0.0, 0.0, 0.0];
-    this.rotation = [0.0, 0.0, 0.0];
-    this.scale = [0.0, 0.0, 0.0];
-    this.solidState = false;
-    this.gravityEffected = false;
+    this.uuid              = UUID.createUUID();
+    this.name              = name;
+    this.type              = type;
+    this.children          = [];
+    this.position          = [0.0, 0.0, 0.0];
+    this.rotation          = [0.0, 0.0, 0.0];
+    this.scale             = [0.0, 0.0, 0.0];
+    this.isSolid           = false;
+    this.isGravityEffected = false;
     // TODO: support all the more specific properties
     // namely: Cameras, Skyboxes
+  }
+
+  getUuid() {
+    return (this.uuid);
+  }
+
+  setName(name) {
+    this.name = name;
+  }
+
+  getName() {
+    return (this.name);
   }
 
   addChild(objectUuid) {
@@ -27,14 +39,6 @@ export default class ObjectDescriptor {
       }
     }
     return (false);
-  }
-
-  setName(name) {
-    this.name = name;
-  }
-
-  getName() {
-    return (this.name);
   }
 
   setPosition(position) {
@@ -66,14 +70,14 @@ export default class ObjectDescriptor {
   }
 
   getSolidStatus() {
-    return (this.solidState);
+    return (this.isSolid);
   }
 
   setGravityStatus(isGravityEffected) {
-    this.gravityEffected = isGravityEffected;
+    this.isGravityEffected = isGravityEffected;
   }
 
   getGravityStatus() {
-    return (this.gravityEffected);
+    return (this.isGravityEffected);
   }
 }
