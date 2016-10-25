@@ -1,4 +1,4 @@
-import UUID from './../../utils/UUID';
+import UUID from './../utils/UUID';
 
 export default class ObjectDescriptor {
   constructor(name, type) {

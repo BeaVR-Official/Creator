@@ -1,4 +1,4 @@
-import UUID from './../../utils/UUID';
+import UUID from './../utils/UUID';
 import ObjectDescriptor from "ObjectDescriptor";
 
 export default class SceneDescriptor {
