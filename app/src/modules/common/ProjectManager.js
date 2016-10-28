@@ -75,6 +75,7 @@ class ProjectManager {
   }
 
   addObject(sceneUuid, name, type) {
+    //TODO: Define the structure of type: what if custom object ? Send array with geometry ? etc.
     let index = this.getSceneDescriptorIndex(sceneUuid);
     if (index === -1) {
       return (false);
@@ -112,6 +113,95 @@ class ProjectManager {
       return (undefined);
     }
     return (sceneDescriptor.getName());
+  }
+
+  //
+  // Modification et consultation des propriétés des ObjectDescriptors
+  //
+
+  setObjectPosition(sceneUuid, objectUuid, position) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (false);
+    }
+    objectDescriptor.setPosition(position);
+    return (false);
+  }
+
+  getObjectPosition(sceneUuid, objectUuid) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (undefined);
+    }
+    return (objectDescriptor.getPosition());
+  }
+
+  setObjectRotation(sceneUuid, objectUuid, rotation) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (false);
+    }
+    objectDescriptor.setRotation(rotation);
+    return (false);
+  }
+
+  getObjectRotation(sceneUuid, objectUuid) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (undefined);
+    }
+    return (objectDescriptor.getRotation());
+  }
+
+  setObjectScale(sceneUuid, objectUuid, scale) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (false);
+    }
+    objectDescriptor.setScale(scale);
+    return (false);
+  }
+
+  getObjectScale(sceneUuid, objectUuid) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (undefined);
+    }
+    return (objectDescriptor.getScale());
+  }
+
+  setObjectSolidStatus(sceneUuid, objectUuid, isSolid) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (false);
+    }
+    objectDescriptor.setSolidStatus(isSolid);
+    return (false);
+  }
+
+  getObjectSolidStatus(sceneUuid, objectUuid) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (undefined);
+    }
+    return (objectDescriptor.getSolidStatus());
+  }
+
+  setObjectGravityStatus(sceneUuid, objectUuid, isGravityEffected) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (false);
+    }
+    objectDescriptor.setGravityStatus(isGravityEffected);
+    return (false);
+  }
+
+  getObjectGravityStatus(sceneUuid, objectUuid) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (undefined);
+    }
+    return (objectDescriptor.getGravityStatus());
   }
 }
 
