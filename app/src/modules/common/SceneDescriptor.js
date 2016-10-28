@@ -20,11 +20,19 @@ export default class SceneDescriptor {
     return (this.name);
   }
 
-  setObjectDescriptors(objectDescriptors) {
+  setAllObjectDescriptors(objectDescriptors) {
     this.objectDescriptors = objectDescriptors;
   }
 
-  getObjectDescriptors() {
+  getObjectDescriptor(objectUuid) {
+    let index = this.getObjectDescriptorIndex(objectUuid);
+    if (index === -1) {
+      return (undefined);
+    }
+    return (this.objectDescriptors[index]);
+  }
+
+  getAllObjectDescriptors() {
     return (this.objectDescriptors);
   }
 
