@@ -84,11 +84,23 @@ class ProjectManager {
   }
 
   removeObject(sceneUuid, objectUuid) {
-    let index = this.findSceneIndex(sceneUuid);
-    if (index === -1) {
+    //TODO: may require debugging over for loop to verify that all children get removed
+    let sceneDescriptor = this.getSceneDescriptor(sceneUuid);
+    if (sceneDescriptor === undefined) {
       return (false);
     }
-    this.sceneDescriptors[index].removeObjectDescriptor(objectUuid);
+    // recursively remove all children objects
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    let childrenUuid = objectDescriptor.getChildren();
+    for (let index = 0; index < childrenUuid.length; index++) {
+      this.removeObject(sceneUuid, childrenUuid[index]);
+    }
+    // if object has a parent, remove it from parent object's children list
+    let parentUuid = objectDescriptor.getParent();
+    if (parentUuid !== undefined) {
+      this.removeObjectChild(sceneUuid, parentUuid, objectUuid);
+    }
+    sceneDescriptor.removeObjectDescriptor(objectUuid);
     //TODO: Ask ScriptManager to remove all references to objectUuid !!!
     // ScriptManager.removeObjectReferences(objectUuid);
     return (true);
@@ -118,6 +130,55 @@ class ProjectManager {
   //
   // Modification et consultation des propriétés des ObjectDescriptors
   //
+
+  addObjectChild(sceneUuid, parentObjectUuid, childObjectUuid) {
+    let parentOD = this.getObjectDescriptor(sceneUuid, parentObjectUuid);
+    let childOD  = this.getObjectDescriptor(sceneUuid, childObjectUuid);
+    if (parentOD === undefined || childOD === undefined) {
+      return (false);
+    }
+    let previousParentUuid = childOD.getParent();
+    // if child object already has a parent
+    if (previousParentUuid !== undefined) {
+      // then remove the child object from the parent's children list
+      let previousParentOD = this.getObjectDescriptor(sceneUuid, previousParentUuid);
+      previousParentOD.removeChild(childObjectUuid);
+    }
+    parentOD.addChild(childObjectUuid);
+    childOD.setParent(parentObjectUuid);
+    return (true);
+  }
+
+  removeObjectChild(sceneUuid, parentObjectUuid, childObjectUuid) {
+    let parentOD = this.getObjectDescriptor(sceneUuid, parentObjectUuid);
+    let childOD  = this.getObjectDescriptor(sceneUuid, childObjectUuid);
+    if (parentOD === undefined || childOD === undefined) {
+      return (false);
+    }
+    parentOD.removeChild(childObjectUuid);
+    childOD.setParent(undefined);
+    return (true);
+  }
+
+  removeObjectChildren(sceneUuid, parentObjectUuid) {
+    let parentOD = this.getObjectDescriptor(sceneUuid, parentObjectUuid);
+    if (parentOD === undefined) {
+      return (false);
+    }
+    let childrenUuid = parentOD.getChildren();
+    for (let index = 0; index < childrenUuid.length; index++) {
+      this.removeObjectChild(sceneUuid, parentObjectUuid, childrenUuid[index]);
+    }
+    return (true);
+  }
+
+  getObjectChildren(sceneUuid, objectUuid) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (undefined);
+    }
+    return (objectDescriptor.getChildren());
+  }
 
   setObjectPosition(sceneUuid, objectUuid, position) {
     let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);

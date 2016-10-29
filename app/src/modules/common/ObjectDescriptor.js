@@ -5,6 +5,7 @@ export default class ObjectDescriptor {
     this.uuid              = UUID.createUUID();
     this.name              = name;
     this.type              = type;
+    this.parent            = undefined;
     this.children          = [];
     this.position          = [0.0, 0.0, 0.0];
     this.rotation          = [0.0, 0.0, 0.0];
@@ -39,6 +40,23 @@ export default class ObjectDescriptor {
       }
     }
     return (false);
+  }
+
+  removeAllChildren() {
+    this.children.splice(0, this.children.length);
+    //this.children = [];
+  }
+
+  getChildren() {
+    return (this.children);
+  }
+
+  setParent(parentUuid) {
+    this.parent = parentUuid;
+  }
+
+  getParent() {
+    return (this.parent);
   }
 
   setPosition(position) {
