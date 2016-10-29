@@ -91,7 +91,7 @@ class ProjectManager {
     }
     // recursively remove all children objects
     let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
-    let childrenUuid = objectDescriptor.getChildren();
+    let childrenUuid     = objectDescriptor.getChildren();
     for (let index = 0; index < childrenUuid.length; index++) {
       this.removeObject(sceneUuid, childrenUuid[index]);
     }
