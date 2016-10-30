@@ -1,6 +1,6 @@
-import ProjectManager from "ProjectManager";
-import SceneDescriptor from "SceneDescriptor";
-import ObjectDescriptor from "ObjectDescriptor";
+import ProjectManager from "./ProjectManager";
+import SceneDescriptor from "./SceneDescriptor";
+import ObjectDescriptor from "./ObjectDescriptor";
 
 class SaveManager {
   constructor() {

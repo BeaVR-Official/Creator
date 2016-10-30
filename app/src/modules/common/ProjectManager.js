@@ -1,5 +1,5 @@
-import SceneDescriptor from "SceneDescriptor";
-import ObjectDescriptor from "ObjectDescriptor";
+import SceneDescriptor from "./SceneDescriptor";
+import ObjectDescriptor from "./ObjectDescriptor";
 
 class ProjectManager {
   constructor() {
