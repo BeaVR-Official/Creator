@@ -3,8 +3,9 @@ import ObjectDescriptor from "ObjectDescriptor";
 
 class ProjectManager {
   constructor() {
-    this.name             = "";
-    this.sceneDescriptors = [];
+    this.name              = "";
+    this.sceneDescriptors  = [];
+    this.startingSceneUuid = undefined;
   }
 
   setName(name) {
@@ -13,6 +14,18 @@ class ProjectManager {
 
   getName() {
     return (this.name);
+  }
+
+  setStartingScene(sceneUuid) {
+    if (this.getSceneDescriptorIndex(sceneUuid) === -1) {
+      return (false);
+    }
+    this.startingSceneUuid = sceneUuid;
+    return (true);
+  }
+
+  getStartingScene() {
+    return (this.startingSceneUuid);
   }
 
   getSceneDescriptorIndex(sceneUuid) {
@@ -56,6 +69,9 @@ class ProjectManager {
     let newSceneDescriptor = SceneDescriptor(name);
     this.sceneDescriptors.push(newSceneDescriptor);
     // TODO: May need to use events here
+    if (this.startingSceneUuid === undefined) {
+      this.startingSceneUuid = newSceneDescriptor.getUuid();
+    }
     return (newSceneDescriptor.getUuid());
   }
 
