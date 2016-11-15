@@ -1,12 +1,12 @@
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
 
-//TODO: Events emit
 class ProjectManager extends EventEmitter {
   constructor() {
     super();
-    this.name             = "";
-    this.sceneDescriptors = [];
+    this.name              = "";
+    this.sceneDescriptors  = [];
+    this.startingSceneUuid = undefined;
   }
 
   setName(name) {
@@ -15,6 +15,18 @@ class ProjectManager extends EventEmitter {
 
   getName() {
     return (this.name);
+  }
+
+  setStartingScene(sceneUuid) {
+    if (this.getSceneDescriptorIndex(sceneUuid) === -1) {
+      return (false);
+    }
+    this.startingSceneUuid = sceneUuid;
+    return (true);
+  }
+
+  getStartingScene() {
+    return (this.startingSceneUuid);
   }
 
   getSceneDescriptorIndex(sceneUuid) {
@@ -53,11 +65,14 @@ class ProjectManager extends EventEmitter {
 
   addScene(name) {
     let newSceneDescriptor = new SceneDescriptor(name);
-    let newUuid            = newSceneDescriptor.getUuid();
 
     this.sceneDescriptors.push(newSceneDescriptor);
-    this.emit('newSceneDescriptor', newUuid);
-    return (newUuid);
+    // TODO: May need to use events here
+    if (this.startingSceneUuid === undefined) {
+      this.startingSceneUuid = newSceneDescriptor.getUuid();
+    }
+    this.emit('newSceneDescriptor', this.startingSceneUuid);
+    return (newSceneDescriptor.getUuid());
   }
 
   removeScene(sceneUuid) {
@@ -81,6 +96,7 @@ class ProjectManager extends EventEmitter {
     if (index === -1) {
       return (false);
     }
+
     let objectUuid = this.sceneDescriptors[index]
       .addObjectDescriptor(name, type);
     let data = {
