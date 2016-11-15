@@ -1,4 +1,5 @@
 import UUID from './../utils/UUID';
+import Constants from '../creator/Constants';
 import ObjectDescriptor from "./ObjectDescriptor";
 
 export default class SceneDescriptor {
@@ -18,6 +19,10 @@ export default class SceneDescriptor {
 
   getName() {
     return (this.name);
+  }
+
+  getGraphicalScene() {
+    return (this.graphicalScene);
   }
 
   setAllObjectDescriptors(objectDescriptors) {

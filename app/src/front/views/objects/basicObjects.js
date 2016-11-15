@@ -5,8 +5,10 @@
 import Loader from '../../utils';
 import Object3D from '../../models/objectModel';
 import Objects from '../../collections/objectCollection';
-import Navigator from '../../../modules/creator/Navigator';
 import * as Backbone from 'backbone';
+
+import GraphicalManager from '../../../modules/common/GraphicalManager';
+import ProjectManager from '../../../modules/common/ProjectManager';
 
 class BasicObjectsView extends Backbone.View {
 
@@ -20,7 +22,7 @@ class BasicObjectsView extends Backbone.View {
 
   get events() {
     return {
-      'click .tab' : 'loadBasicObjects'
+      'click .tab': 'loadBasicObjects'
     };
   }
 
@@ -30,34 +32,41 @@ class BasicObjectsView extends Backbone.View {
 
   initialize() { // en dur pour le moment
     let basicObject = [];
-    basicObject.push(new Object3D({name: "Cube", logo:'assets/images/cube.png'}));
-    basicObject.push(new Object3D({name: "Cylinder", logo:'assets/images/cylinder.png'}));
-    basicObject.push(new Object3D({name: "Sphere", logo:'assets/images/sphere.png'}));
+    basicObject.push(new Object3D({name: "Cube", logo: 'assets/images/cube.png'}));
+    basicObject.push(new Object3D({name: "Cylinder", logo: 'assets/images/cylinder.png'}));
+    basicObject.push(new Object3D({name: "Sphere", logo: 'assets/images/sphere.png'}));
     this.objects = new Objects(basicObject);
   }
 
   render() {
     this.$el.html(this.template({
-      objectsCategories : this.objects.toJSON()
+      objectsCategories: this.objects.toJSON()
     }));
     return this;
   }
 
   loadBasicObjects(e) {
-    $(".tab.active").each(function() {
+    $(".tab.active").each(function () {
       $(this).removeClass('active');
     });
-    let selectedElem = $(e.target).closest('.tab');
+    let selectedElem     = $(e.target).closest('.tab');
+
+
+    let currentSceneUuid = GraphicalManager.getLastRenderedScene();
+
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
       case "Cube":
-        Navigator.addBox();
+
+        // TEST
+        ProjectManager.addObject(currentSceneUuid, "Box_01", "box");
+
         break;
       case "Cylinder":
-        Navigator.addCylinder();
+        // Navigator.addCylinder();
         break;
       case "Sphere":
-        Navigator.addSphere();
+        // Navigator.addSphere();
         break;
     }
   }

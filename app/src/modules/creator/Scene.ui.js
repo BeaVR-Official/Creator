@@ -5,8 +5,8 @@ import SceneControls from './SceneControls';
 class SceneUI {
   constructor() {
     this.adaptToWindow();
-    $(window).resize(() => this.adaptToWindow());
-    $('#mainView').append(Scene._renderer.domElement);
+    // $(window).resize(() => this.adaptToWindow());
+    // $('#mainView').append(Scene._renderer.domElement);
 /*
     SceneControls.constructor();
 */
