@@ -2,11 +2,12 @@ import Scene from './Scene';
 import CreatorManagement from './CreatorManagement';
 
 class Loader {
-  
+
   constructor() {
   }
 
   loadFile(file) {
+    let filename  = file.name;
     let reader    = new FileReader();
     let extension = file.name.split('.').pop().toLowerCase();
 
@@ -15,6 +16,21 @@ class Loader {
         let contents = event.target.result;
         let data     = JSON.parse(contents);
         this.handleJSON(data, file);
+      }, false);
+      reader.readAsText(file);
+    }
+    if (extension === "obj") {
+      reader.addEventListener('load', function (event) {
+
+        let contents = event.target.result;
+        let object   = new THREE.OBJLoader().parse(contents);
+
+        object.name = filename;
+        console.log("OBJECT OBJ", object);
+
+        CreatorManagement.addObject(object);
+        Scene.render();
+
       }, false);
       reader.readAsText(file);
     }
