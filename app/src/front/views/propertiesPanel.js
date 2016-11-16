@@ -115,14 +115,15 @@ class PropertiesView extends Backbone.View {
         case "location[z]":
           this.object.position.z = elem.val();
           break;
-        case "rotation[x]":
-          this.object.rotation.x = elem.val();
+        case "rotation[x]": {
+          this.object.rotation.x = elem.val() * Math.PI / 180;
           break;
+        }
         case "rotation[y]":
-          this.object.rotation.y = elem.val();
+          this.object.rotation.y = elem.val() * Math.PI / 180;
           break;
         case "rotation[z]":
-          this.object.rotation.z = elem.val();
+          this.object.rotation.z = elem.val() * Math.PI / 180;
           break;
         case "scale[x]":
           this.object.scale.x = elem.val();
