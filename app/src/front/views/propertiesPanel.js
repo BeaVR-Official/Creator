@@ -23,9 +23,10 @@ class PropertiesView extends Backbone.View {
 
   get events() {
     return {
-      'change input':         'actionChanged',
-      'click .actionblock':   'actionBlockClicked',
-      'click .reactionblock': 'reactionBlockClicked'
+      'change input':            'actionChanged',
+      'click .actionblock':      'actionBlockClicked',
+      'click #validate_texture': 'uploadTexture',
+      'click .reactionblock':    'reactionBlockClicked'
     };
   }
 
@@ -71,7 +72,8 @@ class PropertiesView extends Backbone.View {
           this.actionBlocks.add(new BlockModel({name: "Test"}));
           this.render();
         } else {
-          const v = new ActionBlockParamsView(clickedObject); // passer l'objet de la collection cliqué à la view d'édition
+          const v = new ActionBlockParamsView(clickedObject); // passer l'objet de la collection cliqué à la view
+                                                              // d'édition
           v.render();
         }
       });
@@ -206,6 +208,26 @@ class PropertiesView extends Backbone.View {
     else
       field.val(value);
   }
+
+  uploadTexture() {
+    // TODO: /!\ gros bidouillage
+    console.log("OBJECT", this.object);
+    let uploadInput = document.getElementById("upload_texture");
+    let file        = uploadInput.files[0];
+
+    let reader    = new FileReader();
+    reader.onload = function (e) {
+      let thisImage = reader.result;
+      sessionStorage.setItem(file.name, thisImage);
+    };
+    reader.readAsDataURL(uploadInput.files[0]);
+
+    let mat              = new THREE.MeshPhongMaterial();
+    mat.map              = new THREE.ImageUtils.loadTexture(
+      sessionStorage.getItem(file.name));
+    this.object.material = mat;
+  }
+
 }
 
 export default PropertiesView;
