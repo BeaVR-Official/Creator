@@ -8,7 +8,7 @@ import Objects from '../collections/objectCollection';
 import BasicObjectsView from './objects/basicObjects';
 import BasicLightsView from './objects/basicLights';
 import ActionBlockView from './objects/actionBlock';
-import CustomObject from './objects/customObject';
+import ExternalObject from './objects/externalObject';
 import WorldCustomization from './objects/worldCustomization';
 import * as Backbone from 'backbone';
 
@@ -38,14 +38,14 @@ class ObjectMenuView extends Backbone.View {
     object.push(new Object3D({name: "Add Reaction Block", logo:'assets/images/multi-tab.png'}));
     object.push(new Object3D({name: "Basic objects", logo:'assets/images/multi-tab.png'}));
     object.push(new Object3D({name: "Lights", logo:'assets/images/ambientLight.png'}));
-    object.push(new Object3D({name: "Custom objects", logo:'assets/images/puzzle.png'}));
+    object.push(new Object3D({name: "External objects", logo:'assets/images/puzzle.png'}));
     object.push(new Object3D({name: "World", logo:'assets/images/painter-palette.png'}));
     this.objects = new Objects(object);
 
     this.basicObjectView = new BasicObjectsView();
     this.basicLightView = new BasicLightsView();
     this.actionBlock = new ActionBlockView();
-    this.customObject = new CustomObject();
+    this.externalObject = new ExternalObject();
     this.worldCustomization = new WorldCustomization();
   }
 
@@ -69,8 +69,8 @@ class ObjectMenuView extends Backbone.View {
       case "Lights":
         this.basicLightView.render();
         break;
-      case "Custom objects":
-        this.customObject.render();
+      case "External objects":
+        this.externalObject.render();
         break;
       case "World":
         this.worldCustomization.render();

@@ -19,7 +19,7 @@ class Application {
       'ActionBlock',
       'ActionBlockParams',
       'ProjectHandler',
-      'CustomObject',
+      'ExternalObject',
       'WorldCustomization'], function() {
       new Router();
       Backbone.history.start();

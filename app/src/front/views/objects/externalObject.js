@@ -7,10 +7,10 @@ import Loader from '../../utils';
 import * as Backbone from 'backbone';
 import Navigator from '../../../modules/creator/Navigator';
 
-class CustomObjectView extends Backbone.View {
+class ExternalObjectView extends Backbone.View {
 
   get template() {
-    return _.template(Loader.templates.CustomObject);
+    return _.template(Loader.templates.ExternalObject);
   }
 
   get $el() {
@@ -19,7 +19,7 @@ class CustomObjectView extends Backbone.View {
 
   get events() {
     return {
-      'click #validate_customObject': 'uploadCustomObject'
+      'click #validate_externalObject': 'uploadExternalObject'
     };
   }
 
@@ -36,11 +36,11 @@ class CustomObjectView extends Backbone.View {
     return this;
   }
 
-  uploadCustomObject() {
-    let uploadInput = document.getElementById("upload_customObject");
+  uploadExternalObject() {
+    let uploadInput = document.getElementById("upload_externalObject");
     let file = uploadInput.files[0];
     Navigator.addExternal(file);
   }
 }
 
-export default CustomObjectView;
+export default ExternalObjectView;
