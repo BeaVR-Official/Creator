@@ -232,6 +232,8 @@ class PropertiesView extends Backbone.View {
     } else
       this.object.material = mat;
 
+    sessionStorage.clear();
+
     console.log("typeof OBJECT", (typeof this.object));
   }
 
