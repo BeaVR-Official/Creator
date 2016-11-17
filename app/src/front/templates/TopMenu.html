@@ -26,7 +26,7 @@
                         <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Launch</p></div>
                     </div>
                 </a>
-                <a class="item" style="padding-left: 40px;padding-right: 40px;">
+                <a class="item" style="padding-left: 40px;padding-right: 40px;" id="save">
                     <div class="ui grid">
                         <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/save-file-option.png" style="height: 28px; margin: auto;" /></div>
                         <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Save</p></div>
@@ -35,8 +35,9 @@
                 <% if (currentUser == undefined) { %>
                 <a class="item" style="padding-left: 40px;padding-right: 40px;">
                     <div class="ui grid">
-                        <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/save-file-option.png" style="height: 28px; margin: auto;" /></div>
-                        <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Load</p></div>
+<label for="file">Load</label>
+<input id="load_file" type="file" name="file" id="file">
+                        <button id="validate_load">Valider</button>
                     </div>
                 </a>
                 <a class="ui dropdown item userMenuDropdown">

@@ -27,8 +27,18 @@ class TopMenuView extends Backbone.View {
       'click #project_button' : 'openProjectPanel',
       'click #scene_button' : 'openScenePanel',
       'click .modalProjects' : 'openProjectModal',
-      'click .logoutAction' : ''
+      'click .logoutAction' : '',
+      'click #save': 'saveDemo',
+      'click #validate_load': 'loadDemo'
     };
+  }
+
+  saveDemo() {
+    Save.saveCustomObjects(false);
+  }
+
+  loadDemo() {
+    Save.loadCustomObjects();
   }
 
   constructor(params) {

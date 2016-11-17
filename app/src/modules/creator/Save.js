@@ -14,7 +14,7 @@ class Save {
     Scene.render();
     Scene.initHelpers();
 
-    let file   = event.target.files[0];
+    let file   = document.getElementById("load_file").files[0];
     let reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function (e) {
