@@ -15,3 +15,7 @@
 /.idea/jsLibraryMappings.xml
 /app/dist/
 
+/Creator.iml
+.idea/compiler.xml
+.idea/copyright/
+Creator.iml
