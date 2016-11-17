@@ -6,12 +6,14 @@ var listLoadedObjectsUuid = [];
 class ScenePlayer {
 
   constructor() {
+    this.count = 0;
 
     this._scene = new THREE.Scene();
     this.initCamera();
     this.initRenderer();
     this.initOrbitControl();
     window.addEventListener('deviceorientation', () => this.setOrientationControls, true);
+
     this.load();
   }
 
@@ -91,27 +93,37 @@ class ScenePlayer {
    */
 
   load() {
-    let stored        = localStorage['saveRunner'];
-    let loader        = new THREE.ObjectLoader();
-    let loadedObjects = JSON.parse(stored);
-    loadedObjects.forEach((entry) => {
-      let loadedMesh = loader.parse(entry);
-      // on enregistre tout les enfants dans un premier temps
-      this.excludeChildren(loadedMesh);
-    });
-    loadedObjects.forEach((entry) => {
-      let loadedMesh = loader.parse(entry);
-      let stop       = false;
-      listLoadedObjectsUuid.forEach((object) => {
-        if (object === loadedMesh.uuid) {
-          stop = true;
+    // Vinvin a fait ça sur mon ordi, ce n'est pas moi ;-)
+    if (this.count === 0) {
+      let stored        = localStorage['saveRunner'];
+      let loader        = new THREE.ObjectLoader();
+      let loadedObjects = JSON.parse(stored);
+      loadedObjects.forEach((entry) => {
+        let loadedMesh = loader.parse(entry);
+        // on enregistre tout les enfants dans un premier temps
+        this.excludeChildren(loadedMesh);
+      });
+      loadedObjects.forEach((entry) => {
+        let loadedMesh = loader.parse(entry);
+        let stop       = false;
+        listLoadedObjectsUuid.forEach((object) => {
+          if (object === loadedMesh.uuid) {
+            stop = true;
+          }
+        });
+        if (stop === false || listLoadedObjectsUuid.length === 0) {
+
+          if (loadedMesh.userData.objType === "picker") {
+            this._scene.add(loadedMesh.children[0]);
+          } else
+            this._scene.add(loadedMesh);
+
+          console.log("LoadedMesh", loadedMesh);
         }
       });
-      if (stop === false || listLoadedObjectsUuid.length === 0) {
-        this._scene.add(loadedMesh);
-      }
-    });
-    this.render();
+      this.render();
+    }
+    this.count++;
   }
 
   excludeChildren(object) {
