@@ -223,10 +223,16 @@ class PropertiesView extends Backbone.View {
     };
     reader.readAsDataURL(uploadInput.files[0]);
 
-    let mat              = new THREE.MeshPhongMaterial();
-    mat.map              = new THREE.ImageUtils.loadTexture(
+    let mat = new THREE.MeshPhongMaterial();
+    mat.map = new THREE.ImageUtils.loadTexture(
       sessionStorage.getItem(file.name));
-    this.object.material = mat;
+
+    if (this.object instanceof THREE.Group) {
+      this.object.children[0].material = mat;
+    } else
+      this.object.material = mat;
+
+    console.log("typeof OBJECT", (typeof this.object));
   }
 
 }

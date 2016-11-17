@@ -11,7 +11,7 @@ class Loader {
     let reader    = new FileReader();
     let extension = file.name.split('.').pop().toLowerCase();
 
-    if (extension === 'js') {
+    if (extension === 'js' || extension === 'json') {
       reader.addEventListener('load', event => {
         let contents = event.target.result;
         let data     = JSON.parse(contents);
@@ -27,30 +27,32 @@ class Loader {
 
         object.name = filename;
 
-        let mat = new THREE.MeshPhongMaterial();
-        mat.map = new THREE.ImageUtils.loadTexture(
-          'assets/images/groundTex/ground_4.png');
-
-        object.children[0].material = mat;
-        object.children[1].material = mat;
-        object.children[2].material = mat;
-        object.children[3].material = mat;
-        object.children[4].material = mat;
-        object.children[5].material = mat;
-        object.children[6].material = mat;
-
-        console.log("mat", mat);
-        console.log("OBJECT OBJ", object);
+        // TMP test material
+        // let mat = new THREE.MeshPhongMaterial();
+        // mat.map = new THREE.ImageUtils.loadTexture(
+        //   'assets/images/groundTex/ground_4.png');
+        //
+        // _.map(object.children, function (child) {
+        //   return child.material = mat;
+        // });
 
         CreatorManagement.addObject(object);
         Scene.render();
 
+        console.log("External OBJ added", object);
       }, false);
       reader.readAsText(file);
     }
   }
 
   handleJSON(data, file) {
+
+    if (data.metadata === undefined) { // 2.0
+
+      data.metadata = {type: 'Geometry'};
+
+    }
+
     if (data.metadata.type === undefined) { // 3.0
       data.metadata.type = 'Geometry';
     }
