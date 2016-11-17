@@ -92,36 +92,41 @@ class ScenePlayer {
    }
    */
 
+
   load() {
     // Vinvin a fait ça sur mon ordi, ce n'est pas moi ;-)
     if (this.count === 0) {
-      let stored        = localStorage['saveRunner'];
-      let loader        = new THREE.ObjectLoader();
-      let loadedObjects = JSON.parse(stored);
-      loadedObjects.forEach((entry) => {
-        let loadedMesh = loader.parse(entry);
-        // on enregistre tout les enfants dans un premier temps
-        this.excludeChildren(loadedMesh);
-      });
-      loadedObjects.forEach((entry) => {
-        let loadedMesh = loader.parse(entry);
-        let stop       = false;
-        listLoadedObjectsUuid.forEach((object) => {
-          if (object === loadedMesh.uuid) {
-            stop = true;
+
+      $.getJSON( "SaveSample.json", (json) => {
+
+        let loader        = new THREE.ObjectLoader();
+        let loadedObjects = json;
+        loadedObjects.forEach((entry) => {
+          let loadedMesh = loader.parse(entry);
+          // on enregistre tout les enfants dans un premier temps
+          this.excludeChildren(loadedMesh);
+        });
+        loadedObjects.forEach((entry) => {
+          let loadedMesh = loader.parse(entry);
+          let stop       = false;
+          listLoadedObjectsUuid.forEach((object) => {
+            if (object === loadedMesh.uuid) {
+              stop = true;
+            }
+          });
+          if (stop === false || listLoadedObjectsUuid.length === 0) {
+
+            if (loadedMesh.userData.objType === "picker") {
+              this._scene.add(loadedMesh.children[0]);
+            } else
+              this._scene.add(loadedMesh);
+
+            console.log("LoadedMesh", loadedMesh);
           }
         });
-        if (stop === false || listLoadedObjectsUuid.length === 0) {
+        this.render();
 
-          if (loadedMesh.userData.objType === "picker") {
-            this._scene.add(loadedMesh.children[0]);
-          } else
-            this._scene.add(loadedMesh);
-
-          console.log("LoadedMesh", loadedMesh);
-        }
       });
-      this.render();
     }
     this.count++;
   }
