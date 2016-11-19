@@ -18,6 +18,10 @@ class Threejs extends AbstractPlugin {
     const node       = this._nodeFromElement($node);
     const $deleteBtn = $(this.options.templates.deleteBtn);
 
+
+
+
+
     $node.find('.node-content').eq(0).append($deleteBtn);
     $deleteBtn.click(() => that.deleteNode(node));
   }
@@ -27,6 +31,10 @@ class Threejs extends AbstractPlugin {
    * @param $node
    * @returns {*|jQuery|HTMLElement}
    */
+
+
+
+
   _nodeFromElement($node) {
     return this.renderer._nodeFromElement($node);
   }

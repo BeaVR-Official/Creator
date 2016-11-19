@@ -161,9 +161,9 @@ class PropertiesView extends Backbone.View {
       this.setInfo("location[y]", this.object.position.y);
       this.setInfo("location[z]", this.object.position.z);
 
-      this.setInfo("rotation[x]", this.object.rotation.x);
-      this.setInfo("rotation[y]", this.object.rotation.y);
-      this.setInfo("rotation[z]", this.object.rotation.z);
+      this.setInfo("rotation[x]", this.object.rotation.x * 180 / Math.PI);
+      this.setInfo("rotation[y]", this.object.rotation.y * 180 / Math.PI);
+      this.setInfo("rotation[z]", this.object.rotation.z * 180 / Math.PI);
 
       this.setInfo("scale[x]", this.object.scale.x);
       this.setInfo("scale[y]", this.object.scale.y);

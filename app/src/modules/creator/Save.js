@@ -77,7 +77,7 @@ class Save {
 
     // Dernière Partie temporaire
     if (runner === true) {
-      localStorage['saveRunner'] = output;
+      // localStorage['saveRunner'] = output;
     } else {
       let blob = new Blob([JSON.stringify(object)], {type: "application/json;charset=utf-8"});
       saveAs(blob, "SaveSample.json");
