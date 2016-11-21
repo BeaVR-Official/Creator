@@ -5,8 +5,8 @@
 //
 // Scene.render();
 
-import ProjectManager from './modules/common/ProjectManager';
-import GraphicalManager from './modules/common/GraphicalManager';
-require('./front/app.js');
+import Application from './front/app';
+import EventManager from './modules/common/EventManager';
 
-let sceneUuid = ProjectManager.addScene("Default");
+new Application();
+EventManager.addScene("Default");
