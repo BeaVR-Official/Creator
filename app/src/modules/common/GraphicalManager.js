@@ -1,8 +1,6 @@
 import Constants from '../creator/Constants';
 import ProjectManager from './ProjectManager';
 
-// TODO: Events on
-
 Physijs.scripts.worker = 'physijs_worker.js';
 Physijs.scripts.ammo   = 'ammo.js';
 
@@ -30,17 +28,35 @@ class GraphicalManager {
       camSettings.posZ);
 
     // GraphicalManager attributes
-    this.graphicalScenes   = [];
-    this.lastRenderedScene = undefined;
-    this.currentSceneUuid  = undefined;
-    this.mouse             = new THREE.Vector2();
-
-    // ProjectManager events
-    // this.events();
+    this.editorMod        = true; // false for runnerMod
+    this.scene            = undefined;
+    this.currentSceneUuid = undefined;
+    this.lastSceneUuid    = undefined;
+    this.mouse            = new THREE.Vector2();
   }
 
-  setLastRenderedScene(sceneUuid) {
-    this.lastRenderedScene = sceneUuid;
+  setCurrentSceneUuid(sceneUuid) {
+    this.currentSceneUuid = sceneUuid;
+    if (this.isSceneChanges()) {
+      // Launch SceneFactory
+      this._sceneFactory();
+    }
+  }
+
+  isSceneChanges() {
+    return (this.currentSceneUuid !== this.lastSceneUuid);
+  }
+
+  getCurrentSceneUuid() {
+    return this.currentSceneUuid;
+  }
+
+  setlastSceneUuid(sceneUuid) {
+    this.lastSceneUuid = sceneUuid;
+  }
+
+  getLastSceneUuid() {
+    return this.lastSceneUuid;
   }
 
   setMouse(mouse) {
@@ -50,65 +66,70 @@ class GraphicalManager {
     console.log("mouse", this.mouse);
   }
 
-  getLastRenderedScene() {
-    return this.lastRenderedScene;
-  }
-
-  /**
-   * Adapter scene renderer when window is resizing.
-   */
-  adaptToWindow() {
-    let parentWidth  = $(window).width() - Constants.getCanvasSettings().width;
-    let parentHeight = $(window).height();
-
-    this.camera.aspect = parentWidth / parentHeight;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(parentWidth, parentHeight);
-  }
-
-  /**
-   * Get graphicalScene by uuid of sceneDescriptor
-   * @param idSceneDescriptor
-   * @returns {*}
-   */
-  getGraphicalScene(idSceneDescriptor) {
-    for (let index = 0; index < this.graphicalScenes.length; index++) {
-      let graphicalScene = this.graphicalScenes[index];
-      if (graphicalScene.uuid === idSceneDescriptor)
-        return graphicalScene;
-    }
-    return undefined;
-  }
-
-  addScene(uuidSceneDescriptor) {
-    let graphicalScene = {
-      uuid:       uuidSceneDescriptor,
-      scenePhysi: new Physijs.Scene()
-    };
-    this.graphicalScenes.push(graphicalScene);
-    this.render(uuidSceneDescriptor);
-  }
-
-  addObject(sceneUuid, objectUuid) {
-    let scenePhysi       = this.getGraphicalScene(sceneUuid).scenePhysi;
-    let sceneDescriptor  = ProjectManager.getSceneDescriptor(sceneUuid);
+  addObject(objectUuid) {
+    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
-    let newObject        = this.createMesh(objectDescriptor);
 
-    scenePhysi.add(newObject);
-    console.log("newObject", newObject);
-    this.render(sceneUuid);
+    this._objectFactory(objectDescriptor);
   }
 
   removeObject(sceneDescriptor, objectDescriptor) {
 
   }
 
-  changeScene(sceneUuid) {
 
+  /**
+   * Adapt scene renderer to canvas
+   * TODO: getCanvasWidth & height by EventManager(no more canvasSettings in Constants)
+   * @private
+   */
+  _adaptToWindow() {
+    let parentWidth  = $(window).width() - Constants.getCanvasSettings().width;
+    let parentHeight = $(window).height();
+
+    this.camera.aspect = parentWidth / parentHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(parentWidth, parentHeight);
+    this.render();
   }
 
-  createMesh(objectDescriptor) {
+  _sceneFactory() {
+    this._createScene();
+    this._adaptToWindow();
+
+    let sceneDesc   = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
+    let allObjDescs = sceneDesc.getAllObjectDescriptors();
+
+    _.map(allObjDescs, function (objDesc) {
+      this._objectFactory(objDesc);
+
+    });
+    // this.render();
+  }
+
+  _objectFactory(objectDescriptor) {
+    let obj = this._createMesh(objectDescriptor);
+
+    this.scene.add(obj);
+    this.render();
+  }
+
+  /**
+   * Create different kind of scene
+   * @private
+   */
+  _createScene() {
+    if (this.editorMod) {
+      this.scene = new THREE.Scene();
+      // TODO variable Grid params
+      let grid   = new THREE.GridHelper(500, 50);
+
+      this.scene.add(grid);
+    } else
+      this.scene = new Physijs.Scene();
+  }
+
+  _createMesh(objectDescriptor) {
     // TODO handle data material into obj desc
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     console.log("material!!!!!", material);
@@ -134,24 +155,11 @@ class GraphicalManager {
     return mesh;
   }
 
-  /**
-   * Render the sceneDescriptor send
-   * @param idSceneDescriptor
-   */
-  render(idSceneDescriptor) {
-    // TODO:Check if necessary
-    // window.scene = scene;
-
-    let scenePhysiJS = this.getGraphicalScene(idSceneDescriptor).scenePhysi;
-    console.log("Scene", scenePhysiJS);
-
-    // Resize
-    this.adaptToWindow();
-    // Render
+  render() {
     this.renderer.clear();
-    this.camera.lookAt(scenePhysiJS.position);
-    this.renderer.render(scenePhysiJS, this.camera);
-    this.setLastRenderedScene(idSceneDescriptor);
+    this.camera.lookAt(this.scene.position);
+    this.renderer.render(this.scene, this.camera);
+    this.setlastSceneUuid(this.currentSceneUuid);
   }
 }
 

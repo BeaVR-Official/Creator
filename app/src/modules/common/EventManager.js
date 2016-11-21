@@ -7,6 +7,10 @@ class EventManager extends EventEmitter {
     this.eventsListener();
   }
 
+  // ////////////////
+  // Creator commands
+  // ////////////////
+
   addScene(sceneName) {
     this.emit('addScene', sceneName);
   }
@@ -34,16 +38,29 @@ class EventManager extends EventEmitter {
     this.emit('removeObject', data);
   }
 
+  // /////////////////////
+  // Creator SpecialEvents
+  // /////////////////////
+
+  adaptGraphManToWindow(canvasHeight, canvasWidth) {
+
+  }
+
+  // ////////////////
+  // Events' listener
+  // ////////////////
   // TODO clear events ?
+
   eventsListener() {
     this.on('addScene', function (sceneName) {
       let sceneUuid = ProjectManager.addScene(sceneName);
 
-      GraphicalManager.addScene(sceneUuid);
+      GraphicalManager.setCurrentSceneUuid(sceneUuid);
     });
 
     this.on('removeScene', function (sceneUuid) {
       ProjectManager.removeScene(sceneUuid);
+
     });
 
     this.on('addObject', function (data) {
@@ -52,7 +69,7 @@ class EventManager extends EventEmitter {
         data.objectName,
         data.objectType);
 
-      GraphicalManager.addObject(data.sceneUuid, objectUuid);
+      GraphicalManager.addObject(objectUuid);
     });
 
     this.on('removeObject', function (data) {
@@ -61,6 +78,10 @@ class EventManager extends EventEmitter {
 
       GraphicalManager.removeObject(sceneDescriptor, objectDescriptor);
       let state = ProjectManager.removeObject(data.sceneUuid, data.objectUuid);
+    });
+
+    this.on('adaptGraphManToWindow', function (data) {
+
     });
   }
 

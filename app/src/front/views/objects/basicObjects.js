@@ -52,7 +52,7 @@ class BasicObjectsView extends Backbone.View {
     let selectedElem     = $(e.target).closest('.tab');
 
 
-    let currentSceneUuid = GraphicalManager.getLastRenderedScene();
+    let currentSceneUuid = GraphicalManager.getLastSceneUuid();
 
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
