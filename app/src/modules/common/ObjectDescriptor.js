@@ -1,6 +1,6 @@
 import UUID from './../utils/UUID';
-import MaterialDescriptor from 'MaterialDescriptor';
-import GeometryDescriptor from 'GeometryDescriptor';
+import MaterialDescriptor from './MaterialDescriptor';
+import GeometryDescriptor from './GeometryDescriptor';
 
 export default class ObjectDescriptor {
   constructor(name, type) {

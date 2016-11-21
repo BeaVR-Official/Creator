@@ -5,7 +5,8 @@
 import Loader from '../../utils';
 import * as Backbone from 'backbone';
 import Scene from '../../../modules/creator/Scene';
-import ProjectManager from '../../../modules/creator/ProjectManager';
+import ProjectManager from '../../../modules/common/ProjectManager';
+import EventManager  from '../../../modules/common/EventManager';
 
 class ScenePanelView extends Backbone.View {
 
@@ -26,7 +27,7 @@ class ScenePanelView extends Backbone.View {
 
   render() {
     this.$el.html(this.template({
-      sceneList : ProjectManager._sceneManager._scenes
+      sceneList : ProjectManager.getAllSceneDescriptors()
     }));
     $("#scene_name").val(ProjectManager.getCurrentScene().name);
     return this;
@@ -53,7 +54,7 @@ class ScenePanelView extends Backbone.View {
 
   newScene() {
     // Changement coté back
-    ProjectManager._sceneManager.addNewScene($("#new_scene_name").val());
+    EventManager.addScene($("#new_scene_name").val());
     
     // Changement coté front
     $("#display_scene_name").text(value);

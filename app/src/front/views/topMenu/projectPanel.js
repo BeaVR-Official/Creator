@@ -4,7 +4,7 @@
 
 import Loader from '../../utils';
 import * as Backbone from 'backbone';
-import ProjectManager from '../../../modules/creator/ProjectManager';
+import ProjectManager from '../../../modules/common/ProjectManager';
 
 class ProjectPanelView extends Backbone.View {
 
@@ -25,7 +25,7 @@ class ProjectPanelView extends Backbone.View {
 
   render() {
     this.$el.html(this.template);
-    $("#project_name").val(ProjectManager._name);
+    $("#project_name").val(ProjectManager.getName());
     return this;
   }
 
@@ -37,7 +37,7 @@ class ProjectPanelView extends Backbone.View {
 
   changeProjectName() {
     let value = $("#project_name").val();
-    ProjectManager._name = value;
+    ProjectManager.setName(value);
     $("#display_project_name").text(value);
   }
 

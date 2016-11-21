@@ -8,7 +8,8 @@ import Save from '../../modules/creator/Save';
 import ProjectPanelView from './topMenu/projectPanel';
 import ScenePanelView from './topMenu/scenePanel';
 import TopMenuUtils from "./topMenu.utils";
-import ProjectManager from '../../modules/creator/ProjectManager';
+import ProjectManager from '../../modules/common/ProjectManager';
+import GraphicalManager from '../../modules/common/GraphicalManager';
 
 class TopMenuView extends Backbone.View {
 
@@ -90,8 +91,8 @@ class TopMenuView extends Backbone.View {
   render() {
     if (this.$el)
     this.$el.html(this.template({
-      currentProject: {name : ProjectManager._name},
-      currentScene: {name: ProjectManager.getCurrentScene().name},
+      currentProject: {name : ProjectManager.getName()},
+      currentScene: {name: ProjectManager.getSceneDescriptor(GraphicalManager.getCurrentSceneUuid()).getName()},
       currentUser : (this.model.attributes.id != -1) ?
                                                {firstName: this.model.attributes.firstName,
                                                 picture: this.model.attributes.picture} : undefined}));
