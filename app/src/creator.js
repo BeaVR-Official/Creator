@@ -1,6 +1,12 @@
-import Scene from './modules/creator/Scene';
+// import Scene from './modules/creator/Scene';
+//
+// require('./front/app.js');
+// require('./modules/creator/ProjectManager.js');
+//
+// Scene.render();
 
-require('./front/app.js');
-require('./modules/creator/ProjectManager.js');
+import Application from './front/app';
+import EventManager from './modules/common/EventManager';
 
-Scene.render();
+new Application();
+EventManager.addScene("Default");

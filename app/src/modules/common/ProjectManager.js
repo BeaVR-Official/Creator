@@ -1,5 +1,6 @@
-import SceneDescriptor from "SceneDescriptor";
-import ObjectDescriptor from "ObjectDescriptor";
+import SceneDescriptor from "./SceneDescriptor";
+import ObjectDescriptor from "./ObjectDescriptor";
+import EventDescriptor from "./EventManager";
 
 class ProjectManager {
   constructor() {
@@ -47,10 +48,7 @@ class ProjectManager {
 
   getSceneDescriptor(sceneUuid) {
     let index = this.getSceneDescriptorIndex(sceneUuid);
-    if (index !== -1) {
-      return (undefined);
-    }
-    return (this.sceneDescriptors[index]);
+    return (index !== -1 ? this.sceneDescriptors[index] : undefined);
   }
 
   getObjectDescriptor(sceneUuid, objectUuid) {
@@ -66,13 +64,14 @@ class ProjectManager {
   //
 
   addScene(name) {
-    let newSceneDescriptor = SceneDescriptor(name);
+    let newSceneDescriptor = new SceneDescriptor(name);
+
     this.sceneDescriptors.push(newSceneDescriptor);
     // TODO: May need to use events here
     if (this.startingSceneUuid === undefined) {
       this.startingSceneUuid = newSceneDescriptor.getUuid();
     }
-    return (newSceneDescriptor.getUuid());
+    return (this.startingSceneUuid);
   }
 
   removeScene(sceneUuid) {
@@ -82,7 +81,7 @@ class ProjectManager {
     }
     let objectDescriptors = this.sceneDescriptors[sceneIndex].getAllObjectDescriptors();
     for (let objectIndex = 0; i < objectDescriptors.length; objectIndex += 1) {
-      //TODO: Ask ScriptManager to remove all references to objectUuid !!!
+      // TODO: Ask ScriptManager to remove all references to objectUuid !!!
       // ScriptManager.removeObjectReferences(objectDescriptors[objectIndex].getUuid());
     }
     this.sceneDescriptors[sceneIndex].removeAllObjectDescriptors();
@@ -91,16 +90,19 @@ class ProjectManager {
   }
 
   addObject(sceneUuid, name, type) {
-    //TODO: Define the structure of type: what if custom object ? Send array with geometry ? etc.
+    // TODO: Define the structure of type: what if custom object ? Send array with geometry ? etc.
     let index = this.getSceneDescriptorIndex(sceneUuid);
     if (index === -1) {
       return (false);
     }
-    return (this.sceneDescriptors[index].addObjectDescriptor(name, type));
+
+    let objectUuid = this.sceneDescriptors[index]
+      .addObjectDescriptor(name, type);
+    return (objectUuid);
   }
 
   removeObject(sceneUuid, objectUuid) {
-    //TODO: may require debugging over for loop to verify that all children get removed
+    // TODO: may require debugging over for loop to verify that all children get removed
     let sceneDescriptor = this.getSceneDescriptor(sceneUuid);
     if (sceneDescriptor === undefined) {
       return (false);
@@ -117,8 +119,10 @@ class ProjectManager {
       this.removeObjectChild(sceneUuid, parentUuid, objectUuid);
     }
     sceneDescriptor.removeObjectDescriptor(objectUuid);
-    //TODO: Ask ScriptManager to remove all references to objectUuid !!!
+    // TODO: Ask ScriptManager to remove all references to objectUuid !!!
     // ScriptManager.removeObjectReferences(objectUuid);
+
+    EventDescriptor.removeObject(sceneUuid, objectUid);
     return (true);
   }
 

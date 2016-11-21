@@ -20,13 +20,11 @@ class Application {
       'ActionBlockParams',
       'ProjectHandler',
       'CustomObject',
-      'WorldCustomization'], function() {
+      'WorldCustomization'], function () {
       new Router();
       Backbone.history.start();
     });
   }
 }
 
-$(() => {
-  new Application();
-});
+export default Application;

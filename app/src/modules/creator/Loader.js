@@ -32,6 +32,7 @@ class Loader {
     if (data.metadata.type.toLowerCase() === 'geometry') {
       let loader   = new THREE.JSONLoader();
       let result   = loader.parse(data);
+      console.log("result external obj", result);
       let geometry = result.geometry;
       let material;
 
