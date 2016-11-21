@@ -1,4 +1,6 @@
 import UUID from './../utils/UUID';
+import MaterialDescriptor from 'MaterialDescriptor';
+import GeometryDescriptor from 'GeometryDescriptor';
 
 export default class ObjectDescriptor {
   constructor(name, type) {
@@ -12,6 +14,8 @@ export default class ObjectDescriptor {
     this.scale             = [0.0, 0.0, 0.0];
     this.isSolid           = false;
     this.isGravityEffected = false;
+    this.geometryDescriptor = new GeometryDescriptor(name + " geometry");
+    this.materialDescriptor = new MaterialDescriptor(name + " material");
     // TODO: support all the more specific properties
     // namely: Cameras, Skyboxes
   }
@@ -81,6 +85,22 @@ export default class ObjectDescriptor {
 
   getScale() {
     return (this.scale);
+  }
+
+  setMaterialDescriptor(materialDescriptor) {
+    this.materialDescriptor = materialDescriptor;
+  }
+
+  getMaterialDescriptor() {
+    return (this.materialDescriptor);
+  }
+
+  setGeometryDescriptor(geometryDescriptor) {
+    this.geometryDescriptor = geometryDescriptor;
+  }
+
+  getGeometryDescriptor() {
+    return (this.geometryDescriptor);
   }
 
   setSolidStatus(isSolid) {
