@@ -1,9 +1,9 @@
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
+import EventDescriptor from "./EventManager";
 
-class ProjectManager extends EventEmitter {
+class ProjectManager {
   constructor() {
-    super();
     this.name              = "";
     this.sceneDescriptors  = [];
     this.startingSceneUuid = undefined;
@@ -71,8 +71,7 @@ class ProjectManager extends EventEmitter {
     if (this.startingSceneUuid === undefined) {
       this.startingSceneUuid = newSceneDescriptor.getUuid();
     }
-    this.emit('newSceneDescriptor', this.startingSceneUuid);
-    return (newSceneDescriptor.getUuid());
+    return (this.startingSceneUuid);
   }
 
   removeScene(sceneUuid) {
@@ -99,11 +98,6 @@ class ProjectManager extends EventEmitter {
 
     let objectUuid = this.sceneDescriptors[index]
       .addObjectDescriptor(name, type);
-    let data = {
-      sceneUuid: sceneUuid,
-      objectUuid: objectUuid
-    };
-    this.emit('newObjectDescriptor', data);
     return (objectUuid);
   }
 
@@ -127,6 +121,8 @@ class ProjectManager extends EventEmitter {
     sceneDescriptor.removeObjectDescriptor(objectUuid);
     // TODO: Ask ScriptManager to remove all references to objectUuid !!!
     // ScriptManager.removeObjectReferences(objectUuid);
+
+    EventDescriptor.removeObject(sceneUuid, objectUid);
     return (true);
   }
 

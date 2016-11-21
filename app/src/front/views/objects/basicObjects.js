@@ -8,7 +8,7 @@ import Objects from '../../collections/objectCollection';
 import * as Backbone from 'backbone';
 
 import GraphicalManager from '../../../modules/common/GraphicalManager';
-import ProjectManager from '../../../modules/common/ProjectManager';
+import EventManager from '../../../modules/common/EventManager';
 
 class BasicObjectsView extends Backbone.View {
 
@@ -59,7 +59,7 @@ class BasicObjectsView extends Backbone.View {
       case "Cube":
 
         // TEST
-        ProjectManager.addObject(currentSceneUuid, "Box_01", "box");
+        EventManager.addObject(currentSceneUuid, "Box_01", "box");
 
         break;
       case "Cylinder":

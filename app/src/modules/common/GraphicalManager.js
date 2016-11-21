@@ -32,10 +32,11 @@ class GraphicalManager {
     // GraphicalManager attributes
     this.graphicalScenes   = [];
     this.lastRenderedScene = undefined;
-    this.mouse = new THREE.Vector2();
+    this.currentSceneUuid  = undefined;
+    this.mouse             = new THREE.Vector2();
 
     // ProjectManager events
-    this.events();
+    // this.events();
   }
 
   setLastRenderedScene(sceneUuid) {
@@ -79,55 +80,33 @@ class GraphicalManager {
     return undefined;
   }
 
-  /**
-   * Render the sceneDescriptor send
-   * @param idSceneDescriptor
-   */
-  render(idSceneDescriptor) {
-    // TODO:Check if necessary
-    // window.scene = scene;
-
-    let scenePhysiJS = this.getGraphicalScene(idSceneDescriptor).scenePhysi;
-    console.log("Scene", scenePhysiJS);
-
-    // Resize
-    this.adaptToWindow();
-    // Render
-    this.renderer.clear();
-    this.camera.lookAt(scenePhysiJS.position);
-    this.renderer.render(scenePhysiJS, this.camera);
-    this.setLastRenderedScene(idSceneDescriptor);
+  addScene(uuidSceneDescriptor) {
+    let graphicalScene = {
+      uuid:       uuidSceneDescriptor,
+      scenePhysi: new Physijs.Scene()
+    };
+    this.graphicalScenes.push(graphicalScene);
+    this.render(uuidSceneDescriptor);
   }
 
-  events() {
-    /**
-     * New SceneDescriptor event
-     */
-    ProjectManager.on('newSceneDescriptor', uuid => {
-      let graphicalScene = {
-        uuid:       uuid,
-        scenePhysi: new Physijs.Scene()
-      };
-      this.graphicalScenes.push(graphicalScene);
-      this.render(uuid);
-    });
+  addObject(sceneUuid, objectUuid) {
+    let scenePhysi       = this.getGraphicalScene(sceneUuid).scenePhysi;
+    let sceneDescriptor  = ProjectManager.getSceneDescriptor(sceneUuid);
+    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
+    let newObject        = this.createMesh(objectDescriptor);
 
-    /**
-     * New ObjectDescriptor event
-     * data contains sceneUuid and ObjectUuid
-     */
-    ProjectManager.on('newObjectDescriptor', data => {
-      let scenePhysi       = this.getGraphicalScene(data.sceneUuid).scenePhysi;
-      let sceneDescriptor  = ProjectManager.getSceneDescriptor(data.sceneUuid);
-      let objectDescriptor = sceneDescriptor.getObjectDescriptor(data.objectUuid);
-      let newObject        = this.createMesh(objectDescriptor);
-
-      scenePhysi.add(newObject);
-      this.render(data.sceneUuid);
-    });
+    scenePhysi.add(newObject);
+    console.log("newObject", newObject);
+    this.render(sceneUuid);
   }
 
+  removeObject(sceneDescriptor, objectDescriptor) {
 
+  }
+
+  changeScene(sceneUuid) {
+
+  }
 
   createMesh(objectDescriptor) {
     // TODO handle data material into obj desc
@@ -155,6 +134,25 @@ class GraphicalManager {
     return mesh;
   }
 
+  /**
+   * Render the sceneDescriptor send
+   * @param idSceneDescriptor
+   */
+  render(idSceneDescriptor) {
+    // TODO:Check if necessary
+    // window.scene = scene;
+
+    let scenePhysiJS = this.getGraphicalScene(idSceneDescriptor).scenePhysi;
+    console.log("Scene", scenePhysiJS);
+
+    // Resize
+    this.adaptToWindow();
+    // Render
+    this.renderer.clear();
+    this.camera.lookAt(scenePhysiJS.position);
+    this.renderer.render(scenePhysiJS, this.camera);
+    this.setLastRenderedScene(idSceneDescriptor);
+  }
 }
 
 export default new GraphicalManager();
