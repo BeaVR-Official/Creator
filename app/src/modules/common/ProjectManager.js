@@ -9,6 +9,14 @@ class ProjectManager {
     this.startingSceneUuid = undefined;
   }
 
+  toJSON() {
+    return {
+      name:               this.name,
+      sceneDescriptors:   this.sceneDescriptors,
+      startingSceneUuid:  this.startingSceneUuid
+    }
+  }
+
   setName(name) {
     this.name = name;
   }

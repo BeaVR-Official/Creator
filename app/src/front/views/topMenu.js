@@ -4,6 +4,7 @@
 
 import Loader from '../utils';
 import * as Backbone from 'backbone';
+import SaveManager from '../../modules/common/SaveManager';
 import Save from '../../modules/creator/Save';
 import ProjectPanelView from './topMenu/projectPanel';
 import ScenePanelView from './topMenu/scenePanel';
@@ -27,7 +28,9 @@ class TopMenuView extends Backbone.View {
       'click #project_button' : 'openProjectPanel',
       'click #scene_button' : 'openScenePanel',
       'click .modalProjects' : 'openProjectModal',
-      'click .logoutAction' : ''
+      'click .logoutAction' : '',
+      'click #saveProject' : 'saveProject',
+      'click #loadProject' : 'loadProject'
     };
   }
 
@@ -41,6 +44,14 @@ class TopMenuView extends Backbone.View {
     _.bind(this.render, this);
     this.model.bind('change', this.render);
     this.model.bind('change', _.bind(this.render, this));
+  }
+
+  saveProject() {
+    SaveManager.exportProject();
+  }
+
+  loadProject() {
+    SaveManager.importProject();
   }
 
   initialize() {
