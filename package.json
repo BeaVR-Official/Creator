@@ -57,6 +57,7 @@
     "physijs": "0.0.4",
     "physijs-webpack": "0.0.2",
     "three": "0.76.1",
-    "underscore": "1.8.3"
+    "underscore": "1.8.3",
+    "event-to-promise": "0.7.0"
   }
 }

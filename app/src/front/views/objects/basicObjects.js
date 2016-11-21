@@ -49,17 +49,21 @@ class BasicObjectsView extends Backbone.View {
     $(".tab.active").each(function () {
       $(this).removeClass('active');
     });
-    let selectedElem     = $(e.target).closest('.tab');
+    let selectedElem = $(e.target).closest('.tab');
 
-
-    let currentSceneUuid = GraphicalManager.getLastSceneUuid();
+    let currentSceneUuid = GraphicalManager.currentSceneUuid;
 
     selectedElem.addClass("active");
     switch (selectedElem.data("id")) {
       case "Cube":
 
         // TEST
-        EventManager.addObject(currentSceneUuid, "Box_01", "box");
+        let data = {
+          sceneUuid:  currentSceneUuid,
+          objectName: "Box_01",
+          objectType: "box"
+        };
+        EventManager.emitEvent('addObject', data);
 
         break;
       case "Cylinder":

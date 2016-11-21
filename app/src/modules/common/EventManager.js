@@ -1,5 +1,6 @@
 import GraphicalManager from "./GraphicalManager";
 import ProjectManager from "./ProjectManager";
+import eventToPromise from 'event-to-promise';
 
 class EventManager extends EventEmitter {
   constructor() {
@@ -7,51 +8,19 @@ class EventManager extends EventEmitter {
     this.eventsListener();
   }
 
-  // ////////////////
-  // Creator commands
-  // ////////////////
-
-  addScene(sceneName) {
-    this.emit('addScene', sceneName);
+  emitEvent(eventName, data) {
+    this.emit(eventName, data);
+    return eventToPromise(this, eventName).then(function () {
+      return data;
+    });
   }
 
-  removeScene(sceneUuid) {
-    this.emit('removeScene', sceneUuid);
-  }
-
-  addObject(sceneUuid, name, type) {
-    let data = {
-      sceneUuid:  sceneUuid,
-      objectName: name,
-      objectType: type
-    };
-
-    this.emit('addObject', data);
-  }
-
-  removeObject(sceneUuid, objectUuid) {
-    let data = {
-      sceneUuid:  sceneUuid,
-      objectUuid: objectUuid
-    };
-
-    this.emit('removeObject', data);
-  }
-
-  // /////////////////////
-  // Creator SpecialEvents
-  // /////////////////////
-
-  adaptGraphManToWindow(canvasHeight, canvasWidth) {
-
-  }
-
-  // ////////////////
-  // Events' listener
-  // ////////////////
   // TODO clear events ?
-
   eventsListener() {
+
+    // ////////////////////////
+    // Creator Commands event
+    // ////////////////////////
     this.on('addScene', function (sceneName) {
       let sceneUuid = ProjectManager.addScene(sceneName);
 
@@ -63,6 +32,9 @@ class EventManager extends EventEmitter {
 
     });
 
+    /**
+     * data params: sceneUuid, objectName, objectType
+     */
     this.on('addObject', function (data) {
       let objectUuid = ProjectManager.addObject(
         data.sceneUuid,
@@ -72,6 +44,9 @@ class EventManager extends EventEmitter {
       GraphicalManager.addObject(objectUuid);
     });
 
+    /**
+     * data params: sceneUuid, objectUuid
+     */
     this.on('removeObject', function (data) {
       let sceneDescriptor  = ProjectManager.getSceneDescriptor(data.sceneUuid);
       let objectDescriptor = ProjectManager.getObjectDescriptor(data.objectUuid);
@@ -80,6 +55,9 @@ class EventManager extends EventEmitter {
       let state = ProjectManager.removeObject(data.sceneUuid, data.objectUuid);
     });
 
+    // ////////////////////////
+    // Creator specific events
+    // ////////////////////////
     this.on('adaptGraphManToWindow', function (data) {
 
     });
