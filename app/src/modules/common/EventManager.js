@@ -32,6 +32,10 @@ class EventManager extends EventEmitter {
 
       // TODO add method GM
     });
+    
+    this.on('switchScene', function (sceneUuid) {
+      
+    })
 
     this.on('editProjectName', function(projectName) {
       ProjectManager.setName(projectName);
