@@ -109,7 +109,7 @@ class GraphicalManager {
   _objectFactory(objectDescriptor) {
     let obj = this._createMesh(objectDescriptor);
 
-    obj.name = objectDescriptor.uuid;
+    obj.name = objectDescriptor.getUuid();
 
     this.scene.add(obj);
     this.render();
@@ -136,15 +136,15 @@ class GraphicalManager {
     console.log("material!!!!!", material);
 
     let geometry = undefined;
-    if (objectDescriptor.type === "sky")
+    if (objectDescriptor.getType() === "sky")
       geometry = new THREE.CubeGeometry(5000, 5000, 5000);
-    if (objectDescriptor.type === "ground")
+    if (objectDescriptor.getType() === "ground")
       geometry = new THREE.PlaneGeometry(1000, 1000);
-    if (objectDescriptor.type === "box")
+    if (objectDescriptor.getType() === "box")
       geometry = new THREE.BoxGeometry(200, 200, 200);
-    if (objectDescriptor.type === "sphere")
+    if (objectDescriptor.getType() === "sphere")
       geometry = new THREE.SphereGeometry(50, 50, 320);
-    if (objectDescriptor.type === "cylinder")
+    if (objectDescriptor.getType() === "cylinder")
       geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     // TODO see how to do for lights/lightsHelper/externalObj
 

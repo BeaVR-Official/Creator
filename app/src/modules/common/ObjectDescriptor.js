@@ -1,46 +1,61 @@
 import UUID from './../utils/UUID';
 import MaterialDescriptor from './MaterialDescriptor';
 import GeometryDescriptor from './GeometryDescriptor';
+import Backbone from 'backbone';
 
-export default class ObjectDescriptor {
+export default class ObjectDescriptor extends Backbone.Model {
+
   constructor(name, type) {
-    this.uuid              = UUID.createUUID();
-    this.name              = name;
-    this.type              = type;
-    this.parent            = undefined;
-    this.children          = [];
-    this.position          = [0.0, 0.0, 0.0];
-    this.rotation          = [0.0, 0.0, 0.0];
-    this.scale             = [0.0, 0.0, 0.0];
-    this.isSolid           = false;
-    this.isGravityEffected = false;
-    this.isVisibilty       = true;
-    this.geometryDescriptor = new GeometryDescriptor(name + " geometry");
-    this.materialDescriptor = new MaterialDescriptor(name + " material");
+    super();
+    this.attributes.uuid              = UUID.createUUID();
+    this.attributes.name              = name;
+    this.attributes.type              = type;
+    this.attributes.parent            = undefined;
+    this.attributes.children          = [];
+    this.attributes.position          = [0.0, 0.0, 0.0];
+    this.attributes.rotation          = [0.0, 0.0, 0.0];
+    this.attributes.scale             = [0.0, 0.0, 0.0];
+    this.attributes.isSolid           = false;
+    this.attributes.isGravityEffected = false;
+    this.attributes.isVisibilty       = true;
+    this.attributes.geometryDescriptor = new GeometryDescriptor(name + " geometry");
+    this.attributes.materialDescriptor = new MaterialDescriptor(name + " material");
     // TODO: support all the more specific properties
     // namely: Cameras, Skyboxes
   }
 
+  setUuid(uuid) {
+    this.attributes.uuid = uuid;
+  }
+
   getUuid() {
-    return (this.uuid);
+    return (this.attributes.uuid);
   }
 
   setName(name) {
-    this.name = name;
+    this.attributes.name = name;
   }
 
   getName() {
-    return (this.name);
+    return (this.attributes.name);
+  }
+
+  setType(type) {
+    this.attributes.type = type;
+  }
+
+  getType() {
+    return (this.attributes.type);
   }
 
   addChild(objectUuid) {
-    this.children.push(objectUuid);
+    this.attributes.children.push(objectUuid);
   }
 
   removeChild(objectUuid) {
-    for (let index = 0; index < this.children.length; index++) {
-      if (this.children[index].uuid === objectUuid) {
-        this.children.splice(index, 1);
+    for (let index = 0; index < this.attributes.children.length; index++) {
+      if (this.attributes.children[index].uuid === objectUuid) {
+        this.attributes.children.splice(index, 1);
         return (true);
       }
     }
@@ -48,83 +63,125 @@ export default class ObjectDescriptor {
   }
 
   removeAllChildren() {
-    this.children.splice(0, this.children.length);
-    //this.children = [];
+    this.attributes.children.splice(0, this.attributes.children.length);
+    //this.attributes.children = [];
+  }
+
+  setChildren(children) {
+    this.attributes.children = children;
   }
 
   getChildren() {
-    return (this.children);
+    return (this.attributes.children);
   }
 
   setParent(parentUuid) {
-    this.parent = parentUuid;
+    this.attributes.parent = parentUuid;
   }
 
   getParent() {
-    return (this.parent);
+    return (this.attributes.parent);
   }
 
   setPosition(position) {
-    this.position = position;
+    this.attributes.position = position;
   }
 
   getPosition() {
-    return (this.position);
+    return (this.attributes.position);
   }
 
   setRotation(rotation) {
-    this.rotation = rotation;
+    this.attributes.rotation = rotation;
   }
 
   getRotation() {
-    return (this.rotation);
+    return (this.attributes.rotation);
   }
 
   setScale(scale) {
-    this.scale = scale;
+    this.attributes.scale = scale;
   }
 
   getScale() {
-    return (this.scale);
+    return (this.attributes.scale);
   }
 
   setMaterialDescriptor(materialDescriptor) {
-    this.materialDescriptor = materialDescriptor;
+    this.attributes.materialDescriptor = materialDescriptor;
   }
 
   getMaterialDescriptor() {
-    return (this.materialDescriptor);
+    return (this.attributes.materialDescriptor);
   }
 
   setGeometryDescriptor(geometryDescriptor) {
-    this.geometryDescriptor = geometryDescriptor;
+    this.attributes.geometryDescriptor = geometryDescriptor;
   }
 
   getGeometryDescriptor() {
-    return (this.geometryDescriptor);
+    return (this.attributes.geometryDescriptor);
   }
 
   setSolidStatus(isSolid) {
-    this.scale = isSolid;
+    this.attributes.scale = isSolid;
   }
 
   getSolidStatus() {
-    return (this.isSolid);
+    return (this.attributes.isSolid);
   }
 
   setGravityStatus(isGravityEffected) {
-    this.isGravityEffected = isGravityEffected;
+    this.attributes.isGravityEffected = isGravityEffected;
   }
 
   getGravityStatus() {
-    return (this.isGravityEffected);
+    return (this.attributes.isGravityEffected);
   }
 
   setVisibilityStatus(isVisibility) {
-    this.isVisibilty = isVisibility;
+    this.attributes.isVisibilty = isVisibility;
   }
 
   getVisibilityStatus() {
-    return (this.isVisibilty);
+    return (this.attributes.isVisibilty);
+  }
+
+  /*
+   BackBone model methods
+   */
+
+  defaults() {
+    return {
+      uuid              : UUID.createUUID(),
+      name              : "",
+      type              : "",
+      parent            : undefined,
+      children          : [],
+      position          : [0.0, 0.0, 0.0],
+      rotation          : [0.0, 0.0, 0.0],
+      scale             : [0.0, 0.0, 0.0],
+      isSolid           : false,
+      isGravityEffected : false,
+      isVisibilty       : true,
+      geometryDescriptor : new GeometryDescriptor("" + " geometry"),
+      materialDescriptor : new MaterialDescriptor("" + " material")
+    };
+  }
+
+  get idAttribute() {
+    return '_id';
+  }
+
+  get cidPrefix() {
+    return '__c';
+  }
+
+  url() {
+    return "";
+  }
+
+  get(name) {
+    return this.attributes[name];
   }
 }

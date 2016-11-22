@@ -48,9 +48,9 @@ class SaveManager {
 
   importObjectDescriptor(objectDescriptor) {
     let _objectDescriptor = new ObjectDescriptor(objectDescriptor.name, objectDescriptor.type);
-    _objectDescriptor.uuid = objectDescriptor.uuid;
+    _objectDescriptor.setUuid(objectDescriptor.uuid);
     _objectDescriptor.setParent(objectDescriptor.parent);
-    _objectDescriptor.children = objectDescriptor.children;
+    _objectDescriptor.setChildren(objectDescriptor.children);
     _objectDescriptor.setPosition(objectDescriptor.position);
     _objectDescriptor.setRotation(objectDescriptor.rotation);
     _objectDescriptor.setScale(objectDescriptor.scale);
