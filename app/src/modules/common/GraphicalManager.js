@@ -163,6 +163,9 @@ class GraphicalManager {
     );
   }
 
+  switchScene(sceneUuid) {
+
+  }
 
   // ////////////////////////
   // Add Things events
@@ -196,15 +199,15 @@ class GraphicalManager {
   // ////////////////////////
 
   updateObjectPosition(OD, position) {
-    this.scene.getObjectById(OD.uuid).position = position;
+    this.scene.getObjectById(OD.uuid, true).position = position;
   }
 
   updateObjectRotation(OD, rotation) {
-    this.scene.getObjectById(OD.uuid).rotation = rotation
+    this.scene.getObjectById(OD.uuid, true).rotation = rotation
   }
 
   updateObjectScale(OD, scale) {
-    this.scene.getObjectById(OD.uuid).scale = scale;
+    this.scene.getObjectById(OD.uuid, true).scale = scale;
   }
 
   updateObjectColor(OD, color) {
@@ -212,7 +215,7 @@ class GraphicalManager {
   }
 
   updateObjectVisibility(OD, isVisibility) {
-    this.scene.getObjectById(OD.uuid).visible = isVisibility;
+    this.scene.getObjectById(OD.uuid, true).visible = isVisibility;
   }
 
   // TODO
