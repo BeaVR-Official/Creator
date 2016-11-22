@@ -14,6 +14,7 @@ export default class ObjectDescriptor {
     this.scale             = [0.0, 0.0, 0.0];
     this.isSolid           = false;
     this.isGravityEffected = false;
+    this.isVisibilty       = true;
     this.geometryDescriptor = new GeometryDescriptor(name + " geometry");
     this.materialDescriptor = new MaterialDescriptor(name + " material");
     // TODO: support all the more specific properties
@@ -117,5 +118,13 @@ export default class ObjectDescriptor {
 
   getGravityStatus() {
     return (this.isGravityEffected);
+  }
+
+  setVisibilityStatus(isVisibility) {
+    this.isVisibilty = isVisibility;
+  }
+
+  getVisibilityStatus() {
+    return (this.isVisibilty);
   }
 }

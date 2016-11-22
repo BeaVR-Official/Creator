@@ -66,18 +66,6 @@ class GraphicalManager {
     console.log("mouse", this.mouse);
   }
 
-  addObject(objectUuid) {
-    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
-    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
-
-    this._objectFactory(objectDescriptor);
-  }
-
-  removeObject(sceneDescriptor, objectDescriptor) {
-
-  }
-
-
   /**
    * Adapt scene renderer to canvas
    * TODO: getCanvasWidth & height by EventManager(no more canvasSettings in Constants)
@@ -109,6 +97,8 @@ class GraphicalManager {
 
   _objectFactory(objectDescriptor) {
     let obj = this._createMesh(objectDescriptor);
+
+    obj.name = objectDescriptor.uuid;
 
     this.scene.add(obj);
     this.render();
@@ -160,6 +150,77 @@ class GraphicalManager {
     this.camera.lookAt(this.scene.position);
     this.renderer.render(this.scene, this.camera);
     this.setlastSceneUuid(this.currentSceneUuid);
+  }
+
+
+  // ////////////////////////
+  // TreeView events
+  // ////////////////////////
+
+  removeObject(objectDescriptor) {
+    this.scene.remove(
+      this.scene.getObjectById(objectDescriptor.uuid)
+    );
+  }
+
+
+  // ////////////////////////
+  // Add Things events
+  // ////////////////////////
+
+  addObject(objectUuid) {
+    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
+    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
+
+    this._objectFactory(objectDescriptor);
+  }
+
+  // TODO
+  addLight() {
+  }
+
+  // TODO
+  addExternalObject() {
+  }
+
+  // TODO
+  addSky() {
+  }
+
+  // TODO
+  addGround() {
+  }
+
+  // ////////////////////////
+  // Object Property events
+  // ////////////////////////
+
+  updateObjectPosition(OD, position) {
+    this.scene.getObjectById(OD.uuid).position = position;
+  }
+
+  updateObjectRotation(OD, rotation) {
+    this.scene.getObjectById(OD.uuid).rotation = rotation
+  }
+
+  updateObjectScale(OD, scale) {
+    this.scene.getObjectById(OD.uuid).scale = scale;
+  }
+
+  updateObjectColor(OD, color) {
+    this.scene.getObjectById(OD.uuid).color = color;
+  }
+
+  updateObjectVisibility(OD, isVisibility) {
+    this.scene.getObjectById(OD.uuid).visible = isVisibility;
+  }
+
+  // TODO
+  updateObjectMaterial(OD, materialUuid) {
+  }
+
+  //TODO
+  updateObjectGeometry(OD, geometryUuid) {
   }
 }
 
