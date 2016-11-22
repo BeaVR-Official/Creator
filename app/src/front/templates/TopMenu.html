@@ -26,19 +26,19 @@
                         <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Launch</p></div>
                     </div>
                 </a>
-                <a class="item" style="padding-left: 40px;padding-right: 40px;">
+                <a class="item" style="padding-left: 40px;padding-right: 40px;" id="saveProject">
                     <div class="ui grid">
                         <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/save-file-option.png" style="height: 28px; margin: auto;" /></div>
                         <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Save</p></div>
                     </div>
                 </a>
-                <% if (currentUser == undefined) { %>
-                <a class="item" style="padding-left: 40px;padding-right: 40px;">
+                <a class="item" style="padding-left: 40px;padding-right: 40px;" id="loadProject">
                     <div class="ui grid">
                         <div class="row" style="padding:0px; margin-top: 5px;"><img src="assets/images/save-file-option.png" style="height: 28px; margin: auto;" /></div>
                         <div class="row" style="padding:0px;"><p style="margin:auto; font-size: 12px;">Load</p></div>
                     </div>
                 </a>
+                <% if (currentUser == undefined) { %>
                 <a class="ui dropdown item userMenuDropdown">
                     <img class="profileImage" src="assets/images/user-count-icon.png" style="height: 35px; width: auto;"/>
                     <i class="dropdown icon"></i>
