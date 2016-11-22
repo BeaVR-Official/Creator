@@ -1,14 +1,17 @@
 import UUID from './../utils/UUID';
+import Backbone from 'backbone';
 
-export default class MaterialDescriptor {
+export default class MaterialDescriptor extends Backbone.Model {
+  
   constructor(name) {
-    this.uuid = UUID.createUUID();
-    this.name = name;
-    this.colorCode = "0X000000";
-    this.bumpRessourceUuid = undefined;
-    this.luminosity = 0.0;
-    this.textureResourceUuid = undefined;
-    this.textureRepeat = {
+    super();
+    this.attributes.uuid = UUID.createUUID();
+    this.attributes.name = name;
+    this.attributes.colorCode = "0X000000";
+    this.attributes.bumpRessourceUuid = undefined;
+    this.attributes.luminosity = 0.0;
+    this.attributes.textureResourceUuid = undefined;
+    this.attributes.textureRepeat = {
       x: 1,
       y: 1
     };
@@ -16,10 +19,10 @@ export default class MaterialDescriptor {
   }
 
   setName(name) {
-    this.name = name;
+    this.attributes.name = name;
   }
 
   getName() {
-    return (this.name);
+    return (this.attributes.name);
   }
 }

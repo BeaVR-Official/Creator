@@ -1,32 +1,35 @@
 import UUID from './../utils/UUID';
 import Constants from '../creator/Constants';
 import ObjectDescriptor from "./ObjectDescriptor";
+import Backbone from 'backbone';
 
-export default class SceneDescriptor {
+export default class SceneDescriptor extends Backbone.Model {
+
   constructor(name) {
-    this.uuid              = UUID.createUUID();
-    this.name              = name;
-    this.objectDescriptors = [];
+    super();
+    this.attributes.uuid              = UUID.createUUID();
+    this.attributes.name              = name;
+    this.attributes.objectDescriptors = [];
   }
 
   getUuid() {
-    return (this.uuid);
+    return (this.attributes.uuid);
   }
 
   setName(name) {
-    this.name = name;
+    this.attributes.name = name;
   }
 
   getName() {
-    return (this.name);
+    return (this.attributes.name);
   }
 
   getGraphicalScene() {
-    return (this.graphicalScene);
+    return (this.attributes.graphicalScene);
   }
 
   setAllObjectDescriptors(objectDescriptors) {
-    this.objectDescriptors = objectDescriptors;
+    this.attributes.objectDescriptors = objectDescriptors;
   }
 
   getObjectDescriptor(objectUuid) {
@@ -34,16 +37,16 @@ export default class SceneDescriptor {
     if (index === -1) {
       return (undefined);
     }
-    return (this.objectDescriptors[index]);
+    return (this.attributes.objectDescriptors[index]);
   }
 
   getAllObjectDescriptors() {
-    return (this.objectDescriptors);
+    return (this.attributes.objectDescriptors);
   }
 
   getObjectDescriptorIndex(objectUuid) {
-    for (let index = 0; index < this.objectDescriptors.length; index++) {
-      if (this.objectDescriptors[index].getUuid() === objectUuid) {
+    for (let index = 0; index < this.attributes.objectDescriptors.length; index++) {
+      if (this.attributes.objectDescriptors[index].getUuid() === objectUuid) {
         return (index);
       }
     }
@@ -52,7 +55,7 @@ export default class SceneDescriptor {
 
   addObjectDescriptor(name, type) {
     let newObjectDescriptor = new ObjectDescriptor(name, type);
-    this.objectDescriptors.push(newObjectDescriptor);
+    this.attributes.objectDescriptors.push(newObjectDescriptor);
     return (newObjectDescriptor.getUuid());
   }
 
@@ -62,12 +65,12 @@ export default class SceneDescriptor {
       return (false);
     }
     // TODO remove all children !!!
-    this.objectDescriptors.splice(index, 1);
+    this.attributes.objectDescriptors.splice(index, 1);
     return (true);
   }
 
   removeAllObjectDescriptors() {
-    this.objectDescriptors.splice(0, this.objectDescriptors.length);
-    //this.objectDescriptors = [];
+    this.attributes.objectDescriptors.splice(0, this.attributes.objectDescriptors.length);
+    //this.attributes.objectDescriptors = [];
   }
 }
