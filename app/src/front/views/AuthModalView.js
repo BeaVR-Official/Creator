@@ -3,9 +3,8 @@
  */
 
 import Loader from '../utils';
-import * as Backbone from 'backbone';
+import Backbone from 'backbone';
 
-import $ from 'jquery';
 import RegisterModal from './RegisterModalView';
 import ResetPasswordModal from './ResetPasswordModalView';
 import ProjectSelectionModal from './ProjectSelectionModalView'

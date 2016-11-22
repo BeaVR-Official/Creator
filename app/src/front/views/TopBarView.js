@@ -1,6 +1,5 @@
 import Loader from '../utils';
-import * as Backbone from 'backbone';
-
+import Backbone from 'backbone';
 
 require('../../../assets/styles/TopBar.scss');
 

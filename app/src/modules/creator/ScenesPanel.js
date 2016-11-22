@@ -1,4 +1,4 @@
-import * as CreatorManagement from './CreatorManagement';
+import  CreatorManagement from './CreatorManagement';
 import Scene from './Scene';
 
 class ScenesPanel {

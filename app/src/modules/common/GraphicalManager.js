@@ -13,7 +13,7 @@ class GraphicalManager {
     this.renderer.autoClear = false;
     this.renderer.setClearColor(sceneSettings.backgroundColor, 1);
     this.renderer.setSize(sceneSettings.width, sceneSettings.height);
-    $('#mainView').append(this.renderer.domElement);
+    $('#SceneSelector').append(this.renderer.domElement);
 
     // Init SceneView camera
     let camSettings = Constants.getCamSettings();
@@ -76,7 +76,6 @@ class GraphicalManager {
   removeObject(sceneDescriptor, objectDescriptor) {
 
   }
-
 
   /**
    * Adapt scene renderer to canvas

@@ -3,9 +3,8 @@
  */
 
 import Loader from '../utils';
-import * as Backbone from 'backbone';
+import Backbone from 'backbone';
 
-import $ from 'jquery';
 import Object3D from '../models/object';
 
 require('../../../assets/styles/SettingsBox.scss');
@@ -99,7 +98,6 @@ class SettingsBoxView extends Backbone.View {
         var string = event.target.attributes['data-name'].value;
         var elem = string.split('.');
         this.model.attributes[elem[0]][elem[1]][elem[2]] = parseInt($(event.target).val());
-        console.log(this.model);
     }
 
     inputWheel(event, delta) {

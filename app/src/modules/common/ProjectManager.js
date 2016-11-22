@@ -11,9 +11,9 @@ class ProjectManager {
 
   toJSON() {
     return {
-      name:               this.name,
-      sceneDescriptors:   this.sceneDescriptors,
-      startingSceneUuid:  this.startingSceneUuid
+      name:              this.name,
+      sceneDescriptors:  this.sceneDescriptors,
+      startingSceneUuid: this.startingSceneUuid
     }
   }
 

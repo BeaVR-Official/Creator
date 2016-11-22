@@ -2,8 +2,7 @@ const webpack       = require('webpack');
 const path          = require('path');
 
 module.exports = {
-  entry:
-    {
+  entry: {
     creator: __dirname + '/app/src/creator.js',
     runner:  __dirname + '/app/src/runner.js',
     tests:   __dirname + '/app/tests/tests.js'

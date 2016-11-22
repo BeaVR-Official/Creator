@@ -4,16 +4,16 @@
 
 import Router from './Router';
 import Loader from './utils';
-import * as Backbone from 'backbone';
+import Backbone from 'backbone';
 import $ from 'jquery';
 
-require('../../assets/styles/fonts.scss');
-require('../../assets/styles/main.scss');
+require('../../assets/styles/Fonts.scss');
+require('../../assets/styles/Main.scss');
 
 class Application {
     constructor() {
         Loader.loadTemplates(['AuthModal', 'RegisterModal', 'ResetPasswordModal', 'ProjectSelectionModal',
-                'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar'  ],
+                'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar', 'Sidebar' ],
             function() {
                 new Router();
                 Backbone.history.start();

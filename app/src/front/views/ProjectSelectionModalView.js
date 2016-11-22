@@ -3,60 +3,60 @@
  */
 
 import Loader from '../utils';
-import * as Backbone from 'backbone';
+import Backbone from 'backbone';
 
 import AuthModal from './AuthModalView';
 import ProjectCreationModal from './ProjectCreationModalView'
-import $ from 'jquery';
 
 class ProjectSelectionModalView extends Backbone.View {
 
-    get template() {
-        return _.template(Loader.templates.ProjectSelectionModal);
-    }
+  get template() {
+    return _.template(Loader.templates.ProjectSelectionModal);
+  }
 
-    get events() {
-        return {
-            'click #disconnect_button' : 'openAuthModal',
-            'click #project_creation_button' : 'openProjectCreationModal'
-        };
-    }
+  get events() {
+    return {
+      'click #disconnect_button':       'openAuthModal',
+      'click #project_creation_button': 'openProjectCreationModal'
+    };
+  }
 
-    get $el() {
-        return $('.ModalSelector');
-    }
+  get $el() {
+    return $('.ModalSelector');
+  }
 
-    constructor() {
-        super({
-            events: {}
-        });
-        Loader.initStyles();
-    }
+  constructor() {
+    super({
+      events: {}
+    });
+    Loader.initStyles();
+  }
 
-    openAuthModal() {
-        var modal = new AuthModal();
-        $('#project_selection_modal').animateCssOut('fadeOutRight', modal);
-    }
+  openAuthModal() {
+    var modal = new AuthModal();
+    $('#project_selection_modal').animateCssOut('fadeOutRight', modal);
+  }
 
-    openProjectCreationModal() {
-        var modal = new ProjectCreationModal(this);
-        $('#project_selection_modal').animateCssOut('fadeOutLeft', modal);
-    }
+  openProjectCreationModal() {
+    var modal = new ProjectCreationModal(this);
+    $('#project_selection_modal').animateCssOut('fadeOutLeft', modal);
+  }
 
-    initialize() {}
+  initialize() {
+  }
 
-    show(backanim = false) {
-        this.render();
-        if (backanim)
-            $('#project_selection_modal').animateCssIn('fadeInLeft');
-        else
-            $('#project_selection_modal').animateCssIn('fadeInRight');
-    }
+  show(backanim = false) {
+    this.render();
+    if (backanim)
+      $('#project_selection_modal').animateCssIn('fadeInLeft');
+    else
+      $('#project_selection_modal').animateCssIn('fadeInRight');
+  }
 
-    render() {
-        this.$el.html(this.template());
-        return this;
-    }
+  render() {
+    this.$el.html(this.template());
+    return this;
+  }
 }
 
 export default ProjectSelectionModalView;

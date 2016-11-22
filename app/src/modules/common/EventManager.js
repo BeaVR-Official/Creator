@@ -21,15 +21,14 @@ class EventManager extends EventEmitter {
     // ////////////////////////
     // Creator Commands event
     // ////////////////////////
-    this.on('addScene', function (sceneName) {
+    this.on('addScene', (sceneName) => {
       let sceneUuid = ProjectManager.addScene(sceneName);
 
       GraphicalManager.setCurrentSceneUuid(sceneUuid);
     });
 
-    this.on('removeScene', function (sceneUuid) {
+    this.on('removeScene', (sceneUuid) => {
       ProjectManager.removeScene(sceneUuid);
-
     });
 
     /**

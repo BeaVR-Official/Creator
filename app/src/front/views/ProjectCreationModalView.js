@@ -3,9 +3,7 @@
  */
 
 import Loader from '../utils';
-import * as Backbone from 'backbone';
-
-import $ from 'jquery';
+import Backbone from 'backbone';
 
 class ProjectCreationModalView extends Backbone.View {
 

@@ -2,16 +2,16 @@
  * Created by ekersale on 08/11/2016.
  */
 
-import HelloWorldView from './views/HelloWorldView';
+import SidebarView from './views/SidebarView';
 import AuthModalView from './views/AuthModalView';
 import RegisterModalView from './views/RegisterModalView'
 import ResetPasswordModalView from './views/ResetPasswordModalView'
 import ProjectSelectionModalView from './views/ProjectSelectionModalView'
 import ProjectCreationModalView from './views/ProjectCreationModalView'
-import * as Backbone from 'backbone';
-import SettingsBox from './views/SettingsBox';
-import NextPrevBox from './views/NextPrevBox';
-import ToolsBox from './views/ToolsBox';
+import Backbone from 'backbone';
+import SettingsBox from './views/SettingsBoxView';
+import NextPrevBox from './views/NextPrevBoxView';
+import ToolsBox from './views/ToolsBoxView';
 import TopBarView from './views/TopBarView';
 
 
@@ -41,6 +41,7 @@ class Router extends Backbone.Router {
     }
 
     home() {
+        new SidebarView();
         new SettingsBox();
         new NextPrevBox();
         new ToolsBox();

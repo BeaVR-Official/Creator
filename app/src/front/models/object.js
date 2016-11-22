@@ -2,7 +2,7 @@
  * Created by ekersale on 11/11/2016.
  */
 
-import * as Backbone from 'backbone';
+import Backbone from 'backbone';
 
 class Object3D extends Backbone.Model {
     get idAttribute() {

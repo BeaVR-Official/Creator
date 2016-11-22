@@ -3,8 +3,8 @@
  */
 
 import Router from "../router";
-import Object3D from "../models/objectModel";
-import * as Backbone from '../../../../node_modules/backbone/backbone';
+import Object3D from "../models/object";
+import Backbone from 'backbone';
 
 class Objects extends Backbone.Collection {
   url() {

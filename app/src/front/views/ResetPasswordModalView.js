@@ -3,10 +3,9 @@
  */
 
 import Loader from '../utils';
-import * as Backbone from 'backbone';
+import Backbone from 'backbone';
 
 import AuthModal from './AuthModalView';
-import $ from 'jquery';
 
 class ResetPasswordModalView extends Backbone.View {
 
