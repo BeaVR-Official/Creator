@@ -1,0 +1,61 @@
+<div class="ui dimmer modals page transition visible active">
+    <div class="ui modal transition visible active beavr-anim" id="register_modal">
+        <div class="header">
+            S'inscrire
+        </div>
+        <div class="content">
+            <form class="ui form fluid warning" name="subscriptionForm">
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" name="subscriptionData.firstName" placeholder="Prénom">
+                    </div>
+                    <div class="field">
+                        <input type="text" name="subscriptionData.lastName" placeholder="Nom">
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="pseudo" required="required" placeholder="Pseudo"/>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        Le pseudo doit contenir entre 3 et 16 caractères.
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="mail icon"></i>
+                        <input type="email" name="email" placeholder="Adresse e-mail" required>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Mot de passe" required>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        Le mot de passe doit être composé de 8 caractères minimum.
+                    </div>
+                </div>
+                <div class="ui black deny button" id="back_button">
+                    Retour
+                </div>
+                <div class="ui positive right labeled icon button">
+                    S'inscrire
+                    <i class="checkmark icon"></i>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

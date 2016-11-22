@@ -1,0 +1,69 @@
+<div class="ui dimmer modals page transition visible active">
+    <div class="ui modal transition visible active beavr-anim" id="project_creation_modal">
+        <div class="header">
+            Créer un nouveau projet
+        </div>
+        <div class="content">
+            <form class="ui form fluid warning" name="projectCreationForm">
+                <div class="required field">
+                    <div class="ui corner labeled input">
+                        <input type="text" name="applicationName" required="required" placeholder="Nom de l'application"/>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        Le nom de l'application doit contenir au plus 48 caractères.
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled input">
+                        <textarea class="form-control" name="applicationDescription" placeholder="Description de l'application" maxlength="600" rows="4" required></textarea>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        La description de l'application doit contenir au plus 600 caractères.
+                    </div>
+                </div>
+                <div class="required field">
+                    <label for="applicationDevices">Matériels de réalité virtuelle :</label>
+                    <select name="skills" id="applicationDevices" multiple="" class="ui fluid dropdown" required>
+                        <option value="">Matériels de Réalité Virtuelle</option>
+                        <option value="oculus">Oculus Rift</option>
+                        <option value="leap">Leap Motion</option>
+                        <option value="htcvive">HTC Vive</option>
+                        <option value="gearvr">Samsung Gear VR</option>
+                        <option value="cardboard">Google Cardboard</option>
+                    </select>
+                </div>
+                <div class="required field">
+                    <label for="applicationCategories">Catégories :</label>
+                    <select name="skills" id="applicationCategories" multiple="" class="ui fluid dropdown" required>
+                        <option value="">Catégories</option>
+                        <option value="fauneflore">Faune et flore</option>
+                        <option value="loisirs">Loisirs</option>
+                        <option value="sciences">Sciences</option>
+                        <option value="musique">Musique</option>
+                        <option value="expeditions">Expéditions</option>
+                        <option value="politique">Politique</option>
+                    </select>
+                </div>
+                <div class="ui black deny button" id="back_button">
+                    Retour
+                </div>
+                <div class="ui positive right labeled icon button" id="create_button">
+                    Créer
+                    <i class="checkmark icon"></i>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+    $('select.dropdown')
+        .dropdown();
+</script>

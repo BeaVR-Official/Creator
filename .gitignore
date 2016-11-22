@@ -1,4 +1,3 @@
-/webpack.config.js
 /.idea/libraries
 /.idea/Creator.iml
 /.idea/beavr-creator.iml
@@ -15,3 +14,6 @@
 /.idea/jsLibraryMappings.xml
 /app/dist/
 
+.idea/compiler.xml
+.idea/copyright/
+Creator.iml

@@ -1,0 +1,41 @@
+<div class=" ui stackable six columns grid ToolsBox">
+    <div class="column">
+        <button class="ui icon basic button"><i class="fa fa-play"></i></button>
+    </div>
+    <div class="column">
+        <button class="ui icon basic button"><i class="fa fa-floppy-o"></i></button>
+    </div>
+    <div class="column">
+        <button class="ui icon basic button"><i class="fa fa-cloud-upload"></i></button>
+    </div>
+    <div class="column">
+        <button class="ui icon basic button"><i class="fa fa-search-minus fa-rotate-90"></i></button>
+    </div>
+    <div class="column">
+        <button class="ui icon basic button"><i class="fa fa-search-plus"></i></button>
+    </div>
+    <div class="column hide">
+        <button class="ui icon basic button"><i class="fa  fa-eye-slash"></i></button>
+    </div>
+</div>
+
+<div class="ToolsBox BoxExpend">
+    <button class="ui icon basic button show"><i class="fa  fa-eye"></i></button>
+</div>
+
+<script>
+    $(".hide").click(function() {
+        $('.ui.stackable.six.columns').fadeOut(500, function() {
+            $('.ui.stackable.six.columns').css('visibility', 'hidden');
+            $('.BoxExpend').css('visibility', 'visible');
+            $('.BoxExpend').css('display', 'block');
+            $('.BoxExpend').fadeIn(500);
+        })
+    });
+
+    $(".show").click(function() {
+        $('.BoxExpend').css('visibility', 'hidden');
+        $('.ui.stackable.six.columns').css('visibility', 'visible');
+        $('.ui.stackable.six.columns').fadeIn(500);
+    })
+</script>
