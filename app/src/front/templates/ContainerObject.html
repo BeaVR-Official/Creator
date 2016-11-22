@@ -1,0 +1,31 @@
+
+<div class="container">
+    <div class="ui top attached tabular menu">
+        <a class="active item" data-tab="first">Tous</a>
+        <a class="item" data-tab="second">Utilisés</a>
+    </div>
+
+    <div class="ui bottom attached tab segment active" data-tab="first">
+        <div class="ui grid">
+            <% _.each(object, function(objet, i){  %> 
+            <div class="eight wide column">
+                    <button class="ui teal basic huge button">
+                        <i class="<%- objet.logo %>"></i>
+                    </button>
+            </div>
+            <% }); %>
+        </div>
+        <div class="ui bottom attached small button" tabindex="0">Importer un objet</div>
+
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="second">
+        Second
+    </div>
+</div>
+
+
+<script>
+
+    $('.menu .item').tab();
+
+</script>
