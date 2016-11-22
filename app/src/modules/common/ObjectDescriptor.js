@@ -146,4 +146,42 @@ export default class ObjectDescriptor extends Backbone.Model {
   getVisibilityStatus() {
     return (this.attributes.isVisibilty);
   }
+
+  /*
+   BackBone model methods
+   */
+
+  defaults() {
+    return {
+      uuid              : UUID.createUUID(),
+      name              : "",
+      type              : "",
+      parent            : undefined,
+      children          : [],
+      position          : [0.0, 0.0, 0.0],
+      rotation          : [0.0, 0.0, 0.0],
+      scale             : [0.0, 0.0, 0.0],
+      isSolid           : false,
+      isGravityEffected : false,
+      isVisibilty       : true,
+      geometryDescriptor : new GeometryDescriptor("" + " geometry"),
+      materialDescriptor : new MaterialDescriptor("" + " material")
+    };
+  }
+
+  get idAttribute() {
+    return '_id';
+  }
+
+  get cidPrefix() {
+    return '__c';
+  }
+
+  url() {
+    return "";
+  }
+
+  get(name) {
+    return this.attributes[name];
+  }
 }

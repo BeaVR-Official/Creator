@@ -25,4 +25,39 @@ export default class MaterialDescriptor extends Backbone.Model {
   getName() {
     return (this.attributes.name);
   }
+
+  /*
+   BackBone model methods
+   */
+
+  defaults() {
+    return {
+      uuid: UUID.createUUID(),
+      name: "",
+      colorCode: "0X000000",
+      bumpRessourceUuid: undefined,
+      luminosity: 0.0,
+      textureResourceUuid: undefined,
+      textureRepeat: {
+        x: 1,
+        y: 1
+      }
+    };
+  }
+
+  get idAttribute() {
+    return '_id';
+  }
+
+  get cidPrefix() {
+    return '__c';
+  }
+
+  url() {
+    return "";
+  }
+
+  get(name) {
+    return this.attributes[name];
+  }
 }

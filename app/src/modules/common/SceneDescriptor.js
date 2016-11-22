@@ -73,4 +73,32 @@ export default class SceneDescriptor extends Backbone.Model {
     this.attributes.objectDescriptors.splice(0, this.attributes.objectDescriptors.length);
     //this.attributes.objectDescriptors = [];
   }
+
+  /*
+   BackBone model methods
+   */
+
+  defaults() {
+    return {
+      uuid             : UUID.createUUID(),
+      name              : "",
+      objectDescriptors : []
+    };
+  }
+
+  get idAttribute() {
+    return '_id';
+  }
+
+  get cidPrefix() {
+    return '__c';
+  }
+
+  url() {
+    return "";
+  }
+
+  get(name) {
+    return this.attributes[name];
+  }
 }

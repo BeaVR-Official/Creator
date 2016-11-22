@@ -19,4 +19,33 @@ export default class GeometryDescriptor extends Backbone.Model {
   getName() {
     return (this.attributes.name);
   }
+
+  /*
+  BackBone model methods
+   */
+
+  defaults() {
+    return {
+      uuid: UUID.createUUID(),
+      name: "",
+      type: "",
+      geometryResourceUuid: undefined
+    };
+  }
+
+  get idAttribute() {
+    return '_id';
+  }
+
+  get cidPrefix() {
+    return '__c';
+  }
+
+  url() {
+    return "";
+  }
+
+  get(name) {
+    return this.attributes[name];
+  }
 }
