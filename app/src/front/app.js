@@ -12,9 +12,8 @@ require('../../assets/styles/Main.scss');
 
 class Application {
     constructor() {
-        Loader.loadTemplates(['LeftBar', 'ContainerObject', 'ModalSelectFile', 'ModalSelectMenu',
-                'AuthModal', 'RegisterModal', 'ResetPasswordModal', 'ProjectSelectionModal',
-                'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar'],
+        Loader.loadTemplates(['AuthModal', 'RegisterModal', 'ResetPasswordModal', 'ProjectSelectionModal',
+                'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar', 'Sidebar' ],
             function() {
                 new Router();
                 Backbone.history.start();

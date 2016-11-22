@@ -2,7 +2,7 @@
  * Created by ekersale on 08/11/2016.
  */
 
-import LeftBarView from './views/LeftBarView';
+import SidebarView from './views/SidebarView';
 import AuthModalView from './views/AuthModalView';
 import RegisterModalView from './views/RegisterModalView'
 import ResetPasswordModalView from './views/ResetPasswordModalView'
@@ -41,11 +41,11 @@ class Router extends Backbone.Router {
     }
 
     home() {
+        new SidebarView();
         new SettingsBox();
         new NextPrevBox();
         new ToolsBox();
         new TopBarView();
-        new LeftBarView();
     }
 
     AuthModal() {
