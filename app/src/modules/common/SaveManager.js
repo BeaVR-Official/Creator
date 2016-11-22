@@ -56,6 +56,7 @@ class SaveManager {
     _objectDescriptor.setScale(objectDescriptor.scale);
     _objectDescriptor.setSolidStatus(objectDescriptor.isSolid);
     _objectDescriptor.setGravityStatus(objectDescriptor.isGravityEffected);
+    _objectDescriptor.setVisibility(objectDescriptor.isVisibility);
     return _objectDescriptor;
   }
 

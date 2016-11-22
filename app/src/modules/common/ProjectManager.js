@@ -292,6 +292,23 @@ class ProjectManager {
     }
     return (objectDescriptor.getGravityStatus());
   }
+
+  setObjectVisibilityStatus(sceneUuid, objectUuid, isVisibilityEffected) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (false);
+    }
+    objectDescriptor.setVisibilityStatus(isVisibilityEffected);
+    return (false);
+  }
+
+  getObjectVisibilityStatus(sceneUuid, objectUuid) {
+    let objectDescriptor = this.getObjectDescriptor(sceneUuid, objectUuid);
+    if (objectDescriptor === undefined) {
+      return (undefined);
+    }
+    return (objectDescriptor.getVisibilityStatus());
+  }
 }
 
 export default new ProjectManager();
