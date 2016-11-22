@@ -12,7 +12,7 @@ class Loader {
         let that = this;
         let loadTemplate = function (index) {
             let name = names[index];
-            $.get('/Creator/front/templates/' + name + '.html', function (data) {
+            $.get('./src/front/templates/' + name + '.html', function (data) {
                 that.templates[name] = data;
                 index++;
                 if (index < names.length) {
