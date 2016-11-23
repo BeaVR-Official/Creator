@@ -13,18 +13,20 @@ require('../../assets/styles/Fonts.scss');
 require('../../assets/styles/Main.scss');
 
 class Application {
-  constructor() {
-    Loader.loadTemplates(['AuthModal', 'RegisterModal', 'ResetPasswordModal', 'ProjectSelectionModal',
-        'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar', 'Sidebar'],
-      function () {
-        new Router();
-        Backbone.history.start();
-        new ThreeJSCanvasEvents();
-      }
-    );
-  }
+    constructor() {
+        Loader.loadTemplates(['LeftBar', 'ContainerObject', 'ModalSelectFile', 'ModalSelectMenu',
+                'AuthModal', 'RegisterModal', 'ResetPasswordModal', 'ProjectSelectionModal',
+                'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar',
+                'BasicObject'],
+            function() {
+                new Router();
+                Backbone.history.start();
+              new ThreeJSCanvasEvents();
+            }
+        );
+    }
 }
 
 $(() => {
-  new Application();
+    new Application();
 });

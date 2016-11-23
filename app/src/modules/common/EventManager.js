@@ -137,6 +137,8 @@ class EventManager extends EventEmitter {
     // ////////////////////////
     // Object Property events
     // ////////////////////////
+    // this.on('adaptGraphManToWindow', function (data) {
+    //   });
 
     this.on('updateObjectPosition', function (data) {
       ProjectManager.setObjectPosition(
