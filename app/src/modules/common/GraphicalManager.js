@@ -159,13 +159,8 @@ class GraphicalManager {
   _raycastingSelection() {
     let closestObject = this._getClosestObject().name; // objDesc uuid into name
 
-    console.log("uuid", ProjectManager.getSceneDescriptor(this.currentSceneUuid));
-    console.log("scene", this.threeScene);
-
-    let obj = ProjectManager.getObjectDescriptor(this.currentSceneUuid, closestObject)
-
-    EventManager.emitEvent('objectSelected', {objectUuid: obj.attributes.uuid})
-    console.log("Object selected", obj);
+    EventManager.emitEvent('objectSelected', {objectUuid: closestObject});
+    console.log("Object selected", closestObject);
   }
 
   _getClosestObject() {
