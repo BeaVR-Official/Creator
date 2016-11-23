@@ -26,6 +26,7 @@ class PropertiesView extends Backbone.View {
       'change input':            'actionChanged',
       'click .actionblock':      'actionBlockClicked',
       'click #validate_texture': 'uploadTexture',
+      'click #validate_bumpMap': 'uploadBumpMap',
       'click .reactionblock':    'reactionBlockClicked'
     };
   }
@@ -135,11 +136,22 @@ class PropertiesView extends Backbone.View {
           this.object.scale.z = elem.val();
           break;
         case "mesh[color]":
-          let newColor = new THREE.Color(elem.val());
-          if (this.object.material === undefined)
-            this.object.color = newColor;
-          else
-            this.object.material.color = newColor;
+          console.log("Objecttt", this.object);
+          if (this.object.userData.objType === "picker") {
+            let newColor = new THREE.Color(elem.val());
+            if (this.object.material === undefined)
+              this.object.color = newColor;
+            else
+              this.object.children[0].color = newColor;
+          } else {
+            let newColor = new THREE.Color(elem.val());
+            if (this.object.material === undefined)
+              this.object.color = newColor;
+            else
+              this.object.material.color = newColor;
+          }
+
+          console.log("Objecttt", this.object);
           break;
         case "mesh[visible]":
           this.object.visible = elem.prop('checked');
@@ -223,18 +235,72 @@ class PropertiesView extends Backbone.View {
     };
     reader.readAsDataURL(uploadInput.files[0]);
 
-    let mat = new THREE.MeshPhongMaterial();
-    mat.map = new THREE.ImageUtils.loadTexture(
-      sessionStorage.getItem(file.name));
+    // Get good obj
+    let oldMat = undefined;
+    if (this.object instanceof THREE.Group) {
+      oldMat = this.object.children[0].material;
+    } else
+      oldMat = this.object.material;
+
+    // Copy old material to new
+    let mat = new THREE.MeshPhongMaterial({
+      bumpMap:   oldMat.bumpMap,
+      bumpScale: oldMat.bumpScale,
+      map:       new THREE.ImageUtils.loadTexture(sessionStorage.getItem(file.name)),
+      color:     oldMat.color
+    });
 
     if (this.object instanceof THREE.Group) {
       this.object.children[0].material = mat;
     } else
       this.object.material = mat;
 
+    console.log("Object", this.object);
     sessionStorage.clear();
 
-    console.log("typeof OBJECT", (typeof this.object));
+  }
+
+  uploadBumpMap() {
+    // TODO: /!\ gros bidouillage
+    console.log("OBJECT", this.object);
+    let uploadInput = document.getElementById("upload_bumpMap");
+    let file        = uploadInput.files[0];
+
+    let reader    = new FileReader();
+    reader.onload = function (e) {
+      let thisImage = reader.result;
+      sessionStorage.setItem(file.name, thisImage);
+    };
+    reader.readAsDataURL(uploadInput.files[0]);
+
+    // Get good obj
+    let oldMat = undefined;
+    if (this.object instanceof THREE.Group) {
+      oldMat = this.object.children[0].material;
+    } else
+      oldMat = this.object.material;
+
+    // Copy old material to new
+    let mat = new THREE.MeshPhongMaterial({
+      bumpMap:   new THREE.ImageUtils.loadTexture(sessionStorage.getItem(file.name)),
+      bumpScale: 1,
+      map:       oldMat.map,
+      color:     oldMat.color
+    });
+
+    if (this.object instanceof THREE.Group) {
+      this.object.children[0].material = mat;
+    } else
+      this.object.material = mat;
+
+    // if (this.object instanceof THREE.Group) {
+    //   this.object.children[0].material = mat;
+    // } else
+    //   this.object.material = mat;
+
+    sessionStorage.clear();
+
+    console.log("typeof OBJECT", this.object);
   }
 
 }
