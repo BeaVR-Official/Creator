@@ -14,7 +14,8 @@ class Application {
     constructor() {
         Loader.loadTemplates(['LeftBar', 'ContainerObject', 'ModalSelectFile', 'ModalSelectMenu',
                 'AuthModal', 'RegisterModal', 'ResetPasswordModal', 'ProjectSelectionModal',
-                'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar'],
+                'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar',
+                'BasicObject'],
             function() {
                 new Router();
                 Backbone.history.start();

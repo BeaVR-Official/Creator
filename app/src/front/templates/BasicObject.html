@@ -6,11 +6,12 @@
 
     <div class="ui bottom attached tab segment active" data-tab="first">
         <div class="ui grid">
-            <% _.each(object, function(objet, i){  %> 
-            <div class="eight wide column">
-                    <button class="ui teal basic huge button">
-                        <i class="<%- objet.logo %>"></i>
-                    </button>
+            <% _.each(object, function(object, i){  %> 
+            <div class="eight wide column basicObjectElem" data-id="<%- object.name %>">
+                <button class="ui teal basic huge button">
+                    <i class="<%- object.logo %>"></i>
+                    <p><%- object.name %></p>
+                </button>
             </div>
             <% }); %>
         </div>

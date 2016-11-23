@@ -104,7 +104,6 @@ class EventManager extends EventEmitter {
 
     this.on('addObject', function (data) {
       let objectUuid = ProjectManager.addObject(
-        data.sceneUuid,
         data.objectName,
         data.objectType
       );

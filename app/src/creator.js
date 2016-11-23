@@ -16,12 +16,12 @@ EventManager.emitEvent('addScene', "Default").then(res => {
 
   let sceneUuid = ProjectManager.getSceneDescriptor(t);
   console.log(sceneUuid);
-  let data = {
-    sceneUuid:  t,
-    objectName: 'toto',
-    objectType: 'box'
-  };
-  EventManager.emitEvent('addObject', data).then(res => {
-    console.log("res", res);
-  });
+  // let data = {
+  //   sceneUuid:  t,
+  //   objectName: 'toto',
+  //   objectType: 'box'
+  // };
+  // EventManager.emitEvent('addObject', data).then(res => {
+  //   console.log("res", res);
+  // });
 });

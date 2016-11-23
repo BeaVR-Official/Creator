@@ -97,14 +97,14 @@ class ProjectManager {
     return (true);
   }
 
-  addObject(sceneUuid, name, type) {
-    // TODO: Define the structure of type: what if custom object ? Send array with geometry ? etc.
-    let index = this.getSceneDescriptorIndex(sceneUuid);
-    if (index === -1) {
-      return (false);
-    }
+  addObject(name, type) {
+    // // TODO: Define the structure of type: what if custom object ? Send array with geometry ? etc.
+    // let index = this.getSceneDescriptorIndex(sceneUuid);
+    // if (index === -1) {
+    //   return (false);
+    // }
 
-    let objectUuid = this.sceneDescriptors[index]
+    let objectUuid = this.getSceneDescriptor(this.getStartingScene())
       .addObjectDescriptor(name, type);
     return (objectUuid);
   }

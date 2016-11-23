@@ -10,6 +10,7 @@ import $ from 'jquery';
 import ContainerObject from '../views/ContainerObjectView';
 import ModalSelectFile from '../views/ModalSelectFileView';
 import ModalSelectMenu from '../views/ModalSelectMenu';
+import BasicObject from '../views/leftBar/BasicObjectsView';
 
 
 import ItemLeftMenu from '../models/ItemLeftMenu';
@@ -30,6 +31,7 @@ class LeftBarView extends Backbone.View {
 
     get events() {
         return {
+            'click #item5' : 'openBasicObject',
             'click #item2' : 'openContainerObject',
             'click #item3' : 'addFile',
             'click #item4' : 'addMenu',
@@ -48,13 +50,14 @@ class LeftBarView extends Backbone.View {
         modalMenu.render();
     }
 
+    openBasicObject() {
+        let container = new BasicObject();
+        container.render();
+    }
+
     openContainerObject() {
-
-
         //this.menu.push(new ItemLeftMenu({id: 5, name: 'Test', logo: 'list icon', isUsed:true}));
-
         //console.log(this.menu);
-
         var container = new ContainerObject();
         container.render();
     }
@@ -79,6 +82,8 @@ class LeftBarView extends Backbone.View {
         itemsMenu.push(new ItemLeftMenu({id: 2, name: 'Topics', logo: 'cubes icon', isUsed:true}));
         itemsMenu.push(new ItemLeftMenu({id: 3, name: 'Settings', logo: 'puzzle icon', isUsed:true}));
         itemsMenu.push(new ItemLeftMenu({id: 4, name: 'Ajouter', logo: 'plus square outline icon', isUsed:true}));
+
+        itemsMenu.push(new ItemLeftMenu({id: 5, name: 'Basic Object', logo: 'plus icon', isUsed: true}));
 
         itemsMenu.push(new ItemLeftMenu({id: 4, name: 'Environnement', logo: 'plus square outline icon', isUsed:false}));
         itemsMenu.push(new ItemLeftMenu({id: 4, name: 'Textures', logo: 'plus square outline icon', isUsed:false}));
