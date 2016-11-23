@@ -6,7 +6,7 @@ import CreatorManagement from './CreatorManagement';
 class Navigator {
 
   addBox() {
-    let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
+    let material = new THREE.MeshPhongMaterial();
     let geometry = new THREE.BoxGeometry(200, 200, 200);
     let box      = new THREE.Mesh(geometry, material);
 

@@ -136,23 +136,35 @@ class PropertiesView extends Backbone.View {
           this.object.scale.z = elem.val();
           break;
         case "mesh[color]":
+          let newColor = new THREE.Color(elem.val());
           console.log("Objecttt", this.object);
           if (this.object.userData.objType === "picker") {
-            let newColor = new THREE.Color(elem.val());
             if (this.object.material === undefined)
               this.object.color = newColor;
             else
               this.object.children[0].color = newColor;
-          } else {
-            let newColor = new THREE.Color(elem.val());
-            if (this.object.material === undefined)
-              this.object.color = newColor;
-            else
-              this.object.material.color = newColor;
+          }
+          else {
+            this.object.material.color = newColor;
           }
 
           console.log("Objecttt", this.object);
           break;
+        case "mesh[specularColor]":
+          console.log("Objecttt", this.object);
+          let newSpecColor = new THREE.Color(elem.val());
+          if (this.object.userData.objType === "picker") {
+            if (this.object.material === undefined)
+              this.object.color = newSpecColor;
+            else
+              this.object.children[0].color = newSpecColor;
+          } else {
+            this.object.material.specular = newSpecColor;
+          }
+
+          console.log("Objecttt", this.object);
+          break;
+
         case "mesh[visible]":
           this.object.visible = elem.prop('checked');
           break;
@@ -188,6 +200,10 @@ class PropertiesView extends Backbone.View {
         color = this.object.material.color;
       if (color !== undefined)
         this.setInfo("mesh[color]", "#" + color.getHexString());
+
+      color = this.object.material.specular;
+      if (color !== undefined)
+        this.setInfo("mesh[specularColor]", "#" + color.getHexString());
 
       this.setInfo("mesh[visible]", this.object.visible);
     }
@@ -247,7 +263,8 @@ class PropertiesView extends Backbone.View {
       bumpMap:   oldMat.bumpMap,
       bumpScale: oldMat.bumpScale,
       map:       new THREE.ImageUtils.loadTexture(sessionStorage.getItem(file.name)),
-      color:     oldMat.color
+      color:     oldMat.color,
+      specular:  oldMat.specular
     });
 
     if (this.object instanceof THREE.Group) {
@@ -285,7 +302,8 @@ class PropertiesView extends Backbone.View {
       bumpMap:   new THREE.ImageUtils.loadTexture(sessionStorage.getItem(file.name)),
       bumpScale: 1,
       map:       oldMat.map,
-      color:     oldMat.color
+      color:     oldMat.color,
+      specular:  oldMat.specular
     });
 
     if (this.object instanceof THREE.Group) {
