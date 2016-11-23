@@ -133,7 +133,6 @@ class GraphicalManager {
   _createMesh(objectDescriptor) {
     // TODO handle data material into obj desc
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
-    console.log("material!!!!!", material);
 
     let geometry = undefined;
     if (objectDescriptor.getType() === "sky")
