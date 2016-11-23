@@ -32,9 +32,6 @@ class Router extends Backbone.Router {
         authModal.show(false);*/
     }
 
-/*    HelloWorld() {
-        new HelloWorldView();
-    }*/
 
     settings() {
         new ProjectSelectionModalView();

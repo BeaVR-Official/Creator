@@ -4,15 +4,19 @@
   #{$key}: calc(#{$value});
 }
 
-$sizeTopMenu: 15%;
-$greyTopBarBackgroundColor:#3F3F3F;
+$sizeTopMenu: 51px;
+$greyTopBarBackgroundColor:#2fc5da;
 
 $backgroundColorSideBar: #1B1C1D;
 
 .LeftBarSelector {
 
-  overflow: scroll;
+  overflow: hidden;
   overflow-x: hidden;
+  @include calc('height', '100% - 52px');
+  position:absolute;
+  top: $sizeTopMenu;
+  width: 55px !important;
 
   ::-webkit-scrollbar {
     width: 0px;
@@ -21,75 +25,26 @@ $backgroundColorSideBar: #1B1C1D;
   ::-webkit-scrollbar-thumb {
     background: #FF0000;
   }
-  .ui {
+  .leftMenu {
+    position:relative;
+    height:100%;
+    background: #2fc5da !important;
+    padding-top: 10px;
 
-    &:hover{
-
+    ::-webkit-scrollbar {
+      display: none;
+      width: 0px;
     }
 
-    &:active{
-      
-    }
-    &.left {
-
-      &.visible {
-
-        &.sidebar {
-            top:$sizeTopMenu;
-        }
-      }
-    }
-    &.inverted {
-
-      &.icon {
-
-        &.menu {
-
-          background: $greyTopBarBackgroundColor;
-
-          &.a {
-
-            &.item {
-              background: deeppink;
-
-            }
-            &:hover {
-              background: greenyellow;
-            }
-
-          }
-          &.item {
-
-            &:hover {
-              background: aqua;
-            }
-
-            &:active{
-              background: yellow;
-            }
-          }
-
-
-        }
-      }
-
-      &.menu {
-
-        //@include calc("height", "100% - 30px");
-        //background: red;
-      }
-      &.item {
-        background: black;
-      }
+    .item {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+      min-width: 48px !important;
     }
 
-  }
-
-  &.item {
-
-    background: blueviolet;
-    &:hover {
-      background: greenyellow;
+    .row.active {
+      background:#2f98ac !important;
     }
+
   }
 }

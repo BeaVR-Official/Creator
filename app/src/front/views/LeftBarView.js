@@ -16,6 +16,8 @@ import BasicObject from '../views/leftBar/BasicObjectsView';
 import ItemLeftMenu from '../models/ItemLeftMenu';
 import LeftMenuCollection from  '../collections/LeftMenuCollection';
 
+import LeftBarSub from '../views/LeftBarSub';
+
 require('../../../assets/styles/LeftBar.scss');
 
 class LeftBarView extends Backbone.View {
@@ -31,18 +33,70 @@ class LeftBarView extends Backbone.View {
 
     get events() {
         return {
-            'click #item5' : 'openBasicObject',
-            'click #item2' : 'openContainerObject',
-            'click #item3' : 'addFile',
-            'click #item4' : 'addMenu',
+            'click #item1' : 'openThreeView',
+            'click #item2' : 'openBasicObjects',
+            'click #item3' : 'openLights',
+            'click #item4' : 'openMaterials',
+            'click #item5' : 'openSkyboxes',
+            'click #item6' : 'addCategorie'
         };
+    }
+
+    openThreeView() {
+        $('.LeftBarSubSelector').css('width', '220px');
+        var objects = [];
+        new LeftBarSub({type: 'TreeView'});
+    }
+
+
+    openBasicObjects() {
+        $('.LeftBarSubSelector').css('width', '220px');
+        var objects = [];
+        objects.push({name: "Cube", logo:'assets/images/cube.png'});
+        objects.push({name: "Cylinder", logo:'assets/images/cylinder.png'});
+        objects.push({name: "Sphere", logo:'assets/images/sphere.png'});
+        objects.push({name: "Add", logo:'assets/images/plus.png'});
+        new LeftBarSub({objects: objects});
+    }
+
+    openLights() {
+        $('.LeftBarSubSelector').css('width', '220px');
+        var objects = [];
+        objects.push({name: "Ambiente", logo:'assets/images/ambientLight.png'});
+        objects.push({name: "Directionnelle", logo:'assets/images/directionalLight.png'});
+        objects.push({name: "Pointée", logo:'assets/images/pointLight.png'});
+        objects.push({name: "Spot", logo:'assets/images/spotLight.png'});
+        new LeftBarSub({objects: objects});
+    }
+
+    openMaterials() {
+        $('.LeftBarSubSelector').css('width', '220px');
+        var objects = [];
+        new LeftBarSub({objects: objects});
+    }
+
+    openSkyboxes() {
+        $('.LeftBarSubSelector').css('width', '220px');
+        var objects = [];
+        objects.push({name: "Désert", logo:'assets/images/DesertIcon.png'});
+        objects.push({name: "Ciel", logo:'assets/images/skyIcon.png'});
+        objects.push({name: "Ville", logo:'assets/images/townIcon.png'});
+        objects.push({name: "Nuit", logo:'assets/images/nightIcon.png'});
+        new LeftBarSub({objects: objects});
+    }
+
+    addCategorie() {
+/*
+        var numero = this.menuCollection.models.length;
+*/
+        this.menuCollection.add(new ItemLeftMenu({id: 7, name: 'special', logo: 'fa fa-question', isUsed:true}), {at: this.menuCollection.models.length - 1})
     }
 
     get $el() {
         return $('.LeftBarSelector');
     }
 
-    addMenu(){
+   /* addMenu(){
 
         console.log(this.menuCollection);
 
@@ -66,7 +120,7 @@ class LeftBarView extends Backbone.View {
 
        var modal = new ModalSelectFile();
        modal.render();
-    }
+    }*/
 
     constructor() {
 
@@ -79,42 +133,31 @@ class LeftBarView extends Backbone.View {
         var itemsMenu = [];
 
         itemsMenu.push(new ItemLeftMenu({id: 1, name: 'Three View', logo: 'list icon', isUsed:true}));
-        itemsMenu.push(new ItemLeftMenu({id: 2, name: 'Topics', logo: 'cubes icon', isUsed:true}));
-        itemsMenu.push(new ItemLeftMenu({id: 3, name: 'Settings', logo: 'puzzle icon', isUsed:true}));
-        itemsMenu.push(new ItemLeftMenu({id: 4, name: 'Ajouter', logo: 'plus square outline icon', isUsed:true}));
+        itemsMenu.push(new ItemLeftMenu({id: 2, name: 'Objects', logo: 'cubes icon', isUsed:true}));
+        itemsMenu.push(new ItemLeftMenu({id: 3, name: 'Lights', logo: 'fa fa-lightbulb-o', isUsed:true}));
+        itemsMenu.push(new ItemLeftMenu({id: 4, name: 'Materials', logo: 'fa fa-tint', isUsed:true}));
 
-        itemsMenu.push(new ItemLeftMenu({id: 5, name: 'Basic Object', logo: 'plus icon', isUsed: true}));
+        itemsMenu.push(new ItemLeftMenu({id: 5, name: 'SkyBox', logo: 'fa fa-globe', isUsed: true}));
 
-        itemsMenu.push(new ItemLeftMenu({id: 4, name: 'Environnement', logo: 'plus square outline icon', isUsed:false}));
-        itemsMenu.push(new ItemLeftMenu({id: 4, name: 'Textures', logo: 'plus square outline icon', isUsed:false}));
-        itemsMenu.push(new ItemLeftMenu({id: 4, name: 'Scripts', logo: 'plus square outline icon', isUsed:false}));
-
+        itemsMenu.push(new ItemLeftMenu({id: 6, name: 'Add', logo: 'fa fa-plus', isUsed:true}));
 
         this.menu = new LeftMenuCollection(itemsMenu);
         this.menuCollection = this.menu;
 
+/*
         this.menu.bind('add', this.render);
-
+*/
+        this.listenTo(this.menu, 'all', this.render);
 
         this.render();
     }
 
     render() {
-
-        console.log("RENDER :>");
-        console.log(this.menu);
-
         this.$el.html(this.template({
             menu: this.menu.toJSON()
         }));
         return this;
     }
-
-    /*
-    render() {
-        this.$el.html(this.template());
-        return this;
-    }*/
 }
 
 export default LeftBarView;

@@ -1,0 +1,107 @@
+@mixin calc($key, $value) {
+  #{$key}: -webkit-calc(#{$value});
+  #{$key}: -moz-calc(#{$value});
+  #{$key}: calc(#{$value});
+}
+
+$sizeTopMenu: 51px;
+
+
+.LeftBarSubSelector {
+
+  overflow: hidden;
+  overflow-x: hidden;
+  @include calc('height', '100% - 52px');
+  position:absolute;
+  top: $sizeTopMenu;
+  left:54px;
+
+  animation-name: zoomInLeft;
+  animation-duration: 2s;
+  background:#3F3F3F !important;
+  width: 0px;
+
+
+  .subview {
+    padding-top: 10px;
+    width: 100%;
+    margin: auto;
+
+
+    .headerSub {
+      text-align:center;
+      background: black;
+      color:white;
+      padding-top: 3px;
+      border: 1px solid gray;
+      padding-bottom: 3px;
+
+      .active {
+        .ui.button.basic {
+          color: #2fc5da !important;
+        }
+      }
+
+      .ui.button.basic {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0px;
+        width: 100%;
+        margin: auto;
+        height: 100%;
+      }
+
+
+    }
+
+
+    .imageBox {
+      box-shadow: inset 0px 1px 38px 14px #131313,1px 1px 14px -2px #000000;
+      -webkit-box-shadow: inset 0px 1px 38px 14px #131313,1px 1px 14px -2px #000000;
+      -moz-box-shadow: inset 0px 1px 38px 14px #131313,1px 1px 14px -2px #000000;
+      -o-box-shadow:inset 0px 1px 38px 14px #131313,1px 1px 14px -2px #000000;
+
+      display: inline-block;
+
+      background: -moz-radial-gradient(center, ellipse cover, rgba(26,194,196,1) 0%, rgba(0,0,0,1) 100%); /* ff3.6+ */
+      background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(26,194,196,1)), color-stop(100%, rgba(0,0,0,1))); /* safari4+,chrome */
+      background:-webkit-radial-gradient(center, ellipse cover, rgba(26,194,196,1) 0%, rgba(0,0,0,1) 100%); /* safari5.1+,chrome10+ */
+      background: -o-radial-gradient(center, ellipse cover, rgba(26,194,196,1) 0%, rgba(0,0,0,1) 100%); /* opera 11.10+ */
+      background: -ms-radial-gradient(center, ellipse cover, rgba(26,194,196,1) 0%, rgba(0,0,0,1) 100%); /* ie10+ */
+      background:radial-gradient(ellipse at center, rgba(26,194,196,1) 0%, rgba(0,0,0,1) 100%); /* w3c */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1AC2C4', endColorstr='#000000',GradientType=1 ); /* ie6-9 */
+      text-align:center;
+      width: 80px;
+      height: 80px;
+      margin: auto;
+      padding: 17px;
+
+      &:hover{
+        background: -moz-radial-gradient(center, ellipse cover, rgb(196, 0, 3) 0%, rgba(0,0,0,1) 100%); /* ff3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgb(196, 0, 3)), color-stop(100%, rgba(0,0,0,1))); /* safari4+,chrome */
+        background:-webkit-radial-gradient(center, ellipse cover, rgba(196,0,3,1) 0%, rgba(0,0,0,1) 100%); /* safari5.1+,chrome10+ */
+        background: -o-radial-gradient(center, ellipse cover, rgba(196,0,3,1) 0%, rgba(0,0,0,1) 100%); /* opera 11.10+ */
+        background: -ms-radial-gradient(center, ellipse cover, rgba(196,0,3,1) 0%, rgba(0,0,0,1) 100%); /* ie10+ */
+        background:radial-gradient(ellipse at center, rgba(196,0,3,1) 0%, rgba(0,0,0,1) 100%); /* w3c */
+      }
+
+      img {
+        width: auto;
+        height: 50px;
+      }
+    }
+
+    .center.tab.column {
+      text-align:center;
+
+    }
+
+    .object-icon {
+      max-height: 50px;
+
+    }
+
+
+  }
+
+}
