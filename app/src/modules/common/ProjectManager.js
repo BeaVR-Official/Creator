@@ -61,10 +61,7 @@ class ProjectManager {
 
   getObjectDescriptor(sceneUuid, objectUuid) {
     let index = this.getSceneDescriptorIndex(sceneUuid);
-    if (index !== -1) {
-      return (undefined);
-    }
-    return (this.sceneDescriptors[index].getObjectDescriptor(objectUuid));
+    return (index !== -1 ? this.sceneDescriptors[index].getObjectDescriptor(objectUuid) : undefined);
   }
 
   //

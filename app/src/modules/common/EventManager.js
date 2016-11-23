@@ -55,6 +55,9 @@ class EventManager extends EventEmitter {
 
     });
 
+    this.on('objectSelected', function (data) {
+      console.log(data);
+    })
 
     // ////////////////////////
     // TreeView events
@@ -135,8 +138,6 @@ class EventManager extends EventEmitter {
     // ////////////////////////
     // Object Property events
     // ////////////////////////
-    this.on('adaptGraphManToWindow', function (data) {
-      });
 
     this.on('updateObjectPosition', function (data) {
       ProjectManager.setObjectPosition(

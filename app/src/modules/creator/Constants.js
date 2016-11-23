@@ -17,8 +17,8 @@ const camSettings   = {
 
 // set scene canvas positions
 const canvasSettings = {
-  width: $('.categories-left-panel').width() + $('.properties-left-panel').outerWidth(),
-  height: $('.nav-container').height()
+  width: window.innerWidth,
+  height: window.innerHeight + $(".TopBarSelector").height()
 };
 
 class Constants {

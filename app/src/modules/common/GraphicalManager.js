@@ -1,5 +1,6 @@
 import Constants from '../creator/Constants';
 import ProjectManager from './ProjectManager';
+import EventManager from './EventManager';
 
 Physijs.scripts.worker = 'physijs_worker.js';
 Physijs.scripts.ammo   = 'ammo.js';
@@ -29,10 +30,11 @@ class GraphicalManager {
 
     // GraphicalManager attributes
     this.editorMod        = true; // false for runnerMod
-    this.scene            = undefined;
+    this.threeScene            = undefined;
     this.currentSceneUuid = undefined;
     this.lastSceneUuid    = undefined;
     this.mouse            = new THREE.Vector2();
+    this.raycaster        = new THREE.Raycaster(); // For object detection by clicking
   }
 
   setCurrentSceneUuid(sceneUuid) {
@@ -61,9 +63,7 @@ class GraphicalManager {
 
   setMouse(mouse) {
     this.mouse.set(mouse.x, mouse.y);
-
-    //TODO obj intersection calc
-    console.log("mouse", this.mouse);
+    this._raycastingSelection();
   }
 
   addObject(objectUuid) {
@@ -83,8 +83,8 @@ class GraphicalManager {
    * @private
    */
   _adaptToWindow() {
-    let parentWidth  = $(window).width() - Constants.getCanvasSettings().width;
-    let parentHeight = $(window).height();
+    let parentWidth  = Constants.getCanvasSettings().width;
+    let parentHeight = Constants.getCanvasSettings().height;
 
     this.camera.aspect = parentWidth / parentHeight;
     this.camera.updateProjectionMatrix();
@@ -111,7 +111,7 @@ class GraphicalManager {
 
     obj.name = objectDescriptor.getUuid();
 
-    this.scene.add(obj);
+    this.threeScene.add(obj);
     this.render();
   }
 
@@ -121,13 +121,13 @@ class GraphicalManager {
    */
   _createScene() {
     if (this.editorMod) {
-      this.scene = new THREE.Scene();
+      this.threeScene = new THREE.Scene();
       // TODO variable Grid params
       let grid   = new THREE.GridHelper(500, 50);
 
-      this.scene.add(grid);
+      this.threeScene.add(grid);
     } else
-      this.scene = new Physijs.Scene();
+      this.threeScene = new Physijs.Scene();
   }
 
   _createMesh(objectDescriptor) {
@@ -148,7 +148,7 @@ class GraphicalManager {
       geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     // TODO see how to do for lights/lightsHelper/externalObj
 
-    let mesh           = new Physijs.BoxMesh(geometry, material);
+    let mesh           = new THREE.Mesh(geometry, material);
     mesh.mirroredLoop  = true;
     mesh.castShadow    = true;
     mesh.receiveShadow = true;
@@ -156,10 +156,31 @@ class GraphicalManager {
     return mesh;
   }
 
+  _raycastingSelection() {
+    let closestObject = this._getClosestObject().name; // objDesc uuid into name
+
+    console.log("uuid", ProjectManager.getSceneDescriptor(this.currentSceneUuid));
+    console.log("scene", this.threeScene);
+
+    let obj = ProjectManager.getObjectDescriptor(this.currentSceneUuid, closestObject)
+
+    EventManager.emitEvent('objectSelected', {objectUuid: obj.attributes.uuid})
+    console.log("Object selected", obj);
+  }
+
+  _getClosestObject() {
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    let intersects = this.raycaster.intersectObjects(this.threeScene.children, true);
+
+    if (intersects.length > 0)
+      return intersects[0].object;
+    return false;
+  }
+
   render() {
     this.renderer.clear();
-    this.camera.lookAt(this.scene.position);
-    this.renderer.render(this.scene, this.camera);
+    this.camera.lookAt(this.threeScene.position);
+    this.renderer.render(this.threeScene, this.camera);
     this.setlastSceneUuid(this.currentSceneUuid);
   }
 
@@ -169,14 +190,15 @@ class GraphicalManager {
   // ////////////////////////
 
   removeObject(objectDescriptor) {
-    this.scene.remove(
-      this.scene.getObjectById(objectDescriptor.uuid)
+    this.threeScene.remove(
+      this.threeScene.getObjectById(objectDescriptor.uuid)
     );
   }
 
   switchScene(sceneUuid) {
 
   }
+
 
   // ////////////////////////
   // Add Things events
@@ -205,28 +227,29 @@ class GraphicalManager {
   addGround() {
   }
 
+
   // ////////////////////////
   // Object Property events
   // ////////////////////////
 
   updateObjectPosition(OD, position) {
-    this.scene.getObjectById(OD.uuid, true).position = position;
+    this.threeScene.getObjectById(OD.uuid, true).position = position;
   }
 
   updateObjectRotation(OD, rotation) {
-    this.scene.getObjectById(OD.uuid, true).rotation = rotation
+    this.threeScene.getObjectById(OD.uuid, true).rotation = rotation
   }
 
   updateObjectScale(OD, scale) {
-    this.scene.getObjectById(OD.uuid, true).scale = scale;
+    this.threeScene.getObjectById(OD.uuid, true).scale = scale;
   }
 
   updateObjectColor(OD, color) {
-    this.scene.getObjectById(OD.uuid).color = color;
+    this.threeScene.getObjectById(OD.uuid).color = color;
   }
 
   updateObjectVisibility(OD, isVisibility) {
-    this.scene.getObjectById(OD.uuid, true).visible = isVisibility;
+    this.threeScene.getObjectById(OD.uuid, true).visible = isVisibility;
   }
 
   // TODO
