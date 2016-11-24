@@ -8,15 +8,28 @@ Physijs.scripts.ammo   = 'ammo.js';
 class GraphicalManager {
 
   constructor() {
+    this._initViewPort('#SceneSelector');
+    this._initControls();
+
+    // GraphicalManager attributes
+    this.editorMod        = true; // false for runnerMod
+    this.threeScene       = undefined;
+    this.currentSceneUuid = undefined;
+    this.lastSceneUuid    = undefined;
+    this.mouse            = new THREE.Vector2();
+    this.raycaster        = new THREE.Raycaster(); // For object detection by clicking
+  }
+
+  _initViewPort(htmlAnchor) {
     // Init SceneView renderer
     let sceneSettings       = Constants.getSceneSettings();
     this.renderer           = new THREE.WebGLRenderer({antialias: true});
     this.renderer.autoClear = false;
     this.renderer.setClearColor(sceneSettings.backgroundColor, 1);
     this.renderer.setSize(sceneSettings.width, sceneSettings.height);
-    $('#SceneSelector').append(this.renderer.domElement);
+    $(htmlAnchor).append(this.renderer.domElement);
 
-    // Init SceneView camera
+    // Camera settings
     let camSettings = Constants.getCamSettings();
     this.camera     = new THREE.PerspectiveCamera(
       camSettings.fov,
@@ -27,14 +40,6 @@ class GraphicalManager {
       camSettings.posX,
       camSettings.posY,
       camSettings.posZ);
-
-    // GraphicalManager attributes
-    this.editorMod        = true; // false for runnerMod
-    this.threeScene            = undefined;
-    this.currentSceneUuid = undefined;
-    this.lastSceneUuid    = undefined;
-    this.mouse            = new THREE.Vector2();
-    this.raycaster        = new THREE.Raycaster(); // For object detection by clicking
   }
 
   setCurrentSceneUuid(sceneUuid) {
@@ -112,7 +117,7 @@ class GraphicalManager {
     if (this.editorMod) {
       this.threeScene = new THREE.Scene();
       // TODO variable Grid params
-      let grid   = new THREE.GridHelper(500, 50);
+      let grid        = new THREE.GridHelper(500, 50);
 
       this.threeScene.add(grid);
     } else
@@ -144,8 +149,18 @@ class GraphicalManager {
     return mesh;
   }
 
+  _initControls() {
+    this.orbitControl = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+
+
+    this.orbitControl.addEventListener('change', () => {
+      this.render()
+    });
+  }
+
   _raycastingSelection() {
     let closestObject = this._getClosestObject(); // objDesc uuid into name
+    console.log("Selected object: ", closestObject);
 
     EventManager.emitEvent('objectSelected', {objectUuid: closestObject.name});
   }
@@ -166,7 +181,6 @@ class GraphicalManager {
     this.setlastSceneUuid(this.currentSceneUuid);
   }
 
-
   // ////////////////////////
   // TreeView events
   // ////////////////////////
@@ -180,7 +194,6 @@ class GraphicalManager {
   switchScene(sceneUuid) {
 
   }
-
 
   // ////////////////////////
   // Add Things events
@@ -208,7 +221,6 @@ class GraphicalManager {
   // TODO
   addGround() {
   }
-
 
   // ////////////////////////
   // Object Property events
