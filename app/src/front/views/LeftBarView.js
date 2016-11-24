@@ -66,6 +66,7 @@ class LeftBarView extends Backbone.View {
         objects.push({name: "Directionnelle", logo:'assets/images/directionalLight.png'});
         objects.push({name: "Pointée", logo:'assets/images/pointLight.png'});
         objects.push({name: "Spot", logo:'assets/images/spotLight.png'});
+        objects.push({name: "Add", logo:'assets/images/plus.png'});
         new LeftBarSub({objects: objects});
     }
 
@@ -82,45 +83,17 @@ class LeftBarView extends Backbone.View {
         objects.push({name: "Ciel", logo:'assets/images/skyIcon.png'});
         objects.push({name: "Ville", logo:'assets/images/townIcon.png'});
         objects.push({name: "Nuit", logo:'assets/images/nightIcon.png'});
+        objects.push({name: "Add", logo:'assets/images/plus.png'});
         new LeftBarSub({objects: objects});
     }
 
     addCategorie() {
-/*
-        var numero = this.menuCollection.models.length;
-*/
         this.menuCollection.add(new ItemLeftMenu({id: 7, name: 'special', logo: 'fa fa-question', isUsed:true}), {at: this.menuCollection.models.length - 1})
     }
 
     get $el() {
         return $('.LeftBarSelector');
     }
-
-   /* addMenu(){
-
-        console.log(this.menuCollection);
-
-        var modalMenu = new ModalSelectMenu();
-        modalMenu.render();
-    }
-
-    openBasicObject() {
-        let container = new BasicObject();
-        container.render();
-    }
-
-    openContainerObject() {
-        //this.menu.push(new ItemLeftMenu({id: 5, name: 'Test', logo: 'list icon', isUsed:true}));
-        //console.log(this.menu);
-        var container = new ContainerObject();
-        container.render();
-    }
-
-    addFile(){
-
-       var modal = new ModalSelectFile();
-       modal.render();
-    }*/
 
     constructor() {
 

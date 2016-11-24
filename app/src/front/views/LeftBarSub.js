@@ -6,6 +6,7 @@ import Loader from '../utils';
 import * as Backbone from 'backbone';
 import * as _ from '../../../../node_modules/underscore';
 import $ from 'jquery';
+import Navigator from '../../modules/creator/Navigator';
 
 
 require('../../../assets/styles/LeftBarSub.scss');
@@ -41,12 +42,15 @@ class LeftBarView extends Backbone.View {
 
   }
 
+  get events() {
+    return {
+      'click .imageBox' : 'addObject'
+    };
+  }
 
   constructor(value) {
 
-    super({
-      events: {}
-    });
+    super({});
     console.log(value);
     this.default = (value.objects != undefined) ? value.objects : [];
     this.objects = this.default;
@@ -54,6 +58,9 @@ class LeftBarView extends Backbone.View {
     this.render();
   }
 
+  addObject(event) {
+    console.log($(event.target).closest('.imageBox').attr('data-id'));
+  }
 
    render() {
       this.$el.html(this.template({objects : this.objects, type: this.type}));
