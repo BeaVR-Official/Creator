@@ -106,7 +106,11 @@ class EventManager extends EventEmitter {
     // ////////////////////////
 
     this.on('addObject', function (data) {
-      let objectUuid = ProjectManager.addObject(data);
+      let objectUuid = ProjectManager.addObject(
+        data.objectName,
+        data.objectType
+      );
+
       GraphicalManager.addObject(objectUuid);
     });
 

@@ -10,14 +10,19 @@
             <p style="margin: auto;">Tree View</p>
         <% }%>
     </div>
-    <% _.each(objects, function(object, i){ %>
-    <div class="center tab column animated fadeInRight addObject" data-id="<%- object.type %>">
-        <div class="imageBox dropMaterial row center">
-            <img class="object-icon" src="<%- object.logo %>"/>
+
+    <% if (type != 'default' && type != 'used') { %>
+        <div id="sceneTree"></div>
+    <% } else { %>
+        <% _.each(objects, function(object, i){ %>
+        <div class="center tab column animated fadeInRight addObject" data-id="<%- object.type %>">
+            <div class="imageBox dropMaterial row center">
+                <img class="object-icon" src="<%- object.logo %>"/>
+            </div>
+            <div class="my-object-text-row row" style="padding:0px;">
+                <p style="color:white;"><%- object.name %></p>
+            </div>
         </div>
-        <div class="my-object-text-row row" style="padding:0px;">
-            <p style="color:white;"><%- object.name %></p>
-        </div>
-    </div>
-    <% }); %>
+        <% }); %>
+    <% } %>
 </div>

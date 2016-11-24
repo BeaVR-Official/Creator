@@ -64,6 +64,7 @@ class LeftBarView extends Backbone.View {
       objectName: '',
       objectType: addType
     };
+    // TODO filtré entre les dif obj via un data.typeObj
     EventManager.emitEvent('addObject', data);
   }
 

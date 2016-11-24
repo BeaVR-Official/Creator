@@ -7,10 +7,7 @@ import * as Backbone from 'backbone';
 import * as _ from '../../../../node_modules/underscore';
 import $ from 'jquery';
 
-import ContainerObject from '../views/ContainerObjectView';
-import ModalSelectFile from '../views/ModalSelectFileView';
-import ModalSelectMenu from '../views/ModalSelectMenu';
-import BasicObject from '../views/leftBar/BasicObjectsView';
+import LeftBarSugarMaple from './LeftBarSugarMaple';
 
 
 import ItemLeftMenu from '../models/ItemLeftMenu';
@@ -44,7 +41,6 @@ class LeftBarView extends Backbone.View {
 
     openThreeView() {
         $('.LeftBarSubSelector').css('width', '220px');
-        var objects = [];
         new LeftBarSub({type: 'TreeView'});
     }
 
@@ -123,6 +119,11 @@ class LeftBarView extends Backbone.View {
         this.listenTo(this.menu, 'all', this.render);
 
         this.render();
+
+        this.openThreeView();
+
+        let leftBarSugarMaple = new LeftBarSugarMaple();
+        leftBarSugarMaple.initializeSugar();
     }
 
     render() {
