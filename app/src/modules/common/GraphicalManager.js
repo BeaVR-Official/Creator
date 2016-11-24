@@ -145,10 +145,9 @@ class GraphicalManager {
   }
 
   _raycastingSelection() {
-    let closestObject = this._getClosestObject().name; // objDesc uuid into name
+    let closestObject = this._getClosestObject(); // objDesc uuid into name
 
-    EventManager.emitEvent('objectSelected', {objectUuid: closestObject});
-    console.log("Object selected", closestObject);
+    EventManager.emitEvent('objectSelected', {objectUuid: closestObject.name});
   }
 
   _getClosestObject() {

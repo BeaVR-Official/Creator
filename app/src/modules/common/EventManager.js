@@ -56,7 +56,7 @@ class EventManager extends EventEmitter {
     });
 
     this.on('objectSelected', function (data) {
-      console.log(data);
+      console.log("My data object!!!!", data);
     })
 
     // ////////////////////////

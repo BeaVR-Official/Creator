@@ -47,7 +47,6 @@ class ThreeJSCanvasEvents {
   }
 
   _onMouseUp(event) {
-
     let x = event.clientX;
     let y = event.clientY - $(".TopBarSelector").height();
 
