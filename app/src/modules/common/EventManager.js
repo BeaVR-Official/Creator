@@ -55,8 +55,12 @@ class EventManager extends EventEmitter {
 
     });
 
-    this.on('objectSelected', function (data) {
-      console.log("My data object!!!!", data);
+    /*
+    data: objectDescriptorUuid
+     */
+    this.on('objectSelected', (data) => {
+      this.emitEvent('getObjectSelected', ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid))
+      console.log("My data object!!!!", data.objectUuid);
     })
 
     // ////////////////////////

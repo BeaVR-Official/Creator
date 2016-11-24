@@ -7,19 +7,19 @@ export default class ObjectDescriptor extends Backbone.Model {
 
   constructor(name, type) {
     super();
-    this.attributes.uuid              = UUID.createUUID();
-    this.attributes.name              = name;
-    this.attributes.type              = type;
-    this.attributes.parent            = undefined;
-    this.attributes.children          = [];
-    this.attributes.position          = [0.0, 0.0, 0.0];
-    this.attributes.rotation          = [0.0, 0.0, 0.0];
-    this.attributes.scale             = [0.0, 0.0, 0.0];
-    this.attributes.isSolid           = false;
-    this.attributes.isGravityEffected = false;
-    this.attributes.isVisibilty       = true;
-    this.attributes.geometryDescriptor = new GeometryDescriptor(name + " geometry");
-    this.attributes.materialDescriptor = new MaterialDescriptor(name + " material");
+    this.attributes.uuid                          = UUID.createUUID();
+    this.attributes.name                          = name;
+    this.attributes.type                          = type;
+    this.attributes.parent                        = undefined;
+    this.attributes.children                      = [];
+    this.attributes.transformations.translation   = [0.0, 0.0, 0.0];
+    this.attributes.transformations.rotation      = [0.0, 0.0, 0.0];
+    this.attributes.transformations.scale         = [0.0, 0.0, 0.0];
+    this.attributes.isSolid                       = false;
+    this.attributes.isGravityEffected             = false;
+    this.attributes.isVisibilty                   = true;
+    this.attributes.geometryDescriptor            = new GeometryDescriptor(name + " geometry");
+    this.attributes.materialDescriptor            = new MaterialDescriptor(name + " material");
     // TODO: support all the more specific properties
     // namely: Cameras, Skyboxes
   }
@@ -84,27 +84,27 @@ export default class ObjectDescriptor extends Backbone.Model {
   }
 
   setPosition(position) {
-    this.attributes.position = position;
+    this.attributes.transformations.translation = position;
   }
 
   getPosition() {
-    return (this.attributes.position);
+    return (this.attributes.transformations.translation);
   }
 
   setRotation(rotation) {
-    this.attributes.rotation = rotation;
+    this.attributes.transformations.rotation = rotation;
   }
 
   getRotation() {
-    return (this.attributes.rotation);
+    return (this.attributes.transformations.rotation);
   }
 
   setScale(scale) {
-    this.attributes.scale = scale;
+    this.attributes.transformations.scale = scale;
   }
 
   getScale() {
-    return (this.attributes.scale);
+    return (this.attributes.transformations.scale);
   }
 
   setMaterialDescriptor(materialDescriptor) {
@@ -158,9 +158,11 @@ export default class ObjectDescriptor extends Backbone.Model {
       type              : "",
       parent            : undefined,
       children          : [],
-      position          : [0.0, 0.0, 0.0],
-      rotation          : [0.0, 0.0, 0.0],
-      scale             : [0.0, 0.0, 0.0],
+      transformations   : {
+        translation : [0.0, 0.0, 0.0],
+        rotation    : [0.0, 0.0, 0.0],
+        scale       : [0.0, 0.0, 0.0]
+      },
       isSolid           : false,
       isGravityEffected : false,
       isVisibilty       : true,

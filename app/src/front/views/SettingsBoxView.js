@@ -7,6 +7,8 @@ import Backbone from 'backbone';
 
 import Object3D from '../models/object';
 
+import EventManager from '../../modules/common/EventManager';
+
 require('../../../assets/styles/SettingsBox.scss');
 
 class SettingsBoxView extends Backbone.View {
@@ -21,21 +23,21 @@ class SettingsBoxView extends Backbone.View {
 
     get events() {
         return {
-            'click .openSettings': 'OpenCloseBox',
-            'keyup transformations input': 'changed',
-            'change transformations input': 'changed',
+            'click .openSettings':              'OpenCloseBox',
+            'keyup transformations input':      'changed',
+            'change transformations input':     'changed',
             'mousewheel transformations input': 'inputWheel',
-            'change #sliderOpacity': 'propertyChanged',
-            'mousemove #sliderOpacity': 'propertyChanged',
+            'change #sliderOpacity':            'propertyChanged',
+            'mousemove #sliderOpacity':         'propertyChanged',
             ///Events drag
-            'dragstart .dropMaterial img': 'dragEvent',
-            'dragstart .dropTexture img': 'dragEvent',
-            'drop .dropMaterial' : 'dropMaterial',
-            'dragover .dropMaterial': function(ev) {
+            'dragstart .dropMaterial img':      'dragEvent',
+            'dragstart .dropTexture img':       'dragEvent',
+            'drop .dropMaterial':               'dropMaterial',
+            'dragover .dropMaterial':           function (ev) {
                 ev.preventDefault();
             },
-            'drop .dropTexture' : 'dropTexture',
-            'dragover .dropTexture': function(ev) {
+            'drop .dropTexture':                'dropTexture',
+            'dragover .dropTexture':            function (ev) {
                 ev.preventDefault();
             },
         };
@@ -48,7 +50,25 @@ class SettingsBoxView extends Backbone.View {
         _.bindAll(this, 'changed');
         this.render();
         this.count = 0;
+        this.eventListener();
     }
+
+    eventListener() {
+        EventManager.on('getObjectSelected', (objectDescriptor) => {
+            this.model.attributes = objectDescriptor.attributes;
+            console.log(this.model);
+            this.render();
+        });
+    }
+
+// To test with @Elliot
+    // constructor(objSelected) {}
+/*    setObject(objectModelBackbone) {
+        this.model = new Object3D();
+        //this.listenTo(this.model, 'all', EventManager)
+        this.listenTo(this.model, 'all', this.render);
+        this.render();
+    }*/
 
 
     dragEvent(ev) {
