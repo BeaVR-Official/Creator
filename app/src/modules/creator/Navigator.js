@@ -164,6 +164,20 @@ class Navigator {
     light.userData.objType = type;
     light.name             = type + '_' + light.userData.id;
   }
+
+  // Clone d'un obj simple seulement
+  cloneObject(object) {
+    console.log("Object To clone: ", object);
+    let material = undefined;
+    if (object.material === undefined) {
+      material = new THREE.MeshPhongMaterial();
+    } else
+      material = object.material.clone();
+    let objectCloned = new THREE.Mesh(object.geometry.clone(), material);
+    this.setMeshInfo(objectCloned, object.userData.objType);
+    console.log("Object cloned: ", objectCloned);
+    CreatorManagement.addObject(objectCloned);
+  }
 }
 
 export default new Navigator();

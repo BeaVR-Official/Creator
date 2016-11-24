@@ -8,6 +8,7 @@ import Objects from '../collections/objectCollection';
 import Scene from '../../modules/creator/Scene';
 import CreatorManagement from '../../modules/creator/CreatorManagement';
 import ActionBlockParamsView from './objects/actionBlockParams';
+import Navigator from '../../modules/creator/Navigator';
 
 import * as Backbone from 'backbone';
 
@@ -23,11 +24,12 @@ class PropertiesView extends Backbone.View {
 
   get events() {
     return {
-      'change input':            'actionChanged',
-      'click .actionblock':      'actionBlockClicked',
-      'click #validate_texture': 'uploadTexture',
-      'click #validate_bumpMap': 'uploadBumpMap',
-      'click .reactionblock':    'reactionBlockClicked'
+      'change input':              'actionChanged',
+      'click .actionblock':        'actionBlockClicked',
+      'click #validate_texture':   'uploadTexture',
+      'click #validate_bumpMap':   'uploadBumpMap',
+      'click #validate_duplicate': 'doDuplicate',
+      'click .reactionblock':      'reactionBlockClicked'
     };
   }
 
@@ -193,7 +195,7 @@ class PropertiesView extends Backbone.View {
       this.setInfo("scale[y]", this.object.scale.y);
       this.setInfo("scale[z]", this.object.scale.z);
 
-      let color;
+      let color = undefined;
       if (this.object.material === undefined)
         color = this.object.color;
       else
@@ -201,7 +203,9 @@ class PropertiesView extends Backbone.View {
       if (color !== undefined)
         this.setInfo("mesh[color]", "#" + color.getHexString());
 
-      color = this.object.material.specular;
+      color = undefined;
+      if (this.object.material !== undefined)
+        color = this.object.material.specular;
       if (color !== undefined)
         this.setInfo("mesh[specularColor]", "#" + color.getHexString());
 
@@ -319,6 +323,10 @@ class PropertiesView extends Backbone.View {
     sessionStorage.clear();
 
     console.log("typeof OBJECT", this.object);
+  }
+
+  doDuplicate() {
+    Navigator.cloneObject(this.object);
   }
 
 }
