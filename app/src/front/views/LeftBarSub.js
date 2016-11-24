@@ -6,7 +6,7 @@ import Loader from '../utils';
 import * as Backbone from 'backbone';
 import * as _ from '../../../../node_modules/underscore';
 import $ from 'jquery';
-import Navigator from '../../modules/creator/Navigator';
+import EventManager from '../../modules/common/EventManager'
 
 
 require('../../../assets/styles/LeftBarSub.scss');
@@ -59,7 +59,12 @@ class LeftBarView extends Backbone.View {
   }
 
   addObject(event) {
-    console.log($(event.target).closest('.imageBox').attr('data-id'));
+    let addType = ($(event.target).closest('.addObject').attr('data-id'));
+    let data = {
+      objectName: '',
+      objectType: addType
+    };
+    EventManager.emitEvent('addObject', data);
   }
 
    render() {

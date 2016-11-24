@@ -52,7 +52,7 @@ class LeftBarView extends Backbone.View {
     openBasicObjects() {
         $('.LeftBarSubSelector').css('width', '220px');
         var objects = [];
-        objects.push({name: "Cube", logo:'assets/images/cube.png', type: 'cube'});
+        objects.push({name: "Cube", logo:'assets/images/cube.png', type: 'box'});
         objects.push({name: "Cylinder", logo:'assets/images/cylinder.png', type: 'cylinder'});
         objects.push({name: "Sphere", logo:'assets/images/sphere.png', type: 'sphere'});
         objects.push({name: "Add", logo:'assets/images/plus.png'});
