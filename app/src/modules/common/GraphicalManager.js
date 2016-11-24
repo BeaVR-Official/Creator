@@ -66,17 +66,6 @@ class GraphicalManager {
     this._raycastingSelection();
   }
 
-  addObject(objectUuid) {
-    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
-    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
-
-    this._objectFactory(objectDescriptor);
-  }
-
-  removeObject(sceneDescriptor, objectDescriptor) {
-
-  }
-
   /**
    * Adapt scene renderer to canvas
    * TODO: getCanvasWidth & height by EventManager(no more canvasSettings in Constants)

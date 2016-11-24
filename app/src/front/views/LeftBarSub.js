@@ -50,7 +50,7 @@ class LeftBarView extends Backbone.View {
     console.log(value);
     this.default = (value.objects != undefined) ? value.objects : [];
     this.objects = this.default;
-    this.type= (value.type != undefined)? value.type: "default";
+    this.type = (value.type != undefined)? value.type: "default";
     this.render();
   }
 
