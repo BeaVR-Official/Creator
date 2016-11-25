@@ -7,17 +7,20 @@ Physijs.scripts.ammo   = 'ammo.js';
 
 class GraphicalManager {
 
+  // In editor mod by default
   constructor() {
+    // GraphicalManager attributes
+    this.editorMod         = true; // false for runnerMod
+    this.threeScene        = undefined;
+    this.currentSceneUuid  = undefined;
+    this.lastSceneUuid     = undefined;
+    this.mouse             = new THREE.Vector2();
+    this.raycaster         = new THREE.Raycaster(); // For object detection by clicking
+    this.transformControls = undefined;
+
     this._initViewPort('#SceneSelector');
     this._initControls();
 
-    // GraphicalManager attributes
-    this.editorMod        = true; // false for runnerMod
-    this.threeScene       = undefined;
-    this.currentSceneUuid = undefined;
-    this.lastSceneUuid    = undefined;
-    this.mouse            = new THREE.Vector2();
-    this.raycaster        = new THREE.Raycaster(); // For object detection by clicking
   }
 
   _initViewPort(htmlAnchor) {
@@ -120,6 +123,7 @@ class GraphicalManager {
       let grid        = new THREE.GridHelper(500, 50);
 
       this.threeScene.add(grid);
+      this.threeScene.add(this.transformControls);
     } else
       this.threeScene = new Physijs.Scene();
   }
@@ -150,16 +154,44 @@ class GraphicalManager {
   }
 
   _initControls() {
+    // Orbit control enable for Runner ?
+    // Actually enable for editor & runner
     this.orbitControl = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-
-
     this.orbitControl.addEventListener('change', () => {
       this.render()
     });
+
+    if (this.editorMod) {
+      this.transformControls = new THREE.TransformControls(this.camera, this.renderer.domElement);
+      this.transformControls.addEventListener('change', () => {
+        // Send event when updating and not redo click selection
+        this.render()
+      });
+    }
+  }
+
+  /**
+   * Change mod or transformControls
+   * modes: "translate" / "rotate" / "scale"
+   */
+  setModControls(mode) {
+    if (this.transformControls !== undefined) {
+      this.transformControls.setMode(mode);
+    }
   }
 
   _raycastingSelection() {
     let closestObject = this._getClosestObject(); // objDesc uuid into name
+
+    console.log("Object", closestObject);
+    // if (this.transformControls.on)
+
+    if (closestObject !== undefined)
+      this.transformControls.attach(closestObject);
+    else
+      this.transformControls.detach();
+
+    this.render();
     console.log("Selected object: ", closestObject);
 
     EventManager.emitEvent('objectSelected', {objectUuid: closestObject.name});
@@ -179,6 +211,7 @@ class GraphicalManager {
     this.camera.lookAt(this.threeScene.position);
     this.renderer.render(this.threeScene, this.camera);
     this.setlastSceneUuid(this.currentSceneUuid);
+    // requestAnimationFrame(this.render);
   }
 
   // ////////////////////////
