@@ -5,7 +5,7 @@
 import Loader from '../utils';
 import * as Backbone from 'backbone';
 import * as _ from '../../../../node_modules/underscore';
-import $ from 'jquery';
+import 'jquery-ui-bundle';
 import EventManager from '../../modules/common/EventManager'
 
 
@@ -75,3 +75,4 @@ class LeftBarView extends Backbone.View {
 }
 
 export default LeftBarView;
+
