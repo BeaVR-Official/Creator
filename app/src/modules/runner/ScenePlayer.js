@@ -3,19 +3,15 @@ import Constants from '../creator/Constants';
 // Degeu car this = undefined donc un attribut c'ets pareil !
 var listLoadedObjectsUuid = [];
 
-Physijs.scripts.worker = 'physijs_worker.js';
-Physijs.scripts.ammo   = 'ammo.js';
-
 class ScenePlayer {
 
   constructor() {
-    this._scene = new Physijs.Scene();
-    this._scene.setGravity(new THREE.Vector3(0, -1200, 0));
-    this.initRenderer();
+    this.count = 0;
+    this._scene = new THREE.Scene();
     this.initCamera();
+    this.initRenderer();
     this.initOrbitControl();
     window.addEventListener('deviceorientation', () => this.setOrientationControls, true);
-    //window.addEventListener('deviceorientation', this.setOrientationControls, true);
     this.load();
   }
 
@@ -42,111 +38,81 @@ class ScenePlayer {
       camSettings.posY,
       camSettings.posZ);
     this._camera.lookAt(new THREE.Vector3(0, 200, 0));
-    this._scene.add(this._camera);
   }
 
   initOrbitControl() {
     this._controls = new THREE.OrbitControls(
-     this._camera,
-     this._renderer.domElement
-    );
-    //this._controls.rotateUp(Math.PI / 4);
-    this._controls.target.set(
+      this._camera,
+      this._renderer.domElement);
+    /*
+     this._controls.target.set(
      this._camera.position.x + 0.15,
      this._camera.position.y,
      this._camera.position.z
-    );
-    this._controls.enablePan = false;
-    this._controls.enableZoom = false;
+     );
+     */
+    //this._controls.enablePan = false;
+    //this._controls.enableZoom = false;
+    /*
+     this._orbitControl = new THREE.OrbitControls(
+     this._camera,
+     this._renderer.domElement);
+     */
+    /*
+     this._orbitControl.rotateUp(Math.PI / 4);
+     this._orbitControl.target.set(this._camera.position.x + 0.1, this._camera.position.y, this._camera.position.z);
+     window.addEventListener("deviceOrientation", this.onOrientationChanged);
+     */
+    this._controls.addEventListener('change', () => this.render());
   }
 
   setOrientationControls(event) {
     if (!event.alpha) {
-      console.info("event.alpha = null");
       return;
     }
-    console.info("event.alpha :)");
     this._controls = new THREE.DeviceOrientationControls(this._camera, true);
     this._controls.connect();
     this._controls.update();
-    this._renderer.domElement.addEventListener('click', this.fullscreen, false);
-    window.removeEventListener('deviceorientation', this.setOrientationControls, true);
+    this.render();
+    //element.addEventListener('click', fullscreen, false);
   }
-
-  fullscreen() {
-    if (container.requestFullscreen) {
-      container.requestFullscreen();
-    } else if (container.msRequestFullscreen) {
-      container.msRequestFullscreen();
-    } else if (container.mozRequestFullScreen) {
-      container.mozRequestFullScreen();
-    } else if (container.webkitRequestFullscreen) {
-      container.webkitRequestFullscreen();
-    }
-  }
-
   /*
-  Seconde partie
+   onOrientationChanged(event) {
+   if (!event.alpha) {
+   return;
+   }
+   this._orbitControl = new THREE.DeviceOrientationControls(camera, true);
+   this._orbitControl.connect();
+   this._orbitControl.update();
+   window.removeEventListener("deviceOrientation", onOrientationChanged);
+   }
    */
 
-  fillObjectAttributes(recvr, sendr) {
-    for (const prop in sendr) {
-      if (sendr.hasOwnProperty(prop))
-        if (typeof sendr[prop] === 'object') {
-          if (recvr[prop] === undefined)
-            recvr[prop] = {};
-          this.fillObjectAttributes(recvr[prop], sendr[prop]);
-        } else recvr[prop] = sendr[prop];
-    }
-  }
-
   load() {
-    let stored        = localStorage['saveRunner'];
-    let loader        = new THREE.ObjectLoader();
-    let loadedObjects = JSON.parse(stored);
-    loadedObjects.forEach((entry) => {
-      let loadedMesh = loader.parse(entry);
-      // on enregistre tout les enfants dans un premier temps
-      this.excludeChildren(loadedMesh);
-    });
-    loadedObjects.forEach((entry) => {
-      let loadedMesh = loader.parse(entry);
-
-      if (entry._physijs !== undefined) {
-        const geometry = loadedMesh.geometry;
-        const material = loadedMesh.material;
-        if (entry._physijs.type === 'plane')
-          loadedMesh = new Physijs.PlaneMesh(geometry, material);
-        if (entry._physijs.type === 'box')
-          loadedMesh = new Physijs.BoxMesh(geometry, material);
-        if (entry._physijs.type === 'sphere')
-          loadedMesh = new Physijs.SphereMesh(geometry, material);
-        if (entry._physijs.type === 'cylinder')
-          loadedMesh = new Physijs.CylinderMesh(geometry, material);
-        if (entry._physijs.type === 'cone')
-          loadedMesh = new Physijs.ConeMesh(geometry, material);
-        if (entry._physijs.type === 'capsule')
-          loadedMesh = new Physijs.CapsuleMesh(geometry, material);
-        if (entry._physijs.type === 'convex')
-          loadedMesh = new Physijs.ConvexMesh(geometry, material);
-        if (entry._physijs.type === 'concave')
-          loadedMesh = new Physijs.ConcaveMesh(geometry, material);
-        if (entry._physijs.type === 'heightfield')
-          loadedMesh = new Physijs.HeightfieldMesh(geometry, material);
-
-        this.fillObjectAttributes(loadedMesh._physijs, entry._physijs);
-      }
-
-      let stop = false;
-      listLoadedObjectsUuid.forEach((object) => {
-        if (object === loadedMesh.uuid) {
-          stop = true;
+    if (this.count === 0) {
+      let stored        = localStorage['saveRunner'];
+      let loader        = new THREE.ObjectLoader();
+      let loadedObjects = JSON.parse(stored);
+      loadedObjects.forEach((entry) => {
+        let loadedMesh = loader.parse(entry);
+        // on enregistre tout les enfants dans un premier temps
+        this.excludeChildren(loadedMesh);
+      });
+      loadedObjects.forEach((entry) => {
+        let loadedMesh = loader.parse(entry);
+        let stop       = false;
+        listLoadedObjectsUuid.forEach((object) => {
+          if (object === loadedMesh.uuid) {
+            stop = true;
+          }
+        });
+        if (stop === false || listLoadedObjectsUuid.length === 0) {
+          this._scene.add(loadedMesh);
         }
       });
-      if (stop === false || listLoadedObjectsUuid.length === 0) {
-        this._scene.add(loadedMesh);
-      }
-    });
+      this.render();
+    }
+    this.count++;
   }
 
   excludeChildren(object) {
@@ -156,20 +122,18 @@ class ScenePlayer {
     });
   }
 
+  render() {
+    this._renderer.clear();
+    this._effect.render(this._scene, this._camera);
+  }
+
   start() {
+
   }
 
   pause() {
+
   }
 }
 
-const scenePlayer = new ScenePlayer();
-
-scenePlayer.render = () => {
-  scenePlayer._scene.simulate(); // run physics
-  scenePlayer._renderer.clear();
-  scenePlayer._effect.render(scenePlayer._scene, scenePlayer._camera);
-  requestAnimationFrame(scenePlayer.render);
-};
-
-export default scenePlayer;
+export default new ScenePlayer();

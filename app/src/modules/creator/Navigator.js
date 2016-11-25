@@ -8,7 +8,7 @@ class Navigator {
   addBox() {
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let geometry = new THREE.BoxGeometry(200, 200, 200);
-    let box      = new Physijs.BoxMesh(geometry, material);
+    let box      = new THREE.Mesh(geometry, material);
 
     box.mirroredLoop  = true;
     box.castShadow    = true;
@@ -22,7 +22,7 @@ class Navigator {
   addSphere() {
     let geometry = new THREE.SphereGeometry(50, 50, 320);
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
-    let sphere   = new Physijs.SphereMesh(geometry, material);
+    let sphere   = new THREE.Mesh(geometry, material);
 
     sphere.mirroredLoop  = true;
     sphere.castShadow    = true;
@@ -36,7 +36,7 @@ class Navigator {
   addCylinder() {
     let geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
-    let cylinder = new Physijs.CylinderMesh(geometry, material);
+    let cylinder = new THREE.Mesh(geometry, material);
 
     cylinder.mirroredLoop  = true;
     cylinder.castShadow    = true;
@@ -140,7 +140,7 @@ class Navigator {
     let groundMat = new THREE.MeshBasicMaterial({map: grassTex});
     let groundGeo = new THREE.PlaneGeometry(1000, 1000);
 
-    let ground         = new Physijs.PlaneMesh(groundGeo, groundMat);
+    let ground         = new THREE.Mesh(groundGeo, groundMat);
     ground.position.y  = 0;
     ground.rotation.x  = -Math.PI / 2;
     ground.doubleSided = true;
