@@ -21,9 +21,9 @@ class Object3D extends Backbone.Model {
         return {
             id: -1,
             transformations : {
-                translation: {x : 0, y : 0, z : 0},
-                rotation: {x : 0, y : 0, z : 0},
-                scale: {x : 0, y : 0, z : 0}
+                translation: [0,0,0],
+                rotation: [0,0,0],
+                scale: [0,0,0]
             }
 
         };

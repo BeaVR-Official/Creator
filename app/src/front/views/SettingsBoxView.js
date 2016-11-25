@@ -24,9 +24,9 @@ class SettingsBoxView extends Backbone.View {
     get events() {
         return {
             'click .openSettings':              'OpenCloseBox',
-            'keyup transformations input':      'changed',
-            'change transformations input':     'changed',
-            'mousewheel transformations input': 'inputWheel',
+            'keyup .transformations input':      'changed',
+            'change .transformations input':     'changed',
+            'mousewheel .transformations input': 'inputWheel',
             'change #sliderOpacity':            'propertyChanged',
             'mousemove #sliderOpacity':         'propertyChanged',
             ///Events drag
@@ -54,22 +54,12 @@ class SettingsBoxView extends Backbone.View {
     }
 
     eventListener() {
+        var that = this;
         EventManager.on('getObjectSelected', (objectDescriptor) => {
-            this.model.attributes = objectDescriptor.attributes;
-            console.log(this.model);
-            this.render();
+            that.model = objectDescriptor;
+            that.render();
         });
     }
-
-// To test with @Elliot
-    // constructor(objSelected) {}
-/*    setObject(objectModelBackbone) {
-        this.model = new Object3D();
-        //this.listenTo(this.model, 'all', EventManager)
-        this.listenTo(this.model, 'all', this.render);
-        this.render();
-    }*/
-
 
     dragEvent(ev) {
         ev.originalEvent.dataTransfer.setData("text", $(ev.target).attr('src'));
@@ -77,7 +67,6 @@ class SettingsBoxView extends Backbone.View {
 
     dropMaterial(ev) {
         ev.preventDefault();
-        var data = ev.originalEvent.dataTransfer.getData("text");
         var data = ev.originalEvent.dataTransfer.getData("text");
         if ($(ev.target).localName != "img")
             $(ev.target).closest('img').attr('src', data);
@@ -121,19 +110,24 @@ class SettingsBoxView extends Backbone.View {
     }
 
     inputWheel(event, delta) {
+
         var string = event.target.attributes['data-name'].value;
         var elem = string.split('.');
         if (delta > 0) {
-            this.model.attributes[elem[0]][elem[1]][elem[2]] = parseInt($(event.target).val()) + 1;
             console.log(this.model.attributes[elem[0]][elem[1]][elem[2]]);
+            this.model.attributes[elem[0]][elem[1]][elem[2]] = parseInt($(event.target).val()) + 1;
         } else {
+            console.log(this.model.attributes[elem[0]][elem[1]][elem[2]]);
             this.model.attributes[elem[0]][elem[1]][elem[2]] = parseInt($(event.target).val()) - 1;
         }
+        console.log(this.model);
+
     }
 
     render() {
+        console.log(this.model.attributes.transformations);
         var that = this;
-        this.$el.html(this.template({transformations: that.model.get('transformations')}));
+        this.$el.html(this.template({transformations: that.model.attributes.transformations}));
         return this;
     }
 
