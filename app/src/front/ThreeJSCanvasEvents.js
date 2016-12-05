@@ -41,15 +41,16 @@ class ThreeJSCanvasEvents {
   }
 
   _onMouseDown(event) {
+    // GraphicalManager.setMouseMoving(false);
   }
 
   _onMouseMove(event) {
+    // GraphicalManager.setMouseMoving(true);
   }
 
   _onMouseUp(event) {
     let x = event.clientX;
     let y = event.clientY - $(".TopBarSelector").height();
-
 
     let windowWidth  = window.innerWidth;
     let windowHeight = window.innerHeight;
@@ -61,9 +62,7 @@ class ThreeJSCanvasEvents {
 
     GraphicalManager.setMouse(mouse);
   }
-
-
-  // TODO add keyboardEvents (optional for rush)
+  // TODO add keyboardEvents
 }
 
 export default ThreeJSCanvasEvents;

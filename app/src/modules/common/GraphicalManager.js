@@ -17,6 +17,8 @@ class GraphicalManager {
     this.mouse             = new THREE.Vector2();
     this.raycaster         = new THREE.Raycaster(); // For object detection by clicking
     this.transformControls = undefined;
+    // this.updatingTrans     = false;
+    this.selectedObject    = undefined;
 
     this._initViewPort('#SceneSelector');
     this._initControls();
@@ -73,6 +75,10 @@ class GraphicalManager {
     this.mouse.set(mouse.x, mouse.y);
     this._raycastingSelection();
   }
+
+  // setMouseMoving(moving) {
+  //   this.mouseMoving = moving;
+  // }
 
   /**
    * Adapt scene renderer to canvas
@@ -156,17 +162,35 @@ class GraphicalManager {
   _initControls() {
     // Orbit control enable for Runner ?
     // Actually enable for editor & runner
-    this.orbitControl = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-    this.orbitControl.addEventListener('change', () => {
+    this.orbitControls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+    this.orbitControls.addEventListener('change', () => {
       this.render()
     });
 
     if (this.editorMod) {
       this.transformControls = new THREE.TransformControls(this.camera, this.renderer.domElement);
       this.transformControls.addEventListener('change', () => {
+        if (this.selectedObject !== undefined) {
+          let objectUuid = this.selectedObject.name;
+          let sceneUuid = this.currentSceneUuid;
+
+          ProjectManager.setObjectPosition(sceneUuid, objectUuid, this.selectedObject.position);
+          ProjectManager.setObjectRotation(sceneUuid, objectUuid,  this.selectedObject.rotation);
+          ProjectManager.setObjectScale(sceneUuid, objectUuid, this.selectedObject.scale);
+        }
         // Send event when updating and not redo click selection
         this.render()
       });
+      // this.transformControls.addEventListener('mouseDown',() => {
+      //   this.orbitControls.enabled = false;
+      //   this.updatingTrans = true;
+      //   console.log("UPDATING");
+      // });
+      // this.transformControls.addEventListener('mouseUp', () => {
+      //   this.orbitControls.enabled = true;
+      //   this.updatingTrans = false;
+      //   console.log("STOP UPDATING");
+      // });
     }
   }
 
@@ -181,20 +205,21 @@ class GraphicalManager {
   }
 
   _raycastingSelection() {
+    // console.log("UPDATING TRANS ", this.updatingTrans);
+    // if (this.updatingTrans === false)
+    this.selectedObject = undefined;
+    this.transformControls.detach();
+    // TODO process deselection object on backbone side
+    EventManager.emitEvent('objectDeselected');
+
     let closestObject = this._getClosestObject(); // objDesc uuid into name
-
-    console.log("Object", closestObject);
-    // if (this.transformControls.on)
-
-    if (closestObject !== undefined)
+    if (closestObject !== undefined) {
+      this.selectedObject = closestObject;
       this.transformControls.attach(closestObject);
-    else
-      this.transformControls.detach();
-
+      EventManager.emitEvent('objectSelected', {objectUuid: closestObject.name});
+    }
     this.render();
     console.log("Selected object: ", closestObject);
-
-    EventManager.emitEvent('objectSelected', {objectUuid: closestObject.name});
   }
 
   _getClosestObject() {
@@ -203,7 +228,7 @@ class GraphicalManager {
 
     if (intersects.length > 0)
       return intersects[0].object;
-    return false;
+    return undefined;
   }
 
   render() {
