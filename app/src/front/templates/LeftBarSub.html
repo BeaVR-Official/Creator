@@ -12,7 +12,7 @@
     </div>
 
     <% if (type != 'default' && type != 'used') { %>
-        <div id="sceneTree"></div>
+        <div id="sceneTree" class="sugarmaple"></div>
     <% } else { %>
         <% _.each(objects, function(object, i){ %>
         <div class="center tab column animated fadeInRight addObject" data-id="<%- object.type %>">
