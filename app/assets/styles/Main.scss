@@ -13,14 +13,14 @@
   }
 
   .ToolsBoxSelector {
-    position: absolute;
+    position: fixed;
     height: 50px;
-    width: 100%;
+    width: 20%;
+    left: 45%;
     top: 50px;
     z-index: 15;
 
     //Libère zone de clic
-    //width:100%;
     //position:absolute;
     //top: 52px;
     //margin:auto;
