@@ -32,21 +32,20 @@ class EventManager extends EventEmitter {
 
       // TODO add method GM
     });
-    
+
     this.on('switchScene', function (sceneUuid) {
-      
+
     })
 
-    this.on('editProjectName', function(projectName) {
+    this.on('editProjectName', function (projectName) {
       ProjectManager.setName(projectName);
       // TODO refresh Project Name if display on crzator
     });
 
-    this.on('editSceneName', function(data) {
+    this.on('editSceneName', function (data) {
       ProjectManager.getSceneDescriptor(data.sceneUuid).setName(data.sceneName);
       // TODO refresh Scene(s) Name(s) if display on creator (eg: TreeView)
     })
-
 
     // ////////////////////////
     // Creator specific events
@@ -56,11 +55,19 @@ class EventManager extends EventEmitter {
     });
 
     /*
-    data: objectDescriptorUuid
+     data: objectDescriptorUuid
      */
     this.on('objectSelected', (data) => {
       this.emitEvent('getObjectSelected', ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid))
       console.log("My data object!!!!", data.objectUuid);
+    })
+
+
+    // ////////////////////////
+    // TransformControls modes
+    // ////////////////////////
+    this.on('changeTransformControlMode', function (data) {
+      GraphicalManager.setTransformControlMode(data);
     })
 
     // ////////////////////////
@@ -77,7 +84,7 @@ class EventManager extends EventEmitter {
 
     this.on('attachChildObject', function (data) {
       /*
-      Note : addObjectChild s'occupe de la suppression de l'ancien parent
+       Note : addObjectChild s'occupe de la suppression de l'ancien parent
        */
       ProjectManager.addObjectChild(
         data.sceneUuid,
@@ -89,10 +96,10 @@ class EventManager extends EventEmitter {
     });
 
     /*
-    /!\ A utiliser uniquement si l'enfant est retourné à la racine
-        et NON si il est attché à un autre parent
-        cf : event 'removeObject' a utilisé alors
-        PS : Pas besoin d'envoyer l'uuid de l'ancien parent, on s'en occupe
+     /!\ A utiliser uniquement si l'enfant est retourné à la racine
+     et NON si il est attché à un autre parent
+     cf : event 'removeObject' a utilisé alors
+     PS : Pas besoin d'envoyer l'uuid de l'ancien parent, on s'en occupe
      */
     this.on('removeChildObject', function (data) {
       ProjectManager.removeObjectChild(
@@ -104,12 +111,12 @@ class EventManager extends EventEmitter {
       // TODO add GM for parent & child
     });
 
-
     // ////////////////////////
     // Add Things events
     // ////////////////////////
 
     this.on('addObject', function (data) {
+      console.log("Add Object");
       let objectUuid = ProjectManager.addObject(
         data.objectName,
         data.objectType
@@ -136,7 +143,6 @@ class EventManager extends EventEmitter {
       // TODO
       GraphicalManager.addGround();
     });
-
 
     // ////////////////////////
     // Object Property events

@@ -169,13 +169,14 @@ class GraphicalManager {
 
     if (this.editorMod) {
       this.transformControls = new THREE.TransformControls(this.camera, this.renderer.domElement);
+
       this.transformControls.addEventListener('change', () => {
         if (this.selectedObject !== undefined) {
           let objectUuid = this.selectedObject.name;
-          let sceneUuid = this.currentSceneUuid;
+          let sceneUuid  = this.currentSceneUuid;
 
           ProjectManager.setObjectPosition(sceneUuid, objectUuid, this.selectedObject.position);
-          ProjectManager.setObjectRotation(sceneUuid, objectUuid,  this.selectedObject.rotation);
+          ProjectManager.setObjectRotation(sceneUuid, objectUuid, this.selectedObject.rotation);
           ProjectManager.setObjectScale(sceneUuid, objectUuid, this.selectedObject.scale);
         }
         // Send event when updating and not redo click selection
@@ -195,12 +196,14 @@ class GraphicalManager {
   }
 
   /**
-   * Change mod or transformControls
-   * modes: "translate" / "rotate" / "scale"
+   * Set mode of transformControl
+   * @param mode -> have to be a string translate || rotate || scale
    */
-  setModControls(mode) {
-    if (this.transformControls !== undefined) {
+  setTransformControlMode(mode) {
+    if (this.transformControls !== undefined &&
+      (mode === "translate" || mode === "rotate" || mode === "scale")) {
       this.transformControls.setMode(mode);
+      this.render();
     }
   }
 
