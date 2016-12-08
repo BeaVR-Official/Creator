@@ -14,7 +14,7 @@ $sizeTopMenu: 51px;
   @include calc('height', '100% - 52px');
   position:absolute;
   top: $sizeTopMenu;
-  left:54px;
+  left:49px;
 
   animation-name: zoomInLeft;
   animation-duration: 2s;
