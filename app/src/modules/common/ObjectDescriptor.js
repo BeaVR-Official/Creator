@@ -12,9 +12,9 @@ export default class ObjectDescriptor extends Backbone.Model {
     this.attributes.type                          = type;
     this.attributes.parent                        = undefined;
     this.attributes.children                      = [];
-    this.attributes.transformations.translation   = [0.0, 0.0, 0.0];
-    this.attributes.transformations.rotation      = [0.0, 0.0, 0.0];
-    this.attributes.transformations.scale         = [0.0, 0.0, 0.0];
+    this.attributes.transformations.translation   = {x:0.0, y:0.0, z:0.0};
+    this.attributes.transformations.rotation      = {x:0.0, y:0.0, z:0.0};
+    this.attributes.transformations.scale         = {x:0.0, y:0.0, z:0.0};
     this.attributes.isSolid                       = false;
     this.attributes.isGravityEffected             = false;
     this.attributes.isVisibilty                   = true;
@@ -159,9 +159,9 @@ export default class ObjectDescriptor extends Backbone.Model {
       parent            : undefined,
       children          : [],
       transformations   : {
-        translation : [0.0, 0.0, 0.0],
-        rotation    : [0.0, 0.0, 0.0],
-        scale       : [0.0, 0.0, 0.0]
+        translation : {x:0.0, y:0.0, z:0.0},
+        rotation    : {x:0.0, y:0.0, z:0.0},
+        scale       : {x:0.0, y:0.0, z:0.0}
       },
       isSolid           : false,
       isGravityEffected : false,

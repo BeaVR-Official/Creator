@@ -4,34 +4,47 @@
 
 import Backbone from 'backbone';
 
+import MaterialDescriptor from '../../modules/common/MaterialDescriptor';
+import GeometryDescriptor from '../../modules/common/GeometryDescriptor';
+
 class Object3D extends Backbone.Model {
-    get idAttribute() {
-        return '_id';
-    }
+  get idAttribute() {
+    return '_id';
+  }
 
-    get cidPrefix() {
-        return '__c';
-    }
+  get cidPrefix() {
+    return '__c';
+  }
 
-    url() {
-        return "";
-    }
+  url() {
+    return "";
+  }
 
-    defaults() {
-        return {
-            id: -1,
-            transformations : {
-                translation: [0,0,0],
-                rotation: [0,0,0],
-                scale: [0,0,0]
-            }
+  defaults() {
+    return {
+      id:       -1,
+      name:     "",
+      type:     "",
+      parent:   undefined,
+      children: [],
 
-        };
-    }
+      transformations: {
+        translation: {x:0.0, y:0.0, z:0.0},
+        rotation:    {x:0.0, y:0.0, z:0.0},
+        scale:       {x:0.0, y:0.0, z:0.0}
+      },
 
-    get(name) {
-        return this.attributes[name];
-    }
+      isSolid:            false,
+      isGravityEffected:  false,
+      isVisibilty:        true,
+      geometryDescriptor: new GeometryDescriptor("" + " geometry"),
+      materialDescriptor: new MaterialDescriptor("" + " material")
+    };
+  }
+
+  get(name) {
+    return this.attributes[name];
+  }
 }
 
 export default Object3D;
