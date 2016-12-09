@@ -24,18 +24,19 @@
 </div>
 
 <script>
-    $(".hide").click(function() {
-        $('.ui.stackable.six.columns').fadeOut(500, function() {
-            $('.ui.stackable.six.columns').css('visibility', 'hidden');
-            $('.BoxExpend').css('visibility', 'visible');
-            $('.BoxExpend').css('display', 'block');
-            $('.BoxExpend').fadeIn(500);
-        })
-    });
-
-    $(".show").click(function() {
-        $('.BoxExpend').css('visibility', 'hidden');
-        $('.ui.stackable.six.columns').css('visibility', 'visible');
-        $('.ui.stackable.six.columns').fadeIn(500);
+  $(".hide").click(function () {
+    $('.ui.stackable.six.columns').fadeOut(500, function () {
+      $('.ui.stackable.six.columns').css('visibility', 'hidden');
+      $('.BoxExpend').removeClass('hiddenBox');
+      $('.BoxExpend').addClass('visibleBox');
+      $('.BoxExpend').fadeIn(500);
     })
+  });
+
+  $(".show").click(function () {
+    $('.BoxExpend').removeClass('visibleBox');
+    $('.BoxExpend').addClass('hiddenBox');
+    $('.ui.stackable.six.columns').css('visibility', 'visible');
+    $('.ui.stackable.six.columns').fadeIn(500);
+  })
 </script>

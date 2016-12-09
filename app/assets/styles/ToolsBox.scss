@@ -79,3 +79,15 @@
     }
   }
 }
+
+
+.visibleBox {
+  display: block;
+  visibility: visible !important;
+  margin-right: -171% !important;
+}
+
+.hiddenBox {
+  visibility: hidden !important;
+  margin-right: 0 !important;
+}
