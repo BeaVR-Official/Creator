@@ -22,11 +22,8 @@ class LeftBarView extends Backbone.View {
     //static var menuCollection = null;
 
     get template() {
-
         return _.template(Loader.templates.LeftBar);
     }
-
-
 
     get events() {
         return {
@@ -41,9 +38,8 @@ class LeftBarView extends Backbone.View {
 
     openThreeView() {
         $('.LeftBarSubSelector').css('width', '220px');
-        new LeftBarSub({type: 'TreeView'});
+        this.leftBar.switchLeftBarView({type: 'TreeView'});
     }
-
 
     openBasicObjects() {
         $('.LeftBarSubSelector').css('width', '220px');
@@ -52,7 +48,7 @@ class LeftBarView extends Backbone.View {
         objects.push({name: "Cylinder", logo:'assets/images/cylinder.png', type: 'cylinder'});
         objects.push({name: "Sphere", logo:'assets/images/sphere.png', type: 'sphere'});
         objects.push({name: "Add", logo:'assets/images/plus.png'});
-        new LeftBarSub({objects: objects});
+        this.leftBar.switchLeftBarView({objects: objects});
     }
 
     openLights() {
@@ -63,13 +59,13 @@ class LeftBarView extends Backbone.View {
         objects.push({name: "Pointée", logo:'assets/images/pointLight.png'});
         objects.push({name: "Spot", logo:'assets/images/spotLight.png'});
         objects.push({name: "Add", logo:'assets/images/plus.png'});
-        new LeftBarSub({objects: objects});
+        this.leftBar.switchLeftBarView({objects: objects});
     }
 
     openMaterials() {
         $('.LeftBarSubSelector').css('width', '220px');
         var objects = [];
-        new LeftBarSub({objects: objects});
+        this.leftBar.switchLeftBarView({objects: objects});
     }
 
     openSkyboxes() {
@@ -80,11 +76,14 @@ class LeftBarView extends Backbone.View {
         objects.push({name: "Ville", logo:'assets/images/townIcon.png'});
         objects.push({name: "Nuit", logo:'assets/images/nightIcon.png'});
         objects.push({name: "Add", logo:'assets/images/plus.png'});
-        new LeftBarSub({objects: objects});
+        this.leftBar.switchLeftBarView({objects: objects});
     }
 
     addCategorie() {
-        this.menuCollection.add(new ItemLeftMenu({id: 7, name: 'special', logo: 'fa fa-question', isUsed:true}), {at: this.menuCollection.models.length - 1})
+        this.menuCollection.add(
+          new ItemLeftMenu({id: 7, name: 'special', logo: 'fa fa-question', isUsed:true}),
+          {at: this.menuCollection.models.length - 1}
+        );
     }
 
     get $el() {
@@ -120,6 +119,7 @@ class LeftBarView extends Backbone.View {
 
         this.render();
 
+        this.leftBar = new LeftBarSub();
         this.openThreeView();
 
         let leftBarSugarMaple = new LeftBarSugarMaple();

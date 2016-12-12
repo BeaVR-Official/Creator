@@ -48,9 +48,11 @@ class LeftBarView extends Backbone.View {
     };
   }
 
-  constructor(value) {
+  constructor() {
+    super();
+  }
 
-    super({});
+  switchLeftBarView(value) {
     console.log(value);
     this.default = (value.objects != undefined) ? value.objects : [];
     this.objects = this.default;
