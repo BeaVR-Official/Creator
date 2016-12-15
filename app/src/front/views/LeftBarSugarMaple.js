@@ -42,7 +42,17 @@ class LeftBarSugarMaple {
         threejs:   true
       }
     });
-    // TODO Pas bon
+
+    // Test usage
+    const titi = this.smTree.sugarmaple('manage.create', 'titi', 'tete');
+    const tita = this.smTree.sugarmaple('manage.create', 'tita', {a: 'tete',b: 2});
+    const tito = this.smTree.sugarmaple('manage.create', 'tito', ['tete']);
+    this.smTree.sugarmaple('manage.attach', titi, tita);
+    this.smTree.sugarmaple('manage.attach', titi, tito);
+    this.smTree.sugarmaple('manage.setRoot', titi);
+
+
+    // Deprecated methods. Still here as examples
     ScenePanel.default.initTree(this.smTree);
     this.sugarMapleEvents();
     this.sceneEvents();

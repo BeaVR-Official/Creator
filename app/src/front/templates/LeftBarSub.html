@@ -26,28 +26,3 @@
         <% }); %>
     <% } %>
 </div>
-
-<script>
-    const sm = $('#sceneTree').sugarmaple({
-        events:  {
-            onImport: (node) => {
-                return node;
-            },
-            onExport: (node) => {
-                return node;
-            }
-        },
-        plugins: {
-            manage:    true,
-            sortable:  true,
-            checkable: true
-        }
-    });
-
-    const titi = sm.sugarmaple('manage.create', 'titi', 'tete');
-    const tita = sm.sugarmaple('manage.create', 'tita', {a: 'tete',b: 2});
-    const tito = sm.sugarmaple('manage.create', 'tito', ['tete']);
-    sm.sugarmaple('manage.attach', titi, tita);
-    sm.sugarmaple('manage.attach', titi, tito);
-    sm.sugarmaple('manage.setRoot', titi);
-</script>
