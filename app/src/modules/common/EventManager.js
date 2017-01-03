@@ -27,15 +27,20 @@ class EventManager extends EventEmitter {
       GraphicalManager.setCurrentSceneUuid(sceneUuid);
     });
 
+    this.on('selectScene', (sceneUuid) => {
+
+    });
+
     this.on('removeScene', (sceneUuid) => {
       ProjectManager.removeScene(sceneUuid);
 
       // TODO add method GM
+      // GraphicalManager unloadMethod
     });
 
     this.on('switchScene', function (sceneUuid) {
 
-    })
+    });
 
     this.on('editProjectName', function (projectName) {
       ProjectManager.setName(projectName);
@@ -45,7 +50,7 @@ class EventManager extends EventEmitter {
     this.on('editSceneName', function (data) {
       ProjectManager.getSceneDescriptor(data.sceneUuid).setName(data.sceneName);
       // TODO refresh Scene(s) Name(s) if display on creator (eg: TreeView)
-    })
+    });
 
     // ////////////////////////
     // Creator specific events
@@ -58,17 +63,20 @@ class EventManager extends EventEmitter {
      data: objectDescriptorUuid
      */
     this.on('objectSelected', (data) => {
-      this.emitEvent('getObjectSelected', ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid))
-      console.log("My data object!!!!", data.objectUuid);
-    })
+      GraphicalManager.attachToTransform(data.objectUuid);
+      this.emitEvent('getObjectSelected', ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid));
+    });
 
+    this.on('objectDeselected', (data) => {
+      GraphicalManager.deselectObject();
+    });
 
     // ////////////////////////
     // TransformControls modes
     // ////////////////////////
     this.on('changeTransformControlMode', function (data) {
       GraphicalManager.setTransformControlMode(data);
-    })
+    });
 
     // ////////////////////////
     // TreeView events
@@ -116,13 +124,12 @@ class EventManager extends EventEmitter {
     // ////////////////////////
 
     this.on('addObject', function (data) {
-      console.log("Add Object");
       let objectUuid = ProjectManager.addObject(
         data.objectName,
         data.objectType
       );
 
-      GraphicalManager.addObject(objectUuid);
+      data.uuid = GraphicalManager.addObject(objectUuid);
     });
 
     this.on('addLight', function (data) {

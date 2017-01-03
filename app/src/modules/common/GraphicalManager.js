@@ -116,6 +116,7 @@ class GraphicalManager {
 
     this.threeScene.add(obj);
     this.render();
+    return obj.name;
   }
 
   /**
@@ -208,21 +209,11 @@ class GraphicalManager {
   }
 
   _raycastingSelection() {
-    // console.log("UPDATING TRANS ", this.updatingTrans);
-    // if (this.updatingTrans === false)
-    this.selectedObject = undefined;
-    this.transformControls.detach();
-    // TODO process deselection object on backbone side
-    EventManager.emitEvent('objectDeselected');
-
-    let closestObject = this._getClosestObject(); // objDesc uuid into name
-    if (closestObject !== undefined) {
-      this.selectedObject = closestObject;
-      this.transformControls.attach(closestObject);
-      EventManager.emitEvent('objectSelected', {objectUuid: closestObject.name});
-    }
-    this.render();
-    console.log("Selected object: ", closestObject);
+    EventManager.emitEvent('objectDeselected').then(res => {
+      let closestObject = this._getClosestObject(); // objDesc uuid into name
+      if (closestObject !== undefined)
+        this.selectObject(closestObject);
+    });
   }
 
   _getClosestObject() {
@@ -242,9 +233,36 @@ class GraphicalManager {
     // requestAnimationFrame(this.render);
   }
 
-  // ////////////////////////
-  // TreeView events
-  // ////////////////////////
+// ////////////////////////
+// Object Selection
+// ////////////////////////
+
+  selectObject(object) {
+    this.selectedObject = object;
+    EventManager.emitEvent('objectSelected', {objectUuid: object.name});
+  }
+
+  deselectObject() {
+    this.selectedObject = undefined;
+    this.transformControls.detach();
+    this.render();
+  }
+
+// ////////////////////////
+// TransformControls
+// ////////////////////////
+  attachToTransform(objectUuid) {
+    let object = this.threeScene.getObjectByName(objectUuid);
+
+    if (object) {
+      this.transformControls.attach(object);
+      this.render();
+    }
+  }
+
+// ////////////////////////
+// TreeView events
+// ////////////////////////
 
   removeObject(objectDescriptor) {
     this.threeScene.remove(
@@ -256,36 +274,36 @@ class GraphicalManager {
 
   }
 
-  // ////////////////////////
-  // Add Things events
-  // ////////////////////////
+// ////////////////////////
+// Add Things events
+// ////////////////////////
 
   addObject(objectUuid) {
     let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
 
-    this._objectFactory(objectDescriptor);
+    return this._objectFactory(objectDescriptor);
   }
 
-  // TODO
+// TODO
   addLight() {
   }
 
-  // TODO
+// TODO
   addExternalObject() {
   }
 
-  // TODO
+// TODO
   addSky() {
   }
 
-  // TODO
+// TODO
   addGround() {
   }
 
-  // ////////////////////////
-  // Object Property events
-  // ////////////////////////
+// ////////////////////////
+// Object Property events
+// ////////////////////////
 
   updateObjectPosition(OD, position) {
     this.threeScene.getObjectById(OD.uuid, true).position = position;
@@ -307,11 +325,11 @@ class GraphicalManager {
     this.threeScene.getObjectById(OD.uuid, true).visible = isVisibility;
   }
 
-  // TODO
+// TODO
   updateObjectMaterial(OD, materialUuid) {
   }
 
-  //TODO
+//TODO
   updateObjectGeometry(OD, geometryUuid) {
   }
 }
