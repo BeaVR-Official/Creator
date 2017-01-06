@@ -76,7 +76,7 @@ class ProjectManager {
     if (this.startingSceneUuid === undefined) {
       this.startingSceneUuid = newSceneDescriptor.getUuid();
     }
-    return (this.startingSceneUuid);
+    return (newSceneDescriptor.getUuid());
   }
 
   removeScene(sceneUuid) {

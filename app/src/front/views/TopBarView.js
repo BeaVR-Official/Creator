@@ -1,6 +1,11 @@
 import Loader from '../utils';
 import Backbone from 'backbone';
 
+import Scene from '../models/scene';
+
+import EventManager from '../../modules/common/EventManager';
+import ProjectManager from '../../modules/common/ProjectManager';
+
 require('../../../assets/styles/TopBar.scss');
 
 class ObjectMenuView extends Backbone.View {
@@ -16,6 +21,7 @@ class ObjectMenuView extends Backbone.View {
   get events() {
     return {
       'dblclick #scene-tabs .tab': 'allowRenameTab',
+      'click .tab':                'selectTab',
       'click .edit':               'renameTab',
       'click .close-cross':        'closeTab',
       'click .add-tab':            'addTab',
@@ -44,11 +50,6 @@ class ObjectMenuView extends Backbone.View {
     return this;
   }
 
-  // To delete when not useful anymore
-  generateTabId() {
-    return Math.floor((Math.random() * 100000) + 1);
-  }
-
   getNewTabName() {
 
     for (var i = 1; i < this.tabArray.length + 1; i++) {
@@ -60,32 +61,51 @@ class ObjectMenuView extends Backbone.View {
   }
 
   addTab() {
-
-    var newTabId   = this.generateTabId();
     var newTabName = this.getNewTabName();
 
-    this.tabArray.push(newTabName);
+    let data = {
+      sceneName: newTabName,
+      scene: undefined
+    };
+    EventManager.emitEvent('addScene', data).then((res) => {
+      let scene = new Scene();
+      scene.attributes = res.scene.attributes;
+      this.tabArray.push(scene.attributes);
 
-    var tabsDiv          = $('#scene-tabs');
-    tabsDiv[0].innerHTML = tabsDiv[0].innerHTML
-      + '<a class=\"item tab\" data-tab=\"tab-'
-      + newTabId
-      + '\">'
-      + '<div class=\"ui disabled transparent input\">'
-      + '<input type=\"text\" class=\"tab-input\" value=\"' + newTabName + '\">'
-      + '<i class=\"hidden edit icon\"></i>'
-      + '</div>'
-      + '<span class=\"close-cross\">x</span></a>';
+      // console.log("res addscene", scene);
+      // console.log("tab array", this.tabArray);
 
-    var contentDiv          = $('#content');
-    contentDiv[0].innerHTML = contentDiv[0].innerHTML
-      + '<div class=\"ui bottom attached tab segment\" data-tab=\"tab-'
-      + newTabId
-      + '\">Contenu de l\'onglet ' + newTabId
-      + '</div>';
-    $('.menu .item').tab();
+      var tabsDiv          = $('#scene-tabs');
+      tabsDiv[0].innerHTML = tabsDiv[0].innerHTML
+        + '<a class=\"item tab\"'
+        + 'data-tab=\"' + scene.attributes.uuid
+        + '\">'
+        + '<div class=\"ui disabled transparent input\">'
+        + '<input type=\"text\" class=\"tab-input\" value=\"' + newTabName + '\">'
+        + '<i class=\"hidden edit icon\"></i>'
+        + '</div>'
+        + '<span class=\"close-cross\">x</span></a>';
 
-    tabsDiv[0].children[this.tabArray.length - 1].click();
+      var contentDiv          = $('#content');
+      contentDiv[0].innerHTML = contentDiv[0].innerHTML
+        + '<div class=\"ui bottom attached tab segment\"'
+        + 'data-tab=\"' + scene.attributes.uuid + '\">'
+        // + 'Contenu de l\'onglet ' + newTabId
+        + '</div>';
+      $('.menu .item').tab();
+
+      tabsDiv[0].children[this.tabArray.length - 1].click();
+    });
+  }
+
+  selectTab(ev) {
+    // var sceneDesc = ProjectManager.getSceneDescriptor(ev.currentTarget.attributes[1].value);
+    // var index = this.tabArray.indexOf(sceneDesc.attributes);
+    // console.log("TAB scene", sceneDesc);
+    // console.log("TAB index", index);
+    // console.log("TAB index", ev.currentTarget.attributes[1].value);
+      EventManager.emitEvent('selectScene', ev.currentTarget.attributes[1].value);
+      // console.log("Select Tab", this.tabArray[index]);
   }
 
   closeTab(ev) {
@@ -108,6 +128,7 @@ class ObjectMenuView extends Backbone.View {
     }
 
     $('.menu .item').tab();
+
   }
 
   showProjectInformations() {

@@ -1,7 +1,7 @@
 // set the scene size
 const sceneSettings = {
-  width:  500,
-  height: 500,
+  width:  window.innerWidth,
+  height: window.innerHeight,
   backgroundColor: 0xB9B9B9
 };
 // set some camera attributes

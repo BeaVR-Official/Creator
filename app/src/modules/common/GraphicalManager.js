@@ -50,6 +50,8 @@ class GraphicalManager {
   setCurrentSceneUuid(sceneUuid) {
     this.currentSceneUuid = sceneUuid;
     if (this.isSceneChanges()) {
+      console.log("Set scene uuid", this.currentSceneUuid);
+
       // Launch SceneFactory
       this._sceneFactory();
     }
@@ -102,8 +104,12 @@ class GraphicalManager {
     let sceneDesc   = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let allObjDescs = sceneDesc.getAllObjectDescriptors();
 
+
+    let that = this;
+
     _.map(allObjDescs, function (objDesc) {
-      this._objectFactory(objDesc);
+      console.log("Desc Objects", objDesc);
+      that._objectFactory(objDesc);
 
     });
     // this.render();
@@ -230,6 +236,8 @@ class GraphicalManager {
     this.camera.lookAt(this.threeScene.position);
     this.renderer.render(this.threeScene, this.camera);
     this.setlastSceneUuid(this.currentSceneUuid);
+
+    console.log("Scenes", ProjectManager.getAllSceneDescriptors());
     // requestAnimationFrame(this.render);
   }
 
@@ -281,6 +289,11 @@ class GraphicalManager {
   addObject(objectUuid) {
     let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
+
+    console.log("----Add object GM----");
+    console.log("Scene desc", sceneDescriptor);
+    console.log("Obj Desc", objectDescriptor);
+    console.log("---------------------");
 
     return this._objectFactory(objectDescriptor);
   }
