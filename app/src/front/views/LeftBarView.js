@@ -47,24 +47,27 @@ class LeftBarView extends Backbone.View {
         objects.push({name: "Cube", logo:'assets/images/cube.png', type: 'box'});
         objects.push({name: "Cylinder", logo:'assets/images/cylinder.png', type: 'cylinder'});
         objects.push({name: "Sphere", logo:'assets/images/sphere.png', type: 'sphere'});
-        objects.push({name: "Add", logo:'assets/images/plus.png'});
+        objects.push({name: "Add", logo:'assets/images/plus.png', type: 'extern'});
         this.leftBar.switchLeftBarView({objects: objects});
     }
 
     openLights() {
         $('.LeftBarSubSelector').css('width', '220px');
         var objects = [];
-        objects.push({name: "Ambiente", logo:'assets/images/ambientLight.png'});
-        objects.push({name: "Directionnelle", logo:'assets/images/directionalLight.png'});
-        objects.push({name: "Pointée", logo:'assets/images/pointLight.png'});
-        objects.push({name: "Spot", logo:'assets/images/spotLight.png'});
-        objects.push({name: "Add", logo:'assets/images/plus.png'});
+        objects.push({name: "Ambiente", logo:'assets/images/ambientLight.png', type: 'ambient'});
+        objects.push({name: "Directionnelle", logo:'assets/images/directionalLight.png', type: 'directional'});
+        objects.push({name: "Radiale", logo:'assets/images/pointLight.png', type: 'point'});
+        objects.push({name: "Spot", logo:'assets/images/spotLight.png', type: 'spot'});
         this.leftBar.switchLeftBarView({objects: objects});
     }
 
     openMaterials() {
         $('.LeftBarSubSelector').css('width', '220px');
         var objects = [];
+        objects.push({name: "Sable", logo:'assets/images/sand.png'});
+        objects.push({name: "Pierre", logo:'assets/images/stone.png'});
+        objects.push({name: "Herbe", logo:'assets/images/grass.png'});
+        objects.push({name: "Bois", logo:'assets/images/wood.png'});
         this.leftBar.switchLeftBarView({objects: objects});
     }
 
