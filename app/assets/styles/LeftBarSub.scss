@@ -100,7 +100,34 @@ $sizeTopMenu: 51px;
       max-height: 50px;
 
     }
+  }
 
+  .ui.small.modal.transition {
+    -vendor-animation-duration: 3s !important;
+    -vendor-animation-delay: 2s !important;
+    -vendor-animation-iteration-count: infinite !important;
+    top: 30%;
+
+
+    .input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .content {
+      background: #4c5672;
+    }
+
+    h2 {
+      color:white;
+      text-align:center;
+      margin: auto;
+      margin-bottom: 10%;
+    }
+
+    img {
+      max-width: 100%;
+    }
 
   }
 

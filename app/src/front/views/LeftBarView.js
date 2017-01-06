@@ -47,7 +47,7 @@ class LeftBarView extends Backbone.View {
         objects.push({name: "Cube", logo:'assets/images/cube.png', type: 'box'});
         objects.push({name: "Cylinder", logo:'assets/images/cylinder.png', type: 'cylinder'});
         objects.push({name: "Sphere", logo:'assets/images/sphere.png', type: 'sphere'});
-        objects.push({name: "Add", logo:'assets/images/plus.png'});
+        objects.push({name: "Add", logo:'assets/images/plus.png', type:'add'});
         this.leftBar.switchLeftBarView({objects: objects});
     }
 
