@@ -65,10 +65,10 @@ class LeftBarView extends Backbone.View {
     openMaterials() {
         $('.LeftBarSubSelector').css('width', '220px');
         var objects = [];
-        objects.push({name: "Sand", logo:'assets/images/sand.png'});
-        objects.push({name: "Stone", logo:'assets/images/stone.png'});
-        objects.push({name: "Grass", logo:'assets/images/grass.png'});
-        objects.push({name: "Wood", logo:'assets/images/wood.png'});
+        objects.push({name: "Sable", logo:'assets/images/sand.png'});
+        objects.push({name: "Pierre", logo:'assets/images/stone.png'});
+        objects.push({name: "Herbe", logo:'assets/images/grass.png'});
+        objects.push({name: "Bois", logo:'assets/images/wood.png'});
         this.leftBar.switchLeftBarView({objects: objects});
     }
 
