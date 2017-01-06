@@ -2,6 +2,10 @@
  * Created by giraud_d on 17/08/2016.
  */
 
+// ///////////////////////////////////////
+// THIS FILE SEEMS TO BE PERFECTLY USELESS
+// ///////////////////////////////////////
+
 import Loader from '../../utils';
 import * as Backbone from 'backbone';
 import * as _ from '../../../../../node_modules/underscore';
