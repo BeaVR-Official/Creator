@@ -5,6 +5,7 @@ import EventDescriptor from "./EventManager";
 class ProjectManager {
   constructor() {
     this.name              = "";
+    this.description       = "";
     this.sceneDescriptors  = [];
     this.startingSceneUuid = undefined;
   }
@@ -12,6 +13,7 @@ class ProjectManager {
   toJSON() {
     return {
       name:              this.name,
+      description:       this.description,
       sceneDescriptors:  this.sceneDescriptors,
       startingSceneUuid: this.startingSceneUuid
     }
@@ -23,6 +25,19 @@ class ProjectManager {
 
   getName() {
     return (this.name);
+  }
+
+  setDescription(description) {
+    this.description = description;
+  }
+
+  getDescription() {
+    return this.description;
+  }
+
+  createNewProject(data) {
+    this.setName(data.name);
+    this.setDescription(data.description);
   }
 
   setStartingScene(sceneUuid) {

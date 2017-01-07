@@ -7,8 +7,10 @@ import Backbone from 'backbone';
 
 import RegisterModal from './RegisterModalView';
 import ResetPasswordModal from './ResetPasswordModalView';
-import ProjectSelectionModal from './ProjectSelectionModalView'
-import ProjectCreationModal from './ProjectCreationModalView'
+import ProjectSelectionModal from './ProjectSelectionModalView';
+import ProjectCreationModal from './ProjectCreationModalView';
+
+import Cookie from '../cookie';
 
 require('../../../assets/styles/AuthModal.scss');
 
@@ -43,6 +45,20 @@ class AuthModalView extends Backbone.View {
 
     loginUser() {
         var modal = new ProjectSelectionModal();
+
+        // Appel API
+        // TODO recup les inputs
+        $.post( 'http://beavr.fr:3000/api/connection' ,
+          {email: 'damien.giraudet@epitech.eu', password: '<3neeko<3'},
+          function (data) {
+              if (data.status == 200) {
+                  Cookie.createCookie("store_id", data.data.userId, 28);
+                  Cookie.createCookie("store_token", data.data.token, 28);
+              } else {
+                  // TODO recommence
+              }
+          });
+
         $('#login_modal').animateCssOut('fadeOutLeft', modal);
     }
 
@@ -56,6 +72,7 @@ class AuthModalView extends Backbone.View {
             events: {}
         });
         Loader.initStyles();
+        this.render();
     }
 
     show(showAnim = true) {
@@ -70,6 +87,7 @@ class AuthModalView extends Backbone.View {
         this.$el.html(this.template());
         return this;
     }
+
 }
 
 export default AuthModalView;

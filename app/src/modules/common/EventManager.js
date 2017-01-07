@@ -1,6 +1,7 @@
 import GraphicalManager from "./GraphicalManager";
 import ProjectManager from "./ProjectManager";
 import eventToPromise from 'event-to-promise';
+import SaveManager from './SaveManager';
 
 class EventManager extends EventEmitter {
   constructor() {
@@ -221,6 +222,16 @@ class EventManager extends EventEmitter {
       // TODO
       GraphicalManager.updateObjectGeometry();
     });
+
+    // Save & Load
+    this.on('createNewProject', function (data) {
+      ProjectManager.createNewProject(data.name, data.description);
+    })
+
+    this.on('saveProject', function () {
+      SaveManager.exportProject();
+    })
+
   }
 
 }

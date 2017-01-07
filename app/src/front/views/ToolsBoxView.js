@@ -5,6 +5,8 @@
 import Loader from '../utils';
 import Backbone from 'backbone';
 
+import EventManager from '../../modules/common/EventManager';
+
 require('../../../assets/styles/ToolsBox.scss');
 
 class ToolsBoxView extends Backbone.View {
@@ -19,14 +21,18 @@ class ToolsBoxView extends Backbone.View {
 
     get events() {
         return {
+            'click #saveProject': 'saveProject'
         };
+    }
+
+    saveProject() {
+        EventManager.emitEvent('saveProject');
     }
 
     constructor() {
         super();
         this.render();
     }
-
 
     render() {
         this.$el.html(this.template());

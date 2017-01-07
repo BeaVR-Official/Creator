@@ -4,11 +4,10 @@ import Backbone from 'backbone';
 import Scene from '../models/scene';
 
 import EventManager from '../../modules/common/EventManager';
-import ProjectManager from '../../modules/common/ProjectManager';
 
 require('../../../assets/styles/TopBar.scss');
 
-class ObjectMenuView extends Backbone.View {
+class TopBarView extends Backbone.View {
 
   get template() {
     return _.template(Loader.templates.TopBar);
@@ -60,8 +59,12 @@ class ObjectMenuView extends Backbone.View {
     return ("Scene - " + i);
   }
 
-  addTab() {
-    var newTabName = this.getNewTabName();
+  addTab(isTheFirst) {
+    let newTabName = "";
+    if (isTheFirst == true)
+      newTabName = "Scene - 1";
+    else
+      newTabName = this.getNewTabName();
 
     let data = {
       sceneName: newTabName,
@@ -158,4 +161,4 @@ class ObjectMenuView extends Backbone.View {
   }
 }
 
-export default ObjectMenuView;
+export default new TopBarView();

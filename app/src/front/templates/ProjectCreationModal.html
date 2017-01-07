@@ -7,7 +7,7 @@
             <form class="ui form fluid warning" name="projectCreationForm">
                 <div class="required field">
                     <div class="ui corner labeled input">
-                        <input type="text" name="applicationName" required="required" placeholder="Nom de l'application"/>
+                        <input type="text" id="applicationName" name="applicationName" required="required" placeholder="Nom de l'application"/>
                         <div class="ui corner label">
                             <i class="asterisk icon"></i>
                         </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="required field">
                     <div class="ui corner labeled input">
-                        <textarea class="form-control" name="applicationDescription" placeholder="Description de l'application" maxlength="600" rows="4" required></textarea>
+                        <textarea class="form-control" id="applicationDescription" name="applicationDescription" placeholder="Description de l'application" maxlength="600" rows="4" required></textarea>
                         <div class="ui corner label">
                             <i class="asterisk icon"></i>
                         </div>
@@ -29,7 +29,7 @@
                         La description de l'application doit contenir au plus 600 caractères.
                     </div>
                 </div>
-                <div class="required field">
+<!--                <div class="required field">
                     <label for="applicationDevices">Matériels de réalité virtuelle :</label>
                     <select name="skills" id="applicationDevices" multiple="" class="ui fluid dropdown" required>
                         <option value="">Matériels de Réalité Virtuelle</option>
@@ -51,7 +51,7 @@
                         <option value="expeditions">Expéditions</option>
                         <option value="politique">Politique</option>
                     </select>
-                </div>
+                </div>-->
                 <div class="ui black deny button" id="back_button">
                     Retour
                 </div>
