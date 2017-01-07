@@ -53,7 +53,7 @@ class SaveManager {
   importProject() {
 
     // download from API
-    let JSONProject = JSON.parse(this.sampleJSONProject());
+/*    let JSONProject = JSON.parse(this.sampleJSONProject());*/
 
     // getting ProjectName;
     ProjectManager.setName(JSONProject.name);
@@ -74,7 +74,7 @@ class SaveManager {
       url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getName() + "/save",
       type: "post",
       data: {save: JSONProject},
-      headers: {Authorization: "Bearer " + Cookie.getCookieValue("token")},
+      headers: {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
       dataType: 'json',
       statusCode : {
         404 : function (data) {

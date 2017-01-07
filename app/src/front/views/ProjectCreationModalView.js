@@ -53,15 +53,18 @@ class ProjectCreationModalView extends Backbone.View {
             url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects",
             type: "post",
             data: data,
-            headers: {Authorization: "Bearer " + Cookie.getCookieValue("token")},
+            headers: {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
             dataType: 'json',
             statusCode : {
                 404 : function (data) {
-                    console.log(data);
+                    alert('Err 404');
                 },
                 200 : function (data) {
                     EventManager.emitEvent('createNewProject', data);
                     TopBar.addTab(true);
+                },
+                500 : function (data) {
+                    alert("Err 500");
                 }
             }
         });

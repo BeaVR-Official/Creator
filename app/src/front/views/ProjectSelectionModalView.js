@@ -8,6 +8,8 @@ import Backbone from 'backbone';
 import AuthModal from './AuthModalView';
 import ProjectCreationModal from './ProjectCreationModalView'
 
+import Cookie from '../cookie';
+
 class ProjectSelectionModalView extends Backbone.View {
 
   get template() {
@@ -31,6 +33,21 @@ class ProjectSelectionModalView extends Backbone.View {
     });
     Loader.initStyles();
 
+    let projects = {};
+    $.ajax({
+      url: "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/",
+      type: "get",
+      headers: {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
+      dataType: 'json',
+      statusCode : {
+        404 : function (data) {
+          console.log(data);
+        },
+        200 : function (data) {
+          console.log(data);
+        }
+      }}
+    );
     //TODO GET /api/creator/:idUser/projects (renvoie tous les projets de l'utilisateur)
   }
 
