@@ -2,49 +2,12 @@ import ProjectManager from "./ProjectManager";
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
 
+import Cookie from '../../front/cookie';
+
 class SaveManager {
 
   constructor() {
   }
-
-  sampleJSONProject () {
-    return JSON.stringify({
-      "name": "",
-      "sceneDescriptors": [
-        {
-          "uuid": "37bd0177-90a1-458a-8108-3f4624e3734c",
-          "name": "Default",
-          "objectDescriptors": [
-            {
-              "uuid": "19e4097e-a9e1-454d-93ac-eb7d9a717ffc",
-              "name": "Box_01",
-              "type": "box",
-              "children": [],
-              "position": [
-                0,
-                0,
-                0
-              ],
-              "rotation": [
-                0,
-                0,
-                0
-              ],
-              "scale": [
-                0,
-                0,
-                0
-              ],
-              "isSolid": false,
-              "isGravityEffected": false
-            }
-          ]
-        }
-      ],
-      "startingSceneUuid": "37bd0177-90a1-458a-8108-3f4624e3734c"
-    });
-  }
-  // IMPORT
 
   importObjectDescriptor(objectDescriptor) {
     let _objectDescriptor = new ObjectDescriptor(objectDescriptor.name, objectDescriptor.type);
@@ -107,8 +70,21 @@ class SaveManager {
 
     let JSONProject = ProjectManager.toJSON();
 
-    // upload to API
-    console.log(JSONProject);
+    $.ajax({
+      url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getName() + "/save",
+      type: "post",
+      data: {save: JSONProject},
+      headers: {Authorization: "Bearer " + Cookie.getCookieValue("token")},
+      dataType: 'json',
+      statusCode : {
+        404 : function (data) {
+          console.log(data);
+        },
+        200 : function (data) {
+          console.log(data);
+        }
+      }
+    });
   }
 
 }

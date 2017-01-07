@@ -5,6 +5,11 @@
 import Loader from '../utils';
 import Backbone from 'backbone';
 
+import Cookie from '../cookie';
+import EventManager from '../../modules/common/EventManager';
+
+import TopBar from './TopBarView';
+
 class ProjectCreationModalView extends Backbone.View {
 
     get template() {
@@ -36,10 +41,35 @@ class ProjectCreationModalView extends Backbone.View {
     }
 
     createProject() {
+
+        let appName = document.getElementById("applicationName").value;
+        let appDesc = document.getElementById("applicationDescription").value;
+        let data = {
+            name : appName,
+            description : appDesc
+        };
+
+        $.ajax({
+            url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects",
+            type: "post",
+            data: data,
+            headers: {Authorization: "Bearer " + Cookie.getCookieValue("token")},
+            dataType: 'json',
+            statusCode : {
+                404 : function (data) {
+                    console.log(data);
+                },
+                200 : function (data) {
+                    EventManager.emitEvent('createNewProject', data);
+                    TopBar.addTab(true);
+                }
+            }
+        });
+
         $('#project_creation_modal').dismissModal('fadeOut');
     }
 
-    initialize() {}
+    initialize() {};
 
     show() {
         this.render();

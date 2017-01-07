@@ -30,6 +30,8 @@ class ProjectSelectionModalView extends Backbone.View {
       events: {}
     });
     Loader.initStyles();
+
+    //TODO GET /api/creator/:idUser/projects (renvoie tous les projets de l'utilisateur)
   }
 
   openAuthModal() {

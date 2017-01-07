@@ -8,7 +8,7 @@
 import EventManager from './modules/common/EventManager';
 import ProjectManager from './modules/common/ProjectManager';
 import GraphicalManager from './modules/common/GraphicalManager';
-require('./modules/sugarmaple/index')
+require('./modules/sugarmaple/index');
 require('./front/app');
 
 // EventManager.emitEvent('addScene', "Default").then(res => {
