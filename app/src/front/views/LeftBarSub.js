@@ -19,12 +19,6 @@ class LeftBarView extends Backbone.View {
     return _.template(Loader.templates.LeftBarSub);
   }
 
-  get events() {
-    return {
-        'click .headerSub .ui.button.inverted.basic': 'SwitchDefault'
-    };
-  }
-
   get $el() {
     return $('.LeftBarSubSelector');
   }
@@ -44,12 +38,24 @@ class LeftBarView extends Backbone.View {
 
   get events() {
     return {
-      'click .imageBox' : 'addObject'
+      'click .imageBox' : 'addObject',
+      'click .headerSub .ui.button.inverted.basic': 'SwitchDefault',
+      'click .modals' : 'CloseModal'
     };
   }
 
   constructor() {
     super();
+  }
+
+  CloseModal(event) {
+    console.log(event);
+    if (event.target.className == "ui dimmer modals page transition hidden active visible" || event.target.className == "close icon") {
+      $('.small.modal').removeClass('active');
+      $('.small.modal').removeClass('visible');
+      $('.modals').removeClass('active');
+      $('.modals').removeClass('visible');
+    }
   }
 
   switchLeftBarView(value) {
@@ -62,6 +68,19 @@ class LeftBarView extends Backbone.View {
 
   addObject(event) {
     let addType = ($(event.target).closest('.addObject').attr('data-id'));
+    if (addType == 'add') {
+
+      $('.modals').addClass('active');
+      $('.modals').addClass('visible');
+      $('.modals').animateCssIn('fadeIn');
+      $('.small.modal').addClass('active');
+      $('.small.modal').addClass('visible');
+      $('.small.modal').animateCssIn('zoomIn');
+      /*
+            $('.ui.small.modal').modal('show');
+      */
+      return;
+    }
     let data = {
       objectName: '',
       objectType: addType
