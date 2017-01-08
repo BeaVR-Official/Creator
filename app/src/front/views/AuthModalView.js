@@ -36,6 +36,7 @@ class AuthModalView extends Backbone.View {
     openRegisterModal() {
         var modal = new RegisterModal();
         $('#login_modal').animateCssOut('fadeOutLeft', modal);
+
     }
 
     openResetPasswordModal() {
@@ -44,22 +45,19 @@ class AuthModalView extends Backbone.View {
     }
 
     loginUser() {
-        var modal = new ProjectSelectionModal();
-
-        // Appel API
         // TODO recup les inputs
-        $.post( 'http://beavr.fr:3000/api/connection' ,
-          {email: 'damien.giraudet@epitech.eu', password: '<3neeko<3'},
-          function (data) {
-              if (data.status == 200) {
-                  Cookie.createCookie("store_id", data.data.userId, 28);
-                  Cookie.createCookie("store_token", data.data.token, 28);
-              } else {
-                  // TODO recommence
-              }
-          });
-
-        $('#login_modal').animateCssOut('fadeOutLeft', modal);
+        let req = $.post( 'http://beavr.fr:3000/api/connection' ,
+            {email: 'damien.giraudet@epitech.eu', password: '<3neeko<3'}
+        );
+        req.done( () => {
+            Cookie.createCookie("store_id", data.data.userId, 28);
+            Cookie.createCookie("store_token", data.data.token, 28);
+            var modal = new ProjectSelectionModal();
+            $('#login_modal').animateCssOut('fadeOutLeft', modal);
+        });
+        req.fail( (err) => {
+            alert("Lors de l'auth : " + err.responseText);
+        })
     }
 
     openProjectCreationModal() {

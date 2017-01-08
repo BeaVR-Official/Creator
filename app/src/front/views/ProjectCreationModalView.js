@@ -8,7 +8,7 @@ import Backbone from 'backbone';
 import Cookie from '../cookie';
 import EventManager from '../../modules/common/EventManager';
 
-import TopBar from './TopBarView';
+import Scene from '../models/scene';
 
 class ProjectCreationModalView extends Backbone.View {
 
@@ -33,6 +33,7 @@ class ProjectCreationModalView extends Backbone.View {
         });
         this.prev = prev;
         Loader.initStyles();
+        //this.render();
     }
 
     openPrevModal() {
@@ -44,32 +45,37 @@ class ProjectCreationModalView extends Backbone.View {
 
         let appName = document.getElementById("applicationName").value;
         let appDesc = document.getElementById("applicationDescription").value;
-        let data = {
+        let projectData = {
             name : appName,
             description : appDesc
         };
 
-        $.ajax({
+        let req = $.ajax({
             url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects",
             type: "post",
-            data: data,
+            data: projectData,
             headers: {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
-            dataType: 'json',
-            statusCode : {
-                404 : function (data) {
-                    alert('Err 404');
-                },
-                200 : function (data) {
-                    EventManager.emitEvent('createNewProject', data);
-                    TopBar.addTab(true);
-                },
-                500 : function (data) {
-                    alert("Err 500");
-                }
-            }
+            dataType: 'json'
         });
+        req.done (() => {
+            this.createNewProjectAndScene(projectData);
+            $('#project_creation_modal').dismissModal('fadeOut');
+        });
+        req.fail ((err) => {
+           alert("Lors de la save du projet dans l'API : " + err.responseText);
+        });
+    }
 
-        $('#project_creation_modal').dismissModal('fadeOut');
+    createNewProjectAndScene(projectData) {
+        EventManager.emitEvent('createNewProject', projectData);
+        let scene = new Scene();
+        let data = {
+            sceneName: "S1",
+            scene: scene
+        };
+        EventManager.emitEvent('addScene', data).then((res) => {
+            scene.attributes = res.scene.attributes;
+        });
     }
 
     initialize() {};

@@ -50,40 +50,36 @@ class SaveManager {
     return _sceneDescriptors;
   }
 
-  importProject() {
-
-    // download from API
-/*    let JSONProject = JSON.parse(this.sampleJSONProject());*/
-
-    // getting ProjectName;
-    ProjectManager.setName(JSONProject.name);
-    ProjectManager.setAllSceneDescriptors(this.importSceneDescriptors(JSONProject.sceneDescriptors));
-    ProjectManager.setStartingScene(JSONProject.startingSceneUuid)
-
-    console.log(ProjectManager.toJSON());
+  importProject(projectUuid) {
+    let req = $.ajax({
+      url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + projectUuid + "/save",
+      type:     "get",
+      headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
+      dataType: 'json'
+    });
+    req.done( (JSONProject) => {
+      ProjectManager.setUuid(JSONProject.uuid);
+      ProjectManager.setName(JSONProject.name);
+      ProjectManager.setDescription(JSONProject.description);
+      ProjectManager.setAllSceneDescriptors(this.importSceneDescriptors(JSONProject.sceneDescriptors.attributes));
+      ProjectManager.setStartingScene(JSONProject.startingSceneUuid)
+    });
+    req.fail( function (err) {
+      alert("Lors de l'upload du projet : " + err.responseText);
+    });
   }
 
-
   // EXPORT
-
   exportProject() {
-
     let JSONProject = ProjectManager.toJSON();
-
     $.ajax({
-      url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getName() + "/save",
+      url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getUuid() + "/save",
       type: "post",
       data: {save: JSONProject},
       headers: {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
-      dataType: 'json',
-      statusCode : {
-        404 : function (data) {
-          console.log(data);
-        },
-        200 : function (data) {
-          console.log(data);
-        }
-      }
+      dataType: 'json'
+    }).fail( function (err) {
+      alert("Lors de la save du projet : " + err.responseText);
     });
   }
 

@@ -12,6 +12,14 @@ export default class SceneDescriptor extends Backbone.Model {
     this.attributes.objectDescriptors = [];
   }
 
+  toJSON() {
+    return {
+      uuid: this.attributes.uuid,
+      name: this.attributes.name,
+      objectDescriptors: this.attributes.objectDescriptors
+    }
+  }
+
   getUuid() {
     return (this.attributes.uuid);
   }

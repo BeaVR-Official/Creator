@@ -18,8 +18,8 @@ class ProjectSelectionModalView extends Backbone.View {
 
   get events() {
     return {
-      'click #disconnect_button':       'openAuthModal',
-      'click #project_creation_button': 'openProjectCreationModal'
+      'click #disconnect_button'            : 'openAuthModal',
+      'click #project_creation_button_user' : 'openProjectCreationModal'
     };
   }
 
@@ -34,21 +34,19 @@ class ProjectSelectionModalView extends Backbone.View {
     Loader.initStyles();
 
     let projects = {};
-    $.ajax({
+    let req = $.ajax({
       url: "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/",
       type: "get",
       headers: {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
-      dataType: 'json',
-      statusCode : {
-        404 : function (data) {
-          console.log(data);
-        },
-        200 : function (data) {
-          console.log(data);
-        }
-      }}
-    );
-    //TODO GET /api/creator/:idUser/projects (renvoie tous les projets de l'utilisateur)
+      dataType: 'json'
+    });
+    req.done((data) => {
+      // TODO projects = data;
+    });
+    req.fail((err) => {
+      alert("Lors de la recup des projets : " + err.responseText);
+    });
+
   }
 
   openAuthModal() {

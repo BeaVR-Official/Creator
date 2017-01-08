@@ -59,12 +59,8 @@ class TopBarView extends Backbone.View {
     return ("Scene - " + i);
   }
 
-  addTab(isTheFirst) {
-    let newTabName = "";
-    if (isTheFirst == true)
-      newTabName = "Scene - 1";
-    else
-      newTabName = this.getNewTabName();
+  addTab() {
+    let newTabName = this.getNewTabName();
 
     let data = {
       sceneName: newTabName,
@@ -161,4 +157,4 @@ class TopBarView extends Backbone.View {
   }
 }
 
-export default new TopBarView();
+export default TopBarView;

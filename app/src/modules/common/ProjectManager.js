@@ -1,9 +1,12 @@
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
 import EventDescriptor from "./EventManager";
+import UUID from './../utils/UUID';
 
 class ProjectManager {
-  constructor() {
+
+  constructor(data) {
+    this.uuid              = UUID.createUUID()
     this.name              = "";
     this.description       = "";
     this.sceneDescriptors  = [];
@@ -12,6 +15,7 @@ class ProjectManager {
 
   toJSON() {
     return {
+      uuid:              this.uuid,
       name:              this.name,
       description:       this.description,
       sceneDescriptors:  this.sceneDescriptors,
@@ -35,9 +39,17 @@ class ProjectManager {
     return this.description;
   }
 
-  createNewProject(data) {
-    this.setName(data.name);
-    this.setDescription(data.description);
+  setUuid(uuid) {
+    this.uuid = uuid;
+  }
+
+  getUuid() {
+    return this.uuid;
+  }
+
+  createNewProject(name, description) {
+    this.setName(name);
+    this.setDescription(description);
   }
 
   setStartingScene(sceneUuid) {
