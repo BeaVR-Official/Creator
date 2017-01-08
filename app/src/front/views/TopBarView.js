@@ -50,7 +50,7 @@ class TopBarView extends Backbone.View {
   }
 
   getNewTabName() {
-    
+
     for (var i = 1; i < this.tabArray.length + 1; i++) {
       if ($.grep(this.tabArray, function(e){ return e.name == "Scene - " + i; }) == null)
         return ("Scene - " + i);
@@ -136,12 +136,14 @@ class TopBarView extends Backbone.View {
 
   allowRenameTab(ev) {
     if (ev.target.classList.contains("disabled")) {
+      ev.target.parentElement.children[1].classList.add("hidden");
       ev.target.classList.remove("disabled");
       ev.target.children[1].classList.remove("hidden");
     }
   }
 
   renameTab(ev) {
+    ev.target.parentElement.parentElement.children[1].classList.remove("hidden");
     ev.target.classList.add("hidden");
     ev.target.parentElement.classList.add("disabled");
 
