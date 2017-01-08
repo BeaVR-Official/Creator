@@ -40,7 +40,8 @@ class LeftBarView extends Backbone.View {
     return {
       'click .imageBox' : 'addObject',
       'click .headerSub .ui.button.inverted.basic': 'SwitchDefault',
-      'click .modals' : 'CloseModal'
+      'click .modals' : 'CloseModal',
+      'click .sendObj': 'UploadObj'
     };
   }
 
@@ -48,8 +49,19 @@ class LeftBarView extends Backbone.View {
     super();
   }
 
+  UploadObj() {
+    var path = (window.URL || window.webkitURL).createObjectURL($(".fileInput")[0].files[0]);
+    var name = $("#modelName").val();
+    this.objects.push({name: name, logo:'assets/images/objectSpe.png', type:path});
+    this.render();
+    console.log(path);
+  }
+
   CloseModal(event) {
     console.log(event);
+    if (event.target.className == "ui button sendObj") {
+      this.UploadObj();
+    }
     if (event.target.className == "ui dimmer modals page transition hidden active visible" || event.target.className == "close icon") {
       $('.small.modal').removeClass('active');
       $('.small.modal').removeClass('visible');
