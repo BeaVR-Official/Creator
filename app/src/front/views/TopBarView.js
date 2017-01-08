@@ -50,9 +50,9 @@ class TopBarView extends Backbone.View {
   }
 
   getNewTabName() {
-
+    
     for (var i = 1; i < this.tabArray.length + 1; i++) {
-      if (this.tabArray.indexOf("Scene - " + i) == -1)
+      if ($.grep(this.tabArray, function(e){ return e.name == "Scene - " + i; }) == null)
         return ("Scene - " + i);
     }
 
