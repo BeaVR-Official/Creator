@@ -47,9 +47,9 @@ class AuthModalView extends Backbone.View {
     loginUser() {
         // TODO recup les inputs
         let req = $.post( 'http://beavr.fr:3000/api/connection' ,
-            {email: 'damien.giraudet@epitech.eu', password: '<3neeko<3'}
+            {email: 'salut@test.fr', password: 'azertyuiop'}
         );
-        req.done( () => {
+        req.done( (data) => {
             Cookie.createCookie("store_id", data.data.userId, 28);
             Cookie.createCookie("store_token", data.data.token, 28);
             var modal = new ProjectSelectionModal();

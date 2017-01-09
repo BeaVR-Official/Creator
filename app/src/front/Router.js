@@ -43,7 +43,7 @@ class Router extends Backbone.Router {
         new ToolsBox();
         new TopBarView();
         new LeftBarView();
-        //this.AuthModal();
+        this.AuthModal();
     }
 
     AuthModal() {

@@ -41,6 +41,7 @@ class ProjectSelectionModalView extends Backbone.View {
       dataType: 'json'
     });
     req.done((data) => {
+      console.log(data);
       // TODO projects = data;
     });
     req.fail((err) => {

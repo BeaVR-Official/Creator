@@ -57,8 +57,13 @@ class ProjectCreationModalView extends Backbone.View {
             headers: {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
             dataType: 'json'
         });
-        req.done (() => {
-            this.createNewProjectAndScene(projectData);
+        req.done ((res) => {
+            let resProject = {
+                name: appName,
+                description: appDesc,
+                id: res.data.project._id
+            }
+            this.createNewProjectAndScene(resProject);
             $('#project_creation_modal').dismissModal('fadeOut');
         });
         req.fail ((err) => {

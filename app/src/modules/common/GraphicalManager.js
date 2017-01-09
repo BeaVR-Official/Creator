@@ -237,7 +237,7 @@ class GraphicalManager {
     this.renderer.render(this.threeScene, this.camera);
     this.setlastSceneUuid(this.currentSceneUuid);
 
-    console.log("Scenes", ProjectManager.getAllSceneDescriptors());
+    //console.log("Scenes", ProjectManager.getAllSceneDescriptors());
     // requestAnimationFrame(this.render);
   }
 

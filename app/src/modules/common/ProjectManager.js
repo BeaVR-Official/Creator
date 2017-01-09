@@ -6,7 +6,7 @@ import UUID from './../utils/UUID';
 class ProjectManager {
 
   constructor(data) {
-    this.uuid              = UUID.createUUID()
+    this.id                = "";
     this.name              = "";
     this.description       = "";
     this.sceneDescriptors  = [];
@@ -18,7 +18,7 @@ class ProjectManager {
       uuid:              this.uuid,
       name:              this.name,
       description:       this.description,
-      sceneDescriptors:  this.sceneDescriptors,
+      sceneDescriptors:  null,//this.sceneDescriptors,
       startingSceneUuid: this.startingSceneUuid
     }
   }
@@ -39,17 +39,18 @@ class ProjectManager {
     return this.description;
   }
 
-  setUuid(uuid) {
-    this.uuid = uuid;
+  setId(id) {
+    this.id = id;
   }
 
-  getUuid() {
-    return this.uuid;
+  getId() {
+    return this.id;
   }
 
-  createNewProject(name, description) {
+  createNewProject(name, description, id) {
     this.setName(name);
     this.setDescription(description);
+    this.setId(id);
   }
 
   setStartingScene(sceneUuid) {
@@ -79,6 +80,13 @@ class ProjectManager {
 
   getAllSceneDescriptors() {
     return (this.sceneDescriptors);
+  }
+  getAllSceneDescriptorsUuid() {
+    let ret = [];
+    this.sceneDescriptors.forEach((scene) => {
+      ret.push(scene.getUuid());
+    })
+    return ret;
   }
 
   getSceneDescriptor(sceneUuid) {

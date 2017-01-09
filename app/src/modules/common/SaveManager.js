@@ -71,16 +71,53 @@ class SaveManager {
 
   // EXPORT
   exportProject() {
-    let JSONProject = ProjectManager.toJSON();
-    $.ajax({
-      url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getUuid() + "/save",
-      type: "post",
-      data: {save: JSONProject},
-      headers: {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
+
+    let JSONSave = {
+      sceneDescriptors:  ProjectManager.getAllSceneDescriptorsUuid(),
+      startingSceneUuid: ProjectManager.getStartingScene()
+    };
+    let saveId;
+    let req1     = $.ajax({
+      url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getId() + "/save",
+      type:     "post",
+      data:     JSONSave,
+      headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
       dataType: 'json'
-    }).fail( function (err) {
+    });
+    req1.done((res) => {
+      saveId = res.data.save._id;
+      alert("Project Saved (project)");
+    });
+    req1.fail(function (err) {
+      console.log(err);
       alert("Lors de la save du projet : " + err.responseText);
     });
+
+/*    let blobJSONProject = new Blob(
+      [ProjectManager.toJSON()],
+      {type: "application/json"}
+    );*/
+    let fileJSONProject = new File(
+      [JSON.stringify(ProjectManager.toJSON())],
+      ProjectManager.getId(),
+      {type: "application/json"}
+    );
+
+    let req2     = $.ajax({
+      url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getId() + "/save/" + saveId + "/files",
+      type:     "post",
+      data:     fileJSONProject,
+      headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
+      dataType: 'json'
+    });
+    req2.done(() => {
+      alert("Project Saved (file)");
+    });
+    req2.fail(function (err) {
+      console.log(err);
+      alert("Lors de la save du projet (file) : " + err.responseText);
+    });
+
   }
 
 }

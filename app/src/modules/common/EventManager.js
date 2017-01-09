@@ -225,7 +225,7 @@ class EventManager extends EventEmitter {
 
     // Save & Load
     this.on('createNewProject', function (data) {
-      ProjectManager.createNewProject(data.name, data.description);
+      ProjectManager.createNewProject(data.name, data.description, data.id);
     })
 
     this.on('saveProject', function () {
