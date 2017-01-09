@@ -52,9 +52,8 @@ class LeftBarView extends Backbone.View {
   UploadObj() {
     var path = (window.URL || window.webkitURL).createObjectURL($(".fileInput")[0].files[0]);
     var name = $("#modelName").val();
-    this.objects.push({name: name, logo:'assets/images/objectSpe.png', type:path});
+    this.objects.splice(this.objects.length - 1, 0, {name: name, logo:'assets/images/objectSpe.png', type:path});
     this.render();
-    console.log(path);
   }
 
   CloseModal(event) {
@@ -62,7 +61,9 @@ class LeftBarView extends Backbone.View {
     if (event.target.className == "ui button sendObj") {
       this.UploadObj();
     }
-    if (event.target.className == "ui dimmer modals page transition hidden active visible" || event.target.className == "close icon") {
+    if (event.target.className == "ui dimmer modals page transition hidden active visible" || 
+        event.target.className == "close icon" ||
+        event.target.className == "ui button close") {
       $('.small.modal').removeClass('active');
       $('.small.modal').removeClass('visible');
       $('.modals').removeClass('active');
@@ -81,16 +82,12 @@ class LeftBarView extends Backbone.View {
   addObject(event) {
     let addType = ($(event.target).closest('.addObject').attr('data-id'));
     if (addType == 'add') {
-
       $('.modals').addClass('active');
       $('.modals').addClass('visible');
       $('.modals').animateCssIn('fadeIn');
       $('.small.modal').addClass('active');
       $('.small.modal').addClass('visible');
       $('.small.modal').animateCssIn('zoomIn');
-      /*
-            $('.ui.small.modal').modal('show');
-      */
       return;
     }
     let data = {
