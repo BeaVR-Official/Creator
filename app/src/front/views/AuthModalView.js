@@ -44,20 +44,24 @@ class AuthModalView extends Backbone.View {
         $('#login_modal').animateCssOut('fadeOutLeft', modal);
     }
 
-    loginUser() {
-        // TODO recup les inputs
-        let req = $.post( 'http://beavr.fr:3000/api/connection' ,
-            {email: 'salut@test.fr', password: 'azertyuiop'}
-        );
-        req.done( (data) => {
-            Cookie.createCookie("store_id", data.data.userId, 28);
-            Cookie.createCookie("store_token", data.data.token, 28);
-            var modal = new ProjectSelectionModal();
-            $('#login_modal').animateCssOut('fadeOutLeft', modal);
-        });
-        req.fail( (err) => {
-            alert("Lors de l'auth : " + err.responseText);
-        })
+    loginUser(e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        if ($('#login_email').val() !== "" && $('#login_password').val() !== "") {
+            $.post('http://beavr.fr:3000/api/connection',
+              {email: $('#login_email').val(), password: $('#login_password').val()}
+            ).done((data) => {
+                console.log(data);
+                Cookie.createCookie("store_id", data.data.userId, 28);
+                Cookie.createCookie("store_token", data.data.token, 28);
+                var modal = new ProjectSelectionModal();
+                $('#login_modal').animateCssOut('fadeOutLeft', modal);
+            }).fail((err) => {
+                console.log(err);
+                if (err.responseText)
+                    console.debug("Lors de l'auth : " + err.responseText);
+            })
+        }
     }
 
     openProjectCreationModal() {

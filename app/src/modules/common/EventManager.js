@@ -130,7 +130,6 @@ class EventManager extends EventEmitter {
         data.objectName,
         data.objectType
       );
-
       data.uuid = GraphicalManager.addObject(objectUuid);
     });
 
@@ -139,8 +138,11 @@ class EventManager extends EventEmitter {
     });
 
     this.on('addExternal', function (data) {
-      // TODO
-      GraphicalManager.addExternalObject();
+      let objectUuid = ProjectManager.addObject(
+        data.objectName,
+        data.objectType
+      );
+      data.uuid = GraphicalManager.addExternalObject(objectUuid, data.path);
     });
 
     this.on('addSky', function (data) {

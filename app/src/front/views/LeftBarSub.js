@@ -52,9 +52,8 @@ class LeftBarView extends Backbone.View {
   UploadObj() {
     var path = (window.URL || window.webkitURL).createObjectURL($(".fileInput")[0].files[0]);
     var name = $("#modelName").val();
-    this.objects.push({name: name, logo:'assets/images/objectSpe.png', type:path});
+    this.objects.splice(this.objects.length - 1, 0, {name: name, logo:'assets/images/objectSpe.png', type:path, typeOfImport: 'imported'});
     this.render();
-    console.log(path);
   }
 
   CloseModal(event) {
@@ -62,7 +61,9 @@ class LeftBarView extends Backbone.View {
     if (event.target.className == "ui button sendObj") {
       this.UploadObj();
     }
-    if (event.target.className == "ui dimmer modals page transition hidden active visible" || event.target.className == "close icon") {
+    if (event.target.className == "ui dimmer modals page transition hidden active visible" || 
+        event.target.className == "close icon" ||
+        event.target.className == "ui button close") {
       $('.small.modal').removeClass('active');
       $('.small.modal').removeClass('visible');
       $('.modals').removeClass('active');
@@ -80,29 +81,43 @@ class LeftBarView extends Backbone.View {
 
   addObject(event) {
     let addType = ($(event.target).closest('.addObject').attr('data-id'));
+    let typeOfImport = ($(event.target).closest('.addObject').attr('data-type'));
     if (addType == 'add') {
-
       $('.modals').addClass('active');
       $('.modals').addClass('visible');
       $('.modals').animateCssIn('fadeIn');
       $('.small.modal').addClass('active');
       $('.small.modal').addClass('visible');
       $('.small.modal').animateCssIn('zoomIn');
-      /*
-            $('.ui.small.modal').modal('show');
-      */
       return;
     }
-    let data = {
-      objectName: '',
-      objectType: addType
-    };
-    // TODO filtré entre les dif obj via un data.typeObj
-    EventManager.emitEvent('addObject', data)
-      .then((res) => {
-      if (res.uuid)
-          EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
-      });
+    console.log(typeOfImport);
+    if (typeOfImport == 'default') {
+      let data = {
+        objectName: '',
+        objectType: addType
+      };
+      console.log("add box");
+      // TODO filtré entre les dif obj via un data.typeObj
+      EventManager.emitEvent('addObject', data)
+                  .then((res) => {
+                    if (res.uuid)
+                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
+                  });
+    }
+    else {
+      let data = {
+        objectName: '',
+        objectType: ($(event.target).closest('.addObject').attr('data-name')),
+        path: addType
+      };
+      EventManager.emitEvent('addExternal', data)
+                  .then((res) => {
+                    if (res.uuid)
+                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
+                  });
+    }
+
   }
 
    render() {

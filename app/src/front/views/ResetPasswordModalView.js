@@ -15,12 +15,30 @@ class ResetPasswordModalView extends Backbone.View {
 
     get events() {
         return {
-            'click #back_button' : 'openAuthModal'
+            'click #back_button' : 'openAuthModal',
+            'click #reset_password_button' : 'resetPassword'
         };
     }
 
     get $el() {
         return $('.ModalSelector');
+    }
+
+    resetPassword(e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        if ($('#reset_password_email').val() !== "") {
+            $.post('http://beavr.fr:3000/api/reset-password',
+              {email: $('#reset_password_email').val()}
+            ).done(() => {
+                var modal = new AuthModal();
+                $('#reset_password_modal').animateCssOut('fadeOutRight', modal);
+            }).fail((err) => {
+                console.log(err);
+                if (err.responseText)
+                    console.debug("Lors du reset : " + err.responseText);
+            })
+        }
     }
 
     constructor() {
