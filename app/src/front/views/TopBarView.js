@@ -85,12 +85,15 @@ class TopBarView extends Backbone.View {
         + '</div>'
         + '<span class=\"close-cross\">x</span></a>';
 
+      /*
       var contentDiv          = $('#content');
+
       contentDiv[0].innerHTML = contentDiv[0].innerHTML
         + '<div class=\"ui bottom attached tab segment\"'
         + 'data-tab=\"' + scene.attributes.uuid + '\">'
         // + 'Contenu de l\'onglet ' + newTabId
         + '</div>';
+        */
       $('.menu .item').tab();
 
       tabsDiv[0].children[this.tabArray.length - 1].click();
@@ -98,6 +101,16 @@ class TopBarView extends Backbone.View {
   }
 
   selectTab(ev) {
+
+    var tabs = $("#scene-tabs a");
+    for (var i = 0; i < tabs.length; i++)
+      tab[i].classList.remove("active");
+    var tabClassList = ev.target.classList;
+    if ($.inArray('item', tabClassList) == -1)
+      ev.target.parentElement.classList.add("active");
+    else
+      ev.target.classList.add("active");
+
     // var sceneDesc = ProjectManager.getSceneDescriptor(ev.currentTarget.attributes[1].value);
     // var index = this.tabArray.indexOf(sceneDesc.attributes);
     // console.log("TAB scene", sceneDesc);
@@ -108,25 +121,32 @@ class TopBarView extends Backbone.View {
   }
 
   closeTab(ev) {
-    var nodeList = Array.prototype.slice.call($('#scene-tabs')[0].children);
-    var i        = nodeList.indexOf(ev.target.parentElement);
 
-    var index = this.tabArray.indexOf(ev.target.parentElement.children[0].children[0].value);
-    if (index > -1) {
-      this.tabArray.splice(index, 1);
+    if (confirm("Êtes vous sûr de vouloir fermer cette scène ? Toute modification non sauvegardée sera perdue.") == true)
+    {
+      var nodeList = Array.prototype.slice.call($('#scene-tabs')[0].children);
+      var i        = nodeList.indexOf(ev.target.parentElement);
+
+      var index = this.tabArray.indexOf(ev.target.parentElement.children[0].children[0].value);
+      if (index > -1) {
+        this.tabArray.splice(index, 1);
+      }
+      ev.target.parentElement.remove();
+
+      if (nodeList.length <= 1)
+        $('.project-tab').click();
+      else {
+        if ((i + 1) == nodeList.length)
+          $('#scene-tabs')[0].children[i - 1].click();
+        else
+          $('#scene-tabs')[0].children[i].click();
+      }
+
+      $('.menu .item').tab();
     }
-    ev.target.parentElement.remove();
-
-    if (nodeList.length <= 1)
-      $('.project-tab').click();
     else {
-      if ((i + 1) == nodeList.length)
-        $('#scene-tabs')[0].children[i - 1].click();
-      else
-        $('#scene-tabs')[0].children[i].click();
-    }
 
-    $('.menu .item').tab();
+    }
 
   }
 
