@@ -108,7 +108,6 @@ class GraphicalManager {
     let that = this;
 
     _.map(allObjDescs, function (objDesc) {
-      console.log("Desc Objects", objDesc);
       that._objectFactory(objDesc);
 
     });
@@ -156,6 +155,7 @@ class GraphicalManager {
       geometry = new THREE.SphereGeometry(50, 50, 320);
     if (objectDescriptor.getType() === "cylinder")
       geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
+
     // TODO see how to do for lights/lightsHelper/externalObj
 
     let mesh           = new THREE.Mesh(geometry, material);
@@ -303,7 +303,25 @@ class GraphicalManager {
   }
 
 // TODO
-  addExternalObject() {
+  addExternalObject(objectUuid, path) {
+    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
+    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
+    var that = this;
+    var objLoader = new THREE.OBJLoader();
+    var material = new THREE.MeshBasicMaterial({color: 'grey', side: THREE.DoubleSide});
+    objLoader.load(path, function (obj) {
+      obj.traverse(function (child) {
+        if (child instanceof THREE.Mesh) {
+          child.material = material;
+        }
+      });
+      for (var i = 0; i < obj.children.length; ++i) {
+        obj.children[i].name = objectDescriptor.getUuid();
+      }
+      that.threeScene.add(obj);
+      that.render();
+    });
+    return objectDescriptor.getUuid();
   }
 
 // TODO

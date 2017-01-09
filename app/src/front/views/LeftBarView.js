@@ -44,10 +44,10 @@ class LeftBarView extends Backbone.View {
     openBasicObjects() {
         $('.LeftBarSubSelector').css('width', '220px');
         var objects = [];
-        objects.push({name: "Cube", logo:'assets/images/cube.png', type: 'box'});
-        objects.push({name: "Cylinder", logo:'assets/images/cylinder.png', type: 'cylinder'});
-        objects.push({name: "Sphere", logo:'assets/images/sphere.png', type: 'sphere'});
-        objects.push({name: "Add", logo:'assets/images/plus.png', type:'add'});
+        objects.push({name: "Cube", logo:'assets/images/cube.png', type: 'box', typeOfImport: 'default' });
+        objects.push({name: "Cylinder", logo:'assets/images/cylinder.png', type: 'cylinder', typeOfImport: 'default'});
+        objects.push({name: "Sphere", logo:'assets/images/sphere.png', type: 'sphere', typeOfImport: 'default'});
+        objects.push({name: "Add", logo:'assets/images/plus.png', type:'add', typeOfImport: 'default'});
         this.leftBar.switchLeftBarView({objects: objects});
     }
 

@@ -52,7 +52,7 @@ class LeftBarView extends Backbone.View {
   UploadObj() {
     var path = (window.URL || window.webkitURL).createObjectURL($(".fileInput")[0].files[0]);
     var name = $("#modelName").val();
-    this.objects.splice(this.objects.length - 1, 0, {name: name, logo:'assets/images/objectSpe.png', type:path});
+    this.objects.splice(this.objects.length - 1, 0, {name: name, logo:'assets/images/objectSpe.png', type:path, typeOfImport: 'imported'});
     this.render();
   }
 
@@ -81,6 +81,7 @@ class LeftBarView extends Backbone.View {
 
   addObject(event) {
     let addType = ($(event.target).closest('.addObject').attr('data-id'));
+    let typeOfImport = ($(event.target).closest('.addObject').attr('data-type'));
     if (addType == 'add') {
       $('.modals').addClass('active');
       $('.modals').addClass('visible');
@@ -90,16 +91,33 @@ class LeftBarView extends Backbone.View {
       $('.small.modal').animateCssIn('zoomIn');
       return;
     }
-    let data = {
-      objectName: '',
-      objectType: addType
-    };
-    // TODO filtré entre les dif obj via un data.typeObj
-    EventManager.emitEvent('addObject', data)
-      .then((res) => {
-      if (res.uuid)
-          EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
-      });
+    console.log(typeOfImport);
+    if (typeOfImport == 'default') {
+      let data = {
+        objectName: '',
+        objectType: addType
+      };
+      console.log("add box");
+      // TODO filtré entre les dif obj via un data.typeObj
+      EventManager.emitEvent('addObject', data)
+                  .then((res) => {
+                    if (res.uuid)
+                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
+                  });
+    }
+    else {
+      let data = {
+        objectName: '',
+        objectType: ($(event.target).closest('.addObject').attr('data-name')),
+        path: addType
+      };
+      EventManager.emitEvent('addExternal', data)
+                  .then((res) => {
+                    if (res.uuid)
+                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
+                  });
+    }
+
   }
 
    render() {
