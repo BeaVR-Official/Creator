@@ -35,7 +35,7 @@
                     <div class="ui buttons">
                         <div class="ui button" id="register_button">S'inscrire</div>
                         <div class="or" data-text="ou"></div>
-                        <button class="ui positive button" id="login_button">Se connecter</button>
+                        <button type="submit" class="ui positive button" id="login_button">Se connecter</button>
                     </div>
                     <button type="button" class="ui facebook button social-network-buttons">
                         <i class="facebook icon"></i>
@@ -46,6 +46,12 @@
                         Google Plus
                     </button>
                 </form>
+                <div id="login_error_message" class="ui warning message hidden">
+                    <div class="header">Erreur lors de la connexion</div>
+                    <ul class="list">
+                        <li>Cet utilisateur n'existe pas ou le mot de passe renseigné est incorrect</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="actions">

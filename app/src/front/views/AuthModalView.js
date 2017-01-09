@@ -51,7 +51,6 @@ class AuthModalView extends Backbone.View {
             $.post('http://beavr.fr:3000/api/connection',
               {email: $('#login_email').val(), password: $('#login_password').val()}
             ).done((data) => {
-                console.log(data);
                 Cookie.createCookie("store_id", data.data.userId, 28);
                 Cookie.createCookie("store_token", data.data.token, 28);
                 var modal = new ProjectSelectionModal();
@@ -59,6 +58,7 @@ class AuthModalView extends Backbone.View {
             }).fail((err) => {
                 console.log(err);
                 if (err.responseText)
+                    $('#login_error_message').removeClass("hidden");
                     console.debug("Lors de l'auth : " + err.responseText);
             })
         }
