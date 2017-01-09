@@ -26,6 +26,7 @@ class RegisterModalView extends Backbone.View {
 
     registerUser(e) {
         e.stopImmediatePropagation();
+        e.preventDefault();
         if ($('#register_email').val() !== "" && $('#register_password').val() !== ""
           && $('#register_pseudo').val() !== "" && $('#register_firstname').val() !== ""
           && $('#register_lastname').val() !== "") {

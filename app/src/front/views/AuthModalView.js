@@ -46,6 +46,7 @@ class AuthModalView extends Backbone.View {
 
     loginUser(e) {
         e.stopImmediatePropagation();
+        e.preventDefault();
         if ($('#login_email').val() !== "" && $('#login_password').val() !== "") {
             $.post('http://beavr.fr:3000/api/connection',
               {email: $('#login_email').val(), password: $('#login_password').val()}
