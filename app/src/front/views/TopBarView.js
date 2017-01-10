@@ -54,10 +54,9 @@ class TopBarView extends Backbone.View {
   getNewTabName() {
 
     for (var i = 1; i < this.tabArray.length + 1; i++) {
-      if ($.grep(this.tabArray, function(e){ return e.name == "Scene - " + i; }) == null)
+      if ($.grep(this.tabArray, function(e){ return e.name == "Scene - " + i; }).length == 0)
         return ("Scene - " + i);
     }
-
     return ("Scene - " + i);
   }
 
@@ -106,7 +105,7 @@ class TopBarView extends Backbone.View {
 
     var tabs = $("#scene-tabs a");
     for (var i = 0; i < tabs.length; i++)
-      tab[i].classList.remove("active");
+      tabs[i].classList.remove("active");
     var tabClassList = ev.target.classList;
     if ($.inArray('item', tabClassList) == -1)
       ev.target.parentElement.classList.add("active");
@@ -129,9 +128,11 @@ class TopBarView extends Backbone.View {
       var nodeList = Array.prototype.slice.call($('#scene-tabs')[0].children);
       var i        = nodeList.indexOf(ev.target.parentElement);
 
-      var index = this.tabArray.indexOf(ev.target.parentElement.children[0].children[0].value);
-      if (index > -1) {
-        this.tabArray.splice(index, 1);
+      var index = $.grep(this.tabArray, function(e){ return e.name == ev.target.parentElement.children[0].children[0].value; });
+      var tabArrayIndex = this.tabArray.indexOf(index[0]);
+
+      if (tabArrayIndex > -1) {
+        this.tabArray.splice(tabArrayIndex, 1);
       }
       ev.target.parentElement.remove();
 
@@ -149,6 +150,7 @@ class TopBarView extends Backbone.View {
     else {
 
     }
+    console.log(this.tabArray);
 
   }
 
