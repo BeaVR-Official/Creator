@@ -57,7 +57,6 @@ class LeftBarView extends Backbone.View {
   }
 
   CloseModal(event) {
-    console.log(event);
     if (event.target.className == "ui button sendObj") {
       this.UploadObj();
     }
@@ -72,7 +71,6 @@ class LeftBarView extends Backbone.View {
   }
 
   switchLeftBarView(value) {
-    console.log(value);
     this.default = (value.objects != undefined) ? value.objects : [];
     this.objects = this.default;
     this.type = (value.type != undefined)? value.type: "default";

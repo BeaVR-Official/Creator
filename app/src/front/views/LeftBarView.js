@@ -39,6 +39,7 @@ class LeftBarView extends Backbone.View {
     openThreeView() {
         $('.LeftBarSubSelector').css('width', '220px');
         this.leftBar.switchLeftBarView({type: 'TreeView'});
+        this.leftBarSugarMaple.initializeSugar();
     }
 
     openBasicObjects() {
@@ -124,9 +125,11 @@ class LeftBarView extends Backbone.View {
 
         this.leftBar = new LeftBarSub();
         this.openThreeView();
+    }
 
-        let leftBarSugarMaple = new LeftBarSugarMaple();
-        leftBarSugarMaple.initializeSugar();
+    initialize() {
+        this.leftBarSugarMaple = new LeftBarSugarMaple();
+        this.leftBarSugarMaple.initializeSugar();
     }
 
     render() {
