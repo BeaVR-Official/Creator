@@ -5,6 +5,8 @@ import Scene from '../models/scene';
 
 import EventManager from '../../modules/common/EventManager';
 
+import ProjectConfIn from './ProjectConfIn';
+
 require('../../../assets/styles/TopBar.scss');
 
 class TopBarView extends Backbone.View {
@@ -151,7 +153,11 @@ class TopBarView extends Backbone.View {
   }
 
   showProjectInformations() {
-    Backbone.history.navigate('/settings');
+    if (this.pj != null){
+      this.pj.remove();
+      console.log("coucou");
+    }
+    this.pj = new ProjectConfIn();
   }
 
   allowRenameTab(ev) {
