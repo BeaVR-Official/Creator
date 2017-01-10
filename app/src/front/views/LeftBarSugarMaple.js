@@ -56,7 +56,6 @@ class LeftBarSugarMaple {
     ScenePanel.default.initTree(this.smTree);
     this.sugarMapleEvents();
     this.sceneEvents();
-    return this;
   }
 
   /**

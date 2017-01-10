@@ -6,7 +6,7 @@ class Options {
     };
 
     this.templates = {
-      checkbox: '<input type="checkbox" class="node-checkbox"/>'
+      checkbox: '<div class="roundedOne"><input type="checkbox" value="None" class="node-checkbox" name="check" /><label for="roundedOne"></label></div>'
     };
 
     this.parameters = {
