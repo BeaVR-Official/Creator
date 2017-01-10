@@ -1,3 +1,24 @@
+<div class="ui dimmer export modals page transition hidden">
+    <div class="ui basic modal export" style="top:30%;">
+        <div class="ui header" style="margin:auto;text-align:center;">
+            <img src="assets/images/cog-animation.gif" style="width:auto;height:100px;text-align:center;">
+        </div>
+        <div class="content" style="text-align: center;">
+            <p>Etes-vous sur de vouloir publier votre projet sur le store ?</p>
+            <p style="color: red; font-size: 9px;">cliquez <a href="http://store.beavr.fr/#/applications/submitted">ici</a> pour modifier votre application</p>
+        </div>
+        <div class="actions" style="text-align: center;">
+            <div id="cancelExport" class="ui red basic cancel inverted button">
+                <i  class="remove icon"></i>
+                Non
+            </div>
+            <div id="validateExport" class="ui green inverted button">
+                <i  class="checkmark icon"></i>
+                Oui
+            </div>
+        </div>
+    </div>
+</div>
 <div class=" ui stackable six columns grid ToolsBox">
     <div class="column">
         <button class="ui icon basic button"><i class="fa fa-play"></i></button>
@@ -6,7 +27,7 @@
         <button id="saveProject" class="ui icon basic button"><i class="fa fa-floppy-o"></i></button>
     </div>
     <div class="column">
-        <button class="ui icon basic button"><i class="fa fa-cloud-upload"></i></button>
+        <button id="exportProject" class="ui icon basic button"><i class="fa fa-cloud-upload"></i></button>
     </div>
     <div class="column">
         <button class="ui icon basic button"><i class="fa fa-search-minus fa-rotate-90"></i></button>
@@ -24,19 +45,19 @@
 </div>
 
 <script>
-  $(".hide").click(function () {
-    $('.ui.stackable.six.columns').fadeOut(500, function () {
-      $('.ui.stackable.six.columns').css('visibility', 'hidden');
-      $('.BoxExpend').removeClass('hiddenBox');
-      $('.BoxExpend').addClass('visibleBox');
-      $('.BoxExpend').fadeIn(500);
-    })
-  });
+    $(".hide").click(function () {
+        $('.ui.stackable.six.columns').fadeOut(500, function () {
+            $('.ui.stackable.six.columns').css('visibility', 'hidden');
+            $('.BoxExpend').removeClass('hiddenBox');
+            $('.BoxExpend').addClass('visibleBox');
+            $('.BoxExpend').fadeIn(500);
+        })
+    });
 
-  $(".show").click(function () {
-    $('.BoxExpend').removeClass('visibleBox');
-    $('.BoxExpend').addClass('hiddenBox');
-    $('.ui.stackable.six.columns').css('visibility', 'visible');
-    $('.ui.stackable.six.columns').fadeIn(500);
-  })
+    $(".show").click(function () {
+        $('.BoxExpend').removeClass('visibleBox');
+        $('.BoxExpend').addClass('hiddenBox');
+        $('.ui.stackable.six.columns').css('visibility', 'visible');
+        $('.ui.stackable.six.columns').fadeIn(500);
+    });
 </script>
