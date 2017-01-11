@@ -365,7 +365,7 @@ class ProjectManager {
     let sceneDescriptor = this.getSceneDescriptor(sceneUuid);
     GraphicalManager.setCurrentSceneUuid(sceneUuid);
     //EventManagerOnFront.emitEvent('loadScene', sceneDescriptor);
-
+    // TODO @damien (peut etre en amont fill treeview)
   }
 }
 

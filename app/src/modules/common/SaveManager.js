@@ -14,9 +14,9 @@ class SaveManager {
     _objectDescriptor.setUuid(objectDescriptor.uuid);
     _objectDescriptor.setParent(objectDescriptor.parent);
     _objectDescriptor.setChildren(objectDescriptor.children);
-    _objectDescriptor.setPosition(objectDescriptor.position);
-    _objectDescriptor.setRotation(objectDescriptor.rotation);
-    _objectDescriptor.setScale(objectDescriptor.scale);
+    _objectDescriptor.setPosition(objectDescriptor.transformations.translation);
+    _objectDescriptor.setRotation(objectDescriptor.transformations.rotation);
+    _objectDescriptor.setScale(objectDescriptor.transformations.scale);
     _objectDescriptor.setSolidStatus(objectDescriptor.isSolid);
     _objectDescriptor.setGravityStatus(objectDescriptor.isGravityEffected);
     _objectDescriptor.setVisibilityStatus(objectDescriptor.isVisibility);
@@ -129,6 +129,8 @@ class SaveManager {
 
   // EXPORT
   exportProject() {
+
+    //TODO @damien save externalObj File
 
     // First step : Create a save container
     let JSONSave = {

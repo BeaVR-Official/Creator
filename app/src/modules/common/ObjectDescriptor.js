@@ -10,6 +10,10 @@ export default class ObjectDescriptor extends Backbone.Model {
     this.attributes.uuid                          = UUID.createUUID();
     this.attributes.name                          = name;
     this.attributes.type                          = type;
+
+    this.attributes.externalObjBddId              = "";
+    this.attributes.textureBddId                  = "";
+
     this.attributes.parent                        = undefined;
     this.attributes.children                      = [];
     this.attributes.transformations.translation   = {x:0.0, y:0.0, z:0.0};

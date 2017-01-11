@@ -57,6 +57,9 @@ class LeftBarSugarMaple {
     this.sceneEvents();
   }
 
+  // TODO @damien initSugar()
+  // TODO @damien addAllObj(Desc)
+
   addObject(objectUuid) {
     let object = ProjectManager.getObjectDescriptor(this.sceneDesc.attributes.uuid, objectUuid);
     console.log(object);

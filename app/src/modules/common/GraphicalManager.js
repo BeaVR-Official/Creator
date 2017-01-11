@@ -158,6 +158,15 @@ class GraphicalManager {
 
     // TODO see how to do for lights/lightsHelper/externalObj
 
+    // TODO @vincent - skybox ground avec getType() ==
+    // Peut être load en amont
+    // TODO @damien si externalObjBddId load obj API (+ PUIS applique puis etre pas dans cette method)
+    // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
+    // TODO @damien set Transformation avec Tree
+
+
+    console.log(objectDescriptor);
+
     let mesh           = new THREE.Mesh(geometry, material);
     mesh.mirroredLoop  = true;
     mesh.castShadow    = true;
