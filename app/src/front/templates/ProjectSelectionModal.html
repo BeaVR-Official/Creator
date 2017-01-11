@@ -5,27 +5,15 @@
         </div>
         <div class="content">
             <div class="ui relaxed divided list">
-                <div class="item">
+                <% _.each(object, function(object, i){  %> 
+                <div class="item projectSelected" data-id="<%- object.id %>">
                     <i class="large cloud download middle aligned icon"></i>
                     <div class="content">
-                        <a class="header">Pwet 1</a>
+                        <a class="header"><%- object.name %></a>
                         <div class="description">Dernière modification le 24/10/2016 à 14h42</div>
                     </div>
                 </div>
-                <div class="item">
-                    <i class="large cloud download middle aligned icon"></i>
-                    <div class="content">
-                        <a class="header">Pwet 2</a>
-                        <div class="description">Dernière modification le 24/10/2016 à 14h42</div>
-                    </div>
-                </div>
-                <div class="item">
-                    <i class="large cloud download middle aligned icon"></i>
-                    <div class="content">
-                        <a class="header">Pwet 3</a>
-                        <div class="description">Dernière modification le 24/10/2016 à 14h42</div>
-                    </div>
-                </div>
+                <% }); %>
             </div>
             <div class="ui horizontal divider">
                 Ou

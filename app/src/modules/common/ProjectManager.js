@@ -1,7 +1,10 @@
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
 import EventDescriptor from "./EventManager";
+import EventManagerOnFront from '../../front/EventManager';
 import UUID from './../utils/UUID';
+
+import GraphicalManager from './GraphicalManager';
 
 class ProjectManager {
 
@@ -18,7 +21,7 @@ class ProjectManager {
       uuid:              this.uuid,
       name:              this.name,
       description:       this.description,
-      sceneDescriptors:  null,//this.sceneDescriptors,
+      sceneDescriptors:  this.sceneDescriptors,
       startingSceneUuid: this.startingSceneUuid
     }
   }
@@ -53,7 +56,11 @@ class ProjectManager {
     this.setId(id);
   }
 
-  setStartingScene(sceneUuid) {
+  setStartingScene(sceneUuid, onLoad = false) {
+    if (onLoad == true) {
+      this.startingSceneUuid = sceneUuid;
+      return ;
+    }
     if (this.getSceneDescriptorIndex(sceneUuid) === -1) {
       return (false);
     }
@@ -340,6 +347,14 @@ class ProjectManager {
       return (undefined);
     }
     return (objectDescriptor.getVisibilityStatus());
+  }
+
+  // RELOAD at save and change of scene
+  reloadScene(sceneUuid = this.startingSceneUuid) {
+    let sceneDescriptor = this.getSceneDescriptor(sceneUuid);
+    GraphicalManager.setCurrentSceneUuid(sceneUuid);
+    //EventManagerOnFront.emitEvent('loadScene', sceneDescriptor);
+
   }
 }
 

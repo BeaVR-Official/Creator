@@ -147,6 +147,22 @@ export default class ObjectDescriptor extends Backbone.Model {
     return (this.attributes.isVisibilty);
   }
 
+  setGeometryDescriptor(geometryDescriptor) {
+    this.geometryDescriptor = geometryDescriptor;
+  }
+
+  getGeometryDescriptor() {
+    return this.geometryDescriptor;
+  }
+
+  setMaterialDescriptor(materialDescriptor) {
+    this.materialDescriptor = materialDescriptor;
+  }
+
+  getMaterialDescriptor() {
+    return this.materialDescriptor;
+  }
+
   /*
    BackBone model methods
    */

@@ -233,7 +233,9 @@ class EventManager extends EventEmitter {
     this.on('saveProject', function () {
       SaveManager.exportProject();
     })
-
+    this.on('loadProject', function (projectId) {
+      SaveManager.importProject(projectId);
+    });
   }
 
 }

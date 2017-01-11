@@ -73,7 +73,7 @@ class ProjectCreationModalView extends Backbone.View {
 
     createNewProjectAndScene(projectData) {
         EventManager.emitEvent('createNewProject', projectData);
-        let scene = new Scene();
+        //let scene = new Scene();
         let data = {
             sceneName: "S1",
             scene: scene

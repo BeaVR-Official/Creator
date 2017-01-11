@@ -49,7 +49,8 @@ class AuthModalView extends Backbone.View {
         e.preventDefault();
         if ($('#login_email').val() !== "" && $('#login_password').val() !== "") {
             $.post('http://beavr.fr:3000/api/connection',
-              {email: $('#login_email').val(), password: $('#login_password').val()}
+              {email: "damien.giraudet@epitech.eu", password: "<3neeko<3"}
+              //{email: $('#login_email').val(), password: $('#login_password').val()}
             ).done((data) => {
                 Cookie.createCookie("store_id", data.data.userId, 28);
                 Cookie.createCookie("store_token", data.data.token, 28);

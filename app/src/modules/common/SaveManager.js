@@ -19,14 +19,16 @@ class SaveManager {
     _objectDescriptor.setScale(objectDescriptor.scale);
     _objectDescriptor.setSolidStatus(objectDescriptor.isSolid);
     _objectDescriptor.setGravityStatus(objectDescriptor.isGravityEffected);
-    _objectDescriptor.setVisibility(objectDescriptor.isVisibility);
+    _objectDescriptor.setVisibilityStatus(objectDescriptor.isVisibility);
+    _objectDescriptor.setGeometryDescriptor(objectDescriptor.geometryDescriptor);
+    _objectDescriptor.setMaterialDescriptor(objectDescriptor.materialDescriptor);
     return _objectDescriptor;
   }
 
   importSceneDescriptor(sceneDescriptor) {
 
     let _sceneDescriptor = new SceneDescriptor(sceneDescriptor.name);
-    _sceneDescriptor.uuid = sceneDescriptor.uuid;
+    _sceneDescriptor.attributes.uuid = sceneDescriptor.uuid;
 
     let _objectDescriptors = [];
     let objectDescriptors = sceneDescriptor.objectDescriptors
@@ -50,33 +52,89 @@ class SaveManager {
     return _sceneDescriptors;
   }
 
-  importProject(projectUuid) {
-    let req = $.ajax({
-      url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + projectUuid + "/save",
+  importProject(projectId) {
+
+    // First step : import project
+    let req1 = $.ajax({
+      url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + projectId,
       type:     "get",
       headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
       dataType: 'json'
     });
-    req.done( (JSONProject) => {
-      ProjectManager.setUuid(JSONProject.uuid);
-      ProjectManager.setName(JSONProject.name);
-      ProjectManager.setDescription(JSONProject.description);
-      ProjectManager.setAllSceneDescriptors(this.importSceneDescriptors(JSONProject.sceneDescriptors.attributes));
-      ProjectManager.setStartingScene(JSONProject.startingSceneUuid)
+    req1.done( (data) => {
+
+      // Second step : import project (last) save container
+      let projectData = data.data.project;
+      ProjectManager.setId(projectData._id);
+      ProjectManager.setName(projectData.name);
+      ProjectManager.setDescription(projectData.description);
+      // en dur
+      let lastSaveId = projectData.saves[projectData.saves.length - 1];
+      let req2 = $.ajax({
+        url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + projectId + "/save/" + lastSaveId,
+        type:     "get",
+        headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
+        dataType: 'json'
+      });
+      req2.done( (data2) => {
+        let saveProject = data2.data.save;
+        // Caca
+        ProjectManager.setAllSceneDescriptors(saveProject.sceneDescriptors);
+        ProjectManager.setStartingScene(saveProject.startingSceneUuid, true);
+        // par default le premier file est celui des SC & OD
+        let fileId = saveProject.files[0];
+
+        // Third step : get url link to import JSON file with all SD & OD
+        let req3 = $.ajax({
+          url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + projectId + "/save/" + lastSaveId + "/files/" + fileId,
+          type:     "get",
+          headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
+          dataType: 'json'
+        });
+        req3.done((data3) => {
+
+          // Fourth and last (for this method) step
+          let req4 = $.ajax({
+            url:  data3.data.file.relativePath,
+            type: "get"
+          });
+          req4.done((data4) => {
+            ProjectManager.setAllSceneDescriptors(
+              this.importSceneDescriptors(JSON.parse(data4).sceneDescriptors)
+            );
+            ProjectManager.reloadScene();
+          });
+          req4.fail((err) => {
+            console.log(err);
+            alert("Lors du l'import du file SD OD : " + err.responseText);
+          });
+        });
+
+        req3.fail((err) => {
+          console.log(err);
+          alert("Lors du l'import du lien du file SD OD : " + err.responseText);
+        });
+
+      });
+      req2.fail( function (err) {
+        alert("Lors de l'import de la save du projet : " + err.responseText);
+      });
+
     });
-    req.fail( function (err) {
-      alert("Lors de l'upload du projet : " + err.responseText);
+    req1.fail( (err) => {
+      alert("Lors de l'import du projet : " + err.responseText);
     });
+
   }
 
   // EXPORT
   exportProject() {
 
+    // First step : Create a save container
     let JSONSave = {
       sceneDescriptors:  ProjectManager.getAllSceneDescriptorsUuid(),
       startingSceneUuid: ProjectManager.getStartingScene()
     };
-    let saveId;
     let req1     = $.ajax({
       url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getId() + "/save",
       type:     "post",
@@ -85,37 +143,33 @@ class SaveManager {
       dataType: 'json'
     });
     req1.done((res) => {
-      saveId = res.data.save._id;
-      alert("Project Saved (project)");
+
+      // Second step : create a json file with all SD & OD
+      let saveId = res.data.save._id;
+      let fileJSONProject = new File(
+        [JSON.stringify(ProjectManager.toJSON())],
+        ProjectManager.getId(),
+        {type: "application/json"}
+      );
+      let fileData = new FormData();
+      fileData.append("file", fileJSONProject, ProjectManager.getId());
+      let req2     = $.ajax({
+        url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getId() + "/save/" + saveId + "/files",
+        type:     "post",
+        data:     fileData,
+        headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
+        contentType: false,
+        processData: false
+      });
+      req2.fail(function (err) {
+        console.log(err);
+        alert("Lors de la save du projet (file) : " + err.responseText);
+      });
+
     });
     req1.fail(function (err) {
       console.log(err);
       alert("Lors de la save du projet : " + err.responseText);
-    });
-
-/*    let blobJSONProject = new Blob(
-      [ProjectManager.toJSON()],
-      {type: "application/json"}
-    );*/
-    let fileJSONProject = new File(
-      [JSON.stringify(ProjectManager.toJSON())],
-      ProjectManager.getId(),
-      {type: "application/json"}
-    );
-
-    let req2     = $.ajax({
-      url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getId() + "/save/" + saveId + "/files",
-      type:     "post",
-      data:     fileJSONProject,
-      headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
-      dataType: 'json'
-    });
-    req2.done(() => {
-      alert("Project Saved (file)");
-    });
-    req2.fail(function (err) {
-      console.log(err);
-      alert("Lors de la save du projet (file) : " + err.responseText);
     });
 
   }

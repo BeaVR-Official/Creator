@@ -8,7 +8,12 @@ import Backbone from 'backbone';
 import AuthModal from './AuthModalView';
 import ProjectCreationModal from './ProjectCreationModalView'
 
+// tmp
+import ItemMenuCollection from '../collections/ItemMenuCollection';
+import Item from '../models/ItemMenu';
+
 import Cookie from '../cookie';
+import EventManager from '../../modules/common/EventManager';
 
 class ProjectSelectionModalView extends Backbone.View {
 
@@ -19,7 +24,8 @@ class ProjectSelectionModalView extends Backbone.View {
   get events() {
     return {
       'click #disconnect_button'            : 'openAuthModal',
-      'click #project_creation_button_user' : 'openProjectCreationModal'
+      'click #project_creation_button_user' : 'openProjectCreationModal',
+      'click .projectSelected'              : 'loadSelectedProject'
     };
   }
 
@@ -31,9 +37,7 @@ class ProjectSelectionModalView extends Backbone.View {
     super({
       events: {}
     });
-    Loader.initStyles();
 
-    let projects = {};
     let req = $.ajax({
       url: "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/",
       type: "get",
@@ -41,13 +45,28 @@ class ProjectSelectionModalView extends Backbone.View {
       dataType: 'json'
     });
     req.done((data) => {
-      console.log(data);
-      // TODO projects = data;
+      this.fillProjectSelection(data.data.projects)
     });
     req.fail((err) => {
       alert("Lors de la recup des projets : " + err.responseText);
     });
 
+    Loader.initStyles();
+  }
+
+  fillProjectSelection(projectsData) {
+    let projectsCollection = [];
+    projectsData.forEach((project) => {
+      projectsCollection.push(new Item({id: project._id, name: project.name}));
+    });
+    // TODO Creer un model collection ou merge avec celui d'elliot
+    this.object = new ItemMenuCollection(projectsCollection);
+  }
+
+  loadSelectedProject(e) {
+    let selectedElem = $(e.target).closest('.projectSelected');
+    EventManager.emitEvent('loadProject', selectedElem.data("id"));
+    $('#project_selection_modal').dismissModal('fadeOut');
   }
 
   openAuthModal() {
@@ -72,7 +91,9 @@ class ProjectSelectionModalView extends Backbone.View {
   }
 
   render() {
-    this.$el.html(this.template());
+    this.$el.html(this.template({
+      object: this.object.toJSON()
+    }));
     return this;
   }
 }
