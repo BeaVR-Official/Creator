@@ -3,12 +3,15 @@
  */
 
 import SugarMaple from '../../modules/sugarmaple/SugarMaple';
+import GraphicalManager from '../../modules/common/GraphicalManager';
+import ProjectManager from '../../modules/common/ProjectManager';
+import EventManager from '../../modules/common/EventManager';
+
+
 import CreatorManagement from '../../modules/creator/CreatorManagement';
-import * as ScenePanel from '../../modules/creator/ScenesPanel';
 
 import 'jquery-ui-bundle';
-//import 'jquery-ui-touch-punch';
-import $ from 'jquery';
+import 'jquery-ui-touch-punch';
 
 /**
  * Creation de cette classe util lié à leftMenu pour compartimenter le code
@@ -17,14 +20,12 @@ import $ from 'jquery';
 class LeftBarSugarMaple {
 
   constructor() {
-  }
-
-  initializeSugar() {
     $.widget("custom.sugarmaple", {
       _create: function () {
         new SugarMaple(this, this.options);
       }
     });
+
 
     this.smTree = $('#sceneTree').sugarmaple({
       events:  {
@@ -43,20 +44,26 @@ class LeftBarSugarMaple {
       }
     });
 
-    // Test usage
-    const titi = this.smTree.sugarmaple('manage.create', 'titi', 'tete');
-    const tita = this.smTree.sugarmaple('manage.create', 'tita', {a: 'tete',b: 2});
-    const tito = this.smTree.sugarmaple('manage.create', 'tito', ['tete']);
-    this.smTree.sugarmaple('manage.attach', titi, tita);
-    this.smTree.sugarmaple('manage.attach', titi, tito);
-    this.smTree.sugarmaple('manage.setRoot', titi);
-
-
-    // Deprecated methods. Still here as examples
-    ScenePanel.default.initTree(this.smTree);
     this.sugarMapleEvents();
+    this.initializeSugar();
+  }
+
+  initializeSugar() {
+    this.sceneDesc = ProjectManager.getSceneDescriptor(GraphicalManager.getCurrentSceneUuid());
+    if (this.sceneDesc != undefined) {
+      this.rootNode = this.smTree.sugarmaple('manage.create', this.sceneDesc.attributes.name, this.sceneDesc);
+      this.smTree.sugarmaple('manage.setRoot', this.rootNode);
+    }
     this.sceneEvents();
-    return this;
+  }
+
+  addObject(objectUuid) {
+    let object = ProjectManager.getObjectDescriptor(this.sceneDesc.attributes.uuid, objectUuid);
+    console.log(object);
+    let objectNode = this.smTree.sugarmaple('manage.create', object.attributes.name, object);
+
+    if (this.rootNode && objectNode)
+      this.smTree.sugarmaple('manage.attach', this.rootNode, objectNode);
   }
 
   /**
@@ -64,28 +71,28 @@ class LeftBarSugarMaple {
    */
   sugarMapleEvents() {
     this.smTree.on('checkable.checked', (e, node) => {
-      if (node !== undefined)
-      ; // TODO ScenePanel.default.onChecked(node);
+      console.log("checked!!", node);
+      // TODO ScenePanel.default.onChecked(node);
     });
 
     this.smTree.on('checkable.unchecked', (e, node) => {
+      console.log("unchecked!!", node);
       // TODO ScenePanel.default.onUnchecked();
     });
 
     this.smTree.on('sortable.dragged', (e, node) => {
-      if (node !== undefined)
-      ;// TODO ScenePanel.default.onDragged(node);
+      console.log("dragged!!", node);
+      // TODO ScenePanel.default.onDragged(node);
     });
 
     this.smTree.on('sortable.dropped', (e, newParent, node) => {
-      if (newParent !== undefined)
-      ;// TODO ScenePanel.default.onDropped(newParent, node);
+      console.log("dropped!!", node);
+      // TODO ScenePanel.default.onDropped(newParent, node);
     });
 
     this.smTree.on('threejs.deleteNode', (e, node) => {
-      if (node !== undefined) {
-        ;// TODO CreatorManagement.removeObject(node.data);
-      }
+      console.log("delete!!", node);
+      // TODO CreatorManagement.removeObject(node.data);
     });
   }
 
@@ -93,22 +100,21 @@ class LeftBarSugarMaple {
    * Events send by SceneView
    */
   sceneEvents() {
-    CreatorManagement.on('selectedObject', object => {
+    EventManager.on('getObjectSelected', object => {
       let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
       this.smTree.sugarmaple('checkable.setCheck', smNode, true);
     });
 
-    CreatorManagement.on('deselectedObject', object => {
-      let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
+    EventManager.on('objectDeselected', object => {
+      let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object.objectDesc);
       this.smTree.sugarmaple('checkable.setCheck', smNode, false);
     });
 
-    CreatorManagement.on('removedObject', object => {
+    EventManager.on('removedObject', object => {
       let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
       this.smTree.sugarmaple('manage.detach', smNode);
     });
   }
 }
 
-export default LeftBarSugarMaple;
-
+export default new LeftBarSugarMaple();

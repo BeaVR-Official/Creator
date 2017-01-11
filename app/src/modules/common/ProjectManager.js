@@ -3,6 +3,7 @@ import ObjectDescriptor from "./ObjectDescriptor";
 import EventDescriptor from "./EventManager";
 import EventManagerOnFront from '../../front/EventManager';
 import UUID from './../utils/UUID';
+import _ from '../../../../node_modules/lodash/lodash.min'
 
 import GraphicalManager from './GraphicalManager';
 
@@ -88,6 +89,7 @@ class ProjectManager {
   getAllSceneDescriptors() {
     return (this.sceneDescriptors);
   }
+
   getAllSceneDescriptorsUuid() {
     let ret = [];
     this.sceneDescriptors.forEach((scene) => {
@@ -136,15 +138,24 @@ class ProjectManager {
     return (true);
   }
 
-  addObject(name, type) {
+  addObject(customName, type) {
     // // TODO: Define the structure of type: what if custom object ? Send array with geometry ? etc.
     // let index = this.getSceneDescriptorIndex(sceneUuid);
     // if (index === -1) {
     //   return (false);
     // }
+    let sceneDescriptor = this.getSceneDescriptor(this.getStartingScene());
+    let name            = customName;
+    if (!name) {
+      let cmpt = 0;
+      _.filter(sceneDescriptor.attributes.objectDescriptors, (value) => {
+        if (value.attributes.type === type)
+          cmpt++;
+      });
+      name = type + "_" + cmpt;
+    }
 
-    let objectUuid = this.getSceneDescriptor(this.getStartingScene())
-      .addObjectDescriptor(name, type);
+    let objectUuid = sceneDescriptor.addObjectDescriptor(name, type);
     return (objectUuid);
   }
 
