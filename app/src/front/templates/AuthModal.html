@@ -13,13 +13,13 @@
                     <div class="required field">
                         <div class="ui left icon input">
                             <i class="mail icon"></i>
-                            <input type="email" name="email" placeholder="Adresse e-mail" required>
+                            <input id="login_email" type="email" name="email" placeholder="Adresse e-mail" required>
                         </div>
                     </div>
                     <div class="required field">
                         <div class="ui action left icon input">
                             <i class="lock icon"></i>
-                            <input type="password" name="password" placeholder="Mot de passe" required>
+                            <input id="login_password" type="password" name="password" placeholder="Mot de passe" required>
                             <button type="button" class="ui teal right labeled icon button" id="reset_password">
                                 <i class="privacy icon"></i>
                                 <p>Mot de passe oublié ?</p>
@@ -35,7 +35,7 @@
                     <div class="ui buttons">
                         <div class="ui button" id="register_button">S'inscrire</div>
                         <div class="or" data-text="ou"></div>
-                        <button class="ui positive button" id="login_button">Se connecter</button>
+                        <button type="submit" class="ui positive button" id="login_button">Se connecter</button>
                     </div>
                     <button type="button" class="ui facebook button social-network-buttons">
                         <i class="facebook icon"></i>
@@ -46,6 +46,12 @@
                         Google Plus
                     </button>
                 </form>
+                <div id="login_error_message" class="ui warning message hidden">
+                    <div class="header">Erreur lors de la connexion</div>
+                    <ul class="list">
+                        <li>Cet utilisateur n'existe pas ou le mot de passe renseigné est incorrect</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="actions">

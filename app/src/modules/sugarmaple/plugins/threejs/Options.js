@@ -3,7 +3,7 @@ class Options {
     this.applyOverrides(overrides);
 
     this.templates = {
-      deleteBtn: '<span class="node-deleteBtn">Del</span>'
+      deleteBtn: '<span class="node-deleteBtn"><img src="assets/images/cross.png" style="width:11px;" /></span>'
     };
 
     this.applyOverrides(overrides);

@@ -1,3 +1,28 @@
+<div class="ui dimmer modals page transition hidden">
+<div class="ui small modal transition hidden">
+    <i class="close icon"></i>
+    <div class="image content">
+        <div class="image">
+            <img src="assets/images/addModalIcon.png">
+        </div>
+        <div class="description">
+            <h2>Importer un modèle 3D</h2>
+            <div class="ui left icon input">
+                <input type="text" placeholder="Nom du modèle" id="modelName">
+                <i class="users icon"></i>
+            </div>
+            <div class="ui left icon input">
+                <input type="file" accept=".obj" class="fileInput">
+                <i class="cube icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui button close">Cancel</div>
+        <div class="ui button sendObj">OK</div>
+    </div>
+</div>
+</div>
 <div class="ui grid two column subview  ">
     <div class="two column row headerSub">
         <% if (type == 'default') { %>
@@ -12,10 +37,10 @@
     </div>
 
     <% if (type != 'default' && type != 'used') { %>
-        <div id="sceneTree" class="sugarmaple"></div>
+        <!--<div id="sceneTree" class="sugarmaple"></div>-->
     <% } else { %>
         <% _.each(objects, function(object, i){ %>
-        <div class="center tab column animated fadeInRight addObject" data-id="<%- object.type %>">
+        <div class="center tab column animated fadeInRight addObject" data-id="<%- object.type %>" data-type="<%- object.typeOfImport %>" data-name="<%- object.name %>">
             <div class="imageBox dropMaterial row center">
                 <img class="object-icon" src="<%- object.logo %>"/>
             </div>

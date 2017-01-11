@@ -1,17 +1,27 @@
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
 import EventDescriptor from "./EventManager";
+import EventManagerOnFront from '../../front/EventManager';
+import UUID from './../utils/UUID';
+import _ from '../../../../node_modules/lodash/lodash.min'
+
+import GraphicalManager from './GraphicalManager';
 
 class ProjectManager {
-  constructor() {
+
+  constructor(data) {
+    this.id                = "";
     this.name              = "";
+    this.description       = "";
     this.sceneDescriptors  = [];
     this.startingSceneUuid = undefined;
   }
 
   toJSON() {
     return {
+      uuid:              this.uuid,
       name:              this.name,
+      description:       this.description,
       sceneDescriptors:  this.sceneDescriptors,
       startingSceneUuid: this.startingSceneUuid
     }
@@ -25,7 +35,33 @@ class ProjectManager {
     return (this.name);
   }
 
-  setStartingScene(sceneUuid) {
+  setDescription(description) {
+    this.description = description;
+  }
+
+  getDescription() {
+    return this.description;
+  }
+
+  setId(id) {
+    this.id = id;
+  }
+
+  getId() {
+    return this.id;
+  }
+
+  createNewProject(name, description, id) {
+    this.setName(name);
+    this.setDescription(description);
+    this.setId(id);
+  }
+
+  setStartingScene(sceneUuid, onLoad = false) {
+    if (onLoad == true) {
+      this.startingSceneUuid = sceneUuid;
+      return ;
+    }
     if (this.getSceneDescriptorIndex(sceneUuid) === -1) {
       return (false);
     }
@@ -52,6 +88,14 @@ class ProjectManager {
 
   getAllSceneDescriptors() {
     return (this.sceneDescriptors);
+  }
+
+  getAllSceneDescriptorsUuid() {
+    let ret = [];
+    this.sceneDescriptors.forEach((scene) => {
+      ret.push(scene.getUuid());
+    })
+    return ret;
   }
 
   getSceneDescriptor(sceneUuid) {
@@ -94,15 +138,24 @@ class ProjectManager {
     return (true);
   }
 
-  addObject(name, type) {
+  addObject(customName, type) {
     // // TODO: Define the structure of type: what if custom object ? Send array with geometry ? etc.
     // let index = this.getSceneDescriptorIndex(sceneUuid);
     // if (index === -1) {
     //   return (false);
     // }
+    let sceneDescriptor = this.getSceneDescriptor(this.getStartingScene());
+    let name            = customName;
+    if (!name) {
+      let cmpt = 0;
+      _.filter(sceneDescriptor.attributes.objectDescriptors, (value) => {
+        if (value.attributes.type === type)
+          cmpt++;
+      });
+      name = type + "_" + cmpt;
+    }
 
-    let objectUuid = this.getSceneDescriptor(this.getStartingScene())
-      .addObjectDescriptor(name, type);
+    let objectUuid = sceneDescriptor.addObjectDescriptor(name, type);
     return (objectUuid);
   }
 
@@ -305,6 +358,14 @@ class ProjectManager {
       return (undefined);
     }
     return (objectDescriptor.getVisibilityStatus());
+  }
+
+  // RELOAD at save and change of scene
+  reloadScene(sceneUuid = this.startingSceneUuid) {
+    let sceneDescriptor = this.getSceneDescriptor(sceneUuid);
+    GraphicalManager.setCurrentSceneUuid(sceneUuid);
+    //EventManagerOnFront.emitEvent('loadScene', sceneDescriptor);
+    // TODO @damien (peut etre en amont fill treeview)
   }
 }
 

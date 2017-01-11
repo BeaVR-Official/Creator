@@ -7,8 +7,10 @@ import Backbone from 'backbone';
 
 import RegisterModal from './RegisterModalView';
 import ResetPasswordModal from './ResetPasswordModalView';
-import ProjectSelectionModal from './ProjectSelectionModalView'
-import ProjectCreationModal from './ProjectCreationModalView'
+import ProjectSelectionModal from './ProjectSelectionModalView';
+import ProjectCreationModal from './ProjectCreationModalView';
+
+import Cookie from '../cookie';
 
 require('../../../assets/styles/AuthModal.scss');
 
@@ -34,6 +36,7 @@ class AuthModalView extends Backbone.View {
     openRegisterModal() {
         var modal = new RegisterModal();
         $('#login_modal').animateCssOut('fadeOutLeft', modal);
+
     }
 
     openResetPasswordModal() {
@@ -41,9 +44,25 @@ class AuthModalView extends Backbone.View {
         $('#login_modal').animateCssOut('fadeOutLeft', modal);
     }
 
-    loginUser() {
-        var modal = new ProjectSelectionModal();
-        $('#login_modal').animateCssOut('fadeOutLeft', modal);
+    loginUser(e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        if ($('#login_email').val() !== "" && $('#login_password').val() !== "") {
+            $.post('http://beavr.fr:3000/api/connection',
+              {email: "damien.giraudet@epitech.eu", password: "<3neeko<3"}
+              //{email: $('#login_email').val(), password: $('#login_password').val()}
+            ).done((data) => {
+                Cookie.createCookie("store_id", data.data.userId, 28);
+                Cookie.createCookie("store_token", data.data.token, 28);
+                var modal = new ProjectSelectionModal();
+                $('#login_modal').animateCssOut('fadeOutLeft', modal);
+            }).fail((err) => {
+                console.log(err);
+                if (err.responseText)
+                    $('#login_error_message').removeClass("hidden");
+                    console.debug("Lors de l'auth : " + err.responseText);
+            })
+        }
     }
 
     openProjectCreationModal() {
@@ -56,6 +75,7 @@ class AuthModalView extends Backbone.View {
             events: {}
         });
         Loader.initStyles();
+        this.render();
     }
 
     show(showAnim = true) {
@@ -70,6 +90,7 @@ class AuthModalView extends Backbone.View {
         this.$el.html(this.template());
         return this;
     }
+
 }
 
 export default AuthModalView;

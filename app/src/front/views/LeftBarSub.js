@@ -5,7 +5,6 @@
 import Loader from '../utils';
 import * as Backbone from 'backbone';
 import * as _ from '../../../../node_modules/underscore';
-import 'jquery-ui-bundle';
 import EventManager from '../../modules/common/EventManager'
 
 
@@ -17,12 +16,6 @@ class LeftBarView extends Backbone.View {
 
   get template() {
     return _.template(Loader.templates.LeftBarSub);
-  }
-
-  get events() {
-    return {
-        'click .headerSub .ui.button.inverted.basic': 'SwitchDefault'
-    };
   }
 
   get $el() {
@@ -44,7 +37,10 @@ class LeftBarView extends Backbone.View {
 
   get events() {
     return {
-      'click .imageBox' : 'addObject'
+      'click .imageBox' : 'addObject',
+      'click .headerSub .ui.button.inverted.basic': 'SwitchDefault',
+      'click .modals' : 'CloseModal',
+      'click .sendObj': 'UploadObj'
     };
   }
 
@@ -52,8 +48,35 @@ class LeftBarView extends Backbone.View {
     super();
   }
 
+  UploadObj() {
+    var path = (window.URL || window.webkitURL).createObjectURL($(".fileInput")[0].files[0]);
+    var name = $("#modelName").val();
+    this.objects.splice(this.objects.length - 1, 0, {name: name, logo:'assets/images/objectSpe.png', type:path, typeOfImport: 'imported'});
+    this.render();
+  }
+
+  CloseModal(event) {
+    if (event.target.className == "ui button sendObj") {
+      this.UploadObj();
+    }
+    if (event.target.className == "ui dimmer modals page transition hidden active visible" || 
+        event.target.className == "close icon" ||
+        event.target.className == "ui button close") {
+      $('.small.modal').removeClass('active');
+      $('.small.modal').removeClass('visible');
+      $('.modals').removeClass('active');
+      $('.modals').removeClass('visible');
+    }
+  }
+
   switchLeftBarView(value) {
-    console.log(value);
+    $('.LeftBarSubSelector').css('width', '220px');
+
+    if (value.type === "TreeView") {
+      $('#sceneTree').css('display', 'block');
+    } else
+      $('#sceneTree').css('display', 'none');
+
     this.default = (value.objects != undefined) ? value.objects : [];
     this.objects = this.default;
     this.type = (value.type != undefined)? value.type: "default";
@@ -62,18 +85,45 @@ class LeftBarView extends Backbone.View {
 
   addObject(event) {
     let addType = ($(event.target).closest('.addObject').attr('data-id'));
-    let data = {
-      objectName: '',
-      objectType: addType
-    };
-    console.log("Nouvel Object en cours d'ajout");
-    console.log(data);
-    // TODO filtré entre les dif obj via un data.typeObj
-    EventManager.emitEvent('addObject', data)
-      .then((res) => {
-      if (res.uuid)
-          EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
-      });
+    let typeOfImport = ($(event.target).closest('.addObject').attr('data-type'));
+    if (addType == 'add') {
+      $('.modals').addClass('active');
+      $('.modals').addClass('visible');
+      $('.modals').animateCssIn('fadeIn');
+      $('.small.modal').addClass('active');
+      $('.small.modal').addClass('visible');
+      $('.small.modal').animateCssIn('zoomIn');
+      return;
+    }
+    console.log(typeOfImport);
+    if (typeOfImport == 'default') {
+      let data = {
+        objectName: '',
+        objectType: addType
+      };
+      console.log("add box");
+      // TODO filtré entre les dif obj via un data.typeObj
+      EventManager.emitEvent('addObject', data)
+                  .then((res) => {
+                    if (res.uuid) {
+                      console.log("LEFTBARSUB", res);
+                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
+                    }
+                  });
+    }
+    else {
+      let data = {
+        objectName: '',
+        objectType: ($(event.target).closest('.addObject').attr('data-name')),
+        path: addType
+      };
+      EventManager.emitEvent('addExternal', data)
+                  .then((res) => {
+                    if (res.uuid)
+                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
+                  });
+    }
+
   }
 
    render() {

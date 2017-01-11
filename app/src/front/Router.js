@@ -14,7 +14,6 @@ import NextPrevBox from './views/NextPrevBoxView';
 import ToolsBox from './views/ToolsBoxView';
 import TopBarView from './views/TopBarView';
 
-
 class Router extends Backbone.Router {
 
     constructor() {
@@ -43,6 +42,7 @@ class Router extends Backbone.Router {
         new ToolsBox();
         new TopBarView();
         new LeftBarView();
+        this.AuthModal();
     }
 
     AuthModal() {

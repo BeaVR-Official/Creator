@@ -1,6 +1,8 @@
+import LeftBarSugarMaple from '../../front/views/LeftBarSugarMaple';
 import GraphicalManager from "./GraphicalManager";
 import ProjectManager from "./ProjectManager";
 import eventToPromise from 'event-to-promise';
+import SaveManager from './SaveManager';
 
 class EventManager extends EventEmitter {
   constructor() {
@@ -26,6 +28,7 @@ class EventManager extends EventEmitter {
       data.scene = ProjectManager.getSceneDescriptor(sceneUuid);
 
       GraphicalManager.setCurrentSceneUuid(sceneUuid);
+      LeftBarSugarMaple.initializeSugar();
     });
 
     this.on('selectScene', (sceneUuid) => {
@@ -64,12 +67,16 @@ class EventManager extends EventEmitter {
      data: objectDescriptorUuid
      */
     this.on('objectSelected', (data) => {
-      GraphicalManager.attachToTransform(data.objectUuid);
-      this.emitEvent('getObjectSelected', ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid));
+      data.objectDesc = ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid);
+      GraphicalManager.attachToTransform(data.objectDesc.attributes.uuid);
+      this.emitEvent('getObjectSelected', data.objectDesc);
     });
 
     this.on('objectDeselected', (data) => {
-      GraphicalManager.deselectObject();
+      if (data.objectUuid) {
+        data.objectDesc = ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid);
+        // GraphicalManager.deselectObject();
+      }
     });
 
     // ////////////////////////
@@ -129,8 +136,8 @@ class EventManager extends EventEmitter {
         data.objectName,
         data.objectType
       );
-
       data.uuid = GraphicalManager.addObject(objectUuid);
+      LeftBarSugarMaple.addObject(data.uuid);
     });
 
     this.on('addLight', function (data) {
@@ -142,8 +149,11 @@ class EventManager extends EventEmitter {
     });
 
     this.on('addExternal', function (data) {
-      // TODO
-      GraphicalManager.addExternalObject();
+      let objectUuid = ProjectManager.addObject(
+        data.objectName,
+        data.objectType
+      );
+      data.uuid = GraphicalManager.addExternalObject(objectUuid, data.path);
     });
 
     this.on('addSky', function (data) {
@@ -224,6 +234,18 @@ class EventManager extends EventEmitter {
     this.on('updateObjectGeometry', function (data) {
       // TODO
       GraphicalManager.updateObjectGeometry();
+    });
+
+    // Save & Load
+    this.on('createNewProject', function (data) {
+      ProjectManager.createNewProject(data.name, data.description, data.id);
+    })
+
+    this.on('saveProject', function () {
+      SaveManager.exportProject();
+    })
+    this.on('loadProject', function (projectId) {
+      SaveManager.importProject(projectId);
     });
   }
 

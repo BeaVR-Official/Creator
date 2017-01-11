@@ -107,7 +107,6 @@ class GraphicalManager {
     let that = this;
 
     _.map(allObjDescs, function (objDesc) {
-      console.log("Desc Objects", objDesc);
       that._objectFactory(objDesc);
 
     });
@@ -142,11 +141,12 @@ class GraphicalManager {
   _createScene() {
     if (this.editorMod) {
       this.threeScene = new THREE.Scene();
+      this.helperScene = new THREE.Scene();
       // TODO variable Grid params
       let grid        = new THREE.GridHelper(500, 50);
 
-      this.threeScene.add(grid);
-      this.threeScene.add(this.transformControls);
+      this.helperScene.add(grid);
+      this.helperScene.add(this.transformControls);
     } else
       this.threeScene = new Physijs.Scene();
   }
@@ -166,7 +166,17 @@ class GraphicalManager {
       geometry = new THREE.SphereGeometry(50, 50, 320);
     if (objectDescriptor.getType() === "cylinder")
       geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
+
     // TODO see how to do for lights/lightsHelper/externalObj
+
+    // TODO @vincent - skybox ground avec getType() ==
+    // Peut être load en amont
+    // TODO @damien si externalObjBddId load obj API (+ PUIS applique puis etre pas dans cette method)
+    // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
+    // TODO @damien set Transformation avec Tree
+
+
+    console.log(objectDescriptor);
 
     let mesh           = new THREE.Mesh(geometry, material);
     mesh.mirroredLoop  = true;
@@ -225,11 +235,11 @@ class GraphicalManager {
   }
 
   _raycastingSelection() {
-    EventManager.emitEvent('objectDeselected').then(res => {
-      let closestObject = this._getClosestObject(); // objDesc uuid into name
-      if (closestObject !== undefined)
-        this.selectObject(closestObject);
-    });
+    this.deselectObject();
+
+    let closestObject = this._getClosestObject(); // objDesc uuid into name
+    if (closestObject !== undefined)
+      this.selectObject(closestObject);
   }
 
   _getClosestObject() {
@@ -245,9 +255,11 @@ class GraphicalManager {
     this.renderer.clear();
     this.camera.lookAt(this.threeScene.position);
     this.renderer.render(this.threeScene, this.camera);
+    if (this.editorMod)
+      this.renderer.render(this.helperScene, this.camera);
     this.setlastSceneUuid(this.currentSceneUuid);
 
-    console.log("Scenes", ProjectManager.getAllSceneDescriptors());
+    //console.log("Scenes", ProjectManager.getAllSceneDescriptors());
     // requestAnimationFrame(this.render);
   }
 
@@ -261,9 +273,12 @@ class GraphicalManager {
   }
 
   deselectObject() {
-    this.selectedObject = undefined;
-    this.transformControls.detach();
-    this.render();
+    if (this.selectedObject !== undefined) {
+      EventManager.emitEvent('objectDeselected', {objectUuid: this.selectedObject.name});
+      this.selectedObject = undefined;
+      this.transformControls.detach();
+      this.render();
+    }
   }
 
 // ////////////////////////
@@ -273,6 +288,8 @@ class GraphicalManager {
     let object = this.threeScene.getObjectByName(objectUuid);
 
     if (object) {
+      this.deselectObject();
+      this.selectedObject = object;
       this.transformControls.attach(object);
       this.render();
     }
@@ -313,7 +330,25 @@ class GraphicalManager {
   }
 
 // TODO
-  addExternalObject() {
+  addExternalObject(objectUuid, path) {
+    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
+    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
+    var that             = this;
+    var objLoader        = new THREE.OBJLoader();
+    var material         = new THREE.MeshBasicMaterial({color: 'grey', side: THREE.DoubleSide});
+    objLoader.load(path, function (obj) {
+      obj.traverse(function (child) {
+        if (child instanceof THREE.Mesh) {
+          child.material = material;
+        }
+      });
+      for (var i = 0; i < obj.children.length; ++i) {
+        obj.children[i].name = objectDescriptor.getUuid();
+      }
+      that.threeScene.add(obj);
+      that.render();
+    });
+    return objectDescriptor.getUuid();
   }
 
 // TODO

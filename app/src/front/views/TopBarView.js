@@ -4,11 +4,12 @@ import Backbone from 'backbone';
 import Scene from '../models/scene';
 
 import EventManager from '../../modules/common/EventManager';
-import ProjectManager from '../../modules/common/ProjectManager';
+
+import ProjectConfIn from './ProjectConfIn';
 
 require('../../../assets/styles/TopBar.scss');
 
-class ObjectMenuView extends Backbone.View {
+class TopBarView extends Backbone.View {
 
   get template() {
     return _.template(Loader.templates.TopBar);
@@ -53,15 +54,14 @@ class ObjectMenuView extends Backbone.View {
   getNewTabName() {
 
     for (var i = 1; i < this.tabArray.length + 1; i++) {
-      if (this.tabArray.indexOf("Scene - " + i) == -1)
+      if ($.grep(this.tabArray, function(e){ return e.name == "Scene - " + i; }).length == 0)
         return ("Scene - " + i);
     }
-
     return ("Scene - " + i);
   }
 
   addTab() {
-    var newTabName = this.getNewTabName();
+    let newTabName = this.getNewTabName();
 
     let data = {
       sceneName: newTabName,
@@ -86,12 +86,15 @@ class ObjectMenuView extends Backbone.View {
         + '</div>'
         + '<span class=\"close-cross\">x</span></a>';
 
+      /*
       var contentDiv          = $('#content');
+
       contentDiv[0].innerHTML = contentDiv[0].innerHTML
         + '<div class=\"ui bottom attached tab segment\"'
         + 'data-tab=\"' + scene.attributes.uuid + '\">'
         // + 'Contenu de l\'onglet ' + newTabId
         + '</div>';
+        */
       $('.menu .item').tab();
 
       tabsDiv[0].children[this.tabArray.length - 1].click();
@@ -99,6 +102,16 @@ class ObjectMenuView extends Backbone.View {
   }
 
   selectTab(ev) {
+
+    var tabs = $("#scene-tabs a");
+    for (var i = 0; i < tabs.length; i++)
+      tabs[i].classList.remove("active");
+    var tabClassList = ev.target.classList;
+    if ($.inArray('item', tabClassList) == -1)
+      ev.target.parentElement.classList.add("active");
+    else
+      ev.target.classList.add("active");
+
     // var sceneDesc = ProjectManager.getSceneDescriptor(ev.currentTarget.attributes[1].value);
     // var index = this.tabArray.indexOf(sceneDesc.attributes);
     // console.log("TAB scene", sceneDesc);
@@ -109,40 +122,56 @@ class ObjectMenuView extends Backbone.View {
   }
 
   closeTab(ev) {
-    var nodeList = Array.prototype.slice.call($('#scene-tabs')[0].children);
-    var i        = nodeList.indexOf(ev.target.parentElement);
 
-    var index = this.tabArray.indexOf(ev.target.parentElement.children[0].children[0].value);
-    if (index > -1) {
-      this.tabArray.splice(index, 1);
+    if (confirm("Êtes vous sûr de vouloir fermer cette scène ? Toute modification non sauvegardée sera perdue.") == true)
+    {
+      var nodeList = Array.prototype.slice.call($('#scene-tabs')[0].children);
+      var i        = nodeList.indexOf(ev.target.parentElement);
+
+      var index = $.grep(this.tabArray, function(e){ return e.name == ev.target.parentElement.children[0].children[0].value; });
+      var tabArrayIndex = this.tabArray.indexOf(index[0]);
+
+      if (tabArrayIndex > -1) {
+        this.tabArray.splice(tabArrayIndex, 1);
+      }
+      ev.target.parentElement.remove();
+
+      if (nodeList.length <= 1)
+        $('.project-tab').click();
+      else {
+        if ((i + 1) == nodeList.length)
+          $('#scene-tabs')[0].children[i - 1].click();
+        else
+          $('#scene-tabs')[0].children[i].click();
+      }
+
+      $('.menu .item').tab();
     }
-    ev.target.parentElement.remove();
-
-    if (nodeList.length <= 1)
-      $('.project-tab').click();
     else {
-      if ((i + 1) == nodeList.length)
-        $('#scene-tabs')[0].children[i - 1].click();
-      else
-        $('#scene-tabs')[0].children[i].click();
-    }
 
-    $('.menu .item').tab();
+    }
+    console.log(this.tabArray);
 
   }
 
   showProjectInformations() {
-    Backbone.history.navigate('/settings');
+    if (this.pj != null){
+      this.pj.remove();
+      console.log("coucou");
+    }
+    this.pj = new ProjectConfIn();
   }
 
   allowRenameTab(ev) {
     if (ev.target.classList.contains("disabled")) {
+      ev.target.parentElement.children[1].classList.add("hidden");
       ev.target.classList.remove("disabled");
       ev.target.children[1].classList.remove("hidden");
     }
   }
 
   renameTab(ev) {
+    ev.target.parentElement.parentElement.children[1].classList.remove("hidden");
     ev.target.classList.add("hidden");
     ev.target.parentElement.classList.add("disabled");
 
@@ -158,4 +187,4 @@ class ObjectMenuView extends Backbone.View {
   }
 }
 
-export default ObjectMenuView;
+export default TopBarView;
