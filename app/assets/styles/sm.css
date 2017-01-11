@@ -1,6 +1,10 @@
 .sugarmaple {
     font-size: 1.2em;
-    width: 20em;
+    margin-left: 60px;
+    margin-top: 90px;
+    width: 11.8em;
+    z-index: 1;
+    position: absolute;
 }
 
 .sugarmaple .node {
@@ -8,7 +12,7 @@
 }
 
 .sugarmaple > .node {
-    background-color: #2fc5da !important;
+    background-color: #d5d5d5 !important;
     padding-left: 0 !important;
 }
 
@@ -23,7 +27,7 @@
 }
 
 .sugarmaple .node:last-child {
-    background: #2fc5da url(../images/lastnode.png) no-repeat;
+    background: #d5d5d5 url(../images/lastnode.png) no-repeat;
     background-position-x: 0.75em;
     background-position-y: -0.60em;
 }

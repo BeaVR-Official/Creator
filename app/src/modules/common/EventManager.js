@@ -1,3 +1,4 @@
+import LeftBarSugarMaple from '../../front/views/LeftBarSugarMaple';
 import GraphicalManager from "./GraphicalManager";
 import ProjectManager from "./ProjectManager";
 import eventToPromise from 'event-to-promise';
@@ -27,6 +28,7 @@ class EventManager extends EventEmitter {
       data.scene = ProjectManager.getSceneDescriptor(sceneUuid);
 
       GraphicalManager.setCurrentSceneUuid(sceneUuid);
+      LeftBarSugarMaple.initializeSugar();
     });
 
     this.on('selectScene', (sceneUuid) => {
@@ -65,12 +67,16 @@ class EventManager extends EventEmitter {
      data: objectDescriptorUuid
      */
     this.on('objectSelected', (data) => {
-      GraphicalManager.attachToTransform(data.objectUuid);
-      this.emitEvent('getObjectSelected', ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid));
+      data.objectDesc = ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid);
+      GraphicalManager.attachToTransform(data.objectDesc.attributes.uuid);
+      this.emitEvent('getObjectSelected', data.objectDesc);
     });
 
     this.on('objectDeselected', (data) => {
-      GraphicalManager.deselectObject();
+      if (data.objectUuid) {
+        data.objectDesc = ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid);
+        // GraphicalManager.deselectObject();
+      }
     });
 
     // ////////////////////////
@@ -131,6 +137,7 @@ class EventManager extends EventEmitter {
         data.objectType
       );
       data.uuid = GraphicalManager.addObject(objectUuid);
+      LeftBarSugarMaple.addObject(data.uuid);
     });
 
     this.on('addLight', function (data) {

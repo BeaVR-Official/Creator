@@ -5,7 +5,6 @@
 import Loader from '../utils';
 import * as Backbone from 'backbone';
 import * as _ from '../../../../node_modules/underscore';
-import 'jquery-ui-bundle';
 import EventManager from '../../modules/common/EventManager'
 
 
@@ -71,6 +70,13 @@ class LeftBarView extends Backbone.View {
   }
 
   switchLeftBarView(value) {
+    $('.LeftBarSubSelector').css('width', '220px');
+
+    if (value.type === "TreeView") {
+      $('#sceneTree').css('display', 'block');
+    } else
+      $('#sceneTree').css('display', 'none');
+
     this.default = (value.objects != undefined) ? value.objects : [];
     this.objects = this.default;
     this.type = (value.type != undefined)? value.type: "default";
@@ -99,8 +105,10 @@ class LeftBarView extends Backbone.View {
       // TODO filtré entre les dif obj via un data.typeObj
       EventManager.emitEvent('addObject', data)
                   .then((res) => {
-                    if (res.uuid)
+                    if (res.uuid) {
+                      console.log("LEFTBARSUB", res);
                       EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
+                    }
                   });
     }
     else {

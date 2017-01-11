@@ -5,11 +5,13 @@
 //
 // Scene.render();
 
-import EventManager from './modules/common/EventManager';
-import ProjectManager from './modules/common/ProjectManager';
-import GraphicalManager from './modules/common/GraphicalManager';
-require('./modules/sugarmaple/index');
+// import EventManager from './modules/common/EventManager';
+// import ProjectManager from './modules/common/ProjectManager';
+// import GraphicalManager from './modules/common/GraphicalManager';
+
+// require('./modules/common/EventManager');
 require('./front/app');
+require('./modules/sugarmaple/index');
 
 // EventManager.emitEvent('addScene', "Default").then(res => {
 //   let t = GraphicalManager.getCurrentSceneUuid();
