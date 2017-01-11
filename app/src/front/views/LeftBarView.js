@@ -51,10 +51,10 @@ class LeftBarView extends Backbone.View {
 
   openLights() {
     var objects = [];
-    objects.push({name: "Ambiente", logo: 'assets/images/ambientLight.png', type: 'ambient'});
-    objects.push({name: "Directionnelle", logo: 'assets/images/directionalLight.png', type: 'directional'});
-    objects.push({name: "Radiale", logo: 'assets/images/pointLight.png', type: 'point'});
-    objects.push({name: "Spot", logo: 'assets/images/spotLight.png', type: 'spot'});
+    objects.push({name: "Ambiente", logo: 'assets/images/ambientLight.png', type: 'ambient', typeOfImport: 'default'});
+    objects.push({name: "Directionnelle", logo: 'assets/images/directionalLight.png', type: 'directional', typeOfImport: 'default'});
+    objects.push({name: "Radiale", logo: 'assets/images/pointLight.png', type: 'point', typeOfImport: 'default'});
+    objects.push({name: "Spot", logo: 'assets/images/spotLight.png', type: 'spot', typeOfImport: 'default'});
     this.leftBar.switchLeftBarView({objects: objects});
   }
 
