@@ -104,7 +104,6 @@ class GraphicalManager {
     let sceneDesc   = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let allObjDescs = sceneDesc.getAllObjectDescriptors();
 
-
     let that = this;
 
     _.map(allObjDescs, function (objDesc) {
@@ -116,13 +115,24 @@ class GraphicalManager {
   }
 
   _objectFactory(objectDescriptor) {
-    let obj = this._createMesh(objectDescriptor);
+    let objectType = objectDescriptor.getType();
+    let obj;
+    // trier les lumières des objets standards
+    if (objectType === 'ambient' || objectType === 'directional' || objectType === 'point' || objectType === 'spot') {
+      obj = this._createLight(objectDescriptor);
+    } else {
+      obj = this._createMesh(objectDescriptor);
+    }
 
     obj.name = objectDescriptor.getUuid();
 
     this.threeScene.add(obj);
     this.render();
     return obj.name;
+  }
+
+  _createLight(objectDescriptor) {
+
   }
 
   /**
