@@ -134,7 +134,11 @@ class EventManager extends EventEmitter {
     });
 
     this.on('addLight', function (data) {
-      // TODO
+      // TODO: I THINK THIS IS COMPLETELY USELESS
+      console.log("added light");
+      let objectUuid = ProjectManager.addObject(data.objectName, data.objectType);
+      data.uuid = GraphicalManager.addObject(objectUuid);
+      LeftBarSugarMaple.addObject(data.uuid);
     });
 
     this.on('addExternal', function (data) {

@@ -66,6 +66,8 @@ class LeftBarView extends Backbone.View {
       objectName: '',
       objectType: addType
     };
+    console.log("Nouvel Object en cours d'ajout");
+    console.log(data);
     // TODO filtré entre les dif obj via un data.typeObj
     EventManager.emitEvent('addObject', data)
       .then((res) => {
