@@ -153,11 +153,11 @@ class GraphicalManager {
   _createMesh(objectDescriptor) {
     // TODO handle data material into obj desc
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
+    let geometry = undefined;
     let mesh     = undefined;
 
-    let geometry = undefined;
     if (objectDescriptor.getType() === "sky")
-      geometry = new THREE.CubeGeometry(5000, 5000, 5000);
+      mesh = this._addSky(objectDescriptor);
     if (objectDescriptor.getType() === "ground")
       mesh = this._addGround(objectDescriptor);
     if (objectDescriptor.getType() === "box")
@@ -204,6 +204,23 @@ class GraphicalManager {
     ground.doubleSided = true;
 
     return ground;
+  }
+
+  _addSky(objectDescriptor) {
+    let geometry      = new THREE.CubeGeometry(5000, 5000, 5000);
+    let faces         = ['west', 'east', 'up', 'down', 'south', 'north'];
+    let materialArray = [];
+
+    faces.forEach(face => {
+      materialArray.push(new THREE.MeshBasicMaterial({
+        map:  THREE.ImageUtils.loadTexture(objectDescriptor.getTextureBddId() + face + ".png"),
+        side: THREE.BackSide
+      }));
+    });
+
+    let skyMaterial = new THREE.MeshFaceMaterial(materialArray);
+
+    return new THREE.Mesh(geometry, skyMaterial);
   }
 
   _initControls() {
@@ -369,14 +386,6 @@ class GraphicalManager {
       that.render();
     });
     return objectDescriptor.getUuid();
-  }
-
-// TODO
-  addSky() {
-  }
-
-// TODO
-  addGround() {
   }
 
 // ////////////////////////

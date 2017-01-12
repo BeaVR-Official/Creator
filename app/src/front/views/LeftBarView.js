@@ -70,10 +70,10 @@ class LeftBarView extends Backbone.View {
 
   openSkyboxes() {
     var objects = [];
-    objects.push({name: "Désert", logo: 'assets/images/DesertIcon.png', type: 'sky', resource:'assets/skyBox/sky_1'});
-    objects.push({name: "Ciel", logo: 'assets/images/skyIcon.png', type: 'sky', resource:'assets/skyBox/sky_1'});
-    objects.push({name: "Ville", logo: 'assets/images/townIcon.png', type: 'sky', resource:'assets/skyBox/sky_1'});
-    objects.push({name: "Nuit", logo: 'assets/images/nightIcon.png', type: 'sky', resource:'assets/skyBox/sky_1'});
+    objects.push({name: "Désert", logo: 'assets/images/DesertIcon.png', type: 'sky', resource:'assets/images/skyBox/sky_2/', typeOfImport: 'default'});
+    objects.push({name: "Ciel", logo: 'assets/images/skyIcon.png', type: 'sky', resource:'assets/images/skyBox/sky_4/', typeOfImport: 'default'});
+    objects.push({name: "Ville", logo: 'assets/images/townIcon.png', type: 'sky', resource:'assets/images/skyBox/sky_3/', typeOfImport: 'default'});
+    objects.push({name: "Nuit", logo: 'assets/images/nightIcon.png', type: 'sky', resource:'assets/images/skyBox/sky_1/', typeOfImport: 'default'});
     // objects.push({name: "Add", logo: 'assets/images/plus.png'});
     this.leftBar.switchLeftBarView({objects: objects});
   }
