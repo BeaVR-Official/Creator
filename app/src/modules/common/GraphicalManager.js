@@ -130,8 +130,7 @@ class GraphicalManager {
     return obj.name;
   }
 
-  _createLight(objectDescriptor) {
-
+  _createLight() {
   }
 
   /**
@@ -140,10 +139,10 @@ class GraphicalManager {
    */
   _createScene() {
     if (this.editorMod) {
-      this.threeScene = new THREE.Scene();
+      this.threeScene  = new THREE.Scene();
       this.helperScene = new THREE.Scene();
       // TODO variable Grid params
-      let grid        = new THREE.GridHelper(500, 50);
+      let grid         = new THREE.GridHelper(500, 50);
 
       this.helperScene.add(grid);
       this.helperScene.add(this.transformControls);
@@ -154,12 +153,13 @@ class GraphicalManager {
   _createMesh(objectDescriptor) {
     // TODO handle data material into obj desc
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
+    let mesh     = undefined;
 
     let geometry = undefined;
     if (objectDescriptor.getType() === "sky")
       geometry = new THREE.CubeGeometry(5000, 5000, 5000);
     if (objectDescriptor.getType() === "ground")
-      geometry = new THREE.PlaneGeometry(1000, 1000);
+      mesh = this._addGround(objectDescriptor);
     if (objectDescriptor.getType() === "box")
       geometry = new THREE.BoxGeometry(200, 200, 200);
     if (objectDescriptor.getType() === "sphere")
@@ -175,15 +175,35 @@ class GraphicalManager {
     // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
     // TODO @damien set Transformation avec Tree
 
-
     console.log(objectDescriptor);
 
-    let mesh           = new THREE.Mesh(geometry, material);
-    mesh.mirroredLoop  = true;
-    mesh.castShadow    = true;
-    mesh.receiveShadow = true;
+    if (!mesh) {
+      mesh               = new THREE.Mesh(geometry, material); //new THREE.Mesh when editor mode !== with physijs
+      mesh.mirroredLoop  = true;
+      mesh.castShadow    = true;
+      mesh.receiveShadow = true;
+    }
 
     return mesh;
+  }
+
+  _addGround(objectDescriptor) {
+    let geometry = new THREE.PlaneGeometry(1000, 1000);
+    let grassTex = new THREE.TextureLoader().load(objectDescriptor.getTextureBddId());
+
+    grassTex.wrapS    = THREE.RepeatWrapping;
+    grassTex.wrapT    = THREE.RepeatWrapping;
+    grassTex.repeat.x = 10;
+    grassTex.repeat.y = 10;
+
+    let material = new THREE.MeshBasicMaterial({map: grassTex});
+
+    let ground         = new THREE.Mesh(geometry, material);
+    ground.position.y  = 0;
+    ground.rotation.x  = -Math.PI / 2;
+    ground.doubleSided = true;
+
+    return ground;
   }
 
   _initControls() {

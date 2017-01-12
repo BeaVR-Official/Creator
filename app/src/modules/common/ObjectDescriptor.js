@@ -52,6 +52,14 @@ export default class ObjectDescriptor extends Backbone.Model {
     return (this.attributes.type);
   }
 
+  getTextureBddId() {
+    return (this.attributes.textureBddId);
+  }
+
+  setTextureBddId(texture) {
+    this.attributes.textureBddId = texture;
+  }
+
   addChild(objectUuid) {
     this.attributes.children.push(objectUuid);
   }

@@ -40,7 +40,7 @@
         <!--<div id="sceneTree" class="sugarmaple"></div>-->
     <% } else { %>
         <% _.each(objects, function(object, i){ %>
-        <div class="center tab column animated fadeInRight addObject" data-id="<%- object.type %>" data-type="<%- object.typeOfImport %>" data-name="<%- object.name %>">
+        <div class="center tab column animated fadeInRight addObject" data-id="<%- object.type %>" data-resource="<%- object.resource %>" data-type="<%- object.typeOfImport %>" data-name="<%- object.name %>">
             <div class="imageBox dropMaterial row center">
                 <img class="object-icon" src="<%- object.logo %>"/>
             </div>

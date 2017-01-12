@@ -86,6 +86,8 @@ class LeftBarView extends Backbone.View {
   addObject(event) {
     let addType = ($(event.target).closest('.addObject').attr('data-id'));
     let typeOfImport = ($(event.target).closest('.addObject').attr('data-type'));
+    let resource = ($(event.target).closest('.addObject').attr('data-resource'));
+
     if (addType == 'add') {
       $('.modals').addClass('active');
       $('.modals').addClass('visible');
@@ -99,9 +101,9 @@ class LeftBarView extends Backbone.View {
     if (typeOfImport == 'default') {
       let data = {
         objectName: '',
-        objectType: addType
+        objectType: addType,
+        resource: resource||""
       };
-      console.log("add box");
       // TODO filtré entre les dif obj via un data.typeObj
       EventManager.emitEvent('addObject', data)
                   .then((res) => {

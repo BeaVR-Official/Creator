@@ -60,20 +60,21 @@ class LeftBarView extends Backbone.View {
 
   openMaterials() {
     var objects = [];
-    objects.push({name: "Sable", logo: 'assets/images/sand.png'});
-    objects.push({name: "Pierre", logo: 'assets/images/stone.png'});
-    objects.push({name: "Herbe", logo: 'assets/images/grass.png'});
-    objects.push({name: "Bois", logo: 'assets/images/wood.png'});
+    objects.push({name: "Sable", logo: 'assets/images/sand.png', type: 'ground', resource:'assets/images/groundTex/ground_1.png', typeOfImport: 'default'});
+    objects.push({name: "Pierre", logo: 'assets/images/stone.png', type: 'ground', resource:'assets/images/groundTex/ground_2.png', typeOfImport: 'default'});
+    objects.push({name: "Herbe", logo: 'assets/images/grass.png', type: 'ground', resource:'assets/images/groundTex/ground_3.png', typeOfImport: 'default'});
+    objects.push({name: "Bois", logo: 'assets/images/wood.png', type: 'ground', resource:'assets/images/groundTex/ground_4.png', typeOfImport: 'default'});
+    // objects.push({name: "Add", logo: 'assets/images/plus.png'});
     this.leftBar.switchLeftBarView({objects: objects});
   }
 
   openSkyboxes() {
     var objects = [];
-    objects.push({name: "Désert", logo: 'assets/images/DesertIcon.png'});
-    objects.push({name: "Ciel", logo: 'assets/images/skyIcon.png'});
-    objects.push({name: "Ville", logo: 'assets/images/townIcon.png'});
-    objects.push({name: "Nuit", logo: 'assets/images/nightIcon.png'});
-    objects.push({name: "Add", logo: 'assets/images/plus.png'});
+    objects.push({name: "Désert", logo: 'assets/images/DesertIcon.png', type: 'sky', resource:'assets/skyBox/sky_1'});
+    objects.push({name: "Ciel", logo: 'assets/images/skyIcon.png', type: 'sky', resource:'assets/skyBox/sky_1'});
+    objects.push({name: "Ville", logo: 'assets/images/townIcon.png', type: 'sky', resource:'assets/skyBox/sky_1'});
+    objects.push({name: "Nuit", logo: 'assets/images/nightIcon.png', type: 'sky', resource:'assets/skyBox/sky_1'});
+    // objects.push({name: "Add", logo: 'assets/images/plus.png'});
     this.leftBar.switchLeftBarView({objects: objects});
   }
 

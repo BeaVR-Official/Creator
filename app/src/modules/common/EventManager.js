@@ -8,6 +8,7 @@ class EventManager extends EventEmitter {
   constructor() {
     super();
     this.eventsListener();
+    this.lastAddedSceneUuid = undefined;
   }
 
   emitEvent(eventName, data) {
@@ -19,12 +20,13 @@ class EventManager extends EventEmitter {
 
   // TODO clear events ?
   eventsListener() {
-
+    let that = this;
     // ////////////////////////
     // Creator Commands event
     // ////////////////////////
     this.on('addScene', (data) => {
       let sceneUuid = ProjectManager.addScene(data.sceneName);
+      that.lastAddedSceneUuid = sceneUuid;
       data.scene = ProjectManager.getSceneDescriptor(sceneUuid);
 
       GraphicalManager.setCurrentSceneUuid(sceneUuid);
@@ -136,6 +138,11 @@ class EventManager extends EventEmitter {
         data.objectName,
         data.objectType
       );
+
+      //Ajout path de la texture (chemin en dur utilisé pour les grounds)
+      let objectDesc = ProjectManager.getObjectDescriptor(that.lastAddedSceneUuid, objectUuid);
+      objectDesc.setTextureBddId(data.resource);
+
       data.uuid = GraphicalManager.addObject(objectUuid);
       LeftBarSugarMaple.addObject(data.uuid);
     });
