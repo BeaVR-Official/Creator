@@ -6,6 +6,8 @@ import Loader from '../utils';
 import Backbone from 'backbone';
 
 import Cookie from '../cookie';
+import ProjectManager from "../../modules/common/ProjectManager";
+
 
 import Project from '../models/project';
 
@@ -31,6 +33,7 @@ class ProjectConfInView extends Backbone.View {
       events: {}
     });
     Loader.initStyles();
+    console.log(ProjectManager.getId());
     this.project = new Project({projectID : '5874a0250684304a2425a54f'});
     this.listenTo(this.project, 'all', this.render);
     this.project.fetch({
