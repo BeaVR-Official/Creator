@@ -1,6 +1,7 @@
 import ProjectManager from "./ProjectManager";
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
+import EventManagerOnFront from '../../front/EventManager';
 
 import Cookie from '../../front/cookie';
 
@@ -103,6 +104,11 @@ class SaveManager {
               this.importSceneDescriptors(JSON.parse(data4).sceneDescriptors)
             );
             ProjectManager.reloadScene();
+            EventManagerOnFront.emitEvent(
+              'loadScene',
+              ProjectManager.getSceneDescriptor(ProjectManager.getStartingScene())
+            );
+            // TODO @damien (peut etre en amont fill treeview)
           });
           req4.fail((err) => {
             console.log(err);

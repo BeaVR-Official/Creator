@@ -69,6 +69,13 @@ class LeftBarSugarMaple {
       this.smTree.sugarmaple('manage.attach', this.rootNode, objectNode);
   }
 
+  loadATV(SD) {
+    this.initializeSugar();
+    SD.attributes.objectDescriptors.forEach((OD) => {
+      this.addObject(OD.attributes.uuid);
+    });
+  }
+
   /**
    * Events send by sugarMaple
    */

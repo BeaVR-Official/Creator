@@ -1,7 +1,6 @@
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
 import EventDescriptor from "./EventManager";
-import EventManagerOnFront from '../../front/EventManager';
 import UUID from './../utils/UUID';
 import _ from '../../../../node_modules/lodash/lodash.min'
 
@@ -364,8 +363,6 @@ class ProjectManager {
   reloadScene(sceneUuid = this.startingSceneUuid) {
     let sceneDescriptor = this.getSceneDescriptor(sceneUuid);
     GraphicalManager.setCurrentSceneUuid(sceneUuid, true);
-    //EventManagerOnFront.emitEvent('loadScene', sceneDescriptor);
-    // TODO @damien (peut etre en amont fill treeview)
   }
 }
 
