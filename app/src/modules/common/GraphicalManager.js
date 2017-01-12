@@ -42,7 +42,6 @@ class GraphicalManager {
     this.render();
   }
 
-
   _initViewPort(htmlAnchor) {
     // Init SceneView renderer
     let sceneSettings       = Constants.getSceneSettings();
@@ -152,7 +151,6 @@ class GraphicalManager {
   //   this.mouseMoving = moving;
   // }
 
-
 // ////////////////////////
 // Scene factory
 // ////////////////////////
@@ -189,7 +187,6 @@ class GraphicalManager {
       this.threeScene = new Physijs.Scene();
   }
 
-
 // ////////////////////////
 // Object factory
 // ////////////////////////
@@ -198,7 +195,7 @@ class GraphicalManager {
     let obj;
     // trier les lumières des objets standards
     if (objectType === 'ambient' || objectType === 'directional' || objectType === 'point' || objectType === 'spot') {
-      obj = this._createLight(objectDescriptor);
+      obj = this._createLight(objectDescriptor, objectType);
     } else {
       obj = this._createMesh(objectDescriptor);
     }
@@ -210,7 +207,59 @@ class GraphicalManager {
     return obj.name;
   }
 
-  _createLight() {
+  _createLight(objectDescriptor, type) {
+    let light;
+    let helper;
+
+    if (type === 'point') {
+      // create a point light (standard)
+      light  = new THREE.PointLight(0xFFFFFF);
+      helper = new THREE.PointLightHelper(light);
+    }
+    if (type === 'ambient') {
+      // create an ambient light, there is no helper for it
+      light  = new THREE.AmbientLight(0x3F3F3F);
+      helper = undefined;
+    }
+    if (type === 'directional') {
+      //  create a directional light (half intensity)
+      light  = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+      helper = new THREE.DirectionalLightHelper(light);
+    }
+    //  create a spot light
+    if (type === 'spot') {
+      light  = new THREE.SpotLight(0xFFFFFF);
+      helper = new THREE.SpotLightHelper(light);
+    }
+
+    let position = objectDescriptor.getPosition();
+    light.position.set(position.x, position.y, position.z);
+
+    if (this.editorMod === true) {
+      if (helper !== undefined) {
+        this.helperScene.add(helper);
+      }
+      return (this._addPicker(light));
+    }
+    else {
+      return (light);
+    }
+  }
+
+  _addPicker(light) {
+    let materialPicker = {
+      visible:   false,
+      color:     0xff0000,  // Debugging display:
+      wireframe: true,      // Active with visible = true
+      fog:       false      //
+    };
+
+    let geometry = new THREE.SphereGeometry(50, 4, 2);
+    let material = new THREE.MeshBasicMaterial(materialPicker);
+    let picker   = new THREE.Mesh(geometry, material);
+
+    picker.add(light);
+    return (picker);
   }
 
   _createMesh(objectDescriptor) {
@@ -283,7 +332,6 @@ class GraphicalManager {
     return new THREE.Mesh(geometry, skyMaterial);
   }
 
-
 // ////////////////////////
 // Add Things events
 // ////////////////////////
@@ -321,9 +369,6 @@ class GraphicalManager {
     });
     return objectDescriptor.getUuid();
   }
-
-
-
 
 // ////////////////////////
 // Click methods
@@ -384,8 +429,6 @@ class GraphicalManager {
       this.render();
     }
   }
-
-
 
 // ////////////////////////
 // Not used yet
