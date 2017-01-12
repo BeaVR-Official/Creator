@@ -22,8 +22,26 @@ class GraphicalManager {
 
     this._initViewPort('#SceneSelector');
     this._initControls();
-
   }
+
+// ////////////////////////
+// ThreeJS settings/initialisation & render methods
+// ////////////////////////
+  /**
+   * Adapt scene renderer to canvas
+   * TODO: getCanvasWidth & height by EventManager(no more canvasSettings in Constants)
+   * @private
+   */
+  _adaptToWindow() {
+    let parentWidth  = Constants.getCanvasSettings().width;
+    let parentHeight = Constants.getCanvasSettings().height;
+
+    this.camera.aspect = parentWidth / parentHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(parentWidth, parentHeight);
+    this.render();
+  }
+
 
   _initViewPort(htmlAnchor) {
     // Init SceneView renderer
@@ -46,6 +64,58 @@ class GraphicalManager {
       camSettings.posY,
       camSettings.posZ);
   }
+
+  _initControls() {
+    // Orbit control enable for Runner ?
+    // Actually enable for editor & runner
+    this.orbitControls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+    this.orbitControls.addEventListener('change', () => {
+      this.render()
+    });
+
+    if (this.editorMod) {
+      this.transformControls = new THREE.TransformControls(this.camera, this.renderer.domElement);
+
+      this.transformControls.addEventListener('change', () => {
+        if (this.selectedObject !== undefined) {
+          let objectUuid = this.selectedObject.name;
+          let sceneUuid  = this.currentSceneUuid;
+
+          ProjectManager.setObjectPosition(sceneUuid, objectUuid, this.selectedObject.position);
+          ProjectManager.setObjectRotation(sceneUuid, objectUuid, this.selectedObject.rotation);
+          ProjectManager.setObjectScale(sceneUuid, objectUuid, this.selectedObject.scale);
+        }
+        // Send event when updating and not redo click selection
+        this.render()
+      });
+      // this.transformControls.addEventListener('mouseDown',() => {
+      //   this.orbitControls.enabled = false;
+      //   this.updatingTrans = true;
+      //   console.log("UPDATING");
+      // });
+      // this.transformControls.addEventListener('mouseUp', () => {
+      //   this.orbitControls.enabled = true;
+      //   this.updatingTrans = false;
+      //   console.log("STOP UPDATING");
+      // });
+    }
+  }
+
+  render() {
+    this.renderer.clear();
+    this.camera.lookAt(this.threeScene.position);
+    this.renderer.render(this.threeScene, this.camera);
+    if (this.editorMod)
+      this.renderer.render(this.helperScene, this.camera);
+    this.setlastSceneUuid(this.currentSceneUuid);
+
+    //console.log("Scenes", ProjectManager.getAllSceneDescriptors());
+    // requestAnimationFrame(this.render);
+  }
+
+// ////////////////////////
+// GM Setter/getter
+// ////////////////////////
 
   setCurrentSceneUuid(sceneUuid) {
     this.currentSceneUuid = sceneUuid;
@@ -82,21 +152,10 @@ class GraphicalManager {
   //   this.mouseMoving = moving;
   // }
 
-  /**
-   * Adapt scene renderer to canvas
-   * TODO: getCanvasWidth & height by EventManager(no more canvasSettings in Constants)
-   * @private
-   */
-  _adaptToWindow() {
-    let parentWidth  = Constants.getCanvasSettings().width;
-    let parentHeight = Constants.getCanvasSettings().height;
 
-    this.camera.aspect = parentWidth / parentHeight;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(parentWidth, parentHeight);
-    this.render();
-  }
-
+// ////////////////////////
+// Scene factory
+// ////////////////////////
   _sceneFactory() {
     this._createScene();
     this._adaptToWindow();
@@ -113,6 +172,27 @@ class GraphicalManager {
     // this.render();
   }
 
+  /**
+   * Create different kind of scene
+   * @private
+   */
+  _createScene() {
+    if (this.editorMod) {
+      this.threeScene  = new THREE.Scene();
+      this.helperScene = new THREE.Scene();
+      // TODO variable Grid params
+      let grid         = new THREE.GridHelper(500, 50);
+
+      this.helperScene.add(grid);
+      this.helperScene.add(this.transformControls);
+    } else
+      this.threeScene = new Physijs.Scene();
+  }
+
+
+// ////////////////////////
+// Object factory
+// ////////////////////////
   _objectFactory(objectDescriptor) {
     let objectType = objectDescriptor.getType();
     let obj;
@@ -131,23 +211,6 @@ class GraphicalManager {
   }
 
   _createLight() {
-  }
-
-  /**
-   * Create different kind of scene
-   * @private
-   */
-  _createScene() {
-    if (this.editorMod) {
-      this.threeScene  = new THREE.Scene();
-      this.helperScene = new THREE.Scene();
-      // TODO variable Grid params
-      let grid         = new THREE.GridHelper(500, 50);
-
-      this.helperScene.add(grid);
-      this.helperScene.add(this.transformControls);
-    } else
-      this.threeScene = new Physijs.Scene();
   }
 
   _createMesh(objectDescriptor) {
@@ -169,13 +232,10 @@ class GraphicalManager {
 
     // TODO see how to do for lights/lightsHelper/externalObj
 
-    // TODO @vincent - skybox ground avec getType() ==
     // Peut être load en amont
     // TODO @damien si externalObjBddId load obj API (+ PUIS applique puis etre pas dans cette method)
     // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
     // TODO @damien set Transformation avec Tree
-
-    console.log(objectDescriptor);
 
     if (!mesh) {
       mesh               = new THREE.Mesh(geometry, material); //new THREE.Mesh when editor mode !== with physijs
@@ -223,128 +283,6 @@ class GraphicalManager {
     return new THREE.Mesh(geometry, skyMaterial);
   }
 
-  _initControls() {
-    // Orbit control enable for Runner ?
-    // Actually enable for editor & runner
-    this.orbitControls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-    this.orbitControls.addEventListener('change', () => {
-      this.render()
-    });
-
-    if (this.editorMod) {
-      this.transformControls = new THREE.TransformControls(this.camera, this.renderer.domElement);
-
-      this.transformControls.addEventListener('change', () => {
-        if (this.selectedObject !== undefined) {
-          let objectUuid = this.selectedObject.name;
-          let sceneUuid  = this.currentSceneUuid;
-
-          ProjectManager.setObjectPosition(sceneUuid, objectUuid, this.selectedObject.position);
-          ProjectManager.setObjectRotation(sceneUuid, objectUuid, this.selectedObject.rotation);
-          ProjectManager.setObjectScale(sceneUuid, objectUuid, this.selectedObject.scale);
-        }
-        // Send event when updating and not redo click selection
-        this.render()
-      });
-      // this.transformControls.addEventListener('mouseDown',() => {
-      //   this.orbitControls.enabled = false;
-      //   this.updatingTrans = true;
-      //   console.log("UPDATING");
-      // });
-      // this.transformControls.addEventListener('mouseUp', () => {
-      //   this.orbitControls.enabled = true;
-      //   this.updatingTrans = false;
-      //   console.log("STOP UPDATING");
-      // });
-    }
-  }
-
-  /**
-   * Set mode of transformControl
-   * @param mode -> have to be a string translate || rotate || scale
-   */
-  setTransformControlMode(mode) {
-    if (this.transformControls !== undefined &&
-      (mode === "translate" || mode === "rotate" || mode === "scale")) {
-      this.transformControls.setMode(mode);
-      this.render();
-    }
-  }
-
-  _raycastingSelection() {
-    this.deselectObject();
-
-    let closestObject = this._getClosestObject(); // objDesc uuid into name
-    if (closestObject !== undefined)
-      this.selectObject(closestObject);
-  }
-
-  _getClosestObject() {
-    this.raycaster.setFromCamera(this.mouse, this.camera);
-    let intersects = this.raycaster.intersectObjects(this.threeScene.children, true);
-
-    if (intersects.length > 0)
-      return intersects[0].object;
-    return undefined;
-  }
-
-  render() {
-    this.renderer.clear();
-    this.camera.lookAt(this.threeScene.position);
-    this.renderer.render(this.threeScene, this.camera);
-    if (this.editorMod)
-      this.renderer.render(this.helperScene, this.camera);
-    this.setlastSceneUuid(this.currentSceneUuid);
-
-    //console.log("Scenes", ProjectManager.getAllSceneDescriptors());
-    // requestAnimationFrame(this.render);
-  }
-
-// ////////////////////////
-// Object Selection
-// ////////////////////////
-
-  selectObject(object) {
-    this.selectedObject = object;
-    EventManager.emitEvent('objectSelected', {objectUuid: object.name});
-  }
-
-  deselectObject() {
-    if (this.selectedObject !== undefined) {
-      EventManager.emitEvent('objectDeselected', {objectUuid: this.selectedObject.name});
-      this.selectedObject = undefined;
-      this.transformControls.detach();
-      this.render();
-    }
-  }
-
-// ////////////////////////
-// TransformControls
-// ////////////////////////
-  attachToTransform(objectUuid) {
-    let object = this.threeScene.getObjectByName(objectUuid);
-
-    if (object) {
-      this.deselectObject();
-      this.selectedObject = object;
-      this.transformControls.attach(object);
-      this.render();
-    }
-  }
-
-// ////////////////////////
-// TreeView events
-// ////////////////////////
-
-  removeObject(objectDescriptor) {
-    this.threeScene.remove(
-      this.threeScene.getObjectById(objectDescriptor.uuid)
-    );
-  }
-
-  switchScene(sceneUuid) {
-
-  }
 
 // ////////////////////////
 // Add Things events
@@ -362,11 +300,7 @@ class GraphicalManager {
     return this._objectFactory(objectDescriptor);
   }
 
-// TODO
-  addLight() {
-  }
-
-// TODO
+// TODO cette méthode doit s'effectuer dans _createMesh() -> @damien
   addExternalObject(objectUuid, path) {
     let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
@@ -388,9 +322,84 @@ class GraphicalManager {
     return objectDescriptor.getUuid();
   }
 
+
+
+
 // ////////////////////////
-// Object Property events
+// Click methods
 // ////////////////////////
+  _raycastingSelection() {
+    this.deselectObject();
+
+    let closestObject = this._getClosestObject(); // objDesc uuid into name
+    if (closestObject !== undefined)
+      this.selectObject(closestObject);
+  }
+
+  _getClosestObject() {
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    let intersects = this.raycaster.intersectObjects(this.threeScene.children, true);
+
+    if (intersects.length > 0)
+      return intersects[0].object;
+    return undefined;
+  }
+
+  selectObject(object) {
+    this.selectedObject = object;
+    EventManager.emitEvent('objectSelected', {objectUuid: object.name});
+  }
+
+  deselectObject() {
+    if (this.selectedObject !== undefined) {
+      EventManager.emitEvent('objectDeselected', {objectUuid: this.selectedObject.name});
+      this.selectedObject = undefined;
+      this.transformControls.detach();
+      this.render();
+    }
+  }
+
+// ////////////////////////
+// TransformControls
+// ////////////////////////
+  /**
+   * Set mode of transformControl
+   * @param mode -> have to be a string translate || rotate || scale
+   */
+  setTransformControlMode(mode) {
+    if (this.transformControls !== undefined &&
+      (mode === "translate" || mode === "rotate" || mode === "scale")) {
+      this.transformControls.setMode(mode);
+      this.render();
+    }
+  }
+
+  attachToTransform(objectUuid) {
+    let object = this.threeScene.getObjectByName(objectUuid);
+
+    if (object) {
+      this.deselectObject();
+      this.selectedObject = object;
+      this.transformControls.attach(object);
+      this.render();
+    }
+  }
+
+
+
+// ////////////////////////
+// Not used yet
+// ////////////////////////
+
+  removeObject(objectDescriptor) {
+    this.threeScene.remove(
+      this.threeScene.getObjectById(objectDescriptor.uuid)
+    );
+  }
+
+  switchScene(sceneUuid) {
+
+  }
 
   updateObjectPosition(OD, position) {
     this.threeScene.getObjectById(OD.uuid, true).position = position;
