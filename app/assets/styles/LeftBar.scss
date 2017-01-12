@@ -1,0 +1,50 @@
+@mixin calc($key, $value) {
+  #{$key}: -webkit-calc(#{$value});
+  #{$key}: -moz-calc(#{$value});
+  #{$key}: calc(#{$value});
+}
+
+$sizeTopMenu: 51px;
+$greyTopBarBackgroundColor:#2fc5da;
+
+$backgroundColorSideBar: #1B1C1D;
+
+.LeftBarSelector {
+
+  overflow: hidden;
+  overflow-x: hidden;
+  @include calc('height', '100% - 52px');
+  position:absolute;
+  top: $sizeTopMenu;
+  width: 55px !important;
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #FF0000;
+  }
+  .leftMenu {
+    position:relative;
+    height:100%;
+    background: #2fc5da !important;
+    padding-top: 10px;
+
+    ::-webkit-scrollbar {
+      display: none;
+      width: 0px;
+    }
+
+    .item {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+      min-width: 48px !important;
+    }
+
+    .row.active {
+      background:#2f98ac !important;
+    }
+
+  }
+}

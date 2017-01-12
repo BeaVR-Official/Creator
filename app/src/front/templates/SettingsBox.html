@@ -1,0 +1,353 @@
+<div class="SettingsBox">
+    <div class="Box animated ">
+        <div class="HeaderBar">
+            <button class="ui button basic icon prevTab"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+            <span>
+                <a class="active animated" data-tab="Transformations">Transformations</a>
+                <a class="animated" data-tab="Material">Apparence</a>
+                <a class="animated" data-tab="MaterialAdvanced">Apparence avancée</a>
+                <a class="animated" data-tab="Animations">Animation</a>
+            </span>
+            <button class="ui button basic icon nextTab"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="ui bottom attached tab segment center active " data-tab="Transformations">
+            <div class="ui grid transformations">
+                <div class="row" style="padding-top: 5px !important;">
+                    <div class="header">Translations</div>
+                </div>
+                <div class="three column row">
+                    <div class="column">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                X
+                            </div>
+                            <input type="number" class="wheelable" placeholder="X" value="<%= transformations.translation.x %>" data-name="transformations.translation.x">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                Y
+                            </div>
+                            <input type="number" class="wheelable" placeholder="Y" value="<%= transformations.translation.y %>" data-name="transformations.translation.y">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                Z
+                            </div>
+                            <input type="number" class="wheelable" placeholder="Z" value="<%= transformations.translation.z %>" data-name="transformations.translation.z">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="header">Rotations</div>
+                </div>
+                <div class="three column row">
+                    <div class="column">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                X
+                            </div>
+                            <input type="number" class="wheelable" placeholder="X" value="<%= transformations.rotation.x %>" data-name="transformations.rotation.x" >
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                Y
+                            </div>
+                            <input type="number" class="wheelable" placeholder="Y" value="<%= transformations.rotation.y %>" data-name="transformations.rotation.y">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                Z
+                            </div>
+                            <input type="number" class="wheelable" placeholder="Z" value="<%= transformations.rotation.z %>" data-name="transformations.rotation.z">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="header">Échelles</div>
+                </div>
+                <div class="three column row">
+                    <div class="column">
+                        <div class="column">
+                            <div class="ui labeled input">
+                                <div class="ui label">
+                                    X
+                                </div>
+                                <input type="number" class="wheelable" placeholder="X" value="<%= transformations.scale.x %>" data-name="transformations.scale.x">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui labeled input">
+                            <div class="ui label">
+                                Y
+                            </div>
+                            <input type="number" class="wheelable" placeholder="Y" value="<%= transformations.scale.y %>" data-name="transformations.scale.y">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui labeled  input">
+                            <div class="ui label">
+                                Z
+                            </div>
+                            <input type="number" class="wheelable" placeholder="Z" value="<%= transformations.scale.z %>" data-name="transformations.scale.z">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom attached tab segment center" data-tab="Material">
+            <div class="ui grid">
+                <div class="row" style="padding-top: 5px !important;" >
+                    <div class="header">Mesh</div>
+                </div>
+                <div class="row two column boxes">
+                    <div class="column" style="width:30% !important; padding-left: 10%; border-right: 1px solid grey; margin:auto; margin-left: 0; margin-right: 0;">
+                        <span style=" color: white;">Mesh & Materiel</span>
+                    </div>
+                    <div class="column" style="width:70%; text-align:center; margin: auto; ">
+                        <div class="imageBox dropMaterial" style="margin-right: 17px;" draggable="true">
+                            <img src="assets/images/cube.png"  draggable="true" >
+                        </div>
+                        <div class="imageBox dropTexture" style="border-radius: 50%; padding: 0; padding-top: 16px;" >
+                            <img src="assets/images/3dtexture.png" draggable="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row two column">
+                    <div class="column" style="width:30% !important; padding-left: 10%; border-right: 1px solid grey;">
+                        <span style=" color: white;">Afficher</span>
+                    </div>
+                    <div class="column" style="width:70% !important; text-align: center;">
+                        <div class="ui fitted toggle checkbox">
+                            <input type="checkbox">
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row two column">
+                    <div class="column" style="width:30% !important; padding-left: 10%; border-right: 1px solid grey;">
+                        <span style=" color: white;">Nom</span>
+                    </div>
+                    <div class="column" style="width:70% !important; padding-left: 10%; padding-right:10%; text-align: center;">
+                        <input class="ui input name" >
+                    </div>
+                </div>
+
+
+                <div class="row two column">
+                    <div class="column" style="width:30% !important; padding-left: 10%; border-right: 1px solid grey;">
+                        <span style=" color: white;">Couleur & Opacité</span>
+                    </div>
+                    <div class="column" style="width:70% !important; padding-left: 10%; padding-right:10%;">
+                        <input type="text" id="color" class="ui button showPopup" style="width: 100%; text-align: center;" name="color" value="#123456" />
+                        <div class="ui flowing popup top left transition hidden" style="background: rgb(46, 46, 46);">
+                            <div class="ui row center aligned" style="text-align:center;">
+                                <span style="margin: 0px 10px 0px 10px; color: white;">Choisissez une couleur</span>
+                                <div id="colorpicker"></div>
+                                <div class="Opacity">
+                                    <span style="float:left; color:white;">0</span>
+                                    <input id="sliderOpacity" type="range" min="0" max="100"  step="1"  value="100" data-orientation="vertical">
+                                    <span style="float:right; color:white;">1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom attached tab segment center" data-tab="Animations" style="overflow-y: scroll;">
+            <div class="ui grid three column row" style="background:gray;margin-top:1px;">
+                <div class="column" style="width: 80%;height: 24px;padding: 0px;padding-top: 3px;padding-left: 9px;">
+                    <span style="color:white;">Action / Réaction</span>
+                </div>
+                <div class="column" style="width: 10%;padding: 0;margin: auto;text-align: right;">
+                    <button class="ui basic icon button" style="padding: 0;"><i class="fa fa-pencil"></i></button>
+                </div>
+                <div class="column" style="width: 10%;padding: 0;margin: auto;text-align: center;">
+                    <button class="ui basic icon button" style="padding: 0;"><i class="fa fa-crosshairs"></i></button>
+                </div>
+            </div>
+            <div class="ui grid five column row">
+                <div class="column" style="width:3%; margin:auto;">
+                    <input type="checkbox">
+                </div>
+                <div class="column" style="width: 14% !important;padding-left: 4%;border-right: 1px solid grey;margin: auto;margin-left: 0;margin-right: 0;">
+                    <span style=" color: white;">SI</span>
+                </div>
+                <div class="column" style="width: 30%;text-align: center;margin: auto;">
+                    <div class="imageBox dropMaterial" style="margin-right: 17px;" draggable="true">
+                        <img src="assets/images/cube.png"  draggable="true" >
+                    </div>
+                </div>
+                <div class="column" style="width: 20% !important;padding-right: 3%;border-right: 1px solid grey;margin: auto;margin-left: 0;margin-right: 0;text-align: center;">
+                    <span style=" color: white;">ALORS</span>
+                </div>
+                <div class="column" style="padding-left: 5%;width: 29%;">
+                    <div class="imageBox dropMaterial" style="border-radius: 50%; padding: 0; padding-top: 16px;" >
+                        <img src="assets/images/3dtexture.png" draggable="true">
+                    </div>
+                </div>
+            </div>
+            <div class="ui grid five column row">
+                <div class="column" style="width:3%; margin:auto;">
+                    <input type="checkbox">
+                </div>
+                <div class="column" style="width: 14% !important;padding-left: 4%;border-right: 1px solid grey;margin: auto;margin-left: 0;margin-right: 0;">
+                    <span style=" color: white;">SI</span>
+                </div>
+                <div class="column" style="width: 30%;text-align: center;margin: auto;">
+                    <div class="imageBox dropMaterial" style="margin-right: 17px;" draggable="true">
+                        <img src="assets/images/cube.png"  draggable="true" >
+                    </div>
+                </div>
+                <div class="column" style="width: 20% !important;padding-right: 3%;border-right: 1px solid grey;margin: auto;margin-left: 0;margin-right: 0;text-align: center;">
+                    <span style=" color: white;">ALORS</span>
+                </div>
+                <div class="column" style="padding-left: 5%;width: 29%;">
+                    <div class="imageBox dropMaterial" style="border-radius: 50%; padding: 0; padding-top: 16px;" >
+                        <img src="assets/images/3dtexture.png" draggable="true">
+                    </div>
+                </div>
+            </div>
+            <div class="ui grid five column row">
+                <div class="column" style="width:3%; margin:auto;">
+                    <input type="checkbox">
+                </div>
+                <div class="column" style="width: 14% !important;padding-left: 4%;border-right: 1px solid grey;margin: auto;margin-left: 0;margin-right: 0;">
+                    <span style=" color: white;">SI</span>
+                </div>
+                <div class="column" style="width: 30%;text-align: center;margin: auto;">
+                    <div class="imageBox dropMaterial" style="margin-right: 17px;" draggable="true">
+                        <img src="assets/images/cube.png"  draggable="true" >
+                    </div>
+                </div>
+                <div class="column" style="width: 20% !important;padding-right: 3%;border-right: 1px solid grey;margin: auto;margin-left: 0;margin-right: 0;text-align: center;">
+                    <span style=" color: white;">ALORS</span>
+                </div>
+                <div class="column" style="padding-left: 5%;width: 29%;">
+                    <div class="imageBox dropMaterial" style="border-radius: 50%; padding: 0; padding-top: 16px;" >
+                        <img src="assets/images/3dtexture.png" draggable="true">
+                    </div>
+                </div>
+            </div>
+            <div class="ui grid five column row">
+                <div class="column" style="width:3%; margin:auto;">
+                    <input type="checkbox">
+                </div>
+                <div class="column" style="width: 14% !important;padding-left: 4%;border-right: 1px solid grey;margin: auto;margin-left: 0;margin-right: 0;">
+                    <span style=" color: white;">SI</span>
+                </div>
+                <div class="column" style="width: 30%;text-align: center;margin: auto;">
+                    <div class="imageBox dropMaterial" style="margin-right: 17px;" draggable="true">
+                        <img src="assets/images/cube.png"  draggable="true" >
+                    </div>
+                </div>
+                <div class="column" style="width: 20% !important;padding-right: 3%;border-right: 1px solid grey;margin: auto;margin-left: 0;margin-right: 0;text-align: center;">
+                    <span style=" color: white;">ALORS</span>
+                </div>
+                <div class="column" style="padding-left: 5%;width: 29%;">
+                    <div class="imageBox dropMaterial" style="border-radius: 50%; padding: 0; padding-top: 16px;" >
+                        <img src="assets/images/3dtexture.png" draggable="true">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="ui bottom attached tab segment center" data-tab="MaterialAdvanced">
+            MaterialAdvanced
+        </div>
+    </div>
+
+    <button class="circular ui icon button black openSettings">
+        <i class="fa fa-cog"></i>
+    </button>
+</div>
+
+<script>
+    /*
+     $('.menu .item').tab();
+     */
+
+    $(document).ready(function() {
+        $('#colorpicker').farbtastic('#color');
+        $('input[type="range"]').rangeslider();
+    });
+
+    $('.showPopup')
+            .popup({
+                popup: '.flowing.popup',
+                position: 'top center',
+                hoverable  : true
+            })
+    ;
+
+    $.fn.extend({
+        animateCss: function (animationName, remove) {
+            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            this.addClass('animated ' + animationName).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationName);
+                if (remove)
+                    $(this).removeClass(remove);
+            });
+        }
+    });
+
+    $('.prevTab').click(function() {
+        $(this).attr('disabled', true);
+        var selector =  $('span a.active');
+        var newActive;
+        setTimeout(function(){
+            $('.prevTab').removeAttr('disabled');
+        }, 1000);
+        selector.animateCss('fadeOutRight', 'active');
+        if (selector.index() == 0) {
+            newActive = $('span a').last();
+            newActive.addClass('active');
+        }
+        else {
+            newActive = selector.prev();
+            newActive.addClass('active');
+        }
+        newActive.animateCss('fadeInLeft');
+        $('.tab.segment.active').removeClass('active');
+        var item = $(".tab.segment[data-tab='" + $(newActive).data( "tab" ) +"']");
+        item.addClass('active');
+        item.animateCss('fadeIn');
+    });
+
+    $('.nextTab').click(function() {
+        $(this).attr('disabled', true);
+        setTimeout(function(){
+            $('.nextTab').removeAttr('disabled');
+        }, 1000);
+        var selector =  $('span a.active');
+        selector.animateCss('fadeOutLeft', 'active');
+        var newActive;
+        if (selector.index() == 3) {
+            newActive = $('span a').first();
+            newActive.addClass('active');
+        }
+        else {
+            newActive = selector.next();
+            newActive.addClass('active');
+        }
+        newActive.animateCss('fadeInRight');
+        $('.tab.segment.active').removeClass('active');
+        var item = $(".tab.segment[data-tab='" + $(newActive).data( "tab" ) +"']");
+        item.addClass('active');
+        item.animateCss('fadeIn');
+    });
+
+</script>

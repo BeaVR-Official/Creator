@@ -1,4 +1,4 @@
-import * as CreatorManagement from './CreatorManagement';
+import  CreatorManagement from './CreatorManagement';
 import Scene from './Scene';
 
 class ScenesPanel {
@@ -8,7 +8,7 @@ class ScenesPanel {
   initTree(sugarMaple) {
     this.smTree   = sugarMaple;
     this.rootNode = this.smTree.sugarmaple('manage.create', 'Scene 1', Scene._scene);
-    this.smTree.sugarmaple('manage.setRoot', this.rootNode);
+    //this.smTree.sugarmaple('manage.setRoot', this.rootNode);
   }
 
   onChecked(node) {

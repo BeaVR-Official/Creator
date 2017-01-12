@@ -1,0 +1,19 @@
+<div class="ui left demo vertical inverted sidebar labeled icon menu visible leftMenu">
+<% _.each(menu, function(item, i){%>
+    <div class="row">
+        <% if (item.isUsed == true) { %>
+        <a id="item<%- item.id %>" class="item">
+            <i class="<%- item.logo %>" style="margin: 0px !important; font-size: 30px;"></i>
+        </a>
+        <% } %>
+    </div>
+    <% }); %>
+</div>
+
+<script>
+    $('.item').click(function(event) {
+        $('.row.active').removeClass('active');
+        $(event.target).closest('.row').addClass('active');
+    });
+</script>
+

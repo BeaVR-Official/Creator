@@ -1,0 +1,23 @@
+<div class="NextPrevBox">
+    <div class="ui icon buttons">
+        <button id="translate" class="ui button transformations active"><i class="fa fa-arrows"></i></button>
+        <button id="rotate" class="ui button transformations "><i class="fa fa-repeat"></i></button>
+        <button id="scale" class="ui button transformations "><i class="fa fa-expand"></i></button>
+    </div>
+    <button class=" animated ui primary basic icon button " style="padding-right: 11px !important;" id="prev"><i class="fa fa-angle-left"></i></button>
+    <button class=" animated ui primary basic icon button " style="padding-right: 11px !important;" id="next" ><i class="fa fa-angle-right"></i></button>
+</div>
+
+<script>
+    $(".animated.button").click(function(event) {
+        $(event.target).addClass('pulse');
+        setTimeout(function() {
+            $(event.target).removeClass('pulse');
+        }, 1000)
+    });
+
+    $(".transformations").click(function(event) {
+        $(".transformations.active").removeClass('active');
+        $(event.target).closest('.button').addClass('active');
+    })
+</script>

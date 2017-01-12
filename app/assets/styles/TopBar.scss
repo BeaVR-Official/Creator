@@ -1,0 +1,199 @@
+$greyTopBarBackgroundColor: #3F3F3F;
+$inactiveTabBackgroundColor: #2fc5da;
+$activeTabBackgroundColor: #2f98ac;
+$tabHeight: 30px;
+
+.TopBarSelector {
+
+  max-height: 52px;
+  height: 52px;
+
+  .TopBar {
+    background-color: $greyTopBarBackgroundColor;
+  }
+
+  #tab-bar-inner {
+    padding-left: 15px;
+  }
+
+  #tab-bar {
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border: 0 !important;
+  }
+
+  .all-tabs .tab {
+    margin-top: 20px;
+    margin-left: 1px;
+    margin-right: 1px;
+    height: $tabHeight;
+    background-color: $inactiveTabBackgroundColor !important;
+    border-radius: 7px 7px 0 0 !important;
+    padding-right: 5px !important;
+  }
+
+  .ui.tabular.menu .active.item {
+    border-radius: 7px 7px 0 0 !important;
+  }
+
+  .ui.grid {
+    margin: 0 !important;
+    border-bottom: 1px solid #D4D4D5;
+  }
+
+  .ui.tabular.menu {
+    border: 0px !important;
+  }
+
+  .ui.attached.segment {
+    border-top: 0px !important;
+  }
+
+  .add-tab {
+    margin-top: 20px;
+    margin-left: 1px;
+    margin-right: 1px;
+    height: $tabHeight;
+    background-color: $inactiveTabBackgroundColor !important;
+    border-radius: 7px 7px 0 0 !important;
+    padding: 0 5px !important;
+  }
+
+  .add-tab:active {
+    background-color: $activeTabBackgroundColor !important;
+  }
+
+  .add-tab span {
+    font-size: 24px;
+    padding: 0px 5px;
+  }
+
+  .all-tabs .active {
+    background-color: $activeTabBackgroundColor !important;
+  }
+
+  .close-cross {
+    margin-left: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: $greyTopBarBackgroundColor;
+  }
+
+  .edit {
+    padding-top: 3px;
+    padding-left: 3px;
+    color: $greyTopBarBackgroundColor;
+  }
+
+  .close-cross:hover,
+  .edit:hover {
+    color: black;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  #logo {
+    text-align: center;
+    padding: 0px;
+    margin: auto;
+  }
+
+  #logo img {
+    margin: auto;
+    max-height: 40px;
+  }
+
+  .helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  .project-tab {
+    margin-left: 1px;
+    margin-right: 1px;
+    background-color: $inactiveTabBackgroundColor !important;
+    padding-right: 20px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    height: initial !important;
+    margin-top: 0px !important;
+    border-radius: 0px !important;
+  }
+
+  .project-tab:active {
+    background-color: $activeTabBackgroundColor !important;
+  }
+
+  .inside {
+    text-align: center;
+  }
+
+  .inside img {
+    height: 25px;
+    width: 25px;
+  }
+
+  .inside span {
+    display: block;
+    font-size: 16px;
+  }
+
+  #scene-tabs {
+    width: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+    overflow-x: scroll;
+  }
+
+  #scene-tabs::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #000000;
+  }
+
+  #scene-tabs::-webkit-scrollbar {
+    background-color: #000000;
+    height: 2px;
+  }
+
+  #scene-tabs::-webkit-scrollbar-thumb {
+    background-color: #960000;
+  }
+
+  #scene-tabs .item {
+    display: inline-block;
+    padding: 0px;
+    width: 120px;
+  }
+
+  #content .tab {
+    border: 0 !important;
+    margin: 0 !important;
+  }
+
+  .ui.disabled.input, .ui.input input[disabled] {
+    opacity: 1 !important;
+    text-align: center;
+    height: 100%;
+    margin: auto !important;
+  }
+
+  .ui.menu .item > .input input {
+    text-align: center;
+    color: white;
+  }
+
+  .tab-input {
+    max-width: 100px !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .ui.menu .item > .input {
+    width: 80%;
+  }
+}

@@ -1,0 +1,108 @@
+
+$sizeTopMenu: 15%;
+$sizeSideBar: 102.23px;
+
+$backgroundColorSideBar: #1B1C1D;
+
+
+$greyTopBarBackgroundColor:#3F3F3F;
+$inactiveTabBackgroundColor:#24777A;
+$activeTabBackgroundColor:#1BB2BD;
+
+
+.ContainerObjectSelector {
+
+  position:absolute;
+  top: $sizeTopMenu;
+  left: $sizeSideBar;
+  width: 180px;
+
+  .ui.grid {
+
+    margin-bottom: 14px;
+  }
+  .ui.segment {
+    border: none;
+    background-color: $greyTopBarBackgroundColor;
+  }
+
+  .ui.tabular.menu .item {
+    color: white;
+    width: 50%;
+    background-color: $greyTopBarBackgroundColor;
+  }
+
+  .eight.wide.column {
+      padding: 0;
+  }
+
+  .ui.teal.basic.huge.button {
+    height: 100%;
+    width: 100%;
+    border-radius: 0px;
+  }
+
+  .ui.white.basic.huge.button {
+    height: 100%;
+    width: 100%;
+    border-radius: 0px;
+  }
+
+  .a .active.item {
+    background-color: $activeTabBackgroundColor;
+  }
+  /*
+  .ui.items :hover {
+
+  }
+
+  .ui.items {
+  }
+
+  .ui.items > .item > .content > .header:not(.ui) {
+
+    font-size: small;
+    //color: teal;
+    color: white;
+  }
+
+
+  .ui.tabular.menu .item {
+    color: white;
+    width: 50%;
+    background-color: $greyTopBarBackgroundColor;
+  }
+
+
+
+  .ui.tabular.menu .active.item {
+    background-color:  teal;
+  }
+
+  .ui.segment {
+    border: none;
+    background-color: $greyTopBarBackgroundColor;
+  }
+  .container{
+
+  }
+
+  .ui {
+
+    &.attached {
+
+      &.tabular{
+
+        &.menu{
+          &.item {
+
+            width: 50%;
+            background-color: yellow;
+          }
+
+        }
+      }
+    }
+  }*/
+
+}

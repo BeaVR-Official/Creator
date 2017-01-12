@@ -1,7 +1,8 @@
 // set the scene size
 const sceneSettings = {
-  width:  500,
-  height: 500
+  width:  window.innerWidth,
+  height: window.innerHeight,
+  backgroundColor: 0xB9B9B9
 };
 // set some camera attributes
 const camSettings   = {
@@ -16,8 +17,8 @@ const camSettings   = {
 
 // set scene canvas positions
 const canvasSettings = {
-  width: $('.categories-left-panel').width() + $('.properties-left-panel').outerWidth(),
-  height: $('.nav-container').height()
+  width: window.innerWidth,
+  height: window.innerHeight + $(".TopBarSelector").height()
 };
 
 class Constants {

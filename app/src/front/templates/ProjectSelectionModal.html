@@ -1,0 +1,35 @@
+<div class="ui dimmer modals page transition visible active">
+    <div class="ui modal transition visible active beavr-anim" id="project_selection_modal">
+        <div class="header">
+            Ouvrir un projet
+        </div>
+        <div class="content">
+            <div class="ui relaxed divided list">
+                <% _.each(object, function(object, i){  %> 
+                <div class="item projectSelected" data-id="<%- object.id %>">
+                    <i class="large cloud download middle aligned icon"></i>
+                    <div class="content">
+                        <a class="header"><%- object.name %></a>
+                        <div class="description">Dernière modification le 24/10/2016 à 14h42</div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            <div class="ui horizontal divider">
+                Ou
+            </div>
+            <div class="ui center aligned basic segment" id="project_creation_button_user">
+                <div class="ui teal labeled icon button">
+                    Créer un nouveau projet
+                    <i class="add icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui black negative labeled icon button" id="disconnect_button">
+                Se déconnecter
+                <i class="sign out icon"></i>
+            </div>
+        </div>
+    </div>
+</div>

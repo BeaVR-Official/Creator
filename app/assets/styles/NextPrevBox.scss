@@ -1,0 +1,46 @@
+.NextPrevBox {
+  //Libère zone de clic
+  //width: 350px;
+  //height: 30px;
+  //text-align: right;
+
+  .buttons{
+    margin-right: 20px;
+
+
+    :hover {
+      background: rgba(0, 131,155, 0.8)  !important;
+    }
+    .button{
+      margin-left: 0px !important;
+      background: rgba(0, 188,212, 0.8);
+      color: white;
+
+      &.active {
+        background: rgba(0, 131,155, 0.8)  !important;
+      }
+
+    }
+
+  }
+
+  .ui.basic.primary.button {
+    box-shadow: 0 0 0 1px #00BCD4 inset !important;
+
+    i {
+      color: rgba(0, 188,212, 1);
+    }
+  }
+
+  button.primary.button {
+    width: 100px;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    box-shadow: 0 0 0 1px #00BCD4 inset !important;
+
+    i {
+      font-size: 20px;
+    }
+
+  }
+}

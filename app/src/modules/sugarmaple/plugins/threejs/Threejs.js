@@ -42,7 +42,7 @@ class Threejs extends AbstractPlugin {
 
     if (object !== undefined) {
       this.tree.iterateOver(rootNode, iNode => {
-        if (iNode.data.uuid === object.uuid)
+        if (iNode.data.attributes.uuid === object.attributes.uuid)
           node = iNode;
       });
     }

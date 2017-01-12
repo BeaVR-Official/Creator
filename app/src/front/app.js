@@ -1,32 +1,32 @@
 /**
- * Created by kersal_e on 27/07/2016.
+ * Created by ekersale on 08/11/2016.
  */
 
-import Router from './router';
+import Router from './Router';
 import Loader from './utils';
+import Backbone from 'backbone';
+import $ from 'jquery';
+
+import ThreeJSCanvasEvents from './ThreeJSCanvasEvents';
+
+require('../../assets/styles/Fonts.scss');
+require('../../assets/styles/Main.scss');
 
 class Application {
-  constructor() {
-    Loader.loadTemplates([
-      'TopMenu',
-      'LeftMenuCategories',
-      'ObjectMenu',
-      'PropertiesPanel',
-      'ProjectPanel',
-      'ScenePanel',
-      'ProjectHandler',
-      'ScriptsMenu',
-      'ActionBlock',
-      'ActionBlockParams',
-      'ProjectHandler',
-      'ExternalObject',
-      'WorldCustomization'], function() {
-      new Router();
-      Backbone.history.start();
-    });
-  }
+    constructor() {
+        Loader.loadTemplates(['LeftBar', 'ContainerObject', 'ModalSelectFile', 'ModalSelectMenu',
+                'AuthModal', 'RegisterModal', 'ResetPasswordModal', 'ProjectSelectionModal',
+                'ProjectCreationModal', 'SettingsBox', 'NextPrevBox', 'ToolsBox', 'TopBar',
+                'BasicObject', 'LeftBarSub', 'ProjectConfIn'],
+            function() {
+                new Router();
+                Backbone.history.start();
+              new ThreeJSCanvasEvents();
+            }
+        );
+    }
 }
 
 $(() => {
-  new Application();
+    new Application();
 });

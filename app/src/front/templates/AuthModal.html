@@ -1,0 +1,65 @@
+<div class="ui dimmer modals page transition visible active">
+    <div class="ui modal transition visible active beavr-anim" id="login_modal">
+        <div class="header">
+            Se connecter
+        </div>
+        <div class="image content">
+            <div class="ui medium image">
+                <img src="assets/images/beavr_logo.png" class="beavr-logo" alt="Logo BeaVR" />
+            </div>
+            <div class="description">
+                <div class="ui header">Connectez-vous pour récupérer un projet.</div>
+                <form class="ui form fluid warning" name="connectionForm">
+                    <div class="required field">
+                        <div class="ui left icon input">
+                            <i class="mail icon"></i>
+                            <input id="login_email" type="email" name="email" placeholder="Adresse e-mail" required>
+                        </div>
+                    </div>
+                    <div class="required field">
+                        <div class="ui action left icon input">
+                            <i class="lock icon"></i>
+                            <input id="login_password" type="password" name="password" placeholder="Mot de passe" required>
+                            <button type="button" class="ui teal right labeled icon button" id="reset_password">
+                                <i class="privacy icon"></i>
+                                <p>Mot de passe oublié ?</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="checkbox" tabindex="0">
+                            <label>Se souvenir de moi</label>
+                        </div>
+                    </div>
+                    <div class="ui buttons">
+                        <div class="ui button" id="register_button">S'inscrire</div>
+                        <div class="or" data-text="ou"></div>
+                        <button type="submit" class="ui positive button" id="login_button">Se connecter</button>
+                    </div>
+                    <button type="button" class="ui facebook button social-network-buttons">
+                        <i class="facebook icon"></i>
+                        Facebook
+                    </button>
+                    <button type="button" class="ui google plus button">
+                        <i class="google plus icon"></i>
+                        Google Plus
+                    </button>
+                </form>
+                <div id="login_error_message" class="ui warning message hidden">
+                    <div class="header">Erreur lors de la connexion</div>
+                    <ul class="list">
+                        <li>Cet utilisateur n'existe pas ou le mot de passe renseigné est incorrect</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui blue right labeled icon button" id="project_creation_button">
+                Créer un projet sans se connecter
+                <i class="plus icon"></i>
+            </div>
+        </div>
+    </div>
+</div>
+

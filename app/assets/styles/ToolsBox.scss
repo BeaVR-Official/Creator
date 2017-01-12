@@ -1,0 +1,93 @@
+.ToolsBox {
+
+  margin:auto !important;
+  //Libère zone de clic
+  //width: 20%;
+  height: auto;
+  width: 100%;
+  text-align: center !important;
+  background: rgb(47, 197, 218);
+
+  -moz-border-radius: 0px 0px 7px 7px;
+  -webkit-border-radius: 0px 0px 7px 7px;
+  border-radius: 0px 0px 7px 7px;
+
+  -moz-box-shadow: 0px 0px 6px #000000;
+  -webkit-box-shadow: 0px 0px 6px #000000;
+  box-shadow: 0px 0px 6px #000000;
+
+  opacity: 1;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity = 100);
+  filter: alpha(opacity = 100);
+
+    .column {
+      .button {
+
+        &:hover{
+          background:transparent !important;
+        }
+
+        &:active {
+          background: transparent !important;
+          i {
+            color: black;
+          }
+        }
+
+        &:focus {
+          background: transparent !important;
+
+
+        }
+
+        padding: 0 !important;
+        box-shadow: none !important;
+        i {
+          color:white;
+          font-size:20px !important;
+        }
+      }
+  }
+
+  &.BoxExpend {
+    visibility: hidden;
+    width: 40px;
+    float: right;
+
+    .button {
+      margin: auto;
+      box-shadow: none !important;
+
+      &:hover{
+        background:transparent !important;
+      }
+
+      &:active {
+        background: transparent !important;
+        i {
+          color: black;
+        }
+      }
+
+      &:focus {
+        background: transparent !important;
+      }
+    }
+
+    i {
+      color:red;
+    }
+  }
+}
+
+
+.visibleBox {
+  display: block;
+  visibility: visible !important;
+  margin-right: -171% !important;
+}
+
+.hiddenBox {
+  visibility: hidden !important;
+  margin-right: 0 !important;
+}

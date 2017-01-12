@@ -1,9 +1,8 @@
-const path          = require('path');
 const webpack       = require('webpack');
-const OfflinePlugin = require('offline-plugin');
+const path          = require('path');
 
 module.exports = {
-  entry:   {
+  entry: {
     creator: __dirname + '/app/src/creator.js',
     runner:  __dirname + '/app/src/runner.js',
     tests:   __dirname + '/app/tests/tests.js'
@@ -17,9 +16,29 @@ module.exports = {
   module:  {
     loaders: [
       {
-        test:    /\.js$/,
-        //loader:  'babel-loader', //TODO: décommenter sous Windows
-        exclude: /(node_modules)/
+        loader: "babel-loader",
+
+        // Skip any files outside of your project's `src` directory
+        include: [
+          __dirname, "/app/src"
+        ],
+
+        exclude: [
+          __dirname + "/node_modules",
+        ],
+        // Only run `.js` and `.jsx` files through Babel
+        test: /\.jsx?$/,
+
+        // Options to configure babel with
+        query: {
+          plugins: ['transform-runtime'],
+          presets: ['es2015'],
+        }
+      },
+      {
+        test: /\.scss$/,
+        include: [__dirname, "/app/assets/styles"],
+        loaders: ["style", "css", "sass"]
       }
     ]
   },

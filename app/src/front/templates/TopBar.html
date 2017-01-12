@@ -1,0 +1,33 @@
+<div class="TopBar">
+    <div class="ui grid">
+        <div id="logo" class="one wide column">
+            <img class="ui image" src="assets/images/2017_logo_beavr.png">
+        </div>
+        <div id="tab-bar" class="fifteen wide column">
+            <div id="tab-bar-inner" class="ui top attached tabular menu all-tabs">
+                <a class="item project-tab">
+                    <div class="inside">
+                        <img src="assets/images/default-user.png">
+                        <span id=ProjectName">Project Name</span>
+                    </div>
+                </a>
+                <div id="scene-tabs">
+                    <!--<a class="item tab" data-tab="first">
+                        <div class="ui disabled transparent input">
+                            <input class="tab-input" type="text" value="First">
+                            <i class="hidden edit icon"></i>
+                        </div>
+                        <span class="close-cross">x</span>
+                    </a>-->
+                </div>
+                <a class="item add-tab"><span>+</span></a>
+            </div>
+        </div>
+    </div>
+    <div id="content" style="visibility: hidden; height: 0px;">
+    </div>
+
+    <script>
+      $('.menu .item').tab();
+    </script>
+</div>
