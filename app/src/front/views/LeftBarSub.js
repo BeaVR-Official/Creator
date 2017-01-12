@@ -105,13 +105,7 @@ class LeftBarView extends Backbone.View {
         resource: resource||""
       };
       // TODO filtré entre les dif obj via un data.typeObj
-      EventManager.emitEvent('addObject', data)
-                  .then((res) => {
-                    if (res.uuid) {
-                      console.log("LEFTBARSUB", res);
-                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
-                    }
-                  });
+      EventManager.emitEvent('addObject', data);
     }
     else {
       let data = {
@@ -119,11 +113,7 @@ class LeftBarView extends Backbone.View {
         objectType: ($(event.target).closest('.addObject').attr('data-name')),
         path: addType
       };
-      EventManager.emitEvent('addExternal', data)
-                  .then((res) => {
-                    if (res.uuid)
-                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
-                  });
+      EventManager.emitEvent('addExternal', data);
     }
 
   }

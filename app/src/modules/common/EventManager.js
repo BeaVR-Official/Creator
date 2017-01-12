@@ -137,7 +137,12 @@ class EventManager extends EventEmitter {
       objectDesc.setTextureBddId(data.resource);
 
       data.uuid = GraphicalManager.addObject(objectUuid);
-      LeftBarSugarMaple.addObject(data.uuid);
+      if (data.uuid) {
+        GraphicalManager.selectObject(data.uuid);
+        LeftBarSugarMaple.addObject(data.uuid);
+        data.selectedObjDesc = objectDesc;
+        that.emitEvent('GM.objectSelected', data);
+      }
     });
 
     this.on('addLight', function (data) {
