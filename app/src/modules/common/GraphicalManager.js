@@ -33,15 +33,14 @@ class GraphicalManager {
    * @private
    */
   _adaptToWindow() {
-    let parentWidth  = Constants.getCanvasSettings().width;
-    let parentHeight = Constants.getCanvasSettings().height;
+    let parentWidth  = $(window).width();
+    let parentHeight = $(window).height() + $(".TopBarSelector").height();
 
     this.camera.aspect = parentWidth / parentHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(parentWidth, parentHeight);
     this.render();
   }
-
 
   _initViewPort(htmlAnchor) {
     // Init SceneView renderer
@@ -158,7 +157,6 @@ class GraphicalManager {
 // ////////////////////////
   _sceneFactory() {
     this._createScene();
-    this._adaptToWindow();
 
     let sceneDesc   = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let allObjDescs = sceneDesc.getAllObjectDescriptors();
@@ -169,7 +167,7 @@ class GraphicalManager {
       that._objectFactory(objDesc);
 
     });
-    // this.render();
+    this.render();
   }
 
   /**
@@ -177,6 +175,8 @@ class GraphicalManager {
    * @private
    */
   _createScene() {
+    $(window).resize(() => this._adaptToWindow());
+
     if (this.editorMod) {
       this.threeScene  = new THREE.Scene();
       this.helperScene = new THREE.Scene();
