@@ -175,15 +175,22 @@ class Sortable extends AbstractPlugin {
   addRelativelyToOverNode($element) {
     if (this.$helper.pos === 'top') {
       // Cannot append Node to the top of Root
-      if (this.tree.isRoot(this.$overNode.data('node')))
-        return false;
+      // if (this.tree.isRoot(this.$overNode.data('node')))
+      //   return false;
       // Check if the top receiver ( = parent of overed node) is able to receive
       const $topParent = this.$overNode.parents('.node').eq(0).find('.node-content').eq(0);
       if ($topParent.droppable('instance') !== undefined) {
         $element.insertBefore(this.$overNode); // move in ui
         if ($element !== this.$placeHolder) { // move in tree data
-          const parent = this._nodeFromElement($topParent);
+          const parent = this._nodeFromElement($topParent) || this.tree.getRoot(); //FIX by vinxit
           const moved = this._nodeFromElement($element);
+
+          // if (!moved)
+          //   return false;
+          // console.log("1.SM TOPPARENT", this._nodeFromElement($topParent));
+          // console.log("1.SM. parent", parent);
+          // console.log("1.SM. moved", moved);
+
           this.tree.attach(parent, moved);
           this._trigger('dropped', [parent, moved]);
         }
@@ -194,8 +201,15 @@ class Sortable extends AbstractPlugin {
       if ($bottomParent.droppable('instance') !== undefined) {
         this.$overNode.$child.prepend($element); // move in ui
         if ($element !== this.$placeHolder) { // move in tree data
-          const parent = this._nodeFromElement(this.$overNode);
+          const parent = this._nodeFromElement(this.$overNode) || this.tree.getRoot(); //FIX by vinxit
           const moved = this._nodeFromElement($element);
+
+          // if (!moved)
+          //   return false;
+          // console.log("2.SM TOPPARENT", this._nodeFromElement($bottomParent));
+          // console.log("2.SM. parent", parent);
+          // console.log("2.SM. moved", moved);
+
           this.tree.attach(parent, moved);
           this._trigger('dropped', [parent, moved]);
         }

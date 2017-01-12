@@ -326,6 +326,19 @@ class GraphicalManager {
   }
 
 
+// ////////////////////////
+// Object hierarchy
+// ////////////////////////
+  attachNewParent(parentUid, objectUuid) {
+    let parent = this.threeScene.getObjectByName(parentUid);
+    let object = this.threeScene.getObjectByName(objectUuid);
+
+    console.log("GM -- Parent on attach ", parent);
+
+    THREE.SceneUtils.detach(object, parent, this.threeScene);
+    THREE.SceneUtils.attach(object, this.threeScene, parent);
+    this.render();
+  }
 
 
 // ////////////////////////

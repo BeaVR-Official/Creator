@@ -92,12 +92,17 @@ class LeftBarSugarMaple {
     });
 
     this.smTree.on('sortable.dragged', (e, node) => {
-      console.log("dragged!!", node);
       // TODO ScenePanel.default.onDragged(node);
     });
 
     this.smTree.on('sortable.dropped', (e, newParent, node) => {
       console.log("dropped!!", node);
+      console.log("dropped parent", newParent);
+      let data = {
+        objectDescDropped: node.data,
+        objectDescNewParent: newParent.data
+      };
+      EventManager.emitEvent('treeview.droppedObj', data);
       // TODO ScenePanel.default.onDropped(newParent, node);
     });
 

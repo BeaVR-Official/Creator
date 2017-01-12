@@ -25,9 +25,9 @@ class EventManager extends EventEmitter {
     // Creator Commands event
     // ////////////////////////
     this.on('addScene', (data) => {
-      let sceneUuid = ProjectManager.addScene(data.sceneName);
+      let sceneUuid           = ProjectManager.addScene(data.sceneName);
       that.lastAddedSceneUuid = sceneUuid;
-      data.scene = ProjectManager.getSceneDescriptor(sceneUuid);
+      data.scene              = ProjectManager.getSceneDescriptor(sceneUuid);
 
       GraphicalManager.setCurrentSceneUuid(sceneUuid);
       LeftBarSugarMaple.initializeSugar();
@@ -58,7 +58,6 @@ class EventManager extends EventEmitter {
       // TODO refresh Scene(s) Name(s) if display on creator (eg: TreeView)
     });
 
-
     // ////////////////////////
     // Treeview events
     // ////////////////////////
@@ -72,6 +71,15 @@ class EventManager extends EventEmitter {
 
       if (GraphicalManager.getSelectedObject().name === data.objectDesc.attributes.uuid)
         GraphicalManager.deselectObject();
+    });
+
+    this.on('treeview.droppedObj', (data) => {
+      let parentUuid = data.objectDescNewParent.attributes.uuid;
+      let childUuid  = data.objectDescDropped.attributes.uuid;
+
+      if (ProjectManager.addObjectChild(this.lastAddedSceneUuid, parentUuid, childUuid)) {
+        GraphicalManager.attachNewParent(parentUuid, childUuid);
+      }
     });
 
     // ////////////////////////
@@ -149,7 +157,7 @@ class EventManager extends EventEmitter {
       // TODO: I THINK THIS IS COMPLETELY USELESS
       console.log("added light");
       let objectUuid = ProjectManager.addObject(data.objectName, data.objectType);
-      data.uuid = GraphicalManager.addObject(objectUuid);
+      data.uuid      = GraphicalManager.addObject(objectUuid);
       LeftBarSugarMaple.addObject(data.uuid);
     });
 
