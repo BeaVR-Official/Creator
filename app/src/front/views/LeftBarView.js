@@ -60,10 +60,10 @@ class LeftBarView extends Backbone.View {
 
   openMaterials() {
     var objects = [];
-    objects.push({name: "Sable", logo: 'assets/images/sand.png', type: 'ground', resource:'assets/images/groundTex/ground_1.png', typeOfImport: 'default'});
-    objects.push({name: "Pierre", logo: 'assets/images/stone.png', type: 'ground', resource:'assets/images/groundTex/ground_2.png', typeOfImport: 'default'});
-    objects.push({name: "Herbe", logo: 'assets/images/grass.png', type: 'ground', resource:'assets/images/groundTex/ground_3.png', typeOfImport: 'default'});
-    objects.push({name: "Bois", logo: 'assets/images/wood.png', type: 'ground', resource:'assets/images/groundTex/ground_4.png', typeOfImport: 'default'});
+    objects.push({name: "Sable", logo: 'assets/images/sand.png', type: 'ground', resource:'assets/images/groundTex/ground_4.png', typeOfImport: 'default'});
+    objects.push({name: "Pierre", logo: 'assets/images/stone.png', type: 'ground', resource:'assets/images/groundTex/ground_3.png', typeOfImport: 'default'});
+    objects.push({name: "Herbe", logo: 'assets/images/grass.png', type: 'ground', resource:'assets/images/groundTex/ground_1.png', typeOfImport: 'default'});
+    objects.push({name: "Bois", logo: 'assets/images/wood.png', type: 'ground', resource:'assets/images/groundTex/ground_2.png', typeOfImport: 'default'});
     // objects.push({name: "Add", logo: 'assets/images/plus.png'});
     this.leftBar.switchLeftBarView({objects: objects});
   }
