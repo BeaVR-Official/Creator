@@ -116,13 +116,13 @@ class GraphicalManager {
 // GM Setter/getter
 // ////////////////////////
 
-  setCurrentSceneUuid(sceneUuid) {
+  setCurrentSceneUuid(sceneUuid, load = false) {
     this.currentSceneUuid = sceneUuid;
     if (this.isSceneChanges()) {
       console.log("Set scene uuid", this.currentSceneUuid);
 
       // Launch SceneFactory
-      this._sceneFactory();
+      this._sceneFactory(load);
     }
   }
 
@@ -158,7 +158,7 @@ class GraphicalManager {
 // ////////////////////////
 // Scene factory
 // ////////////////////////
-  _sceneFactory() {
+  _sceneFactory(load) {
     this._createScene();
 
     let sceneDesc   = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
@@ -167,7 +167,7 @@ class GraphicalManager {
     let that = this;
 
     _.map(allObjDescs, function (objDesc) {
-      that._objectFactory(objDesc);
+      that._objectFactory(objDesc, load);
 
     });
     this.render();
@@ -196,14 +196,14 @@ class GraphicalManager {
 // ////////////////////////
 // Object factory
 // ////////////////////////
-  _objectFactory(objectDescriptor) {
+  _objectFactory(objectDescriptor, load) {
     let objectType = objectDescriptor.getType();
     let obj;
     // trier les lumières des objets standards
     if (objectType === 'ambient' || objectType === 'directional' || objectType === 'point' || objectType === 'spot') {
       obj = this._createLight(objectDescriptor);
     } else {
-      obj = this._createMesh(objectDescriptor);
+      obj = this._createMesh(objectDescriptor, load);
     }
 
     obj.name = objectDescriptor.getUuid();
@@ -216,7 +216,7 @@ class GraphicalManager {
   _createLight() {
   }
 
-  _createMesh(objectDescriptor) {
+  _createMesh(objectDescriptor, load) {
     // TODO handle data material into obj desc
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let geometry = undefined;
@@ -238,7 +238,7 @@ class GraphicalManager {
     // Peut être load en amont
     // TODO @damien si externalObjBddId load obj API (+ PUIS applique puis etre pas dans cette method)
     // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
-    e
+
 
     if (!mesh) {
       mesh               = new THREE.Mesh(geometry, material); //new THREE.Mesh when editor mode !== with physijs
@@ -248,14 +248,18 @@ class GraphicalManager {
     }
 
     // @damien set Transformation avec Tree
-    if (objectDescriptor.getType() != "sky" && objectDescriptor.getType() != "ground") {
+    if (objectDescriptor.getType() != "sky" && objectDescriptor.getType() != "ground" && load == true) {
       mesh.updateMatrix();
       mesh.geometry.applyMatrix( mesh.matrix );
       //If you have previously rendered, you will have to set the needsUpdate flag:
-      // mesh.geometry.verticesNeedUpdate = true;
+      //mesh.geometry.verticesNeedUpdate = true;
       mesh.position.set( objectDescriptor.getPosition().x, objectDescriptor.getPosition().y, objectDescriptor.getPosition().z );
-      mesh.rotation.set( objectDescriptor.getRotation().x, objectDescriptor.getRotation().y, objectDescriptor.getRotation().z );
-      mesh.scale.set( objectDescriptor.getScale().x, objectDescriptor.getScale().y, objectDescriptor.getScale().z )
+      mesh.rotation.set(
+        objectDescriptor.getRotation().x == undefined ? objectDescriptor.getRotation()._x : objectDescriptor.getRotation().x,
+        objectDescriptor.getRotation().y == undefined ? objectDescriptor.getRotation()._y : objectDescriptor.getRotation().y,
+        objectDescriptor.getRotation().z == undefined ? objectDescriptor.getRotation()._z : objectDescriptor.getRotation().z
+      );
+      mesh.scale.set( objectDescriptor.getScale().x, objectDescriptor.getScale().y, objectDescriptor.getScale().z );
     }
 
     return mesh;

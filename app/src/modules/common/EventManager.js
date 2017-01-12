@@ -134,7 +134,7 @@ class EventManager extends EventEmitter {
 
       //Ajout path de la texture (chemin en dur utilisé pour les grounds)
       let objectDesc = ProjectManager.getObjectDescriptor(that.lastAddedSceneUuid, objectUuid);
-      objectDesc.setTextureBddId(data.resource);
+      objectDesc.setTextureBddId(data.resource == undefined ? "" : data.resource );
 
       data.uuid = GraphicalManager.addObject(objectUuid);
       if (data.uuid) {
@@ -157,7 +157,6 @@ class EventManager extends EventEmitter {
       let objectUuid = ProjectManager.addObject(
         data.objectName,
         data.objectType
-        //"externalObj"
       );
       data.uuid = GraphicalManager.addObject(objectUuid, data.path);
       // TODO @Damien save obj or path
