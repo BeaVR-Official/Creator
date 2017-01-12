@@ -58,27 +58,20 @@ class EventManager extends EventEmitter {
       // TODO refresh Scene(s) Name(s) if display on creator (eg: TreeView)
     });
 
-    // ////////////////////////
-    // Creator specific events
-    // ////////////////////////
-    this.on('adaptGraphManToWindow', function (data) {
 
+    // ////////////////////////
+    // Treeview events
+    // ////////////////////////
+    this.on('treeview.checked', (data) => {
+      console.log("EVENT :: ObjectDesc checked", data.objectDesc);
+      GraphicalManager.selectObject(data.objectDesc.attributes.uuid);
     });
 
-    /*
-     data: objectDescriptorUuid
-     */
-    this.on('objectSelected', (data) => {
-      data.objectDesc = ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid);
-      GraphicalManager.attachToTransform(data.objectDesc.attributes.uuid);
-      this.emitEvent('getObjectSelected', data.objectDesc);
-    });
+    this.on('treeview.unchecked', (data) => {
+      console.log("EVENT :: ObjectDesc unchecked", data.objectDesc);
 
-    this.on('objectDeselected', (data) => {
-      if (data.objectUuid) {
-        data.objectDesc = ProjectManager.getObjectDescriptor(ProjectManager.getStartingScene(), data.objectUuid);
-        // GraphicalManager.deselectObject();
-      }
+      if (GraphicalManager.getSelectedObject().name === data.objectDesc.attributes.uuid)
+        GraphicalManager.deselectObject();
     });
 
     // ////////////////////////
@@ -141,10 +134,15 @@ class EventManager extends EventEmitter {
 
       //Ajout path de la texture (chemin en dur utilisé pour les grounds)
       let objectDesc = ProjectManager.getObjectDescriptor(that.lastAddedSceneUuid, objectUuid);
-      objectDesc.setTextureBddId(data.resource);
+      objectDesc.setTextureBddId(data.resource == undefined ? "" : data.resource );
 
       data.uuid = GraphicalManager.addObject(objectUuid);
-      LeftBarSugarMaple.addObject(data.uuid);
+      if (data.uuid) {
+        GraphicalManager.selectObject(data.uuid);
+        LeftBarSugarMaple.addObject(data.uuid);
+        data.selectedObjDesc = objectDesc;
+        that.emitEvent('GM.objectSelected', data);
+      }
     });
 
     this.on('addLight', function (data) {
@@ -160,7 +158,8 @@ class EventManager extends EventEmitter {
         data.objectName,
         data.objectType
       );
-      data.uuid = GraphicalManager.addExternalObject(objectUuid, data.path);
+      data.uuid = GraphicalManager.addObject(objectUuid, data.path);
+      // TODO @Damien save obj or path
     });
 
     this.on('addSky', function (data) {

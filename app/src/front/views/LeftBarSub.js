@@ -52,20 +52,22 @@ class LeftBarView extends Backbone.View {
     var path = (window.URL || window.webkitURL).createObjectURL($(".fileInput")[0].files[0]);
     var name = $("#modelName").val();
     this.objects.splice(this.objects.length - 1, 0, {name: name, logo:'assets/images/objectSpe.png', type:path, typeOfImport: 'imported'});
+    $('.small.modal.addExtObject').removeClass('active');
+    $('.small.modal.addExtObject').removeClass('visible');
+    $('.modals.addExtObject').removeClass('active');
+    $('.modals.addExtObject').removeClass('visible');
     this.render();
+
   }
 
   CloseModal(event) {
-    if (event.target.className == "ui button sendObj") {
-      this.UploadObj();
-    }
     if (event.target.className == "ui dimmer modals page transition hidden active visible" || 
         event.target.className == "close icon" ||
         event.target.className == "ui button close") {
-      $('.small.modal').removeClass('active');
-      $('.small.modal').removeClass('visible');
-      $('.modals').removeClass('active');
-      $('.modals').removeClass('visible');
+      $('.small.modal.addExtObject').removeClass('active');
+      $('.small.modal.addExtObject').removeClass('visible');
+      $('.modals.addExtObject').removeClass('active');
+      $('.modals.addExtObject').removeClass('visible');
     }
   }
 
@@ -89,12 +91,12 @@ class LeftBarView extends Backbone.View {
     let resource = ($(event.target).closest('.addObject').attr('data-resource'));
 
     if (addType == 'add') {
-      $('.modals').addClass('active');
-      $('.modals').addClass('visible');
-      $('.modals').animateCssIn('fadeIn');
-      $('.small.modal').addClass('active');
-      $('.small.modal').addClass('visible');
-      $('.small.modal').animateCssIn('zoomIn');
+      $('.modals.addExtObject').addClass('active');
+      $('.modals.addExtObject').addClass('visible');
+      $('.modals.addExtObject').animateCssIn('fadeIn');
+      $('.small.modal.addExtObject').addClass('active');
+      $('.small.modal.addExtObject').addClass('visible');
+      $('.small.modal.addExtObject').animateCssIn('zoomIn');
       return;
     }
     console.log(typeOfImport);
@@ -105,13 +107,7 @@ class LeftBarView extends Backbone.View {
         resource: resource||""
       };
       // TODO filtré entre les dif obj via un data.typeObj
-      EventManager.emitEvent('addObject', data)
-                  .then((res) => {
-                    if (res.uuid) {
-                      console.log("LEFTBARSUB", res);
-                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
-                    }
-                  });
+      EventManager.emitEvent('addObject', data);
     }
     else {
       let data = {
@@ -119,11 +115,7 @@ class LeftBarView extends Backbone.View {
         objectType: ($(event.target).closest('.addObject').attr('data-name')),
         path: addType
       };
-      EventManager.emitEvent('addExternal', data)
-                  .then((res) => {
-                    if (res.uuid)
-                      EventManager.emitEvent('objectSelected', {objectUuid: res.uuid});
-                  });
+      EventManager.emitEvent('addExternal', data);
     }
 
   }

@@ -33,8 +33,8 @@ class GraphicalManager {
    * @private
    */
   _adaptToWindow() {
-    let parentWidth  = Constants.getCanvasSettings().width;
-    let parentHeight = Constants.getCanvasSettings().height;
+    let parentWidth  = $(window).width();
+    let parentHeight = $(window).height() + $(".TopBarSelector").height();
 
     this.camera.aspect = parentWidth / parentHeight;
     this.camera.updateProjectionMatrix();
@@ -116,13 +116,13 @@ class GraphicalManager {
 // GM Setter/getter
 // ////////////////////////
 
-  setCurrentSceneUuid(sceneUuid) {
+  setCurrentSceneUuid(sceneUuid, load = false) {
     this.currentSceneUuid = sceneUuid;
     if (this.isSceneChanges()) {
       console.log("Set scene uuid", this.currentSceneUuid);
 
       // Launch SceneFactory
-      this._sceneFactory();
+      this._sceneFactory(load);
     }
   }
 
@@ -151,12 +151,15 @@ class GraphicalManager {
   //   this.mouseMoving = moving;
   // }
 
+  getSelectedObject() {
+    return this.selectedObject;
+  }
+
 // ////////////////////////
 // Scene factory
 // ////////////////////////
-  _sceneFactory() {
+  _sceneFactory(load) {
     this._createScene();
-    this._adaptToWindow();
 
     let sceneDesc   = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let allObjDescs = sceneDesc.getAllObjectDescriptors();
@@ -164,10 +167,10 @@ class GraphicalManager {
     let that = this;
 
     _.map(allObjDescs, function (objDesc) {
-      that._objectFactory(objDesc);
+      that._objectFactory(objDesc, load);
 
     });
-    // this.render();
+    this.render();
   }
 
   /**
@@ -175,6 +178,8 @@ class GraphicalManager {
    * @private
    */
   _createScene() {
+    $(window).resize(() => this._adaptToWindow());
+
     if (this.editorMod) {
       this.threeScene  = new THREE.Scene();
       this.helperScene = new THREE.Scene();
@@ -190,14 +195,14 @@ class GraphicalManager {
 // ////////////////////////
 // Object factory
 // ////////////////////////
-  _objectFactory(objectDescriptor) {
+  _objectFactory(objectDescriptor, load) {
     let objectType = objectDescriptor.getType();
     let obj;
     // trier les lumières des objets standards
     if (objectType === 'ambient' || objectType === 'directional' || objectType === 'point' || objectType === 'spot') {
       obj = this._createLight(objectDescriptor, objectType);
     } else {
-      obj = this._createMesh(objectDescriptor);
+      obj = this._createMesh(objectDescriptor, load);
     }
 
     obj.name = objectDescriptor.getUuid();
@@ -262,7 +267,7 @@ class GraphicalManager {
     return (picker);
   }
 
-  _createMesh(objectDescriptor) {
+  _createMesh(objectDescriptor, load) {
     // TODO handle data material into obj desc
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let geometry = undefined;
@@ -284,13 +289,28 @@ class GraphicalManager {
     // Peut être load en amont
     // TODO @damien si externalObjBddId load obj API (+ PUIS applique puis etre pas dans cette method)
     // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
-    // TODO @damien set Transformation avec Tree
+
 
     if (!mesh) {
       mesh               = new THREE.Mesh(geometry, material); //new THREE.Mesh when editor mode !== with physijs
       mesh.mirroredLoop  = true;
       mesh.castShadow    = true;
       mesh.receiveShadow = true;
+    }
+
+    // @damien set Transformation avec Tree
+    if (objectDescriptor.getType() != "sky" && objectDescriptor.getType() != "ground" && load == true) {
+      mesh.updateMatrix();
+      mesh.geometry.applyMatrix( mesh.matrix );
+      //If you have previously rendered, you will have to set the needsUpdate flag:
+      //mesh.geometry.verticesNeedUpdate = true;
+      mesh.position.set( objectDescriptor.getPosition().x, objectDescriptor.getPosition().y, objectDescriptor.getPosition().z );
+      mesh.rotation.set(
+        objectDescriptor.getRotation().x == undefined ? objectDescriptor.getRotation()._x : objectDescriptor.getRotation().x,
+        objectDescriptor.getRotation().y == undefined ? objectDescriptor.getRotation()._y : objectDescriptor.getRotation().y,
+        objectDescriptor.getRotation().z == undefined ? objectDescriptor.getRotation()._z : objectDescriptor.getRotation().z
+      );
+      mesh.scale.set( objectDescriptor.getScale().x, objectDescriptor.getScale().y, objectDescriptor.getScale().z );
     }
 
     return mesh;
@@ -332,23 +352,6 @@ class GraphicalManager {
     return new THREE.Mesh(geometry, skyMaterial);
   }
 
-// ////////////////////////
-// Add Things events
-// ////////////////////////
-
-  addObject(objectUuid) {
-    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
-    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
-
-    console.log("----Add object GM----");
-    console.log("Scene desc", sceneDescriptor);
-    console.log("Obj Desc", objectDescriptor);
-    console.log("---------------------");
-
-    return this._objectFactory(objectDescriptor);
-  }
-
-// TODO cette méthode doit s'effectuer dans _createMesh() -> @damien
   addExternalObject(objectUuid, path) {
     let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
@@ -370,15 +373,46 @@ class GraphicalManager {
     return objectDescriptor.getUuid();
   }
 
+
+// ////////////////////////
+// Add Things events
+// ////////////////////////
+
+  addObject(objectUuid) {
+    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
+    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
+
+    console.log("----Add object GM----");
+    console.log("Scene desc", sceneDescriptor);
+    console.log("Obj Desc", objectDescriptor);
+    console.log("---------------------");
+
+    return this._objectFactory(objectDescriptor);
+  }
+
+// TODO cette méthode doit s'effectuer dans _createMesh() -> @damien
+
+
+
+
+
 // ////////////////////////
 // Click methods
 // ////////////////////////
   _raycastingSelection() {
+    let data = {
+      deselectedObjDesc: (this.selectedObject) ? ProjectManager.getObjectDescriptor(this.currentSceneUuid, this.selectedObject.name) : undefined,
+      selectedObjDesc: undefined
+    };
+    EventManager.emitEvent('GM.objectDeselected', data);
     this.deselectObject();
 
     let closestObject = this._getClosestObject(); // objDesc uuid into name
-    if (closestObject !== undefined)
-      this.selectObject(closestObject);
+    if (closestObject !== undefined) {
+      this.selectObject(closestObject.name);
+      data.selectedObjDesc = ProjectManager.getObjectDescriptor(this.currentSceneUuid, closestObject.name)
+      EventManager.emitEvent('GM.objectSelected', data);
+    }
   }
 
   _getClosestObject() {
@@ -390,14 +424,15 @@ class GraphicalManager {
     return undefined;
   }
 
-  selectObject(object) {
+  selectObject(objectUuid) {
+    let object = this.threeScene.getObjectByName(objectUuid);
+
     this.selectedObject = object;
-    EventManager.emitEvent('objectSelected', {objectUuid: object.name});
+    this.attachToTransform(object);
   }
 
   deselectObject() {
     if (this.selectedObject !== undefined) {
-      EventManager.emitEvent('objectDeselected', {objectUuid: this.selectedObject.name});
       this.selectedObject = undefined;
       this.transformControls.detach();
       this.render();
@@ -419,11 +454,8 @@ class GraphicalManager {
     }
   }
 
-  attachToTransform(objectUuid) {
-    let object = this.threeScene.getObjectByName(objectUuid);
-
+  attachToTransform(object) {
     if (object) {
-      this.deselectObject();
       this.selectedObject = object;
       this.transformControls.attach(object);
       this.render();

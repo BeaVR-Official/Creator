@@ -363,7 +363,7 @@ class ProjectManager {
   // RELOAD at save and change of scene
   reloadScene(sceneUuid = this.startingSceneUuid) {
     let sceneDescriptor = this.getSceneDescriptor(sceneUuid);
-    GraphicalManager.setCurrentSceneUuid(sceneUuid);
+    GraphicalManager.setCurrentSceneUuid(sceneUuid, true);
     //EventManagerOnFront.emitEvent('loadScene', sceneDescriptor);
     // TODO @damien (peut etre en amont fill treeview)
   }
