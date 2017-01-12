@@ -74,13 +74,17 @@ class LeftBarSugarMaple {
    */
   sugarMapleEvents() {
     this.smTree.on('checkable.checked', (e, node) => {
-      console.log("checked!!", node);
-      // TODO ScenePanel.default.onChecked(node);
+      let data = {
+        objectDesc: node.data
+      };
+      EventManager.emitEvent('treeview.checked', data);
     });
 
     this.smTree.on('checkable.unchecked', (e, node) => {
-      console.log("unchecked!!", node);
-      // TODO ScenePanel.default.onUnchecked();
+      let data = {
+        objectDesc: node.data
+      };
+      EventManager.emitEvent('treeview.unchecked', data);
     });
 
     this.smTree.on('sortable.dragged', (e, node) => {
@@ -103,14 +107,16 @@ class LeftBarSugarMaple {
    * Events send by SceneView
    */
   sceneEvents() {
-    EventManager.on('getObjectSelected', object => {
-      let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object);
+    EventManager.on('GM.objectSelected', data => {
+      let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', data.selectedObjDesc);
       this.smTree.sugarmaple('checkable.setCheck', smNode, true);
     });
 
-    EventManager.on('objectDeselected', object => {
-      let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', object.objectDesc);
-      this.smTree.sugarmaple('checkable.setCheck', smNode, false);
+    EventManager.on('GM.objectDeselected', data => {
+      if (data.deselectedObjDesc) {
+        let smNode = this.smTree.sugarmaple('threejs.getNodeFromObject', data.deselectedObjDesc);
+        this.smTree.sugarmaple('checkable.setCheck', smNode, false);
+      }
     });
 
     EventManager.on('removedObject', object => {

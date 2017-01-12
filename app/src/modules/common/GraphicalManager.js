@@ -151,6 +151,9 @@ class GraphicalManager {
   //   this.mouseMoving = moving;
   // }
 
+  getSelectedObject() {
+    return this.selectedObject;
+  }
 
 // ////////////////////////
 // Scene factory
@@ -329,11 +332,19 @@ class GraphicalManager {
 // Click methods
 // ////////////////////////
   _raycastingSelection() {
+    let data = {
+      deselectedObjDesc: (this.selectedObject) ? ProjectManager.getObjectDescriptor(this.currentSceneUuid, this.selectedObject.name) : undefined,
+      selectedObjDesc: undefined
+    };
+    EventManager.emitEvent('GM.objectDeselected', data);
     this.deselectObject();
 
     let closestObject = this._getClosestObject(); // objDesc uuid into name
-    if (closestObject !== undefined)
-      this.selectObject(closestObject);
+    if (closestObject !== undefined) {
+      this.selectObject(closestObject.name);
+      data.selectedObjDesc = ProjectManager.getObjectDescriptor(this.currentSceneUuid, closestObject.name)
+      EventManager.emitEvent('GM.objectSelected', data);
+    }
   }
 
   _getClosestObject() {
@@ -345,14 +356,15 @@ class GraphicalManager {
     return undefined;
   }
 
-  selectObject(object) {
+  selectObject(objectUuid) {
+    let object = this.threeScene.getObjectByName(objectUuid);
+
     this.selectedObject = object;
-    EventManager.emitEvent('objectSelected', {objectUuid: object.name});
+    this.attachToTransform(object);
   }
 
   deselectObject() {
     if (this.selectedObject !== undefined) {
-      EventManager.emitEvent('objectDeselected', {objectUuid: this.selectedObject.name});
       this.selectedObject = undefined;
       this.transformControls.detach();
       this.render();
@@ -374,11 +386,8 @@ class GraphicalManager {
     }
   }
 
-  attachToTransform(objectUuid) {
-    let object = this.threeScene.getObjectByName(objectUuid);
-
+  attachToTransform(object) {
     if (object) {
-      this.deselectObject();
       this.selectedObject = object;
       this.transformControls.attach(object);
       this.render();
