@@ -56,8 +56,8 @@ class SettingsBoxView extends Backbone.View {
 
   eventListener() {
     var that = this;
-    EventManager.on('getObjectSelected', (objectDescriptor) => {
-      that.model.attributes = objectDescriptor.attributes;
+    EventManager.on('GM.objectSelected', data => {
+      that.model.attributes = data.selectedObjDesc.attributes;
       that.render();
     });
   }
