@@ -116,13 +116,13 @@ class GraphicalManager {
 // GM Setter/getter
 // ////////////////////////
 
-  setCurrentSceneUuid(sceneUuid) {
+  setCurrentSceneUuid(sceneUuid, load = false) {
     this.currentSceneUuid = sceneUuid;
     if (this.isSceneChanges()) {
       console.log("Set scene uuid", this.currentSceneUuid);
 
       // Launch SceneFactory
-      this._sceneFactory();
+      this._sceneFactory(load);
     }
   }
 
@@ -158,7 +158,7 @@ class GraphicalManager {
 // ////////////////////////
 // Scene factory
 // ////////////////////////
-  _sceneFactory() {
+  _sceneFactory(load) {
     this._createScene();
 
     let sceneDesc   = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
@@ -167,7 +167,7 @@ class GraphicalManager {
     let that = this;
 
     _.map(allObjDescs, function (objDesc) {
-      that._objectFactory(objDesc);
+      that._objectFactory(objDesc, load);
 
     });
     this.render();
@@ -192,18 +192,17 @@ class GraphicalManager {
       this.threeScene = new Physijs.Scene();
   }
 
-
 // ////////////////////////
 // Object factory
 // ////////////////////////
-  _objectFactory(objectDescriptor) {
+  _objectFactory(objectDescriptor, load) {
     let objectType = objectDescriptor.getType();
     let obj;
     // trier les lumières des objets standards
     if (objectType === 'ambient' || objectType === 'directional' || objectType === 'point' || objectType === 'spot') {
-      obj = this._createLight(objectDescriptor);
+      obj = this._createLight(objectDescriptor, objectType);
     } else {
-      obj = this._createMesh(objectDescriptor);
+      obj = this._createMesh(objectDescriptor, load);
     }
 
     obj.name = objectDescriptor.getUuid();
@@ -213,10 +212,62 @@ class GraphicalManager {
     return obj.name;
   }
 
-  _createLight() {
+  _createLight(objectDescriptor, type) {
+    let light;
+    let helper;
+
+    if (type === 'point') {
+      // create a point light (standard)
+      light  = new THREE.PointLight(0xFFFFFF);
+      helper = new THREE.PointLightHelper(light);
+    }
+    if (type === 'ambient') {
+      // create an ambient light, there is no helper for it
+      light  = new THREE.AmbientLight(0x3F3F3F);
+      helper = undefined;
+    }
+    if (type === 'directional') {
+      //  create a directional light (half intensity)
+      light  = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+      helper = new THREE.DirectionalLightHelper(light);
+    }
+    //  create a spot light
+    if (type === 'spot') {
+      light  = new THREE.SpotLight(0xFFFFFF);
+      helper = new THREE.SpotLightHelper(light);
+    }
+
+    let position = objectDescriptor.getPosition();
+    light.position.set(position.x, position.y, position.z);
+
+    if (this.editorMod === true) {
+      if (helper !== undefined) {
+        this.helperScene.add(helper);
+      }
+      return (this._addPicker(light));
+    }
+    else {
+      return (light);
+    }
   }
 
-  _createMesh(objectDescriptor) {
+  _addPicker(light) {
+    let materialPicker = {
+      visible:   false,
+      color:     0xff0000,  // Debugging display:
+      wireframe: true,      // Active with visible = true
+      fog:       false      //
+    };
+
+    let geometry = new THREE.SphereGeometry(50, 4, 2);
+    let material = new THREE.MeshBasicMaterial(materialPicker);
+    let picker   = new THREE.Mesh(geometry, material);
+
+    picker.add(light);
+    return (picker);
+  }
+
+  _createMesh(objectDescriptor, load) {
     // TODO handle data material into obj desc
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let geometry = undefined;
@@ -238,13 +289,28 @@ class GraphicalManager {
     // Peut être load en amont
     // TODO @damien si externalObjBddId load obj API (+ PUIS applique puis etre pas dans cette method)
     // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
-    // TODO @damien set Transformation avec Tree
+
 
     if (!mesh) {
       mesh               = new THREE.Mesh(geometry, material); //new THREE.Mesh when editor mode !== with physijs
       mesh.mirroredLoop  = true;
       mesh.castShadow    = true;
       mesh.receiveShadow = true;
+    }
+
+    // @damien set Transformation avec Tree
+    if (objectDescriptor.getType() != "sky" && objectDescriptor.getType() != "ground" && load == true) {
+      mesh.updateMatrix();
+      mesh.geometry.applyMatrix( mesh.matrix );
+      //If you have previously rendered, you will have to set the needsUpdate flag:
+      //mesh.geometry.verticesNeedUpdate = true;
+      mesh.position.set( objectDescriptor.getPosition().x, objectDescriptor.getPosition().y, objectDescriptor.getPosition().z );
+      mesh.rotation.set(
+        objectDescriptor.getRotation().x == undefined ? objectDescriptor.getRotation()._x : objectDescriptor.getRotation().x,
+        objectDescriptor.getRotation().y == undefined ? objectDescriptor.getRotation()._y : objectDescriptor.getRotation().y,
+        objectDescriptor.getRotation().z == undefined ? objectDescriptor.getRotation()._z : objectDescriptor.getRotation().z
+      );
+      mesh.scale.set( objectDescriptor.getScale().x, objectDescriptor.getScale().y, objectDescriptor.getScale().z );
     }
 
     return mesh;
@@ -286,24 +352,6 @@ class GraphicalManager {
     return new THREE.Mesh(geometry, skyMaterial);
   }
 
-
-// ////////////////////////
-// Add Things events
-// ////////////////////////
-
-  addObject(objectUuid) {
-    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
-    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
-
-    console.log("----Add object GM----");
-    console.log("Scene desc", sceneDescriptor);
-    console.log("Obj Desc", objectDescriptor);
-    console.log("---------------------");
-
-    return this._objectFactory(objectDescriptor);
-  }
-
-// TODO cette méthode doit s'effectuer dans _createMesh() -> @damien
   addExternalObject(objectUuid, path) {
     let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
@@ -327,6 +375,25 @@ class GraphicalManager {
 
 
 // ////////////////////////
+// Add Things events
+// ////////////////////////
+
+  addObject(objectUuid) {
+    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
+    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
+
+    console.log("----Add object GM----");
+    console.log("Scene desc", sceneDescriptor);
+    console.log("Obj Desc", objectDescriptor);
+    console.log("---------------------");
+
+    return this._objectFactory(objectDescriptor);
+  }
+
+// TODO cette méthode doit s'effectuer dans _createMesh() -> @damien
+
+
+// ////////////////////////
 // Object hierarchy
 // ////////////////////////
   attachNewParent(parentUid, objectUuid) {
@@ -339,7 +406,6 @@ class GraphicalManager {
     THREE.SceneUtils.attach(object, this.threeScene, parent);
     this.render();
   }
-
 
 // ////////////////////////
 // Click methods
@@ -406,8 +472,6 @@ class GraphicalManager {
       this.render();
     }
   }
-
-
 
 // ////////////////////////
 // Not used yet

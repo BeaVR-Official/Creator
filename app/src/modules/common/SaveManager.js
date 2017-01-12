@@ -127,6 +127,16 @@ class SaveManager {
 
   }
 
+  checkExportFile(saveId, sceneDescriptors) {
+    sceneDescriptors.forEach((sceneDescriptor) => {
+      sceneDescriptor.forEach((OD) => {
+        if ((OD).getExternalObjBddId().length > 0) {
+          // upload
+        }
+      })
+    })
+  }
+
   // EXPORT
   exportProject() {
 
