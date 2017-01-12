@@ -60,6 +60,14 @@ export default class ObjectDescriptor extends Backbone.Model {
     this.attributes.textureBddId = texture;
   }
 
+  getExternalObjBddId() {
+    return this.attributes.externalObjBddId;
+  }
+
+  setExternalObjBddId(externalObjBddId) {
+    this.attributes.externalObjBddId = externalObjBddId;
+  }
+
   addChild(objectUuid) {
     this.attributes.children.push(objectUuid);
   }
@@ -157,22 +165,6 @@ export default class ObjectDescriptor extends Backbone.Model {
 
   getVisibilityStatus() {
     return (this.attributes.isVisibilty);
-  }
-
-  setGeometryDescriptor(geometryDescriptor) {
-    this.geometryDescriptor = geometryDescriptor;
-  }
-
-  getGeometryDescriptor() {
-    return this.geometryDescriptor;
-  }
-
-  setMaterialDescriptor(materialDescriptor) {
-    this.materialDescriptor = materialDescriptor;
-  }
-
-  getMaterialDescriptor() {
-    return this.materialDescriptor;
   }
 
   /*

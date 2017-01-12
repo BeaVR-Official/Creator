@@ -159,8 +159,10 @@ class EventManager extends EventEmitter {
       let objectUuid = ProjectManager.addObject(
         data.objectName,
         data.objectType
+        //"externalObj"
       );
-      data.uuid = GraphicalManager.addExternalObject(objectUuid, data.path);
+      data.uuid = GraphicalManager.addObject(objectUuid, data.path);
+      // TODO @Damien save obj or path
     });
 
     this.on('addSky', function (data) {

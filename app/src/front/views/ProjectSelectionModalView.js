@@ -45,13 +45,13 @@ class ProjectSelectionModalView extends Backbone.View {
       dataType: 'json'
     });
     req.done((data) => {
-      this.fillProjectSelection(data.data.projects)
+      this.fillProjectSelection(data.data.projects);
+      Loader.initStyles();
     });
     req.fail((err) => {
       alert("Lors de la recup des projets : " + err.responseText);
     });
 
-    Loader.initStyles();
   }
 
   fillProjectSelection(projectsData) {
@@ -91,6 +91,12 @@ class ProjectSelectionModalView extends Backbone.View {
   }
 
   render() {
+    if (this.object === undefined) {
+      this.$el.html(this.template({
+        object: ""
+      }));
+      return this;
+    }
     this.$el.html(this.template({
       object: this.object.toJSON()
     }));

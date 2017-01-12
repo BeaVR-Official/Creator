@@ -50,6 +50,8 @@ class ProjectCreationModalView extends Backbone.View {
             description : appDesc
         };
 
+        console.info(Cookie.getCookieValue("store_id"));
+        console.info(Cookie.getCookieValue("store_token"));
         let req = $.ajax({
             url : "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects",
             type: "post",

@@ -235,13 +235,24 @@ class GraphicalManager {
     // Peut être load en amont
     // TODO @damien si externalObjBddId load obj API (+ PUIS applique puis etre pas dans cette method)
     // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
-    // TODO @damien set Transformation avec Tree
+    e
 
     if (!mesh) {
       mesh               = new THREE.Mesh(geometry, material); //new THREE.Mesh when editor mode !== with physijs
       mesh.mirroredLoop  = true;
       mesh.castShadow    = true;
       mesh.receiveShadow = true;
+    }
+
+    // @damien set Transformation avec Tree
+    if (objectDescriptor.getType() != "sky" && objectDescriptor.getType() != "ground") {
+      mesh.updateMatrix();
+      mesh.geometry.applyMatrix( mesh.matrix );
+      //If you have previously rendered, you will have to set the needsUpdate flag:
+      // mesh.geometry.verticesNeedUpdate = true;
+      mesh.position.set( objectDescriptor.getPosition().x, objectDescriptor.getPosition().y, objectDescriptor.getPosition().z );
+      mesh.rotation.set( objectDescriptor.getRotation().x, objectDescriptor.getRotation().y, objectDescriptor.getRotation().z );
+      mesh.scale.set( objectDescriptor.getScale().x, objectDescriptor.getScale().y, objectDescriptor.getScale().z )
     }
 
     return mesh;
@@ -283,24 +294,6 @@ class GraphicalManager {
     return new THREE.Mesh(geometry, skyMaterial);
   }
 
-
-// ////////////////////////
-// Add Things events
-// ////////////////////////
-
-  addObject(objectUuid) {
-    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
-    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
-
-    console.log("----Add object GM----");
-    console.log("Scene desc", sceneDescriptor);
-    console.log("Obj Desc", objectDescriptor);
-    console.log("---------------------");
-
-    return this._objectFactory(objectDescriptor);
-  }
-
-// TODO cette méthode doit s'effectuer dans _createMesh() -> @damien
   addExternalObject(objectUuid, path) {
     let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
     let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
@@ -321,6 +314,26 @@ class GraphicalManager {
     });
     return objectDescriptor.getUuid();
   }
+
+
+// ////////////////////////
+// Add Things events
+// ////////////////////////
+
+  addObject(objectUuid) {
+    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
+    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
+
+    console.log("----Add object GM----");
+    console.log("Scene desc", sceneDescriptor);
+    console.log("Obj Desc", objectDescriptor);
+    console.log("---------------------");
+
+    return this._objectFactory(objectDescriptor);
+  }
+
+// TODO cette méthode doit s'effectuer dans _createMesh() -> @damien
+
 
 
 
