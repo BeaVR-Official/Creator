@@ -142,14 +142,16 @@ class EventManager extends EventEmitter {
 
       //Ajout path de la texture (chemin en dur utilisé pour les grounds)
       let objectDesc = ProjectManager.getObjectDescriptor(that.lastAddedSceneUuid, objectUuid);
-      objectDesc.setTextureBddId(data.resource == undefined ? "" : data.resource );
+      if (objectDesc) {
+        objectDesc.setTextureBddId(data.resource == undefined ? "" : data.resource );
 
-      data.uuid = GraphicalManager.addObject(objectUuid);
-      if (data.uuid) {
-        GraphicalManager.selectObject(data.uuid);
-        LeftBarSugarMaple.addObject(data.uuid);
-        data.selectedObjDesc = objectDesc;
-        that.emitEvent('GM.objectSelected', data);
+        data.uuid = GraphicalManager.addObject(objectUuid);
+        if (data.uuid) {
+          GraphicalManager.selectObject(data.uuid);
+          LeftBarSugarMaple.addObject(data.uuid);
+          data.selectedObjDesc = objectDesc;
+          that.emitEvent('GM.objectSelected', data);
+        }
       }
     });
 
