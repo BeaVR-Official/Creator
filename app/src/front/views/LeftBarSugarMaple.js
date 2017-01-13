@@ -7,9 +7,6 @@ import GraphicalManager from '../../modules/common/GraphicalManager';
 import ProjectManager from '../../modules/common/ProjectManager';
 import EventManager from '../../modules/common/EventManager';
 
-
-import CreatorManagement from '../../modules/creator/CreatorManagement';
-
 import 'jquery-ui-bundle';
 import 'jquery-ui-touch-punch';
 

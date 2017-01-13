@@ -1,6 +1,3 @@
-import ScenePlayer from './modules/runner/ScenePlayer';
+import RunnerLoad from './modules/runner/RunnerLoad';
 
-require('./modules/runner/ScenePlayer.ui.js');
-require('./modules/runner/ScenePlayer');
-
-ScenePlayer.render();
+new RunnerLoad();

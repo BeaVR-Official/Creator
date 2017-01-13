@@ -106,10 +106,10 @@ class SaveManager {
               this.importSceneDescriptors(JSON.parse(data4).sceneDescriptors)
             );
             ProjectManager.reloadScene();
-            EventManagerOnFront.emitEvent(
+            /*EventManagerOnFront.emitEvent(
               'loadScene',
               ProjectManager.getSceneDescriptor(ProjectManager.getStartingScene())
-            );
+            );*/
             // TODO @damien (peut etre en amont fill treeview)
           });
           req4.fail((err) => {
