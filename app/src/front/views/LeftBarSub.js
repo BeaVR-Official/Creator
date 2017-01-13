@@ -7,7 +7,6 @@ import * as Backbone from 'backbone';
 import * as _ from '../../../../node_modules/underscore';
 import EventManager from '../../modules/common/EventManager'
 
-
 require('../../../assets/styles/LeftBarSub.scss');
 
 class LeftBarView extends Backbone.View {
@@ -24,12 +23,12 @@ class LeftBarView extends Backbone.View {
 
   SwitchDefault(event) {
     if ($(event.target).attr('id') == 'used') {
-      this.objects = (this.used != undefined)? this.used : [];
-      this.type = "used";
+      this.objects = (this.used != undefined) ? this.used : [];
+      this.type    = "used";
     }
-    else{
+    else {
       this.objects = (this.default != undefined) ? this.default : [];
-      this.type = "default";
+      this.type    = "default";
     }
     this.render();
 
@@ -37,10 +36,10 @@ class LeftBarView extends Backbone.View {
 
   get events() {
     return {
-      'click .imageBox' : 'addObject',
+      'click .imageBox':                            'addObject',
       'click .headerSub .ui.button.inverted.basic': 'SwitchDefault',
-      'click .modals' : 'CloseModal',
-      'click .sendObj': 'UploadObj'
+      'click .modals':                              'CloseModal',
+      'click .sendObj':                             'UploadObj'
     };
   }
 
@@ -51,7 +50,13 @@ class LeftBarView extends Backbone.View {
   UploadObj() {
     var path = (window.URL || window.webkitURL).createObjectURL($(".fileInput")[0].files[0]);
     var name = $("#modelName").val();
-    this.objects.splice(this.objects.length - 1, 0, {name: name, logo:'assets/images/objectSpe.png', type:path, typeOfImport: 'imported'});
+    this.objects.splice(this.objects.length - 1, 0, {
+      name:         name,
+      logo:         'assets/images/objectSpe.png',
+      type:         "external",
+      resource:     path,
+      typeOfImport: 'imported'
+    });
     $('.small.modal.addExtObject').removeClass('active');
     $('.small.modal.addExtObject').removeClass('visible');
     $('.modals.addExtObject').removeClass('active');
@@ -61,9 +66,9 @@ class LeftBarView extends Backbone.View {
   }
 
   CloseModal(event) {
-    if (event.target.className == "ui dimmer modals page transition hidden active visible" || 
-        event.target.className == "close icon" ||
-        event.target.className == "ui button close") {
+    if (event.target.className == "ui dimmer modals page transition hidden active visible" ||
+      event.target.className == "close icon" ||
+      event.target.className == "ui button close") {
       $('.small.modal.addExtObject').removeClass('active');
       $('.small.modal.addExtObject').removeClass('visible');
       $('.modals.addExtObject').removeClass('active');
@@ -81,16 +86,14 @@ class LeftBarView extends Backbone.View {
 
     this.default = (value.objects != undefined) ? value.objects : [];
     this.objects = this.default;
-    this.type = (value.type != undefined)? value.type: "default";
+    this.type    = (value.type != undefined) ? value.type : "default";
     this.render();
   }
 
   addObject(event) {
     let addType = ($(event.target).closest('.addObject').attr('data-id'));
-    let typeOfImport = ($(event.target).closest('.addObject').attr('data-type'));
-    let resource = ($(event.target).closest('.addObject').attr('data-resource'));
 
-    if (addType == 'add') {
+    if (addType === 'add') {
       $('.modals.addExtObject').addClass('active');
       $('.modals.addExtObject').addClass('visible');
       $('.modals.addExtObject').animateCssIn('fadeIn');
@@ -99,31 +102,27 @@ class LeftBarView extends Backbone.View {
       $('.small.modal.addExtObject').animateCssIn('zoomIn');
       return;
     }
-    console.log(typeOfImport);
-    if (typeOfImport == 'default') {
-      let data = {
-        objectName: '',
-        objectType: addType,
-        resource: resource||""
-      };
-      // TODO filtré entre les dif obj via un data.typeObj
-      EventManager.emitEvent('addObject', data);
-    }
-    else {
-      let data = {
-        objectName: '',
-        objectType: ($(event.target).closest('.addObject').attr('data-name')),
-        path: addType
-      };
-      EventManager.emitEvent('addExternal', data);
-    }
 
+    let typeOfImport = ($(event.target).closest('.addObject').attr('data-type'));
+    let resource     = ($(event.target).closest('.addObject').attr('data-resource'));
+    let name         = ($(event.target).closest('.addObject').attr('data-name'));
+
+    console.log("TYYYPE", addType);
+    let data = {
+      objectName: (typeOfImport === 'default') ? '' : name,
+      objectType: addType,
+      resource:   resource || ""
+    };
+
+    console.log("BACKBONE addobj", data);
+
+    EventManager.emitEvent('addObject', data);
   }
 
-   render() {
-      this.$el.html(this.template({objects : this.objects, type: this.type}));
-      return this;
-   }
+  render() {
+    this.$el.html(this.template({objects: this.objects, type: this.type}));
+    return this;
+  }
 }
 
 export default LeftBarView;

@@ -85,7 +85,7 @@ class GraphicalManager {
           ProjectManager.setObjectScale(sceneUuid, objectUuid, this.selectedObject.scale);
         }
         // Send event when updating and not redo click selection
-        this.render()
+        this.render();
       });
       // this.transformControls.addEventListener('mouseDown',() => {
       //   this.orbitControls.enabled = false;
@@ -197,7 +197,7 @@ class GraphicalManager {
 // ////////////////////////
   _objectFactory(objectDescriptor, load) {
     let objectType = objectDescriptor.getType();
-    let obj;
+    let obj        = undefined;
     // trier les lumières des objets standards
     if (objectType === 'ambient' || objectType === 'directional' || objectType === 'point' || objectType === 'spot') {
       obj = this._createLight(objectDescriptor, objectType);
@@ -268,28 +268,31 @@ class GraphicalManager {
   }
 
   _createMesh(objectDescriptor, load) {
+    console.log("OBJ ", objectDescriptor);
+    console.log("OBJ TYPE", objectDescriptor.getType());
     // TODO handle data material into obj desc
     let material = new THREE.MeshPhongMaterial({color: 0xFF0000});
     let geometry = undefined;
     let mesh     = undefined;
+    let objType  = objectDescriptor.getType();
 
-    if (objectDescriptor.getType() === "sky")
-      mesh = this._addSky(objectDescriptor);
-    if (objectDescriptor.getType() === "ground")
-      mesh = this._addGround(objectDescriptor);
-    if (objectDescriptor.getType() === "box")
+    if (objType === "box")
       geometry = new THREE.BoxGeometry(200, 200, 200);
-    if (objectDescriptor.getType() === "sphere")
+    if (objType === "sphere")
       geometry = new THREE.SphereGeometry(50, 50, 320);
-    if (objectDescriptor.getType() === "cylinder")
+    if (objType === "cylinder")
       geometry = new THREE.CylinderGeometry(50, 50, 200, 32);
-
+    if (objType === "sky")
+      this._addSky(objectDescriptor);
+    if (objType === "ground")
+      mesh = this._addGround(objectDescriptor);
+    if (objType === "external")
+      mesh = this._addExternalObject(objectDescriptor, mesh);
     // TODO see how to do for lights/lightsHelper/externalObj
 
     // Peut être load en amont
     // TODO @damien si externalObjBddId load obj API (+ PUIS applique puis etre pas dans cette method)
     // TODO @damien si textureBddId load obj API (+ PUIS @vincent vas gérer);
-
 
     if (!mesh) {
       mesh               = new THREE.Mesh(geometry, material); //new THREE.Mesh when editor mode !== with physijs
@@ -301,16 +304,16 @@ class GraphicalManager {
     // @damien set Transformation avec Tree
     if (objectDescriptor.getType() != "sky" && objectDescriptor.getType() != "ground" && load == true) {
       mesh.updateMatrix();
-      mesh.geometry.applyMatrix( mesh.matrix );
+      mesh.geometry.applyMatrix(mesh.matrix);
       //If you have previously rendered, you will have to set the needsUpdate flag:
       //mesh.geometry.verticesNeedUpdate = true;
-      mesh.position.set( objectDescriptor.getPosition().x, objectDescriptor.getPosition().y, objectDescriptor.getPosition().z );
+      mesh.position.set(objectDescriptor.getPosition().x, objectDescriptor.getPosition().y, objectDescriptor.getPosition().z);
       mesh.rotation.set(
         objectDescriptor.getRotation().x == undefined ? objectDescriptor.getRotation()._x : objectDescriptor.getRotation().x,
         objectDescriptor.getRotation().y == undefined ? objectDescriptor.getRotation()._y : objectDescriptor.getRotation().y,
         objectDescriptor.getRotation().z == undefined ? objectDescriptor.getRotation()._z : objectDescriptor.getRotation().z
       );
-      mesh.scale.set( objectDescriptor.getScale().x, objectDescriptor.getScale().y, objectDescriptor.getScale().z );
+      mesh.scale.set(objectDescriptor.getScale().x, objectDescriptor.getScale().y, objectDescriptor.getScale().z);
     }
 
     return mesh;
@@ -352,27 +355,26 @@ class GraphicalManager {
     return new THREE.Mesh(geometry, skyMaterial);
   }
 
-  addExternalObject(objectUuid, path) {
-    let sceneDescriptor  = ProjectManager.getSceneDescriptor(this.currentSceneUuid);
-    let objectDescriptor = sceneDescriptor.getObjectDescriptor(objectUuid);
-    var that             = this;
-    var objLoader        = new THREE.OBJLoader();
-    var material         = new THREE.MeshBasicMaterial({color: 'grey', side: THREE.DoubleSide});
-    objLoader.load(path, function (obj) {
+  _addExternalObject(objectDescriptor) {
+    let material  = new THREE.MeshBasicMaterial({color: 'grey', side: THREE.DoubleSide});
+    let objLoader = new THREE.OBJLoader();
+    let that      = this;
+
+    objLoader.load(objectDescriptor.getExternalObjBddId(), function (obj) {
+      obj.name = objectDescriptor.getUuid();
       obj.traverse(function (child) {
         if (child instanceof THREE.Mesh) {
           child.material = material;
         }
       });
-      for (var i = 0; i < obj.children.length; ++i) {
-        obj.children[i].name = objectDescriptor.getUuid();
+      for (let i = 0; i < obj.children.length; ++i) {
+        obj.children[i].name = "child" + objectDescriptor.getUuid();
+        THREE.SceneUtils.attach(obj.children[i], that.threeScene, obj);
       }
       that.threeScene.add(obj);
       that.render();
     });
-    return objectDescriptor.getUuid();
   }
-
 
 // ////////////////////////
 // Add Things events
@@ -391,7 +393,6 @@ class GraphicalManager {
   }
 
 // TODO cette méthode doit s'effectuer dans _createMesh() -> @damien
-
 
 // ////////////////////////
 // Object hierarchy
@@ -413,7 +414,7 @@ class GraphicalManager {
   _raycastingSelection() {
     let data = {
       deselectedObjDesc: (this.selectedObject) ? ProjectManager.getObjectDescriptor(this.currentSceneUuid, this.selectedObject.name) : undefined,
-      selectedObjDesc: undefined
+      selectedObjDesc:   undefined
     };
     EventManager.emitEvent('GM.objectDeselected', data);
     this.deselectObject();
@@ -467,6 +468,7 @@ class GraphicalManager {
 
   attachToTransform(object) {
     if (object) {
+      console.log("Attached", object);
       this.selectedObject = object;
       this.transformControls.attach(object);
       this.render();

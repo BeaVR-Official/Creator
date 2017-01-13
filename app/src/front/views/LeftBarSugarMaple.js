@@ -96,8 +96,6 @@ class LeftBarSugarMaple {
     });
 
     this.smTree.on('sortable.dropped', (e, newParent, node) => {
-      console.log("dropped!!", node);
-      console.log("dropped parent", newParent);
       let data = {
         objectDescDropped: node.data,
         objectDescNewParent: newParent.data

@@ -143,7 +143,8 @@ class EventManager extends EventEmitter {
       //Ajout path de la texture (chemin en dur utilisé pour les grounds)
       let objectDesc = ProjectManager.getObjectDescriptor(that.lastAddedSceneUuid, objectUuid);
       if (objectDesc) {
-        objectDesc.setTextureBddId(data.resource == undefined ? "" : data.resource );
+        objectDesc.setExternalObjBddId(data.resource === undefined ? "" : data.resource);
+        objectDesc.setTextureBddId(data.resource === undefined ? "" : data.resource);
 
         data.uuid = GraphicalManager.addObject(objectUuid);
         if (data.uuid) {
@@ -161,15 +162,6 @@ class EventManager extends EventEmitter {
       let objectUuid = ProjectManager.addObject(data.objectName, data.objectType);
       data.uuid      = GraphicalManager.addObject(objectUuid);
       LeftBarSugarMaple.addObject(data.uuid);
-    });
-
-    this.on('addExternal', function (data) {
-      let objectUuid = ProjectManager.addObject(
-        data.objectName,
-        data.objectType
-      );
-      data.uuid = GraphicalManager.addObject(objectUuid, data.path);
-      // TODO @Damien save obj or path
     });
 
     this.on('addSky', function (data) {
