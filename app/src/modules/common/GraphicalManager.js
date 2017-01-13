@@ -32,6 +32,13 @@ class GraphicalManager {
    * TODO: getCanvasWidth & height by EventManager(no more canvasSettings in Constants)
    * @private
    */
+
+  setDisplayMode(statusBoolean) {
+    // true: the manager will show the helpers (used for edition)
+    // false: the manager will only show the objects (used for runner)
+    this.editorMode = statusBoolean;
+  }
+
   _adaptToWindow() {
     let parentWidth  = $(window).width();
     let parentHeight = $(window).height() + $(".TopBarSelector").height();
