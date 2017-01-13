@@ -4,6 +4,7 @@
 
 import eventToPromise from 'event-to-promise';
 import Scene from './models/scene';
+import TreeView from './views/LeftBarSugarMaple';
 
 class EventManager extends EventEmitter {
 
@@ -21,7 +22,7 @@ class EventManager extends EventEmitter {
 
   eventsListener() {
     this.on('loadScene', (sceneData) => {
-      //ex
+      TreeView.loadATV(sceneData);
     });
   }
 
