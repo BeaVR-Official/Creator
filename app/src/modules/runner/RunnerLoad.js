@@ -3,10 +3,9 @@
  */
 
 import Cookie from '../../front/cookie';
-import SaveManager from '../common/SaveManager';
-import ProjectManager from '../common/ProjectManager';
 import GraphicalManager from '../common/GraphicalManager';
-import EventManager from '../common/EventManager';
+import ProjectManager from '../common/ProjectManager';
+import SaveManager from '../common/SaveManager';
 
 class RunnerLoad {
 
@@ -18,8 +17,8 @@ class RunnerLoad {
     GraphicalManager.setDisplayMode(false);
     let projectId = Cookie.getCookieValue('runProjectId');
     SaveManager.importProject(projectId);
-    //ProjectManager.reloadScene();
   }
+
 }
 
 export default RunnerLoad;
