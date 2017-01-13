@@ -83,6 +83,7 @@ class SaveManager {
         ProjectManager.setAllSceneDescriptors(saveProject.sceneDescriptors);
         ProjectManager.setStartingScene(saveProject.startingSceneUuid, true);
         // par default le premier file est celui des SC & OD
+        // TODO !!!!!!
         let fileId = saveProject.files[0];
 
         // Third step : get url link to import JSON file with all SD & OD
@@ -133,14 +134,38 @@ class SaveManager {
 
   }
 
-  checkExportFile(saveId, sceneDescriptors) {
+  exportFile(saveId, sceneDescriptors) {
+    let ODFileToUpload = {};
     sceneDescriptors.forEach((sceneDescriptor) => {
-      sceneDescriptor.forEach((OD) => {
+      sceneDescriptor.attributes.objectDescriptors.forEach((OD) => {
         if ((OD).getExternalObjBddId().length > 0) {
-          // upload
+          let req1 = $.get(OD.getExternalObjBddId());
+          req1.done((res) => {
+            let fileJSONExternal = new File([res], OD.getUuid());
+            let fileData = new FormData();
+            fileData.append("file", fileJSONExternal, OD.getUuid());
+            let req2    = $.ajax({
+              url:      "http://beavr.fr:3000/api/creator/" + Cookie.getCookieValue("store_id") + "/projects/" + ProjectManager.getId() + "/save/" + saveId + "/files",
+              type:     "post",
+              data:     fileData,
+              headers:  {Authorization: "Bearer " + Cookie.getCookieValue("store_token")},
+              contentType: false,
+              processData: false
+            });
+            req2.done((res) => {
+              OD.setExternalObjBddId(res.data.file.relativePath);
+            });
+            req2.fail(function (err) {
+              console.log(err);
+              alert("Lors de la save du projet (file) : " + err.responseText);
+            });
+          });
+          req1.fail((err) => {
+            console.log(err);
+          })
         }
-      })
-    })
+      });
+    });
   }
 
   // EXPORT
@@ -164,6 +189,7 @@ class SaveManager {
 
       // Second step : create a json file with all SD & OD
       let saveId = res.data.save._id;
+      this.exportFile(saveId, ProjectManager.getAllSceneDescriptors())
       let fileJSONProject = new File(
         [JSON.stringify(ProjectManager.toJSON())],
         ProjectManager.getId(),
