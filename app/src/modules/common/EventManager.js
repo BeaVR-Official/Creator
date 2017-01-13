@@ -3,6 +3,7 @@ import GraphicalManager from "./GraphicalManager";
 import ProjectManager from "./ProjectManager";
 import eventToPromise from 'event-to-promise';
 import SaveManager from './SaveManager';
+import Cookie from '../../front/cookie';
 
 class EventManager extends EventEmitter {
   constructor() {
@@ -254,6 +255,13 @@ class EventManager extends EventEmitter {
     })
     this.on('loadProject', function (projectId) {
       SaveManager.importProject(projectId);
+    });
+    this.on('runProject', function () {
+      SaveManager.exportProject(true);
+    });
+    this.on('runProject2', function () {
+      Cookie.createCookie('runProjectId', ProjectManager.getId(), 1);
+      document.location.href = "/Creator/app/runner.html";
     });
   }
 

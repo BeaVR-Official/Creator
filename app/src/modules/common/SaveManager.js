@@ -1,6 +1,7 @@
 import ProjectManager from "./ProjectManager";
 import SceneDescriptor from "./SceneDescriptor";
 import ObjectDescriptor from "./ObjectDescriptor";
+import EventManager from './EventManager';
 import EventManagerOnFront from '../../front/EventManager';
 
 import Cookie from '../../front/cookie';
@@ -169,7 +170,7 @@ class SaveManager {
   }
 
   // EXPORT
-  exportProject() {
+  exportProject(run = false) {
 
     //TODO @damien save externalObj File
 
@@ -209,7 +210,11 @@ class SaveManager {
         console.log(err);
         alert("Lors de la save du projet (file) : " + err.responseText);
       });
-
+      req2.done(() => {
+        if (run == true) {
+          EventManager.emitEvent('runProject2', null);
+        }
+      })
     });
     req1.fail(function (err) {
       console.log(err);

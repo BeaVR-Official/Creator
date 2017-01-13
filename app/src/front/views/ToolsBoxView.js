@@ -23,11 +23,16 @@ class ToolsBoxView extends Backbone.View {
 
     get events() {
         return {
+            'click #runProject': 'runProject',
             'click #saveProject': 'saveProject',
             'click #validateExport': 'exportProject',
             'click #exportProject': 'openModal',
             'click #cancelExport': 'closeModal'
         };
+    }
+
+    runProject() {
+        EventManager.emitEvent('runProject');
     }
 
     saveProject() {
