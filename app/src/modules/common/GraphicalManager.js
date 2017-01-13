@@ -10,7 +10,7 @@ class GraphicalManager {
   // In editor mod by default
   constructor() {
     // GraphicalManager attributes
-    this.editorMod         = true; // false for runnerMod
+    this.editorMode        = true; // false for runnerMod
     this.threeScene        = undefined;
     this.currentSceneUuid  = undefined;
     this.lastSceneUuid     = undefined;
@@ -72,7 +72,7 @@ class GraphicalManager {
       this.render()
     });
 
-    if (this.editorMod) {
+    if (this.editorMode) {
       this.transformControls = new THREE.TransformControls(this.camera, this.renderer.domElement);
 
       this.transformControls.addEventListener('change', () => {
@@ -104,7 +104,7 @@ class GraphicalManager {
     this.renderer.clear();
     this.camera.lookAt(this.threeScene.position);
     this.renderer.render(this.threeScene, this.camera);
-    if (this.editorMod)
+    if (this.editorMode)
       this.renderer.render(this.helperScene, this.camera);
     this.setlastSceneUuid(this.currentSceneUuid);
 
@@ -180,7 +180,7 @@ class GraphicalManager {
   _createScene() {
     $(window).resize(() => this._adaptToWindow());
 
-    if (this.editorMod) {
+    if (this.editorMode) {
       this.threeScene  = new THREE.Scene();
       this.helperScene = new THREE.Scene();
       // TODO variable Grid params
@@ -240,7 +240,7 @@ class GraphicalManager {
     let position = objectDescriptor.getPosition();
     light.position.set(position.x, position.y, position.z);
 
-    if (this.editorMod === true) {
+    if (this.editorMode === true) {
       if (helper !== undefined) {
         this.helperScene.add(helper);
       }
