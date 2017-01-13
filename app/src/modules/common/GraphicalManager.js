@@ -27,11 +27,6 @@ class GraphicalManager {
 // ////////////////////////
 // ThreeJS settings/initialisation & render methods
 // ////////////////////////
-  /**
-   * Adapt scene renderer to canvas
-   * TODO: getCanvasWidth & height by EventManager(no more canvasSettings in Constants)
-   * @private
-   */
 
   setDisplayMode(statusBoolean) {
     // true: the manager will show the helpers (used for edition)
@@ -39,6 +34,11 @@ class GraphicalManager {
     this.editorMode = statusBoolean;
   }
 
+  /**
+   * Adapt scene renderer to canvas
+   * TODO: getCanvasWidth & height by EventManager(no more canvasSettings in Constants)
+   * @private
+   */
   _adaptToWindow() {
     let parentWidth  = $(window).width();
     let parentHeight = $(window).height() + $(".TopBarSelector").height();
